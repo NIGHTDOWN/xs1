@@ -1,4 +1,4 @@
-import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ng169/conf/conf.dart';
@@ -334,7 +334,7 @@ class ReaderSceneState extends State<ReaderScene>
           bottom: 0,
           child: Image.asset(Styles.getTheme()['bg'], fit: BoxFit.cover)),
       buildPageView(),
-      !isnull(getcache('bookshowtips')) ? Readertips() : Container(),
+      !isnull(getcache('bookshowtips', false)) ? Readertips() : Container(),
     ]);
     var children2 = <Widget>[
       Loadbox(
@@ -356,9 +356,10 @@ class ReaderSceneState extends State<ReaderScene>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(left: 10, right: 5),
+                margin: EdgeInsets.only(left: 15, right: 15),
+                // margin: EdgeInsets.all(15),
                 child: new Text(
-                  lang("喜欢本书就加入书架吧"),
+                  lang("加入书架及时获取更新提示"),
                   style: new TextStyle(
                     decoration: TextDecoration.none,
                     fontSize: 16.0,

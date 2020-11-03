@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -347,7 +346,7 @@ class CartReaderSceneState extends State<CartReaderScene>
       topinfo(),
       ReaderBar(widget.novel, chaptersResponse, currentArticle, reflash,
           resetContent),
-      !isnull(getcache('carshowtips')) ? Readertipscar() : Container(),
+      !isnull(getcache('carshowtips', false)) ? Readertipscar() : Container(),
     ];
     var box = Container(
         decoration: new BoxDecoration(
@@ -361,9 +360,10 @@ class CartReaderSceneState extends State<CartReaderScene>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(left: 10, right: 5),
+                // margin: EdgeInsets.only(left: 10, right: 5),
+                margin: EdgeInsets.only(left: 15, right: 15),
                 child: new Text(
-                  lang("喜欢本书就加入书架吧"),
+                  lang("加入书架及时获取更新提示"),
                   style: new TextStyle(
                     decoration: TextDecoration.none,
                     fontSize: 16.0,
@@ -494,6 +494,12 @@ class CartReaderSceneState extends State<CartReaderScene>
     );
   }
 
+  showmenu() {
+    // isMenuVisiable = true;
+    s('isMenuVisiable', true);
+    reflash();
+  }
+
   //屏幕点击事件
   onTap(Offset position) async {
     //点击翻页或者弹出菜单
@@ -529,6 +535,7 @@ class CartReaderSceneState extends State<CartReaderScene>
       page: pageIndex,
       topSafeHeight: topSafeHeight,
       scroll: onScroll,
+      showmenu: showmenu,
       next: next,
       pre: pre,
       lock: lock,

@@ -1,5 +1,3 @@
-//api地址
-
 const apiurl = 'http://api.lookstory.xyz/api/';
 const serverurl = 'http://api.lookstory.xyz/';
 
@@ -40,15 +38,26 @@ const themecache = 'themecache'; //主题
 const oldthemecache = 'oldthemecache'; //原主题
 const fontsizecache = 'fontsizecache'; //原主题
 const autolight = 'autolight'; //屏幕亮度自动适应
+const langlist = [
+  {'en': "English"},
+  {'th': "ไทย"},
+  {'zh': "简体中文"},
+  {'vi': "Tiếng Việt"},
+  {'id': "bahasa Indonesia"},
+  {'ko': "한국어"},
+  {'ms': "Melayu"}
+];
 const readfx = 'readfx'; //阅读方向
 //测试
-const loghttp = true;
-const loghttpcn = true; //显示http错误内容，false显示错误码
+const loghttp = false;
+const loghttprq = true;
+const loghttpcn = false; //显示http错误内容，false显示错误码
 const isdebug = true; //显示各种调试信息，false不显示任何调试信息
 const delanguage = 'zh'; //默认语言
 
 //正式
 // const loghttp = false;
+// const loghttprq = false;
 // const loghttpcn = false; //显示http错误内容，false显示错误码
 // const isdebug = false; //显示各种调试信息，false不显示任何调试信息
 // const delanguage = 'th'; //默认语言

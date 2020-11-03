@@ -26,6 +26,7 @@ class CartoonView extends StatefulWidget {
   final double topSafeHeight;
   final Novel novel;
   final Function scroll;
+  final Function showmenu;
   final Function next;
   final Function pre;
 
@@ -39,7 +40,8 @@ class CartoonView extends StatefulWidget {
       this.pre,
       this.lock,
       this.islock,
-      this.unlock});
+      this.unlock,
+      this.showmenu});
 
   @override
   CartoonViewState createState() => CartoonViewState();
@@ -93,6 +95,42 @@ class CartoonViewState extends State<CartoonView> {
       });
     }
     goindex();
+  }
+
+  onTap(Offset position) async {
+    //点击翻页或者弹出菜单
+
+    //hidetitlebar();
+    double xRate = position.dy / Screen.height;
+    var of = 0.0;
+    var time = 100;
+    var h = g('sheight') / 2;
+    if ((xRate > 0.33 && xRate < 0.66)) {
+      //显示菜单
+      // isMenuVisiable = true;
+      // s('isMenuVisiable', true);
+      // reflash();
+      widget.showmenu();
+    } else if (xRate >= 0.66) {
+      //下一页
+      if (of > pageController.position.maxScrollExtent) {
+        return;
+      }
+      of = pageController.offset;
+
+      pageController.animateTo(of + h,
+          duration: Duration(milliseconds: time), curve: Curves.easeInOut);
+      // pageController.animateToPage(2,
+      //     duration: Duration(milliseconds: time), curve: Curves.easeInOut);
+    } else {
+      //上一页
+      of = pageController.offset;
+      if (of < 0) {
+        return;
+      }
+      pageController.animateTo(of - h,
+          duration: Duration(milliseconds: time), curve: Curves.easeInOut);
+    }
   }
 
   //防止页面高度还没加载完成，加载上一页尾部又立马跳转到下一页
@@ -440,19 +478,23 @@ class CartoonViewState extends State<CartoonView> {
 
   Widget page() {
     if (!isnull(widget.article)) return Container();
-    return ListView(
-      physics: BouncingScrollPhysics(),
-      controller: pageController,
-      children: pics,
-    );
-    //SingleChildScrollView 数量多性能不好；
-    return SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        controller: pageController,
-        child: Column(
+    return GestureDetector(
+        onTapUp: (TapUpDetails details) {
+          onTap(details.globalPosition);
+        },
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          controller: pageController,
           children: pics,
-          crossAxisAlignment: CrossAxisAlignment.start,
         ));
+    //SingleChildScrollView 数量多性能不好；
+    // return SingleChildScrollView(
+    //     physics: BouncingScrollPhysics(),
+    //     controller: pageController,
+    //     child: Column(
+    //       children: pics,
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //     ));
   }
 
   Widget payitem(context) {
@@ -607,7 +649,10 @@ class CartoonViewState extends State<CartoonView> {
     return Expanded(
       child: FlatButton(
         onPressed: () async {
-          await gourl(context, Recharge(widget.article.book_id,widget.article.booktype,widget.article.id.toString()));
+          await gourl(
+              context,
+              Recharge(widget.article.book_id, widget.article.booktype,
+                  widget.article.id.toString()));
           //如余额大于 就可以解锁
           if (User.getcoin() > widget.article.coin) {
             await unlockbook();

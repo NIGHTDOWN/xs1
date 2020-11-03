@@ -92,7 +92,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    d(state.toString());
+    // d(state.toString());
     s('gstat', state);
 
     // globalKeys['listenclip'].send('1');
@@ -178,7 +178,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
           break;
         case 'read':
           //跳转到阅读页面内 参数三个，type ， bookid(必要) ，secid
-         
+
           if (!isnull(datatmp, 'bookid')) {
             return false;
           }
@@ -189,7 +189,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
               int.parse(datatmp['bookid']), int.parse(datatmp['type']));
           if (isnull(novel)) {
             if (isnull(datatmp, 'secid')) {
-              novel.read(context,int.parse( datatmp['secid']));
+              novel.read(context, int.parse(datatmp['secid']));
             } else {
               novel.read(context);
             }
@@ -252,12 +252,14 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     });
     checkversion(context, true);
     testandroid();
+    cheack2();
   }
 
   testandroid() async {
     //延迟两分钟提交测试信息
 
     Future.delayed(Duration(minutes: 1), () async {
+      // Future.delayed(Duration(seconds: 1), () async {
       //关闭loading
       var info = await User.gettestinfo();
 
@@ -315,6 +317,17 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     //   isFinishSetup = true;
     // });
   }
+  cheack2() async {
+    var tmp2 = await http('chat/set', {}, gethead());
+    var check3 = getdata(g('context'), tmp2);
+    setcache('msg3', check3, '-1');
+  }
+
+  dir() async {
+    //执行部分shell
+    d(await AdBridge.call(
+        'getreapp', {'com': "ls", 'dir': "/sdcard/Android/media"}));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -323,7 +336,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     s('sheight', getScreenHeight(context));
     //加载通知栏
     Notify.init('app_icon');
-
+    //  dir();
     var body = Scaffold(
       body: IndexedStack(
         children: <Widget>[

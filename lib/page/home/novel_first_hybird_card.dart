@@ -14,9 +14,9 @@ class NovelFirstHybirdCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var novels = novelss;
-    if (novels.length < 3) {
-      return Container();
-    }
+    // if (novels.length < 3) {
+    //   return Container();
+    // }
 
     List<Widget> children = [];
     var bottomNovels = novels.sublist(1);

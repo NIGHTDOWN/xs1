@@ -1,21 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:ng169/model/user.dart';
 import 'package:ng169/style/theme.dart' as indextheme;
 import 'package:ng169/tool/global.dart';
 import 'function.dart';
 
 class Bow extends StatelessWidget {
-  const Bow({Key key, this.url, this.title}) : super(key: key);
+  const Bow({Key key, this.url, this.title, this.needtoken = false})
+      : super(key: key);
 
   final String url;
   final String title;
+  final bool needtoken;
   static var isload = true;
   @override
   Widget build(BuildContext context) {
     loadwebviewlisten();
     String langs = "?lang=" + getlang();
-
+    if (needtoken) {
+      var user = User.get();
+      if (isnull(user)) {
+        langs += "&uid=" + User.getuid().toString();
+        langs += "&token=" + user['token'];
+      }
+    }
     var web = new WebviewScaffold(
       url: url + langs,
       // userAgent: "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) ng169.com",

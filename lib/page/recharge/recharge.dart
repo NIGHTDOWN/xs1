@@ -29,7 +29,7 @@ class Recharge extends LoginBase {
       cachedatatime = 'rechargesearch_data_time_',
       page = 1;
   List prolist = [];
-  String api = 'order/get_charges';
+  String api = 'order/get_charge';
   String creat_order_api = 'order/creat';
   String cancel_order_api = 'order/fail';
   String order_log_api = 'order/order_log';
@@ -200,6 +200,10 @@ class Recharge extends LoginBase {
                 style: style11,
               ),
             ),
+            Text(
+              lang("单位") + ':USD',
+              style: style11,
+            ),
           ],
         ),
         // margintop,
@@ -342,9 +346,9 @@ class Recharge extends LoginBase {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    Text(lang("￥"), style: select == pid ? style41 : style4),
+                    Text("\$", style: select == pid ? style41 : style4),
                     Text(
-                      json['yuenan_icon'],
+                      json['USD'].toString(),
                       style: select == pid ? style51 : style5,
                     )
                   ],

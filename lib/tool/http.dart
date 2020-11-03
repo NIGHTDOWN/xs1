@@ -11,9 +11,11 @@ import 'global.dart';
 import 'lang.dart';
 
 dynamic res;
-List times = [];
+List times = [];var reqlock = {};
 Future<String> http(String url,
-    [Map<String, dynamic> datas, Map<String, dynamic> header]) async {
+    [Map<String, dynamic> datas,
+    Map<String, dynamic> header,
+    int reqlockmiao]) async {
   Dio dio = Dio();
   //设置代理
   dio.options.baseUrl = apiurl;
@@ -21,6 +23,24 @@ Future<String> http(String url,
   dio.options.connectTimeout = 10000;
   //设置数据接收超时时间
   dio.options.receiveTimeout = 10000;
+  var index = url.hashCode;
+  if (isnull(reqlockmiao)) {
+    //配置了避免重复请求
+    if (isnull(reqlock, index)) {
+      int latime = int.parse(reqlock[index]);
+      int now = int.parse(gettime());
+      if (now - latime <= reqlockmiao) {
+        //时间间隔太短，不请求数据
+        // reqlock[index] = now.toString();
+        return null;
+      }
+      reqlock[index] = now.toString();
+    } else {
+      // reqlock.addAll({index: gettime()});
+      reqlock[index] = gettime();
+    }
+  }
+
   int reqstime = DateTime.now().millisecondsSinceEpoch;
   int reqetime = DateTime.now().millisecondsSinceEpoch;
   if (null != header) {
@@ -34,9 +54,9 @@ Future<String> http(String url,
   try {
     //以表单的形式设置请求参数
     // Map<String, String> queryParameters = {'format': '2', 'key': '939e592487c33b12c509f757500888b5', 'lon': '116.39277', 'lat': '39.933748'};
-    if (loghttp) {
+    if (loghttp || loghttprq) {
       d(url, 2);
-      if (isnull(datas)) {
+      if (isnull(datas) && loghttp) {
         d(datas);
       }
     }

@@ -15,7 +15,6 @@ import 'cache.dart';
 import 'db.dart';
 import 'function.dart';
 import 'lang.dart';
-
 Map<String, dynamic> globalKeys;
 
 i() async {
@@ -27,7 +26,6 @@ i() async {
     'coin': '0',
     'admob': Ads()..init(),
     'msg': 0,
-
     'locallg': '',
     'downthred': Thred(),
     // 'listenclip': Thred()
@@ -93,6 +91,7 @@ setlang(String lang) async {
   String cachename = 'locallg';
   setcache(cachename, lang, '-1');
   s(cachename, lang);
+ 
   await inilang();
 }
 

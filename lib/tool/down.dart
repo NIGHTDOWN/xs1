@@ -14,7 +14,6 @@ import 'function.dart';
 import 'global.dart';
 import 'lang.dart';
 import 'notify.dart';
-
 class Down {
   static StateSetter reflash; //进度条刷新入口
   static var progress = 0.0;
@@ -109,7 +108,9 @@ class Down {
       dir = getcache(downdocment);
     } else {
       Directory appDocDir = await getApplicationDocumentsDirectory();
+      // Directory appDocDir = await getTemporaryDirectory();
       dir = appDocDir.path;
+      // d(dir);
       setcache(downdocment, dir, '0');
     }
     var tmpname = filename.split('/');

@@ -51,7 +51,7 @@ class _ReaderCateState extends State<ReaderCate>
         this.widget.articleIndex / (this.widget.chapters.length - 1);
 
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 500), vsync: this);
+        duration: const Duration(milliseconds: 200), vsync: this);
     animation = Tween(begin: 1.0, end: 0.0).animate(animationController);
 
     animation.addListener(() {

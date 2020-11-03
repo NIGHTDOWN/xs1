@@ -20,7 +20,7 @@ class Readertipscar extends LoginBase {
   }
 
   loadcache() {
-    havecache = isnull(getcache(cachenae));
+  havecache = isnull(getcache(cachenae,false));
     // d(havecache);
     reflash();
   }
@@ -121,7 +121,7 @@ class Readertipscar extends LoginBase {
       ),
     );
     clicktips() {
-      setcache(cachenae, 1, '-1');
+      setcache(cachenae, 1, '-1',false);
       isshow = false;
       loadcache();
     }

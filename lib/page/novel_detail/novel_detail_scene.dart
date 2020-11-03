@@ -8,6 +8,7 @@ import 'package:ng169/obj/chapter.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/commect/addcomment.dart';
 import 'package:ng169/page/commect/comment.dart';
+import 'package:ng169/page/home/novel_rom.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/styles.dart';
@@ -39,6 +40,7 @@ class NovelDetailScene extends StatefulWidget {
 class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
   Novel novel;
   List<Novel> recommendNovels = [];
+  List likebook = [];
   List<NovelComment> comments = [];
   ScrollController scrollController = ScrollController();
   double navAlpha = 0;
@@ -54,10 +56,11 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
     novel = this.widget.novel;
     super.initState();
     fetchData();
-
+    d('加载');
     Rackmodel()..upreadtime(novel);
     scrolllistener();
     // d(widget.opshare);
+    romget();
     if (widget.opshare) {
       share();
     }
@@ -343,6 +346,30 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
     );
   }
 
+  Widget buildLike() {
+    return NovelRomView(lang('大家都在看'), likebook, () {
+      romget();
+    });
+  }
+
+  Future<void> romget() async {
+    var api;
+    if (widget.novel.type == '2') {
+      api = 'cartoon/get_randList';
+    } else {
+      api = 'book/get_randList';
+    }
+
+    var tmpdata = await http(api, null, gethead());
+    var data = getdata(context, tmpdata);
+    if (isnull(data)) {
+      likebook = data;
+      reflash();
+      return data;
+    }
+    return null;
+  }
+
   Widget buildTags() {
     var colors = [Color(0xFFF9A19F), Color(0xFF59DDB9), Color(0xFF7EB3E7)];
     var i = 0;
@@ -429,6 +456,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
                   SizedBox(height: 10),
                   buildComment(),
                   SizedBox(height: 10),
+                  buildLike()
                   /*   NovelDetailRecommendView(recommendNovels),*/
                 ],
               ),

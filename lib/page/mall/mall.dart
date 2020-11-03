@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ng169/page/home/book_banner.dart';
 import 'package:ng169/page/home/home_banner.dart';
 import 'package:ng169/page/home/home_menu.dart';
 import 'package:ng169/page/home/novel_first_hybird_card.dart';
@@ -32,7 +33,7 @@ class MallState extends State<Mall> {
   var bannerapi = 'book/get_banner';
   var newBookapi = 'book/get_new_book';
   var hotbooksapi = 'book/new';
-  var newCartoonsapi = 'cartoon/new_cartoon';
+  var newCartoonsapi = 'cartoon/hot_cartoon';
   var rom = 'book/get_randList';
   Future<List> gethttpdate(String api) async {
     var jbanner = await http(api, null, gethead());
@@ -44,6 +45,12 @@ class MallState extends State<Mall> {
   }
 
   mock() {
+    String lang = getlang();
+    if (isnull(lang)) {
+      if (lang.substring(2) != 'th') {
+        return;
+      }
+    }
     banner = [
       {
         'scan_seat': '1',
@@ -199,6 +206,7 @@ class MallState extends State<Mall> {
     ];
   }
 
+  bool isdart = false;
   Future<void> gethttpdata() async {
     var jbanner = await http('book/get_banner', null, gethead());
     var data = getdata(context, jbanner);
@@ -248,6 +256,7 @@ class MallState extends State<Mall> {
   void initState() {
     super.initState();
     index = index + getlang();
+
     mock();
     loadpage();
 
@@ -255,13 +264,16 @@ class MallState extends State<Mall> {
       //var offset = scrollController.offset;
       var offset = scrollController.offset;
 
-      if (offset < 0) {
+      if (offset <= 0) {
+        titlebarcolor(isdart);
         if (navAlpha != 0) {
           setState(() {
             navAlpha = 0;
           });
         }
       } else if (offset < 50) {
+        titlebarcolor(false);
+
         setState(() {
           navAlpha = 1 - (50 - offset) / 50;
         });
@@ -350,11 +362,16 @@ class MallState extends State<Mall> {
   Widget build(BuildContext context) {
     //如果有4个接口请求的内容中有1个空则重新加载请求
     // banner, newbook, newcart, hotbook
-    if (!isnull(banner) ||
-        !isnull(newbook) ||
-        !isnull(newcart) ||
-        !isnull(hotbook)) {
-      loadpage();
+    // if (!isnull(banner) ||
+    //     !isnull(newbook) ||
+    //     !isnull(newcart) ||
+    //     !isnull(hotbook)) {
+    //   loadpage();
+    // }
+// d(MediaQueryData.fromWindow(window).padding.top);
+    isdart = !isnull(banner) ? true : false;
+    if (navAlpha == 0) {
+      titlebarcolor(isdart);
     }
 
     var body = Container(
@@ -363,13 +380,18 @@ class MallState extends State<Mall> {
         onRefresh: gethttpdata,
         child: ListView(
           controller: scrollController,
+          padding: EdgeInsets.all(0),
+          physics: AlwaysScrollableScrollPhysics(),
           children: <Widget>[
             //banner
 
-            isnull(banner) ? HomeBanner(banner) : SizedBox(),
+            // isnull(banner) ? BookBanner(romdata) : SizedBox(),
+            isnull(banner)
+                ? HomeBanner(banner)
+                : isnull(romdata) ? BookBanner(romdata) : SizedBox(),
             //菜单
             HomeMenu(),
-            isnull(newbook)
+            isnull(romdata)
                 ? bookCardWithInfo(6, lang('猜你喜欢'), romdata)
                 : SizedBox(),
             //推荐小说
@@ -394,6 +416,7 @@ class MallState extends State<Mall> {
         ),
       ),
     );
+
     return Scaffold(
       backgroundColor: SQColor.white,
       body: Stack(

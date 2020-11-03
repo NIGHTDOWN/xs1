@@ -14,9 +14,9 @@ class NovelNormalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var novels = novelss;
-    if (novels.length < 3) {
-      return null;
-    }
+    // if (novels.length < 3) {
+    //   return null;
+    // }
 
     List<Widget> children = [
       isnull(title) ? HomeSectionView(title) : SizedBox(),

@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'function.dart';
 
-
 class NgCache {
   SharedPreferences cache;
   int outtime = 86400; //有效时间

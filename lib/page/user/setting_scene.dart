@@ -23,7 +23,6 @@ class SettingScene extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => SettingState();
 }
-
 class SettingState extends State<SettingScene> {
 // class SettingScene extends StatelessWidget {
   var _cacheSizeStr = '0.00B';
@@ -127,6 +126,10 @@ class SettingState extends State<SettingScene> {
 
   @override
   Widget build(BuildContext context) {
+    var setlang = getcache('msg3');
+
+    bool boo = isnull(setlang);
+
     Switch s = Switch(
       value: _value,
       onChanged: (val) {
@@ -164,21 +167,23 @@ class SettingState extends State<SettingScene> {
           ],
         ),
       ),
-      MeCell(
-        title: lang('选择语言'),
-        onPressed: () {
-          msgbox(context, () {}, Text(lang('选择语言')), getlnagobj());
-        },
-        line_padding_left: 10,
-        right_widget: Row(
-          children: <Widget>[
-            // Text(_cacheSizeStr),
-            SizedBox(
-              width: 12,
-            ),
-          ],
-        ),
-      ),
+      boo
+          ? MeCell(
+              title: lang('选择语言'),
+              onPressed: () {
+                msgbox(context, () {}, Text(lang('选择语言')), getlnagobj());
+              },
+              line_padding_left: 10,
+              right_widget: Row(
+                children: <Widget>[
+                  // Text(_cacheSizeStr),
+                  SizedBox(
+                    width: 12,
+                  ),
+                ],
+              ),
+            )
+          : Container(),
       MeCellss(
         title: lang('检测更新'),
         onPressed: () {
@@ -296,14 +301,16 @@ class SettingState extends State<SettingScene> {
   }
 
   Widget getlnagobj() {
-    List searchword = [
-      {'en': "English"},
-      {'th': "ไทย"},
-      // {'zh': "简体中文"},
-      {'vi': "Tiếng Việt"},
-      {'id': "bahasa Indonesia"},
-      {'ko': "한국어"}
-    ];
+    // List searchword = [
+    //   {'en': "English"},
+    //   {'th': "ไทย"},
+    //   // {'zh': "简体中文"},
+    //   {'vi': "Tiếng Việt"},
+    //   {'id': "bahasa Indonesia"},
+    //   {'ko': "한국어"},
+    //   {'ms': "Melayu"}
+    // ];
+    List searchword = langlist;
     return Wrap(
       children: searchword.map((str) => serword(str)).toList(),
       spacing: 10,
@@ -336,6 +343,7 @@ class SettingState extends State<SettingScene> {
         //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         // ),
         onPressed: () {
+         
           setglang(key);
         },
       ),

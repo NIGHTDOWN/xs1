@@ -20,12 +20,14 @@ Future inilang() async {
   String jsonLang;
   try {
     String lang = getlang();
+   
     if (isnull(lang)) {
       lang = lang.substring(0, 2);
 
       // 判断
       // List tmp = ['en', 'th', 'zh', 'vi', 'id', 'ko'];
-      List tmp = ['en', 'th', 'vi', 'id', 'ko'];
+      List tmp = ['en', 'th', 'vi', 'id', 'ko','ms','zh'];
+      // d(langlist.keys);
       if (tmp.indexOf(lang) == -1) {
         //找不到语言包的时候加载默认
         d('这里加载默认语言' + delanguage);

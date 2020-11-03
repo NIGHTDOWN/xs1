@@ -202,7 +202,7 @@ class RackSceneState extends State<Rack> {
     } else {
       apitmp = api2;
     }
-    http(apitmp, null, gethead()).then((data) {
+    http(apitmp, null, gethead(), 30).then((data) {
       // getdata
       var json = getdata(context, data);
 

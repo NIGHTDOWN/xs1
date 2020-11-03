@@ -14,7 +14,6 @@ import 'package:ng169/tool/t.dart';
 import 'package:ng169/tool/url.dart';
 
 import 'chapter.dart';
-
 class Novel {
   String id;
   String dbid;
@@ -28,7 +27,7 @@ class Novel {
   String isgroom;
   String author;
   double price;
-  double score=5.0;
+  double score = 5.0;
   String type;
   String introduction;
   int chapterCount;
@@ -98,6 +97,7 @@ class Novel {
       T('book').add(insert);
       //添加
     } else {
+      isgroom = isnull(isgroom) ? isgroom : ins['isgroom'].toString();
       insert.addAll({'bookid': id});
       if (!isnull(ins, 'addtime')) {
         insert.addAll({'addtime': gettime()});
@@ -261,6 +261,8 @@ class Novel {
     // getgroom();
     savedb();
   }
+  //更新书架状态
+  initrack() {}
   getchapterCount() async {
     // var list = await Chapter.getcatecache(g('context'), this);
     var where = {'book_id': id, 'booktype': type};
@@ -341,7 +343,6 @@ class Novel {
     nowsecnum = data['nowsecnum'].toString();
     if (isnull(lastsecnum) && isnull(nowsecnum)) {
       //执行
-     
 
       upsecnum = int.parse(nowsecnum) - int.parse(lastsecnum);
     }

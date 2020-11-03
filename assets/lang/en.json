@@ -188,7 +188,7 @@
     "等待更新..": "waiting for update..",
     "已经帮你催作者了": "I have helped you to urge the author",
     "已经催过了": "Already urged",
-    "喜欢本书就加入书架吧": "If you like this book, add it to the shelf",
+    "加入书架及时获取更新提示": "Join the bookshelf to get updated prompts in time",
     "取消": "cancel",
     "加入书架": "Add to Rack",
     "男": "male",
@@ -206,7 +206,10 @@
     "六": "six",
     "日": "day",
     "注销": "Logout",
+    "单位": "Unit",
     "大家都在看": "Everyone is watching",
+    "我要写作": "I want to write",
+    "赚现金":   "Earn cash",
     "google登入": "google login",
     "Facebook登入": "Facebook Login",
     "更新提示": "Update reminder",
@@ -289,6 +292,7 @@
     "下滑": "Glide",
     "上滑": "Slide up",
     "选择语言": "Language",
+    "视频加载失败": "Video Load Fail",
     "分享到不同平台（facebook、twitter、wahtapp..）,至少一个好友阅读文章，既可领取50金豆": "Share to different platforms (facebook, twitter, wahtapp..), at least one friend reading the article, you can receive 50 golden beans",
     "安装包已下载完成，点击安装": "The installation package has been downloaded, click to install"
 }

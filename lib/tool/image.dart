@@ -83,9 +83,14 @@ class NgImage extends StatelessWidget {
       width: width,
       height: height,
       //添加预加载视图
-      errorWidget: (context, url, error) => new Icon(
-        Icons.error,
-        size: width,
+      // errorWidget: (context, url, error) => new Icon(
+      //   Icons.error,
+      //   size: width,
+      // ),
+      errorWidget: (context, url, error) => Image.asset(
+        'assets/images/bookbg.jpg',
+        width: width,
+        height: height,
       ),
       placeholder: (context, index) {
         if (isnull(placeholder)) {

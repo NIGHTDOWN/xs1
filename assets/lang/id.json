@@ -188,7 +188,7 @@
     "等待更新..": "menunggu pembaruan ..",
     "已经帮你催作者了": "Saya telah membantu Anda mendorong penulis",
     "已经催过了": "Sudah mendesak",
-    "喜欢本书就加入书架吧": "Jika Anda menyukai buku ini, tambahkan ke rak",
+    "加入书架及时获取更新提示": "Bergabunglah dengan rak buku untuk segera mendapatkan pembaruan",
     "取消": "membatalkan",
     "加入书架": "Tambahkan",
     "男": "pria",
@@ -207,6 +207,8 @@
     "日": "hari",
     "注销": "Keluar",
     "大家都在看": "Semua orang menonton",
+    "我要写作": "penulisan",
+    "赚现金": "Menghasilkan uang",
     "google登入": "login google",
     "Facebook登入": "Login dengan Facebook",
     "更新提示": "Perbarui pengingat",
@@ -249,6 +251,7 @@
     "我正在此APP看书，邀请你也来！赶紧来安装": "Saya sedang membaca buku di APP ini, saya mengundang Anda untuk datang juga! Datang dan instal sekarang",
     "分享链接邀请好友": "Bagikan tautan untuk mengundang teman",
     "邀请列表": "Daftar Undangan",
+    "单位": "satuan",
     "好友打开链接下载APP": "Teman buka tautan untuk mengunduh APLIKASI",
     "新用户注册，老用户登入": "Pendaftaran pengguna baru, login pengguna lama",
     "好友回到链接页面点击‘助力好友’按钮，帮助你领取500金豆": "Teman kembali ke halaman tautan dan klik tombol 'Bantu Teman' untuk membantu Anda menerima 500 Kacang Emas",
@@ -289,6 +292,7 @@
     "下滑": "Meluncur",
     "上滑": "Geser ke atas",
     "选择语言": "Bahasa",
+    "视频加载失败": "Video gagal dimuat",
     "分享到不同平台（facebook、twitter、wahtapp..）,至少一个好友阅读文章，既可领取50金豆": "Bagikan ke berbagai platform (facebook, twitter, wahtapp ..), setidaknya satu teman membaca artikel, Anda dapat menerima 50 kacang emas",
     "安装包已下载完成，点击安装": "Paket instalasi telah diunduh, klik untuk menginstal"
 }
