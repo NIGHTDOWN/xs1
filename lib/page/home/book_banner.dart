@@ -24,7 +24,7 @@ class BookBanner extends LoginBase {
   BookBanner(this.banners);
   HashMap tmplist = new HashMap();
   static String bgimg;
-  SwiperController sw = SwiperController();
+  // SwiperController sw = SwiperController();
   static double hd = 8;
   void initState() {
     hd = g('swidth') / 25;
@@ -49,7 +49,7 @@ class BookBanner extends LoginBase {
 
   void dispose() {
     super.dispose();
-    sw.dispose();
+    // sw.dispose();
   }
 
   Widget banner(info) {
@@ -141,7 +141,7 @@ class BookBanner extends LoginBase {
                   return initpage(
                       config.itemCount, config.activeIndex, config.controller);
                 }),
-                controller: sw,
+                // controller: sw,
                 itemCount: banners.length,
                 viewportFraction: s,
                 scale: 0.8,

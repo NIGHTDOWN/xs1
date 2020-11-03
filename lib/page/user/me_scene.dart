@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/msg.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/page/task/friend.dart';
@@ -8,6 +9,7 @@ import 'package:ng169/page/user/historypage.dart';
 import 'package:ng169/page/user/rechargelog.dart';
 import 'package:ng169/page/user/recordlog.dart';
 import 'package:ng169/style/sq_color.dart';
+import 'package:ng169/tool/bow.dart';
 import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
@@ -49,6 +51,28 @@ class MeScene extends StatelessWidget {
             // right_widget: Icon(Icons.group_add),
             onPressed: () {
               gourl(context, Friend());
+            },
+          ),
+           MeCell(
+            title: lang('我要写作'),
+            iconName: 'assets/images/u7.png',
+            right_widget: Row(
+              children: <Widget>[
+                Text(lang('赚现金')),
+                Icon(
+                  Icons.keyboard_arrow_right,
+                  color: SQColor.gray,
+                )
+              ],
+            ),
+            onPressed: () {
+              gourl(
+                  context,
+                  Bow(
+                    url: serverurl + 'index/author/run',
+                    title: lang('写原创'),
+                    needtoken: true,
+                  ));
             },
           ),
           Container(

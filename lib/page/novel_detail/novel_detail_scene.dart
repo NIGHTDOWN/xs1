@@ -56,11 +56,11 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
     novel = this.widget.novel;
     super.initState();
     fetchData();
-    d('加载');
+
     Rackmodel()..upreadtime(novel);
     scrolllistener();
     // d(widget.opshare);
-    romget();
+    getrang(widget.novel);
     if (widget.opshare) {
       share();
     }
@@ -352,7 +352,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
     });
   }
 
-  Future<void> romget() async {
+  Future<List> romget() async {
     var api;
     if (widget.novel.type == '2') {
       api = 'cartoon/get_randList';
@@ -368,6 +368,20 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
       return data;
     }
     return null;
+  }
+
+  getrang(Novel novel) async {
+    var cahe = 'cacherand' + getlang() + novel.type + novel.id;
+    var cache = getcache(cahe);
+    if (isnull(cache)) {
+      likebook = cache;
+      return cache;
+    } else {
+      cache =await romget();
+      if (isnull(cache)) {
+        setcache(cahe, cache, '-1');
+      }
+    }
   }
 
   Widget buildTags() {

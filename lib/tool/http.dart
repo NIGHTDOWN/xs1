@@ -11,7 +11,8 @@ import 'global.dart';
 import 'lang.dart';
 
 dynamic res;
-List times = [];var reqlock = {};
+List times = [];
+var reqlock = {};
 Future<String> http(String url,
     [Map<String, dynamic> datas,
     Map<String, dynamic> header,
@@ -111,9 +112,14 @@ dynamic getres() {
 
 dynamic getdata(BuildContext context, String responseData) {
   var js;
+  if (!isnull(responseData)) {
+    //请求无数据返回的时候不要报错
+    return null;
+  }
   try {
     js = jsonDecode(responseData);
   } catch (e) {
+    d(e);
     if (loghttpcn) {
       show(context, lang('请求错误：1'));
     } else {
