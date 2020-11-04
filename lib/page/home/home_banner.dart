@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -60,9 +61,7 @@ class HomeBanner extends StatelessWidget {
         }
         break;
       case 3:
-     
         if (isnull(info['cartoon_id'])) {
-         
           Novel novel;
           int id = int.parse(info['cartoon_id']);
           if (isnull(tmplist) && isnull(tmplist[id.toString()])) {
@@ -74,10 +73,8 @@ class HomeBanner extends StatelessWidget {
           }
 
           if (info['goal_window'] == '2') {
-            
             novel.read(context);
           } else {
-           
             gourl(context, NovelDetailScene(novel));
           }
         }
@@ -104,7 +101,9 @@ class HomeBanner extends StatelessWidget {
       return SizedBox();
     }
     this.context = context;
+    double top = MediaQueryData.fromWindow(window).padding.top;
     return Container(
+      margin: EdgeInsets.only(top: top),
       color: Colors.white,
       child: CarouselSlider(
         items: banners.map((info) {

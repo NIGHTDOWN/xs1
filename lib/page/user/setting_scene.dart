@@ -126,7 +126,7 @@ class SettingState extends State<SettingScene> {
 
   @override
   Widget build(BuildContext context) {
-    var setlang = getcache('msg3');
+    var setlang = getcache('msg3',false);
 
     bool boo = isnull(setlang);
 

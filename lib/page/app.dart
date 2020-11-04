@@ -320,7 +320,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
   cheack2() async {
     var tmp2 = await http('chat/set', {}, gethead());
     var check3 = getdata(g('context'), tmp2);
-    setcache('msg3', check3, '-1');
+    setcache('msg3', check3, '-1', false);
   }
 
   dir() async {

@@ -90,9 +90,9 @@ android {
             //签名信息
             release {
                 signingConfig signingConfigs.release
-                minifyEnabled false //混淆
+                minifyEnabled true //混淆
                 zipAlignEnabled true   //Zipalign优化
-                shrinkResources false //删除无用资源
+                shrinkResources true //删除无用资源
              
                 // 显示Log
                 buildConfigField "boolean", "LOG_DEBUG", "false"

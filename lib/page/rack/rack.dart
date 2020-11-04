@@ -111,6 +111,12 @@ class RackSceneState extends State<Rack> {
 
   //本地模拟数据；防止网络加载慢的时候，数据无内容显示
   mock() {
+    String lang = getlang();
+    if (isnull(lang)) {
+      if (lang.substring(2) != 'th') {
+        return;
+      }
+    }
     var list = [
       {
         "other_name": "วิวาห์ร้อน รักหวานซึ้ง",
