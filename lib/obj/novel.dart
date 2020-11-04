@@ -14,6 +14,7 @@ import 'package:ng169/tool/t.dart';
 import 'package:ng169/tool/url.dart';
 
 import 'chapter.dart';
+
 class Novel {
   String id;
   String dbid;
@@ -332,7 +333,11 @@ class Novel {
     dbid = data['id'].toString();
     //d(id);
     //firstArticleId = data['first_article_id'];
-    name = data['bookname'];
+    // if (data['bookname'] is int) {
+    //   name = data['bookname'].toString();
+    // } else {
+    name = '' + data['bookname'].toString();
+    // }
     imgUrl = data['pic'];
     desc = data['desc'];
     type = data['type'].toString();

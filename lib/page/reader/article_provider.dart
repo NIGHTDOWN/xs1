@@ -117,7 +117,7 @@ class ArticleProvider {
       }
     }
 
-    var cacheindex = 'book' +
+    var cacheindex = 'book_' +
         novel.id.toString() +
         novel.type.toString() +
         secionid.toString();

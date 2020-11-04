@@ -307,9 +307,9 @@ class LocalReaderSceneState extends State<LocalReaderScene>
     //     20;
 
     // var contentWidth = Screen.width - 15 - 10;
-    // article.pageOffsets = ReaderPageAgent.getPageOffsets(
-    //   article.content,
-    // );
+    article.page = ReaderPageAgent.getPage(
+      article.content,
+    );
 
     return article;
   }
