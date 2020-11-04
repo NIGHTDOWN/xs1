@@ -37,7 +37,7 @@ class ArticleProvider {
   static getcontent(context, Novel novel, secionid) async {
     //数据库缓存有问题
 
-    var cacheindex = 'book' +
+    var cacheindex = 'book_' +
         novel.id.toString() +
         novel.type.toString() +
         secionid.toString();

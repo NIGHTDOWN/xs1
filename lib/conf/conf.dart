@@ -1,4 +1,5 @@
 const apiurl = 'http://api.lookstory.xyz/api/';
+// const apiurl = 'http://192.168.2.106/api/';
 const serverurl = 'http://api.lookstory.xyz/';
 
 const defaultAvatar = 'assets/images/ww_default_avatar.png'; //默认头像
@@ -49,15 +50,15 @@ const langlist = [
 ];
 const readfx = 'readfx'; //阅读方向
 //测试
-const loghttp = false;
-const loghttprq = true;
-const loghttpcn = false; //显示http错误内容，false显示错误码
-const isdebug = true; //显示各种调试信息，false不显示任何调试信息
-const delanguage = 'zh'; //默认语言
+// const loghttp = false;
+// const loghttprq = true;
+// const loghttpcn = false; //显示http错误内容，false显示错误码
+// const isdebug = true; //显示各种调试信息，false不显示任何调试信息
+// const delanguage = 'zh'; //默认语言
 
 //正式
-// const loghttp = false;
-// const loghttprq = false;
-// const loghttpcn = false; //显示http错误内容，false显示错误码
-// const isdebug = false; //显示各种调试信息，false不显示任何调试信息
-// const delanguage = 'th'; //默认语言
+const loghttp = false;
+const loghttprq = false;
+const loghttpcn = false; //显示http错误内容，false显示错误码
+const isdebug = false; //显示各种调试信息，false不显示任何调试信息
+const delanguage = 'th'; //默认语言

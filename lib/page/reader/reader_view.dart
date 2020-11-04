@@ -1,9 +1,11 @@
+import 'package:css_text/css_text.dart';
 import 'package:flutter/material.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/article.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/novel_detail/novel_detail_header.dart';
+import 'package:ng169/page/reader/reader_page_agent.dart';
 import 'package:ng169/page/recharge/recharge.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/event_bus.dart';
@@ -253,25 +255,18 @@ class ReaderViewState extends State<ReaderView> {
     }
 
     return Container(
-      color: Colors.transparent,
+      // color: Colors.transparent,
+      // color: Colors.green[200],
+      // width: ReaderPageAgent.getwidth(),
+      // height: ReaderPageAgent.getHeight(),
+      // height: 491.40000000000003,
       margin: EdgeInsets.fromLTRB(
           15, widget.topSafeHeight + ReaderUtils.topOffset, 10, 0),
-      //  margin: EdgeInsets.fromLTRB(15, topSafeHeight + ReaderUtils.topOffset, 10,
-      // Screen.bottomSafeHeight + ReaderUtils.bottomOffset),
-      // child: Text(content,
-      //     style: TextStyle(
-      //         color: Styles.getTheme()['fontcolor'],
-      //         fontSize: fixedFontSize(Styles.getTheme()['fontsize']))));
       child: Text.rich(
-        TextSpan(children: [
-          TextSpan(
-              text: content,
-              style: TextStyle(
-                  color: Styles.getTheme()['fontcolor'],
-                  // height: 1.2,
-                  fontWeight: FontWeight.w200,
-                  fontSize: fixedFontSize(Styles.getTheme()['fontsize']))),
-        ]),
+        TextSpan(
+          children: ReaderPageAgent.gettextwidget(content),
+        ),
+        // TextSpan(text: content, style: ReaderPageAgent.getstyle()),
         textAlign: TextAlign.left,
       ),
     );

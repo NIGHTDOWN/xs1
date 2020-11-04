@@ -348,7 +348,11 @@ bool isnull(dynamic data, [var index]) {
       // d(data);
       // d(index);
       // d(isnull(data[index]));
-      return isnull(data[index]);
+      try {
+        return isnull(data[index]);
+      } catch (e) {
+        return false;
+      }
     }
     //d('是Map');
 

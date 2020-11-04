@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ng169/conf/conf.dart';
@@ -115,6 +114,7 @@ class ReaderSceneState extends State<ReaderScene>
     if (pageIndex >= currentArticle.pageCount - 1 &&
         currentArticle.nextArticleId == 0 &&
         pageController.page > 1.4) {
+      // pageIndex = currentArticle.pageCount - 1;
       golast();
       // show(context, lang('已经是最后一页了'));
       // pageController.jumpToPage(1);
@@ -186,7 +186,13 @@ class ReaderSceneState extends State<ReaderScene>
     //获取小说内容
     await resetContent(tmparticleId, PageJumpType.stay);
     //初始化指针
+    //大于的时候是改变字体的时候，需要把页面大小重新调整
     pageIndex = isnull(getpoint(tmparticleId)) ? (getpoint(tmparticleId)) : 0;
+   
+    if (pageIndex > currentArticle.pageCount - 1) {
+      pageIndex = currentArticle.pageCount - 1;
+    }
+    // d(currentArticle.pageCount);
   }
 
   //获取章节页面定位
@@ -294,16 +300,17 @@ class ReaderSceneState extends State<ReaderScene>
 
     // }
 
-    var contentHeight = Screen.height -
-        topSafeHeight -
-        ReaderUtils.topOffset -
-        Screen.bottomSafeHeight -
-        ReaderUtils.bottomOffset -
-        20;
+    // var contentHeight = Screen.height -
+    //     topSafeHeight -
+    //     ReaderUtils.topOffset -
+    //     Screen.bottomSafeHeight -
+    //     ReaderUtils.bottomOffset -
+    //     20;
 
-    var contentWidth = Screen.width - 15 - 10;
-    article.pageOffsets = ReaderPageAgent.getPageOffsets(article.content,
-        contentHeight, contentWidth, Styles.getTheme()['fontsize']);
+    // var contentWidth = Screen.width - 15 - 10;
+    article.page = ReaderPageAgent.getPage(
+      article.content,
+    );
 
     return article;
   }

@@ -188,6 +188,9 @@ class LocalReaderSceneState extends State<LocalReaderScene>
     await resetContent(tmparticleId, PageJumpType.stay);
     //初始化指针
     pageIndex = isnull(getpoint(tmparticleId)) ? (getpoint(tmparticleId)) : 0;
+    if (pageIndex > currentArticle.pageCount - 1) {
+      pageIndex = currentArticle.pageCount - 1;
+    }
   }
 
   //获取章节页面定位
@@ -296,16 +299,17 @@ class LocalReaderSceneState extends State<LocalReaderScene>
 
     // }
 
-    var contentHeight = Screen.height -
-        topSafeHeight -
-        ReaderUtils.topOffset -
-        Screen.bottomSafeHeight -
-        ReaderUtils.bottomOffset -
-        20;
+    // var contentHeight = Screen.height -
+    //     topSafeHeight -
+    //     ReaderUtils.topOffset -
+    //     Screen.bottomSafeHeight -
+    //     ReaderUtils.bottomOffset -
+    //     20;
 
-    var contentWidth = Screen.width - 15 - 10;
-    article.pageOffsets = ReaderPageAgent.getPageOffsets(article.content,
-        contentHeight, contentWidth, Styles.getTheme()['fontsize']);
+    // var contentWidth = Screen.width - 15 - 10;
+    // article.pageOffsets = ReaderPageAgent.getPageOffsets(
+    //   article.content,
+    // );
 
     return article;
   }
@@ -465,10 +469,7 @@ class LocalReaderSceneState extends State<LocalReaderScene>
                   height: getScreenHeight(context),
                   child:
                       Image.asset(Styles.getTheme()['bg'], fit: BoxFit.cover))),
-                      Column(children:[
-                        Expanded(child:  SingleChildScrollView(child: c))
-                      ]),
-         
+          Column(children: [Expanded(child: SingleChildScrollView(child: c))]),
         ],
       );
     } else {

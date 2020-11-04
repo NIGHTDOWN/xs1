@@ -71,6 +71,8 @@ dependencies:
   device_info: 0.4.0
   device_apps: 1.0.9
   carousel_slider: ^1.3.0
+  # 富文本
+  css_text: any
   #通知栏
   flutter_local_notifications: 1.4.4+3
   draggable_scrollbar: any

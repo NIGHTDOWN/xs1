@@ -256,6 +256,7 @@ class MallState extends State<Mall> {
   void initState() {
     super.initState();
     index = index + getlang();
+    cachedata = cachedata + getlang();
 
     mock();
     loadpage();
@@ -333,10 +334,10 @@ class MallState extends State<Mall> {
 
         newbook =
             isnull(mallcache[1]) ? mallcache[1] : await gethttpdate(newBookapi);
-        newcart = isnull(mallcache[2])
+        hotbook = isnull(mallcache[2])
             ? mallcache[2]
             : await gethttpdate(hotbooksapi);
-        hotbook = isnull(mallcache[3])
+        newcart = isnull(mallcache[3])
             ? mallcache[3]
             : await gethttpdate(newCartoonsapi);
         romdata = isnull(mallcache[4]) ? mallcache[4] : await gethttpdate(rom);

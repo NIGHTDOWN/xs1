@@ -30,6 +30,7 @@ class Article {
   bool pay = false; //????
   bool cartoonisinit = true; //????
   List<Map<String, int>> pageOffsets;
+  List<String> page;
 
   var context;
   Future<bool> ispay() async {
@@ -157,7 +158,7 @@ class Article {
     //??????
     //?????????
     //?????
-  
+
     if (await ispay()) {
       return true;
     }
@@ -192,9 +193,11 @@ class Article {
       if (isnull(ret['remainder'])) {
         User.upcoin(ret['remainder']);
         var bookcache = getarticlecache();
+        if (isnull(bookcache)) {
+          bookcache['ispay'] = 1;
+          uparticlecache(bookcache);
+        }
 
-        bookcache['ispay'] = 1;
-        uparticlecache(bookcache);
         await uppaystatus();
         //????????????
         // Novel novel = Novel.fromDb({
@@ -338,9 +341,14 @@ class Article {
     if (!isnull(this.content)) {
       return '';
     }
-    var offset = pageOffsets[index];
 
-    return this.content.substring(offset['start'], offset['end']);
+    if (!isnull(page, index)) {
+      return page[page.length - 1];
+    }
+    return page[index];
+    // var offset = pageOffsets[index];
+
+    // return this.content.substring(offset['start'], offset['end']);
   }
 
   int get pageCount {
@@ -348,13 +356,13 @@ class Article {
       //????200????
       if (booktype == '1') {
         //小说分页
-        return pageOffsets.length;
+        return page.length;
       } else if (booktype == '2') {
         //漫画分页
         return images.length;
       } else if (booktype == '3') {
         //漫画分页
-        return pageOffsets.length;
+        return page.length;
       }
     } else {
       //content??
