@@ -23,11 +23,8 @@ class CartoonProvider {
   static getcontent(context, Novel novel, secionid) async {
     //数据库缓存有问题
 
-    var cacheindex = 'book' +
-        novel.id.toString() +
-        novel.type.toString() +
-        secionid.toString();
-    var cache = getcache(cacheindex);
+    var cache = Article.getCache(
+        novel.id.toString(), novel.type.toString(), secionid.toString());
     if (isnull(cache)) {
       return cache;
     } else {
@@ -54,11 +51,9 @@ class CartoonProvider {
       var update = {'cachedata': response, 'cacheflag': 1, 'cacheword': ''};
       T('sec').update(update, w);
     }
-    var cacheindex = 'book' +
-        novel.id.toString() +
-        novel.type.toString() +
-        secionid.toString();
-    setcache(cacheindex, tmp, '-1');
+
+    Article.setCache(
+        novel.id.toString(), novel.type.toString(), secionid.toString(), tmp);
     return tmp;
   }
 }

@@ -205,6 +205,7 @@ class RackSceneState extends State<Rack> {
     var apitmp = '';
     if (isnull(getuid())) {
       apitmp = api;
+      Msg.cheack();
     } else {
       apitmp = api2;
     }

@@ -188,7 +188,7 @@ class ReaderSceneState extends State<ReaderScene>
     //初始化指针
     //大于的时候是改变字体的时候，需要把页面大小重新调整
     pageIndex = isnull(getpoint(tmparticleId)) ? (getpoint(tmparticleId)) : 0;
-   
+
     if (pageIndex > currentArticle.pageCount - 1) {
       pageIndex = currentArticle.pageCount - 1;
     }
@@ -217,7 +217,8 @@ class ReaderSceneState extends State<ReaderScene>
     reflash();
 
     currentArticle = await fetchArticle(articleId);
-
+   
+// d(await currentArticle.ispay());
     if (!isnull(currentArticle)) {
       //章节内容不存在，跳一章
       var v = this.widget.novel;

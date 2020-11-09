@@ -22,7 +22,6 @@ class MeCells extends LoginBase {
       this.haveline = true});
   @override
   Widget build(BuildContext context) {
-   
     var qjin = Icon(
       Icons.keyboard_arrow_right,
       color: SQColor.gray,
@@ -46,8 +45,22 @@ class MeCells extends LoginBase {
                         )
                       : SizedBox(),
                   isnull(iconName) ? SizedBox(width: 20) : SizedBox(),
-                  Text(title, style: TextStyle(fontSize: 18)),
-                  Expanded(child: Container()),
+                  Expanded(
+                      flex: 4,
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                  // Text(title, style: TextStyle(fontSize: 18)),
+                  // Expanded(
+                  //   child: Container(),
+                  //   // fit: FlexFit.loose,
+                  // ),
+
                   isnull(g('msg'))
                       ? Container(
                           margin: EdgeInsets.only(right: 10),
@@ -63,8 +76,10 @@ class MeCells extends LoginBase {
                                           fontSize: 13, color: Colors.white))),
                             ),
                           ))
-                      : Container(),
-                  isnull(right_widget) ? right_widget : qjin,
+                      : Container(
+                          width: 20,
+                        ),
+                  // isnull(right_widget) ? right_widget : qjin,
                 ],
               ),
             ),

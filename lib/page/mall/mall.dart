@@ -23,7 +23,7 @@ class Mall extends StatefulWidget {
 }
 
 class MallState extends State<Mall> {
-  List banner, newbook, newcart, hotbook, mallcache, romdata;
+  List banner, newbook, newcart, hotbook, mallcache, randdata;
   List<Widget> more = [SizedBox()];
   var index = 'mallload';
   var cachedata = 'mallload_data', page = 1;
@@ -34,7 +34,7 @@ class MallState extends State<Mall> {
   var newBookapi = 'book/get_new_book';
   var hotbooksapi = 'book/new';
   var newCartoonsapi = 'cartoon/hot_cartoon';
-  var rom = 'book/get_randList';
+  var randapi = 'book/get_randList';
   Future<List> gethttpdate(String api) async {
     var jbanner = await http(api, null, gethead());
     var data = getdata(context, jbanner);
@@ -166,7 +166,7 @@ class MallState extends State<Mall> {
         "update_status": "2"
       },
     ];
-    romdata = [
+    randdata = [
       {
         "book_id": "1066",
         "other_name":
@@ -208,32 +208,32 @@ class MallState extends State<Mall> {
 
   bool isdart = false;
   Future<void> gethttpdata() async {
-    var jbanner = await http('book/get_banner', null, gethead());
+    var jbanner = await http(bannerapi, null, gethead());
     var data = getdata(context, jbanner);
     if (isnull(data)) {
       banner = data;
     }
-    var newBook = await http('book/get_new_book', null, gethead());
+    var newBook = await http(newBookapi, null, gethead());
     var data1 = getdata(context, newBook);
     if (isnull(data1)) {
       newbook = data1;
     }
-    var hotbooks = await http('book/new', null, gethead());
+    var hotbooks = await http(hotbooksapi, null, gethead());
     var data2 = getdata(context, hotbooks);
     if (isnull(data2)) {
       hotbook = data2;
     }
-    var newCartoon = await http('cartoon/new_cartoon', null, gethead());
+    var newCartoon = await http(newCartoonsapi, null, gethead());
     var data3 = getdata(context, newCartoon);
     if (isnull(data3)) {
       newcart = data3;
     }
-    var romdatatmp = await http(rom, null, gethead());
-    var data4 = getdata(context, romdatatmp);
+    var randdatatmp = await http(randapi, null, gethead());
+    var data4 = getdata(context, randdatatmp);
     if (isnull(data4)) {
-      romdata = data4;
+      randdata = data4;
     }
-    mallcache = [banner, newbook, newcart, hotbook, romdata];
+    mallcache = [banner, newbook, newcart, hotbook, randdata];
 
     setcache(cachedata, mallcache, '-1');
     more = [SizedBox()];
@@ -334,13 +334,14 @@ class MallState extends State<Mall> {
 
         newbook =
             isnull(mallcache[1]) ? mallcache[1] : await gethttpdate(newBookapi);
-        hotbook = isnull(mallcache[2])
+        newcart = isnull(mallcache[2])
             ? mallcache[2]
-            : await gethttpdate(hotbooksapi);
-        newcart = isnull(mallcache[3])
-            ? mallcache[3]
             : await gethttpdate(newCartoonsapi);
-        romdata = isnull(mallcache[4]) ? mallcache[4] : await gethttpdate(rom);
+        hotbook = isnull(mallcache[3])
+            ? mallcache[3]
+            : await gethttpdate(hotbooksapi);
+        randdata =
+            isnull(mallcache[4]) ? mallcache[4] : await gethttpdate(randapi);
         // newbook = mallcache[1];
         // newcart = mallcache[2];
         // hotbook = mallcache[3];
@@ -355,7 +356,7 @@ class MallState extends State<Mall> {
   }
 
   Future<void> romget() async {
-    romdata = await gethttpdate(rom);
+    randdata = await gethttpdate(randapi);
     refresh();
   }
 
@@ -386,14 +387,14 @@ class MallState extends State<Mall> {
           children: <Widget>[
             //banner
 
-            // isnull(banner) ? BookBanner(romdata) : SizedBox(),
+            // isnull(banner) ? BookBanner(randdata) : SizedBox(),
             isnull(banner)
                 ? HomeBanner(banner)
-                : isnull(romdata) ? BookBanner(romdata) : SizedBox(),
+                : isnull(randdata) ? BookBanner(randdata) : SizedBox(),
             //菜单
             HomeMenu(),
-            isnull(romdata)
-                ? bookCardWithInfo(6, lang('猜你喜欢'), romdata)
+            isnull(randdata)
+                ? bookCardWithInfo(6, lang('猜你喜欢'), randdata)
                 : SizedBox(),
             //推荐小说
             isnull(newbook)

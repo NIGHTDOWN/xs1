@@ -136,17 +136,23 @@ class Msg {
 
   static cheack() async {
     if (!User.islogin()) return false;
-    var checktmp = await http('chat/havemsg', {}, gethead());
+    //10秒只能一次
+    var checktmp = await http('chat/havemsg', {}, gethead(), 60);
     var check = getdata(g('context'), checktmp);
-    s('msg', check);
+    // d(check);
+    if (isnull(check)) {
+      //不为空才保存
+      s('msg', check);
+    }
+
     return check;
     //if (isnull(check)) {}
   }
 
   static clearread() {
     if (!User.islogin()) return false;
-
-    s('msg', 0);
+    d('调用');
+    setcache('msg', 0, '0');
     return;
   }
 }

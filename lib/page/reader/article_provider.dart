@@ -11,7 +11,7 @@ class ArticleProvider {
     var artiicle, article;
     if (novel.type != '3') {
       artiicle = await getcontent(context, novel, articleId);
-      
+
       if (!isnull(artiicle)) {
         return null;
       }
@@ -28,7 +28,6 @@ class ArticleProvider {
 
       article = Article.fromJson(artiicle, novel);
       article.pay = true;
-      
     }
 
     return article;
@@ -37,12 +36,8 @@ class ArticleProvider {
   static getcontent(context, Novel novel, secionid) async {
     //数据库缓存有问题
 
-    var cacheindex = 'book_' +
-        novel.id.toString() +
-        novel.type.toString() +
-        secionid.toString();
-    var cache = getcache(cacheindex);
-   
+    var cache = Article.getCache(
+        novel.id.toString(), novel.type.toString(), secionid.toString());
     if (isnull(cache)) {
       return cache;
     } else {
@@ -117,11 +112,12 @@ class ArticleProvider {
       }
     }
 
-    var cacheindex = 'book_' +
-        novel.id.toString() +
-        novel.type.toString() +
-        secionid.toString();
-    setcache(cacheindex, tmp, '-1');
+    // var cacheindex = 'book_' +
+    //     novel.id.toString() +
+    //     novel.type.toString() +
+    //     secionid.toString();
+    // setcache(cacheindex, tmp, '-1');
+    Article.setCache(novel.id.toString(),  novel.type.toString(),  secionid.toString(), tmp);
     return tmp;
   }
 }

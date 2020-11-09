@@ -108,7 +108,7 @@ class ReaderPageAgent {
         //判断是否段落结束
         pgstr = tempStr.substring(0, end);
         //截取的字符串去掉占位符号
-        pgstr = pgstr.replaceAll("☐", "");
+        // pgstr = pgstr.replaceAll("☐", "\u3000");
 
         tempStr = tempStr.substring(end, tempStr.length);
         // offset['end'] = last + end;
@@ -127,7 +127,7 @@ class ReaderPageAgent {
     var color = Styles.getTheme()['fontcolor'];
     //letterSpacing 会导致换行不连续
     TextStyle style = TextStyle(
-        color: color, height: 1.5, fontSize: fsize, letterSpacing: 1.1);
+        color: color, height: 1.8, fontSize: fsize, letterSpacing: 1.1);
     return style;
   }
 
@@ -188,7 +188,7 @@ class ReaderPageAgent {
     // InlineSpan tmpp;
 
     //两个字符串宽度的缩进
-    var ke = "☐☐";
+    var ke = "\u3000\u3000";
 
     for (var i = 0; i < rawTextLines.length; i++) {
       if (i == 0) {

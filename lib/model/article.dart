@@ -70,20 +70,38 @@ class Article {
   }
 
   getarticlecache() {
-    String cacheindex = 'book' +
-        novelId.toString() +
-        booktype.toString() +
-        section_id.toString();
+    // String cacheindex = 'book_' +
+    //     novelId.toString() +
+    //     booktype.toString() +
+    //     section_id.toString();
+    // var cache = getcache(cacheindex);
+    // return cache;
+    return getCache(
+        novelId.toString(), booktype.toString(), section_id.toString());
+  }
+
+  uparticlecache(cache) {
+    // String cacheindex = 'book_' +
+    //     novelId.toString() +
+    //     booktype.toString() +
+    //     section_id.toString();
+    // setcache(cacheindex, cache, '0');
+    setCache(novelId.toString(), booktype.toString(), section_id.toString(),
+        cache, '0');
+  }
+
+  static getCache(String novelId, String noveltype, String sectionid) {
+    String cacheindex = 'book_' + novelId + noveltype + sectionid;
     var cache = getcache(cacheindex);
     return cache;
   }
 
-  uparticlecache(cache) {
-    String cacheindex = 'book' +
-        novelId.toString() +
-        booktype.toString() +
-        section_id.toString();
-    setcache(cacheindex, cache, '0');
+  static setCache(
+      String novelId, String noveltype, String sectionid,  cache,
+      [String time = '-1']) {
+    String cacheindex = 'book_' + novelId + noveltype + sectionid;
+    setcache(cacheindex, cache, time);
+    return cache;
   }
 
   cut() {

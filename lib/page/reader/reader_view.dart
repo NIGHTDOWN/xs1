@@ -247,11 +247,26 @@ class ReaderViewState extends State<ReaderView> {
   buildContent(Article article, int page) {
     String content;
     if (!isnull(article)) return Container();
+    var testobj;
     //未支付的显示截取部分
     if (article.pay) {
       content = article.stringAtPageIndex(page);
+      //如果是已经支付的分页内容直接获取分割后的内容；间隔符按照已经存在的
+      testobj = Text.rich(
+        // TextSpan(
+        //   children: ReaderPageAgent.gettextwidget(content),
+        // ),
+        TextSpan(text: content, style: ReaderPageAgent.getstyle()),
+        textAlign: TextAlign.left,
+      );
     } else {
       content = article.contenttmp;
+      //如果是未支付需要获取分割字符串后的widget
+      testobj = Text.rich(
+        TextSpan(
+          children: ReaderPageAgent.gettextwidget(content),
+        ),
+      );
     }
 
     return Container(
@@ -262,13 +277,7 @@ class ReaderViewState extends State<ReaderView> {
       // height: 491.40000000000003,
       margin: EdgeInsets.fromLTRB(
           15, widget.topSafeHeight + ReaderUtils.topOffset, 10, 0),
-      child: Text.rich(
-        TextSpan(
-          children: ReaderPageAgent.gettextwidget(content),
-        ),
-        // TextSpan(text: content, style: ReaderPageAgent.getstyle()),
-        textAlign: TextAlign.left,
-      ),
+      child: testobj,
     );
   }
 }
