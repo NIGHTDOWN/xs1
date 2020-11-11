@@ -55,7 +55,10 @@ class ReaderViewState extends State<ReaderView> {
             right: 0,
             bottom: 0,
             child: Image.asset(Styles.getTheme()['bg'], fit: BoxFit.cover)),
-        buildContent(widget.article, widget.page),
+        SingleChildScrollView(
+          // physics: ScrollPhysics.,
+          child: buildContent(widget.article, widget.page),
+        ),
         ReaderOverlayer(
             article: widget.article,
             page: widget.page,
