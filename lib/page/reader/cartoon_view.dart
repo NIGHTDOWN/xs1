@@ -105,6 +105,7 @@ class CartoonViewState extends State<CartoonView> {
     var of = 0.0;
     var time = 100;
     var h = g('sheight') / 2;
+    double goh = 0;
     if ((xRate > 0.33 && xRate < 0.66)) {
       //显示菜单
       // isMenuVisiable = true;
@@ -113,22 +114,45 @@ class CartoonViewState extends State<CartoonView> {
       widget.showmenu();
     } else if (xRate >= 0.66) {
       //下一页
+      of = pageController.offset;
       if (of > pageController.position.maxScrollExtent) {
         return;
       }
-      of = pageController.offset;
+      if (of == pageController.position.maxScrollExtent) {
+        pageController.animateTo(of + h,
+            duration: Duration(milliseconds: time), curve: Curves.easeInOut);
+        return;
+      }
+      goh = of + h;
+      if (goh > pageController.position.maxScrollExtent) {
+        pageController.animateTo(pageController.position.maxScrollExtent,
+            duration: Duration(milliseconds: time), curve: Curves.easeInOut);
+        return;
+      }
 
-      pageController.animateTo(of + h,
+      //如果当前是已经底部则可以继续下滑
+      pageController.animateTo(goh,
           duration: Duration(milliseconds: time), curve: Curves.easeInOut);
       // pageController.animateToPage(2,
       //     duration: Duration(milliseconds: time), curve: Curves.easeInOut);
     } else {
       //上一页
       of = pageController.offset;
+      goh = of - h;
       if (of < 0) {
         return;
       }
-      pageController.animateTo(of - h,
+      if (of == 0) {
+        pageController.animateTo(-(h / 3),
+            duration: Duration(milliseconds: time), curve: Curves.easeInOut);
+        return;
+      }
+      if (goh < 0) {
+        pageController.animateTo(0,
+            duration: Duration(milliseconds: time), curve: Curves.easeInOut);
+        return;
+      }
+      pageController.animateTo(goh,
           duration: Duration(milliseconds: time), curve: Curves.easeInOut);
     }
   }
