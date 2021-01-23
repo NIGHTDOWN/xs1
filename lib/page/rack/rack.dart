@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ng169/model/mock.dart';
 import 'package:ng169/model/msg.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/novel.dart';
@@ -111,62 +112,65 @@ class RackSceneState extends State<Rack> {
 
   //本地模拟数据；防止网络加载慢的时候，数据无内容显示
   mock() {
-    String lang = getlang();
-    if (isnull(lang)) {
-      if (lang.substring(2) != 'th') {
-        return;
+    // String lang = getlang();
+    // if (isnull(lang)) {
+    //   if (lang.substring(2) != 'th') {
+    //     return;
+    //   }
+    // }
+    // var list = [
+    //   {
+    //     "other_name": "วิวาห์ร้อน รักหวานซึ้ง",
+    //     // "bpic":
+    //     //     "http://xspic.ng169.com/data/attachment/pc/201912/12/17_31/ccdc9e78a94311b3.jpg",
+    //     "bpic": "mock:1-1018.png",
+    //     "book_id": "1018",
+    //     "type": "1",
+    //     "isgroom": "1",
+    //   },
+    //   {
+    //     "other_name": "เจ้าคือพระชายาของข้า",
+    //     "bpic":
+    //         // "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_31/e22bdb07f89fd16e.jpg",
+    //         "mock:1-1008.png",
+    //     "book_id": "1008",
+    //     "type": "1",
+    //     "isgroom": "1",
+    //   },
+    //   {
+    //     "other_name": "รักที่บินถลาเล่นลม",
+    //     "bpic":
+    //         // "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_31/413f79f8528afe81.jpg",
+    //         "mock:1-1009.png",
+    //     "book_id": "1009",
+    //     "type": "1",
+    //     "isgroom": "1",
+    //   },
+    //   {
+    //     "other_name": "surprise เธอคือเซอร์ไพรส์สุดใหญ่ของผม",
+    //     // "bpic":
+    //     //     "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_40/19880cc852440ac4.jpg",
+    //     "bpic": "mock:2-50014.png",
+    //     "book_id": "50014",
+    //     "type": "2",
+    //     "isgroom": "1",
+    //   },
+    //   {
+    //     "other_name": "ยัยหน้าเปี๋ยวของประธานซาตาน",
+    //     // "bpic":
+    //     //     "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_40/127a9f96777200f1.jpg",
+    //     "bpic": "mock:2-50016.png",
+    //     "book_id": "50016",
+    //     "type": "2",
+    //     "isgroom": "1",
+    //   },
+    // ];
+    var list = Mock.get('rack');
+    if (isnull(list)) {
+      for (var item in list) {
+        Novel novelbook = Novel.fromJson(item);
+        favoriteNovels.add(novelbook);
       }
-    }
-    var list = [
-      {
-        "other_name": "วิวาห์ร้อน รักหวานซึ้ง",
-        // "bpic":
-        //     "http://xspic.ng169.com/data/attachment/pc/201912/12/17_31/ccdc9e78a94311b3.jpg",
-        "bpic": "mock:1-1018.png",
-        "book_id": "1018",
-        "type": "1",
-        "isgroom": "1",
-      },
-      {
-        "other_name": "เจ้าคือพระชายาของข้า",
-        "bpic":
-            // "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_31/e22bdb07f89fd16e.jpg",
-            "mock:1-1008.png",
-        "book_id": "1008",
-        "type": "1",
-        "isgroom": "1",
-      },
-      {
-        "other_name": "รักที่บินถลาเล่นลม",
-        "bpic":
-            // "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_31/413f79f8528afe81.jpg",
-            "mock:1-1009.png",
-        "book_id": "1009",
-        "type": "1",
-        "isgroom": "1",
-      },
-      {
-        "other_name": "surprise เธอคือเซอร์ไพรส์สุดใหญ่ของผม",
-        // "bpic":
-        //     "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_40/19880cc852440ac4.jpg",
-        "bpic": "mock:2-50014.png",
-        "book_id": "50014",
-        "type": "2",
-        "isgroom": "1",
-      },
-      {
-        "other_name": "ยัยหน้าเปี๋ยวของประธานซาตาน",
-        // "bpic":
-        //     "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_40/127a9f96777200f1.jpg",
-        "bpic": "mock:2-50016.png",
-        "book_id": "50016",
-        "type": "2",
-        "isgroom": "1",
-      },
-    ];
-    for (var item in list) {
-      Novel novelbook = Novel.fromJson(item);
-      favoriteNovels.add(novelbook);
     }
   }
 

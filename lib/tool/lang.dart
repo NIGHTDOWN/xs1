@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:ng169/conf/conf.dart';
+import 'package:ng169/model/mock.dart';
 import 'package:ng169/tool/global.dart';
 import 'function.dart';
 
@@ -18,15 +19,18 @@ String lang(index) {
 
 Future inilang() async {
   String jsonLang;
+  String lang = getlang();
+  if (isnull(lang)) {
+    lang = lang.substring(0, 2);
+  }
+
   try {
-    String lang = getlang();
-   
     if (isnull(lang)) {
       lang = lang.substring(0, 2);
 
       // 判断
       // List tmp = ['en', 'th', 'zh', 'vi', 'id', 'ko'];
-      List tmp = ['en', 'th', 'vi', 'id', 'ko','ms','zh'];
+      List tmp = ['en', 'th', 'vi', 'id', 'ko', 'ms', 'zh'];
       // d(langlist.keys);
       if (tmp.indexOf(lang) == -1) {
         //找不到语言包的时候加载默认
@@ -51,4 +55,5 @@ Future inilang() async {
   }
 
   language = json.decode(jsonLang);
+  await Mock.init(lang);
 }

@@ -123,11 +123,16 @@ flutter:
   assets:
       - assets/
       - assets/lang/
+      - assets/mock/
       - assets/images/
       - assets/images/cy/
       - assets/images/emjo/
       - assets/images/loading/
       - assets/images/mock/
+      - assets/images/mock/th/
+      - assets/images/mock/id/
+      - assets/images/mock/ms/
+      - assets/images/mock/vi/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg

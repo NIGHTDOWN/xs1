@@ -22,7 +22,9 @@ class HomeBanner extends StatelessWidget {
     var bneer = Container(
         width: Screen.width,
         margin: EdgeInsets.symmetric(horizontal: 5.0),
-        child: NgImage(info['banner_pic']));
+        child: isnull(info, 'banner_pic')
+            ? NgImage(info['banner_pic'])
+            : Container());
     return GestureDetector(
       child: bneer,
       onTap: () {

@@ -76,34 +76,50 @@ class NgImage extends StatelessWidget {
         height: height,
       );
     }
-    return CachedNetworkImage(
-      imageUrl: imgUrl,
-      fit: fit,
-      // useOldImageOnUrlChange: true,
+    var errorWidget = Image.asset(
+      'assets/images/bookbg.jpg',
       width: width,
       height: height,
-      //添加预加载视图
-      // errorWidget: (context, url, error) => new Icon(
-      //   Icons.error,
-      //   size: width,
-      // ),
-      errorWidget: (context, url, error) => Image.asset(
-        'assets/images/bookbg.jpg',
+    );
+    var img = imgUrl;
+    if (ismock == 'dsl:/') {
+      String dsl = imgUrl.substring(5);
+      // var domian=false;
+      if (dslStatus && isnull(dslDomain)) {
+        img = dslDomain + dsl;
+      } else {
+        return errorWidget;
+      }
+    }
+    try {
+      return CachedNetworkImage(
+        imageUrl: img,
+        fit: fit,
+        // useOldImageOnUrlChange: true,
         width: width,
         height: height,
-      ),
-      placeholder: (context, index) {
-        if (isnull(placeholder)) {
-          return placeholder;
-        }
-        return FrameAnimationImage(
-          width: width,
-          height: height,
-          interval: 100,
-        );
-      },
-      // decoration: BoxDecoration(border: Border.all(color: SQColor.paper)),
-    );
+        //添加预加载视图
+        // errorWidget: (context, url, error) => new Icon(
+        //   Icons.error,
+        //   size: width,
+        // ),
+        errorWidget: (context, url, error) => errorWidget,
+        placeholder: (context, index) {
+          if (isnull(placeholder)) {
+            return placeholder;
+          }
+          return FrameAnimationImage(
+            width: width,
+            height: height,
+            interval: 100,
+          );
+        },
+        // decoration: BoxDecoration(border: Border.all(color: SQColor.paper)),
+      );
+    } catch (e) {
+      //远程加载失败，直接返回错误图片
+      return errorWidget;
+    }
   }
 
   // islocol(String url) async {

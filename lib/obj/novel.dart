@@ -215,6 +215,12 @@ class Novel {
     //firstArticleId = data['first_article_id'];
     name = data['other_name'];
     imgUrl = data['bpic'];
+    if (dslStatus && isnull(dslDomain)) {
+      if (isnull(data, 'bpic_dsl')) {
+        imgUrl = data['bpic_dsl'];
+      }
+    }
+
     desc = isnull(data['desc']) ? data['desc'] : '';
     type = isnull(data['book_id']) ? '1' : '2';
     type = isnull(data['type']) ? data['type'].toString() : type;

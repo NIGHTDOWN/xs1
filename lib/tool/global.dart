@@ -6,6 +6,7 @@ import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/cacheimg.dart';
 import 'package:ng169/page/task/ads.dart';
 import 'package:ng169/pay/AdBridge.dart';
+import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/listenclip.dart';
 import 'package:ng169/tool/tcp.dart';
 import 'package:ng169/tool/thred.dart';
@@ -15,8 +16,13 @@ import 'cache.dart';
 import 'db.dart';
 import 'function.dart';
 import 'lang.dart';
-Map<String, dynamic> globalKeys;
 
+Map<String, dynamic> globalKeys;
+PackageInfo packageInfo;
+//dsl状态
+bool dslStatus = false;
+//dsl域名
+String dslDomain = '';
 i() async {
   globalKeys = {
     'cache': new NgCache(),
@@ -37,7 +43,18 @@ i() async {
   }
 
   await globalKeys['cache'].init(); //加载缓存
-  await globalKeys['db'].open(dbname);
+  // await globalKeys['db'].open(dbname);
+  // packageInfo = await PackageInfo.fromPlatform();
+  // await initmblang();
+  await Future.wait<dynamic>([
+    //耗时操作，同步执行
+    globalKeys['db'].open(dbname),
+    initpackinfo(),
+    initmblang(),
+    initidfa(),
+  ]);
+  //dsl状态非必要加载
+  getdsl();
   //下载线程
   globalKeys['downthred'].init(Cacheimg.islocol, true);
   // await globalKeys['listenclip'].init(ListenClip.start, true);
@@ -48,21 +65,50 @@ i() async {
 //   globalKeys['tcp'].recv((data){
 //     d(data);
 //   });
-  PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
+// await Future.wait<dynamic>([demo1,demo2,demo3])
   //String appName = packageInfo.appName;
   //String packageName = packageInfo.packageName;
   String version = packageInfo.version;
   //String buildNumber = packageInfo.buildNumber;
   globalKeys['version'] = version;
-  globalKeys['idfa'] = await getUniqueId();
 
   globalKeys['rack'] = false;
 
-  await initmblang();
-
   // await inilang(); //加载语言包
   //数据库的还没加载
+}
+
+//获取dsl信息，域名，以及状态
+getdsl() async {
+  var cachename = 'dsldamin';
+  var cache = getcache(cachename);
+  if (isnull(cache)) {
+    dslDomain = cache;
+    dslStatus = true;
+  } else {
+    dslDomain = '';
+    dslStatus = false;
+  }
+  var domian = await http('index/dsl', {}, gethead());
+  domian = getdata(g('context'), domian);
+  if (isnull(domian)) {
+    dslDomain = domian;
+    dslStatus = true;
+  } else {
+    // dslDomain=domian;
+    dslDomain = '';
+    dslStatus = false;
+  }
+  setcache(cachename, domian, '-1');
+}
+
+initidfa() async {
+  globalKeys['idfa'] = await getUniqueId();
+}
+
+initpackinfo() async {
+  packageInfo = await PackageInfo.fromPlatform();
 }
 
 //初始化手机系统语言
@@ -91,7 +137,7 @@ setlang(String lang) async {
   String cachename = 'locallg';
   setcache(cachename, lang, '-1');
   s(cachename, lang);
- 
+
   await inilang();
 }
 

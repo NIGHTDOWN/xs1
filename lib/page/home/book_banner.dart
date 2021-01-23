@@ -18,7 +18,7 @@ import 'package:ng169/tool/url.dart';
 
 // ignore: must_be_immutable
 class BookBanner extends LoginBase {
-  final List banners;
+  List banners;
   static var novels = {};
   BuildContext context;
   BookBanner(this.banners);
@@ -27,8 +27,10 @@ class BookBanner extends LoginBase {
   // SwiperController sw = SwiperController();
   static double hd = 8;
   void initState() {
+    
     hd = g('swidth') / 25;
     if (isnull(banners)) {
+      // banners=banners.reversed;
       BookBanner.bgimg = banners[0]['bpic'];
     }
   }

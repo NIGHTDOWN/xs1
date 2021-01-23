@@ -1,0 +1,189 @@
+{
+    "banner":[
+       
+        {
+            "scan_seat":"1",
+            "goal_type":"2",
+            "goal_window":"0",
+            "book_id":"22052",
+            "banner_pic":"mock:id/f745239f60c1e9d9.jpg",
+            "banner_url":"",
+            "cartoon_id":"0"
+        },
+        {
+            "scan_seat":"1",
+            "goal_type":"2",
+            "goal_window":"0",
+            "book_id":"22362",
+            "banner_pic":"mock:id/f7ed13da8d9c2b95.jpg",
+            "banner_url":"",
+            "cartoon_id":"0"
+        },
+        {
+            "scan_seat":"1",
+            "goal_type":"3",
+            "goal_window":"0",
+            "book_id":"0",
+            "banner_pic":"mock:id/1bc1c36466eb3599.jpg",
+            "banner_url":"",
+            "cartoon_id":"51288"
+        }
+    ],
+    "newbook":[
+      
+        {
+            "book_id":"20181",
+            "other_name":"Rebirth Doctor Ivonne Yuan",
+            "desc":null,
+            "bpic_dsl":null,
+            "bpic":"mock:id/94fa4270eaa2b37c.jpg",
+            "writer_name":"lookstory",
+            "isfree":"1",
+            "update_status":"0",
+            "type":"1"
+        },
+        {
+            "book_id":"20540",
+            "other_name":"Jenius Yang Nakal",
+            "desc":null,
+            "bpic_dsl":null,
+            "bpic":"mock:id/5d58ab52d73d0350.jpg",
+            "writer_name":"lookstory",
+            "isfree":"1",
+            "update_status":"0",
+            "type":"1"
+        },
+        {
+            "book_id":"20617",
+            "other_name":"Membunuh Lelaki Idaman",
+            "desc":null,
+            "bpic_dsl":null,
+            "bpic":"mock:id/ba60abf8dbace97f.jpg",
+            "writer_name":"lookstory",
+            "isfree":"1",
+            "update_status":"0",
+            "type":"1"
+        },
+        {
+            "book_id":"20688",
+            "other_name":"Sekretaris Tampan ini Miliku",
+            "desc":null,
+            "bpic_dsl":null,
+            "bpic":"mock:id/f5fcd229b6982af7.jpg",
+            "writer_name":"lookstory",
+            "isfree":"1",
+            "update_status":"0",
+            "type":"1"
+        },
+        {
+            "book_id":"21797",
+            "other_name":"Oppressed Wife",
+            "desc":null,
+            "bpic_dsl":null,
+            "bpic":"mock:id/ba3322e1e9fdc4ba.jpeg",
+            "writer_name":"lookstory",
+            "isfree":"1",
+            "update_status":"1",
+            "type":"1"
+        },
+        {
+            "book_id":"22253",
+            "other_name":"Permaisuri Dibalik Cadar",
+            "desc":null,
+            "bpic_dsl":null,
+            "bpic":"mock:id/3d16092733226109.jpg",
+            "writer_name":"lookstory",
+            "isfree":"1",
+            "update_status":"2",
+            "type":"1"
+        },
+        {
+            "book_id":"22389",
+            "other_name":"Direktur, Aku Juga Mencintaimu",
+            "desc":null,
+            "bpic_dsl":null,
+            "bpic":"mock:id/0a5e1b07147fca2b.jpg",
+            "writer_name":"lookstory",
+            "isfree":"1",
+            "update_status":"2",
+            "type":"1"
+        }
+    ],
+    "randdata":[
+      
+        {
+            "book_id":"20159",
+            "other_name":"You Saved Me",
+            "bpic":"mock:id/f77d0758b3ffb155.jpg",
+            "type":"1",
+            "bpic_dsl":null,
+            "writer_name":"lookstory",
+            "recommend_num":"0"
+        },
+        {
+            "book_id":"20349",
+            "other_name":"Prince Please Don’t Chase Me",
+            "bpic":"mock:id/6294225924c454fc.jpg",
+            "type":"1",
+            "bpic_dsl":null,
+            "writer_name":"lookstory",
+            "recommend_num":"0"
+        },
+        {
+            "book_id":"20460",
+            "other_name":"Mulai Dari Awal Denganmu",
+            "bpic":"mock:id/3738e30ec6d46cdd.jpg",
+            "type":"1",
+            "bpic_dsl":null,
+            "writer_name":"lookstory",
+            "recommend_num":"0"
+        },
+        {
+            "book_id":"20196",
+            "other_name":"Emergency Marriage",
+            "bpic":"mock:id/276cf26777ca6581.jpg",
+            "type":"1",
+            "bpic_dsl":null,
+            "writer_name":"lookstory",
+            "recommend_num":"0"
+        },
+        {
+            "book_id":"21028",
+            "other_name":"Hanya Cintamu seumur hidup ini",
+            "bpic":"mock:id/c10d38fafa927bae.jpg",
+            "type":"1",
+            "bpic_dsl":null,
+            "writer_name":"lookstory",
+            "recommend_num":"1"
+        },
+        {
+            "book_id":"20682",
+            "other_name":"Akhirnya Cinta Datang Juga",
+            "bpic":"mock:id/7b244979ab63c32f.jpg",
+            "type":"1",
+            "bpic_dsl":null,
+            "writer_name":"lookstory",
+            "recommend_num":"0"
+        },
+        {
+            "book_id":"20388",
+            "other_name":" CEO Second Wife",
+            "bpic":"mock:id/6d75ddd19c0bcff4.jpg",
+            "type":"1",
+            "bpic_dsl":null,
+            "writer_name":"lookstory",
+            "recommend_num":"0"
+        }
+    ],
+    "rack":[
+       
+        {
+            "other_name":"Married With Mr.Duda (On Going)",
+            "bpic":"mock:id/f34276a540d79ecd.jpg",
+            "book_id":"22524",
+            "type":"1",
+            "isgroom":"1",
+            "desc":null
+        }
+    ]
+}
