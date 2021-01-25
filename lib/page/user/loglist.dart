@@ -35,6 +35,7 @@ class LogList extends StatelessWidget {
   }
 }
 
+// ignore: missing_return
 Widget cell(json, type) {
   var line_padding_left = 16.0;
   //1充值 2人工送 3好友代充
@@ -54,7 +55,7 @@ Widget cell(json, type) {
       default:
         typestring = lang('充值');
     }
-    
+
     return Container(
       margin:
           EdgeInsets.only(left: line_padding_left, right: line_padding_left),
@@ -204,12 +205,18 @@ Widget cell(json, type) {
       case "8":
         typestring = lang('每日充值');
         break;
-        case "9":
+      case "9":
         typestring = lang('应用评价');
         break;
-        case "10":
+      case "10":
         typestring = lang('阅读本地小说');
         break;
+      case "11":
+        typestring = lang('每日标记');
+        break;
+      default:
+        typestring = '';
+        ;
     }
 
     return Container(

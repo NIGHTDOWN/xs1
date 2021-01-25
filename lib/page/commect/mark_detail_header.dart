@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
 import 'package:ng169/obj/novel.dart';
+import 'package:ng169/page/novel_detail/novel_detail_header.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/starbar.dart';
@@ -9,18 +10,14 @@ import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/lang.dart';
 
-fixedFontSize(double fontSize) {
-  return fontSize / Screen.textScaleFactor;
-}
-
-class NovelDetailHeader extends StatelessWidget {
+class MarkDetailHeader extends StatelessWidget {
   final Novel novel;
-  NovelDetailHeader(this.novel);
+  MarkDetailHeader(this.novel);
 
   @override
   Widget build(BuildContext context) {
     var width = Screen.width;
-    var height = 218.0 + Screen.topSafeHeight;
+    var height = 218.0-54 + Screen.topSafeHeight;
     return Container(
       width: width,
       height: height,
@@ -32,14 +29,6 @@ class NovelDetailHeader extends StatelessWidget {
             width: width,
             height: height,
           ),
-          // Image(
-          //   image: CachedNetworkImageProvider(novel.imgUrl),
-
-          //   fit: BoxFit.fitWidth,
-          //   width: width,
-          //   height: height,
-          // ),
-          // NgImage(novel.imgUrl),
           Container(color: Color(0xbb000000), width: width, height: height),
           BackdropFilter(
             filter: ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
@@ -63,18 +52,7 @@ class NovelDetailHeader extends StatelessWidget {
                 fontSize: fixedFontSize(18),
                 color: Colors.white,
                 fontWeight: FontWeight.bold)),
-        SizedBox(height: h),
-        Text(
-            lang('作者') +
-                ('：') +
-                (isnull(novel.author) ? novel.author : lang('匿名')),
-            style:
-                TextStyle(fontSize: fixedFontSize(14), color: SQColor.white)),
-        SizedBox(height: h),
-        Text(lang('字数') + ('：') + '${novel.wordCount.toString()}',
-            style:
-                TextStyle(fontSize: fixedFontSize(14), color: SQColor.white)),
-        SizedBox(height: h),
+        // SizedBox(height: h),
         Row(children: [
           Text(lang('状态') + ('：'),
               style:
@@ -82,9 +60,9 @@ class NovelDetailHeader extends StatelessWidget {
           Text(novel.status,
               style: TextStyle(fontSize: 14, color: novel.statusColor()))
         ]),
-        SizedBox(height: h),
+        // SizedBox(height: h),
         buildScore(),
-        SizedBox(height: 10),
+        SizedBox(height: 26),
       ];
     } else {
       desc = [
@@ -93,11 +71,7 @@ class NovelDetailHeader extends StatelessWidget {
                 fontSize: fixedFontSize(18),
                 color: Colors.white,
                 fontWeight: FontWeight.bold)),
-        SizedBox(height: h),
-        Text((isnull(novel.author) ? novel.author : lang('匿名')),
-            style:
-                TextStyle(fontSize: fixedFontSize(14), color: SQColor.white)),
-        SizedBox(height: h),
+        // SizedBox(height: h),
         Row(children: [
           Text(lang('状态') + ('：'),
               style:
@@ -105,26 +79,27 @@ class NovelDetailHeader extends StatelessWidget {
           Text(novel.status,
               style: TextStyle(fontSize: 14, color: novel.statusColor()))
         ]),
-        SizedBox(height: h),
+        // SizedBox(height: h),
         buildScore(),
-        SizedBox(height: 10),
+        SizedBox(height: 26),
       ];
     }
     return Container(
       width: width,
-      padding: EdgeInsets.fromLTRB(15, 54 + Screen.topSafeHeight, 10, 0),
+      padding: EdgeInsets.fromLTRB(15,  Screen.topSafeHeight, 10, 0),
       color: Colors.transparent,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           NgImage(novel.imgUrl, width: 100, height: 133),
           SizedBox(width: 15),
-          Expanded(
+          Flexible(
             child: Column(
-                mainAxisAlignment: novel.type == '1'
-                    ? MainAxisAlignment.spaceBetween
-                    : MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                // mainAxisAlignment: novel.type == '1'
+                //     ? MainAxisAlignment.spaceBetween
+                //     : MainAxisAlignment.spaceEvenly,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: desc),
           )
         ],

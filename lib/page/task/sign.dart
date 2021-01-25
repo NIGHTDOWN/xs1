@@ -6,6 +6,7 @@ import 'package:ng169/model/base.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/commect/kefu.dart';
+import 'package:ng169/page/commect/markbook.dart';
 import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
 import 'package:ng169/page/recharge/recharge.dart';
 import 'package:ng169/page/task/ads.dart';
@@ -583,11 +584,114 @@ class Sign extends LoginBase {
             }, () {
               lqjl('task/pay', {}, '8', 100);
             }),
+            taskrow(lang('每日标记'), lang('给阅读的书添加标记，每本书只能添加一次'), 25, 0, 3, 11,
+                () async {
+              // pop(context);
+              List book;
+              List data2;
+              var tmp;
+              String hotbooks;
+              // await Future.wait<dynamic>([
+              // book = await T('book')
+              //     .where({'isgroom': '1', 'uid': getuid()})
+              //     .order('addtime desc')
+              //     .getall();
+              book =
+                  await T('read as v left join book as b on v.bookid=b.bookid')
+                      .wherestring('v.uid=' +
+                          getuid() +
+                          " and v.type in (1,2) group by b.bookid")
+                      .limit('500')
+                      .order('readtime desc')
+                      .getall();
+
+              hotbooks = await http('mark/getbook', null, gethead(), 10);
+              // ]);
+              if (hotbooks == null) {
+                return;
+              }
+              if (!isnull(book)) {
+                show(context, lang('你的还没阅读任何书籍哦'));
+                return;
+              } else {
+                //取远程一条书籍
+                // var hotbooks = await http('book/new', null, gethead());
+                tmp = getdata(context, hotbooks);
+                data2 = tmp['selectin'];
+                List data3 = tmp['list'];
+                var tmpcoin = '25';
+                var temptype = '11';
+                var boosl;
+                var type;
+                Novel novel;
+
+                if (!isnull(data2)) {
+                  if (!isnull(data3)) {
+                    novel = Novel.fromDb(book[0]);
+                  } else {
+                    if (data3[0] > 50000) {
+                      type = 2;
+                    } else {
+                      type = 1;
+                    }
+                    novel = await Novel.fromID(data3[0], type);
+                  }
+                  boosl = await gourl(context, MarkBook(novel: novel));
+
+                  if (isnull(boosl) && boosl > 0) {
+                    User.upcoin(tmpcoin);
+                    showcai(lang('奖励到账'), tmpcoin);
+                    taskdata[temptype]['num'] =
+                        (1 + int.parse(taskdata[temptype]['num'])).toString();
+                  } else {}
+                  return;
+                } else {
+                  var id = '0';
+                  if (!isnull(data3)) {
+                    for (var bok in book) {
+                      id = bok['bookid'].toString();
+
+                      if (!data2.contains(id)) {
+                        novel = Novel.fromDb(bok);
+                        break;
+                      }
+                    }
+                  } else {
+                    for (var bok in data3) {
+                      id = bok.toString();
+
+                      if (!data2.contains(id)) {
+                        if (int.parse(id) > 50000) {
+                          type = 2;
+                        } else {
+                          type = 1;
+                        }
+                        novel = await Novel.fromID(int.parse(id), type);
+                        break;
+                      }
+                    }
+                  }
+                  if (isnull(novel)) {
+                    boosl = await gourl(context, MarkBook(novel: novel));
+                    if (isnull(boosl) && boosl > 0) {
+                      User.upcoin(tmpcoin);
+                      showcai(lang('奖励到账'), tmpcoin);
+                      taskdata[temptype]['num'] =
+                          (1 + int.parse(taskdata[temptype]['num'])).toString();
+                    }
+                    return;
+                  }
+                }
+                show(context, lang('你阅读书籍已经全部标记了，请阅读新的书籍，再来参与任务'));
+                return;
+              }
+            }, () {}),
 
             taskrow(
                 lang('每日分享'),
-                lang('分享到不同平台（facebook、twitter、wahtapp..）,至少一个好友阅读文章，既可领取50金豆'),
-                50,
+                lang(
+                    '分享到不同平台（facebook、twitter、wahtapp..）,至少一个好友阅读文章，既可领取100金豆'),
+                100,
                 0,
                 4,
                 1, () async {
@@ -613,19 +717,19 @@ class Sign extends LoginBase {
                 }
               }
             }, () {}),
+
             taskrow(lang('看视频'), lang('领取丰厚奖励'), 50, 0, 5, 5, () async {
-                    // gourl(context, Ads());
-                    // var data = await gourl(context, Ads());
-                    show(context, lang('视频加载中，请稍等..'));
-                    g('admob').load((bool isget) {
-                      if (isnull(isget)) {
-                        d('回调');
-                        //执行结算
-                        lqjl2('task/ad', {}, '5', 50);
-                      }
-                    });
-                  }, () {})
-                ,
+              // gourl(context, Ads());
+              // var data = await gourl(context, Ads());
+              show(context, lang('视频加载中，请稍等..'));
+              g('admob').load((bool isget) {
+                if (isnull(isget)) {
+                  d('回调');
+                  //执行结算
+                  lqjl2('task/ad', {}, '5', 50);
+                }
+              });
+            }, () {}),
             taskrow(lang('完善用户资料'), lang('完善用户资料奖励100金豆'), 100, 0, 0, 7,
                 () async {
               await gourl(context, EditUser());
@@ -762,6 +866,12 @@ class Sign extends LoginBase {
       case 5:
         if (isnull(taskdata, '5')) {
           nums = int.parse(taskdata['5']['num']);
+        }
+
+        break;
+      case 11:
+        if (isnull(taskdata, '11')) {
+          nums = int.parse(taskdata['11']['num']);
         }
 
         break;
