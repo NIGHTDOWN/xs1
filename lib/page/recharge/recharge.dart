@@ -33,7 +33,7 @@ class Recharge extends LoginBase {
   String creat_order_api = 'order/creat';
   String cancel_order_api = 'order/fail';
   String order_log_api = 'order/order_log';
-  String order_sure_api = 'google/pay';
+  String order_sure_api = 'google/payv3';
   String order_num;
   //2 是用户取消，3是其他
   int pay_status;
