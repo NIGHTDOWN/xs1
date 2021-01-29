@@ -142,7 +142,7 @@ class User {
 
   static double getcoin() {
     var user = get();
-    if (isnull(user)) {
+    if (isnull(user,'remainder')) {
       if (user['remainder'] is int) {
         return double.parse(user['remainder'].toString());
       }

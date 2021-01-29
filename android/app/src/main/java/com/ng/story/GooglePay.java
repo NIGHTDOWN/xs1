@@ -140,7 +140,9 @@ public class GooglePay {
                         if (payload != "") {
                             Bridge.d("加载payload"+payload);
                             consumeParams = ConsumeParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken())
-                                    .setDeveloperPayload(payload).build();
+                             .build();
+                                    // .setDeveloperPayload(payload)
+                                   
                         } else {
                             consumeParams = ConsumeParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken())
                                     .build();

@@ -88,7 +88,7 @@ public class BillingUtil implements PurchasesUpdatedListener {
         mBillingClient.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingSetupFinished(BillingResult billingResult) {
-               
+              
                 if(billingResult.getResponseCode()== BillingClient.BillingResponseCode.OK){
     
                     mIsServiceConnected=true;
@@ -282,8 +282,10 @@ public class BillingUtil implements PurchasesUpdatedListener {
             public void run() {
                 Bridge.d( "Launching in-app purchase flow. Replace old SKU? " + (oldSkus));
 //                querySkuDetailsAsync();
-                BillingFlowParams purchaseParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).
-                        setOldSkus(oldSkus).build();
+                BillingFlowParams purchaseParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails)
+                 .build();
+                        // .setOldSkus(oldSkus)
+                       
                 mBillingClient.launchBillingFlow(mActivitys, purchaseParams);
             }
         };
