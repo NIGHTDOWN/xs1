@@ -448,6 +448,7 @@ alertupinfo(BuildContext context, [bool alert = false, bool isauto = false]) {
         Down.autodown(context, upurl);
       } else {
         msgbox(context, () {
+         
           Down.downandinstall(context, upurl);
         }, null, Text(serverinfo['upgrade_point']), null, Text(lang('确定升级')));
       }

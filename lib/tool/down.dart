@@ -103,8 +103,7 @@ class Down {
   }
 
 //要保存的文件后缀
-  static Future<String> getFilePath(String filename,
-      [String fileExt = 'apk']) async {
+  static Future<String> getFilePath(String filename, [String fileExt]) async {
     // 获取文档目录的路径
     String dir;
     if (isnull(getcache(downdocment))) {
@@ -155,6 +154,7 @@ class Down {
       show(context, lang('获取升级包错误'));
       return false;
     }
+
     Down.loadbox(context);
     //return false;
     //d(1);
