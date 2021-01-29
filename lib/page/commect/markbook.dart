@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ng169/model/cate.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/home/home_section_view.dart';
 
@@ -28,32 +29,36 @@ class MarkBookState extends State<MarkBook> {
   List cate;
   List w2 = [];
   List w3 = [];
-  String cachedata = 'category_data_';
-  String cachedatatime = 'category_data_time';
+  // String cachedata = 'category_data_';
+  // String cachedatatime = 'category_data_time';
   @override
   initState() {
     super.initState();
-
-    if (isnull(getcache(cachedata))) {
-      cate = getcache(cachedata);
-      if (!isnull(getcache(cachedatatime))) {
-        httpget();
-      }
-    } else {
-      httpget();
-    }
+    loadcate();
+    // if (isnull(getcache(cachedata))) {
+    //   cate = getcache(cachedata);
+    //   if (!isnull(getcache(cachedatatime))) {
+    //     httpget();
+    //   }
+    // } else {
+    //   httpget();
+    // }
   }
 
-  httpget() async {
-    var data = await http(api, {}, gethead(), 30);
-    List tmp = getdata(context, data);
-    if (isnull(tmp)) {
-      cate = tmp;
-      setcache(cachedata, tmp, '-1');
-      setcache(cachedatatime, 1, '7200');
-    }
+  loadcate() async {
+    cate = await Catemodel.getcate();   
     setState(() {});
   }
+  // httpget() async {
+  //   var data = await http(api, {}, gethead(), 30);
+  //   List tmp = getdata(context, data);
+  //   if (isnull(tmp)) {
+  //     cate = tmp;
+  //     setcache(cachedata, tmp, '-1');
+  //     setcache(cachedatatime, 1, '7200');
+  //   }
+  //   setState(() {});
+  // }
 
   Future<void> gethttpdata() async {
     refresh();

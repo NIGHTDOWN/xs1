@@ -2,6 +2,7 @@ package io.flutter.plugins;
 
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugins.battery.BatteryPlugin;
+import io.flutter.plugins.connectivity.ConnectivityPlugin;
 import fr.g123k.deviceapps.DeviceAppsPlugin;
 import io.flutter.plugins.deviceinfo.DeviceInfoPlugin;
 import com.mr.flutter.plugin.filepicker.FilePickerPlugin;
@@ -37,6 +38,7 @@ public final class GeneratedPluginRegistrant {
       return;
     }
     BatteryPlugin.registerWith(registry.registrarFor("io.flutter.plugins.battery.BatteryPlugin"));
+    ConnectivityPlugin.registerWith(registry.registrarFor("io.flutter.plugins.connectivity.ConnectivityPlugin"));
     DeviceAppsPlugin.registerWith(registry.registrarFor("fr.g123k.deviceapps.DeviceAppsPlugin"));
     DeviceInfoPlugin.registerWith(registry.registrarFor("io.flutter.plugins.deviceinfo.DeviceInfoPlugin"));
     FilePickerPlugin.registerWith(registry.registrarFor("com.mr.flutter.plugin.filepicker.FilePickerPlugin"));

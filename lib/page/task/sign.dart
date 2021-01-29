@@ -197,7 +197,10 @@ class Sign extends LoginBase {
             ),
             GestureDetector(
                 onTap: back,
-                child: Image.asset('assets/images/pub_back_white.png')),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                )),
             Expanded(
                 child: Center(
                     child: Text(
@@ -611,7 +614,7 @@ class Sign extends LoginBase {
                 return;
               }
               if (!isnull(book)) {
-                show(context, lang('你的还没阅读任何书籍哦'));
+                show(context, lang('你还没阅读任何书籍哦'));
                 return;
               } else {
                 //取远程一条书籍
@@ -624,29 +627,44 @@ class Sign extends LoginBase {
                 var boosl;
                 var type;
                 Novel novel;
-
                 if (!isnull(data2)) {
                   if (!isnull(data3)) {
                     novel = Novel.fromDb(book[0]);
                   } else {
-                    if (data3[0] > 50000) {
+                    int id = 0;
+                    if (data3[0] is String) {
+                      id = int.parse(data3[0]);
+                    } else {
+                      id = data3[0];
+                    }
+                    if (id > 50000) {
                       type = 2;
                     } else {
                       type = 1;
                     }
-                    novel = await Novel.fromID(data3[0], type);
+                    
+                    
+                    novel = await Novel.fromID(id, type);
                   }
                   boosl = await gourl(context, MarkBook(novel: novel));
 
                   if (isnull(boosl) && boosl > 0) {
-                    User.upcoin(tmpcoin);
+                    User.addcoin(tmpcoin);
                     showcai(lang('奖励到账'), tmpcoin);
-                    taskdata[temptype]['num'] =
-                        (1 + int.parse(taskdata[temptype]['num'])).toString();
+                   if (isnull(taskdata, temptype)) {
+                        taskdata[temptype]['num'] =
+                            (1 + int.parse(taskdata[temptype]['num']))
+                                .toString();
+                        reflash();
+                      } else {
+                        taskdata[temptype] = {'num': '1'};
+                        reflash();
+                      }
                   } else {}
                   return;
                 } else {
                   var id = '0';
+
                   if (!isnull(data3)) {
                     for (var bok in book) {
                       id = bok['bookid'].toString();
@@ -671,13 +689,22 @@ class Sign extends LoginBase {
                       }
                     }
                   }
+
                   if (isnull(novel)) {
                     boosl = await gourl(context, MarkBook(novel: novel));
+
                     if (isnull(boosl) && boosl > 0) {
-                      User.upcoin(tmpcoin);
+                      User.addcoin(tmpcoin);
                       showcai(lang('奖励到账'), tmpcoin);
-                      taskdata[temptype]['num'] =
-                          (1 + int.parse(taskdata[temptype]['num'])).toString();
+                      if (isnull(taskdata, temptype)) {
+                        taskdata[temptype]['num'] =
+                            (1 + int.parse(taskdata[temptype]['num']))
+                                .toString();
+                        reflash();
+                      } else {
+                        taskdata[temptype] = {'num': '1'};
+                        reflash();
+                      }
                     }
                     return;
                   }

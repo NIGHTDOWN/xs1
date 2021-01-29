@@ -14,6 +14,7 @@ import 'function.dart';
 import 'global.dart';
 import 'lang.dart';
 import 'notify.dart';
+
 class Down {
   static StateSetter reflash; //进度条刷新入口
   static var progress = 0.0;
@@ -101,7 +102,9 @@ class Down {
     return exist;
   }
 
-  static Future<String> getFilePath(String filename) async {
+//要保存的文件后缀
+  static Future<String> getFilePath(String filename,
+      [String fileExt = 'apk']) async {
     // 获取文档目录的路径
     String dir;
     if (isnull(getcache(downdocment))) {
@@ -116,6 +119,9 @@ class Down {
     var tmpname = filename.split('/');
     var name = tmpname[tmpname.length - 1];
     var file = '$dir/$name';
+    if (isnull(fileExt)) {
+      file = file + '.' + fileExt;
+    }
     return file;
   }
 

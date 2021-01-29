@@ -90,11 +90,11 @@ class SearchPageState extends State<SearchPage> {
       }
       loadingstatu();
       var data =
-          await http(sapi, {'page': page, 'keyword': searword.text}, gethead());
+          await http(sapi, {'page': page++, 'keyword': searword.text}, gethead());
       var tmpmore = getdata(context, data);
       if (isnull(tmpmore)) {
         more.add(bookCardWithInfo(5, '', tmpmore));
-        page++;
+        // page++;
       } else {
         stop = true;
       }
@@ -548,4 +548,5 @@ class SearchPageState extends State<SearchPage> {
       ),
     );
   }
+
 }

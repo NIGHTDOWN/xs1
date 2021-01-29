@@ -334,6 +334,9 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     s('context', context);
     s('swidth', getScreenWidth(context));
     s('sheight', getScreenHeight(context));
+    // User.gettestinfo()
+    // AdBridge.call("getnet");
+    // AdBridge.call("getnet");
     //加载通知栏
     Notify.init('app_icon');
     //  dir();

@@ -6,7 +6,10 @@ class NovelmorechooseCard extends StatelessWidget {
   final List novelss;
   final String choosestr;
 
-  NovelmorechooseCard(this.novelss, this.choosestr);
+  bool showborderline;
+
+  NovelmorechooseCard(this.novelss, this.choosestr,
+      [this.showborderline = true]);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +21,9 @@ class NovelmorechooseCard extends StatelessWidget {
     List<Widget> children = [];
     for (var i = 0; i < novels.length; i++) {
       var novel = novels[i];
-
-      children.add(Divider(height: 1));
+      if (showborderline) {
+        children.add(Divider(height: 1));
+      }
 
       children.add(NovelsearchCell(Novel.fromJson(novel), choosestr));
     }

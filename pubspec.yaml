@@ -12,7 +12,7 @@ description: ervery look story by no advertion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 7.8.0+18
+version: 8.1.0+20
 
 
 environment:
@@ -63,6 +63,7 @@ dependencies:
   #打开文件
   open_file: any
   install_apk_plugin : any
+  connectivity: ^0.4.2
   #设备信息
   #device_info : 0.4.1
   # dio:any

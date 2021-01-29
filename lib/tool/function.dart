@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:connectivity/connectivity.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -136,6 +137,7 @@ gethead() {
     'version'.toString(): g('version').toString(),
     'idfa': g('idfa'),
     'lang': getlang(),
+    'qd': downqd,
     'devicetype'.toString(): Platform.isAndroid ? 'android' : 'ios'
   };
 
@@ -149,6 +151,19 @@ gethead() {
   var ret = new Map<String, dynamic>.from(m);
 
   return ret;
+}
+
+// ignore: missing_return
+Future<String> getwifi() async {
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile) {
+    // 网络类型为移动网络
+    return 'mobile';
+  } else if (connectivityResult == ConnectivityResult.wifi) {
+    // 网络类型为WIFI
+    return 'wifi';
+  }
+  return 'none';
 }
 
 Future<ui.Image> getAssetImage(String asset, {width, height}) async {

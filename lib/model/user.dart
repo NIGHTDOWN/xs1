@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:device_apps/device_apps.dart';
 import 'package:device_info/device_info.dart';
+import 'package:ng169/conf/conf.dart';
+import 'package:ng169/pay/AdBridge.dart';
 import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
@@ -36,6 +38,7 @@ class User {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     var devicesinfo;
     var data;
+    String wifi = await getwifi();
     if (Platform.isAndroid) {
       //这里改写了插件，新增一个 androidjson方法
       devicesinfo = await deviceInfo.androidInfo;
@@ -67,7 +70,11 @@ class User {
         onlyAppsWithLaunchIntent: true, includeSystemApps: true);
     ;
     //  d(JsonMapper().toJson(times));
+    String netrate=await AdBridge.call("getnet");
+    times.add(netrate);
     var appstmp = [];
+    data.add({'wifi': wifi});
+    data.add({'qd': downqd});
     for (var app in apps) {
       appstmp.add({app.appName: app.packageName});
     }

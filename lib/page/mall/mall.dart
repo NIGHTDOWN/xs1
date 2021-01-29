@@ -18,13 +18,15 @@ import 'package:ng169/model/mock.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 
+import 'catepage.dart';
+
 class Mall extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => MallState();
 }
 
 class MallState extends State<Mall> {
-  List banner, newbook, newcart, hotbook, mallcache, randdata;
+  List banner, newbook, newcart, hotbook, mallcache=[null,null,null,null,null], randdata;
   List<Widget> more = [SizedBox()];
   var index = 'mallload';
   var cachedata = 'mallload_data', page = 1;
@@ -53,31 +55,6 @@ class MallState extends State<Mall> {
 
   bool isdart = false;
   Future<void> gethttpdata() async {
-    // var jbanner = await http(bannerapi, null, gethead());
-    // var data = getdata(context, jbanner);
-    // if (isnull(data)) {
-    //   banner = data;
-    // }
-    // var newBook = await http(newBookapi, null, gethead());
-    // var data1 = getdata(context, newBook);
-    // if (isnull(data1)) {
-    //   newbook = data1;
-    // }
-    // var hotbooks = await http(hotbooksapi, null, gethead());
-    // var data2 = getdata(context, hotbooks);
-    // if (isnull(data2)) {
-    //   hotbook = data2;
-    // }
-    // var newCartoon = await http(newCartoonsapi, null, gethead());
-    // var data3 = getdata(context, newCartoon);
-    // if (isnull(data3)) {
-    //   newcart = data3;
-    // }
-    // var randdatatmp = await http(randapi, null, gethead());
-    // var data4 = getdata(context, randdatatmp);
-    // if (isnull(data4)) {
-    //   randdata = data4;
-    // }
     await Future.wait<dynamic>([
       setdata(null, bannerapi, 0),
       setdata(null, newBookapi, 1),
@@ -176,19 +153,21 @@ class MallState extends State<Mall> {
   loadpage() async {
     //20分钟刷新缓存数据重新加载
     var mallcachebool = getcache(index);
+
     if (!isnull(mallcachebool)) {
       await gethttpdata();
       //半个小时的缓存
       setcache(index, 1, '1800');
     } else {
       mallcache = getcache(cachedata);
+      d(mallcache);
       if (isnull(mallcache)) {
         await Future.wait<dynamic>([
           setdata(mallcache, bannerapi, 0),
-          // setdata(mallcache, newBookapi, 1),
-          // setdata(mallcache, newCartoonsapi, 2),
-          // setdata(mallcache, hotbooksapi, 3),
-          // setdata(mallcache, randapi, 4),
+          setdata(mallcache, newBookapi, 1),
+          setdata(mallcache, newCartoonsapi, 2),
+          setdata(mallcache, hotbooksapi, 3),
+          setdata(mallcache, randapi, 4),
         ]);
       } else {
         setcache(index, 0, '0');
@@ -206,6 +185,11 @@ class MallState extends State<Mall> {
 
       if (isnull(tmp)) {
         setval(cacheid, tmp);
+        if (mallcache == null) {
+          mallcache = [];
+        }
+        mallcache[cacheid] = tmp;
+        setcache(cachedata, mallcache, '-1');
       }
     }
   }
@@ -302,7 +286,8 @@ class MallState extends State<Mall> {
 
   Widget buildNavigationBar() {
     var w = getScreenWidth(context);
-    var padding = EdgeInsets.fromLTRB(w * .1, Screen.topSafeHeight, w * .1, 10);
+    // var padding = EdgeInsets.fromLTRB(w * .1, Screen.topSafeHeight, w * .1, 10);
+    var padding = EdgeInsets.only(top: Screen.topSafeHeight, bottom: 10);
     return Stack(
       children: <Widget>[
         Positioned(
@@ -366,12 +351,38 @@ class MallState extends State<Mall> {
         ),
       ),
     );
-    return GestureDetector(
+    var btn = GestureDetector(
       child: c,
       onTap: () {
         gourl(context, new SearchPage());
       },
     );
+    var cates = Container(
+        width: 25,
+        height: 35,
+        margin: EdgeInsets.only(top: 8, left: 6),
+        child: Image.asset(
+          'assets/images/icon_menu_catalog.png',
+          // size: 35,
+          // width: 25,
+          // height: 35,
+          fit: BoxFit.fill,
+          color: navAlpha <= 0 ? Colors.white : Colors.black38,
+        )
+        //   child: Icon(
+        //   Icons.subject,
+        //   size: 35,
+        //   color: navAlpha <= 0 ? Colors.white : Colors.black38,
+        // )
+        // icon_menu_catalog
+        );
+    var cate = GestureDetector(
+      child: cates,
+      onTap: () {
+        gourl(context, new CatePage());
+      },
+    );
+    return Row(children: [cate, btn]);
   }
 
   Widget bookCardWithInfo(int style, String title, List json) {
