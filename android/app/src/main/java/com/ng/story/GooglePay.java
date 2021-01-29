@@ -216,7 +216,9 @@ public class GooglePay {
             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null
                     && skuDetailsList.size() > 0) {
                 for (SkuDetails skuDetails : skuDetailsList) {
-                    
+                    //结算库3传自定义参数
+                    BillingUtil.getInstance().setpayload(payload);
+                    BillingUtil.getInstance().setsku(sku);
                     BillingUtil.getInstance().initiatePurchaseFlow(skuDetails, type);
                     break;
                 }

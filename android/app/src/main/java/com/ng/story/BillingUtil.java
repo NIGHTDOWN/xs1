@@ -31,7 +31,8 @@ public class BillingUtil implements PurchasesUpdatedListener {
     private boolean mIsServiceConnected;
 
     private final List<Purchase> mPurchases = new ArrayList<>();
-
+    private String payload;
+    private String sku;
     // Default value of mBillingClientResponseCode until BillingManager was not yeat initialized
 //    public static final int BILLING_MANAGER_NOT_INITIALIZED  = -1;
 //    private  int mBillingClientResponseCode =BILLING_MANAGER_NOT_INITIALIZED;
@@ -42,7 +43,7 @@ public class BillingUtil implements PurchasesUpdatedListener {
     private Set<String> mTokensToBeConsumed;
     private static BillingUtil mSingleton = null;
     private BillingUtil() {}
-
+   
     /**
      * 鑾峰彇瀹炰緥瀵硅薄
      *
@@ -79,7 +80,12 @@ public class BillingUtil implements PurchasesUpdatedListener {
         });
 
     }
-
+    public void setpayload(String str){
+        payload=str;
+    }
+     public void setsku(String str){
+      sku=str;
+    }
     /**
     
      * @param executeOnSuccess
@@ -281,8 +287,12 @@ public class BillingUtil implements PurchasesUpdatedListener {
             @Override
             public void run() {
                 Bridge.d( "Launching in-app purchase flow. Replace old SKU? " + (oldSkus));
+                Bridge.d(skuDetails);
 //                querySkuDetailsAsync();
+                //结算库3以上的自定义参数
                 BillingFlowParams purchaseParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails)
+                 .setObfuscatedProfileId(payload)  //Some data you want to send
+                 .setObfuscatedAccountId(sku)  //Some d productId
                  .build();
                         // .setOldSkus(oldSkus)
                        
