@@ -61,7 +61,7 @@ class CatePage extends LoginBase {
     datap.addAll({'page': page});
     var datatmp = loadpage(datap);
     var data;
-    
+
     if (isnull(datatmp, 0)) {
       data = datatmp[1];
     } else {
@@ -228,7 +228,7 @@ class CatePage extends LoginBase {
 
   setpagecache(Map<String, dynamic> data, save) {
     String lang = getlang();
-    
+
     String hascode = data.toString().hashCode.toString() + lang;
     var indextmp = index + hascode;
     var cachedatatmp = cachedata + hascode;

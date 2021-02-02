@@ -46,7 +46,7 @@ class MarkBookState extends State<MarkBook> {
   }
 
   loadcate() async {
-    cate = await Catemodel.getcate();   
+    cate = await Catemodel.getcate();
     setState(() {});
   }
   // httpget() async {
