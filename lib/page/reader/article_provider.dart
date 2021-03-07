@@ -49,9 +49,12 @@ class ArticleProvider {
       context, Novel novel, secionid) async {
     var tmp;
     if (novel.type != '3') {
-      var response = await http('book/get_wap_content',
+      // var response = await http('book/get_wap_content',
+      //     {'book_id': novel.id, 'section_id': secionid}, gethead());
+      var response = await http('content/get_book',
           {'book_id': novel.id, 'section_id': secionid}, gethead());
       tmp = getdata(context, response);
+
       var w = {
         'book_id': novel.id,
         'section_id': secionid,
@@ -95,6 +98,7 @@ class ArticleProvider {
             .order('`index` desc')
             .field('section_id')
             .getone();
+
         tmp = {
           "next": isnull(next) ? next['section_id'].toString() : '0',
           "pre": isnull(pre) ? pre['section_id'].toString() : '0',
@@ -117,7 +121,15 @@ class ArticleProvider {
     //     novel.type.toString() +
     //     secionid.toString();
     // setcache(cacheindex, tmp, '-1');
-    Article.setCache(novel.id.toString(),  novel.type.toString(),  secionid.toString(), tmp);
+
+    if (isnull(tmp, 'next')) {
+      Article.setCache(
+          novel.id.toString(), novel.type.toString(), secionid.toString(), tmp);
+    } else {
+      Article.setCache(novel.id.toString(), novel.type.toString(),
+          secionid.toString(), tmp, "46400");
+    }
+
     return tmp;
   }
 }

@@ -237,7 +237,9 @@ class RackSceneState extends State<Rack> {
   }
 
   refresh() {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> fetchData() async {

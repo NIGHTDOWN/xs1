@@ -155,12 +155,14 @@ class CatePage extends LoginBase {
   }
 
   loadcate() async {
-    cate = await Catemodel.getcate();
-    cateleft = cate[0]['child'];
-    selectc1 = cate[0]['child'][0]['category_id'];
-    tag = cate[0]['child'][0]['child'];
-    gethttpdata();
-    setState(() {});
+    try {
+      cate = await Catemodel.getcate();
+      cateleft = cate[0]['child'];
+      selectc1 = cate[0]['child'][0]['category_id'];
+      tag = cate[0]['child'][0]['child'];
+      gethttpdata();
+      setState(() {});
+    } catch (e) {}
   }
 
   loadingstatu() {

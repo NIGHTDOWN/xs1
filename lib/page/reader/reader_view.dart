@@ -265,6 +265,7 @@ class ReaderViewState extends State<ReaderView> {
     } else {
       content = article.contenttmp;
       //如果是未支付需要获取分割字符串后的widget
+
       testobj = Text.rich(
         TextSpan(
           children: ReaderPageAgent.gettextwidget(content),

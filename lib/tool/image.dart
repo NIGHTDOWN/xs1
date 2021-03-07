@@ -25,9 +25,13 @@ class NgImage extends StatelessWidget {
   final BoxFit fit;
   final Widget placeholder;
   bool localcache = false;
-
+  String dsl;
   NgImage(this.imgUrl,
-      {this.width, this.height, this.fit = BoxFit.cover, this.placeholder});
+      {this.width,
+      this.height,
+      this.fit = BoxFit.cover,
+      this.placeholder,
+      this.dsl});
 
 //   @override
 //   State<StatefulWidget> createState() => NgImageState();
@@ -82,11 +86,13 @@ class NgImage extends StatelessWidget {
       height: height,
     );
     var img = imgUrl;
+
     if (ismock == 'dsl:/') {
-      String dsl = imgUrl.substring(5);
+      String dslimg = imgUrl.substring(5);
       // var domian=false;
+      //
       if (dslStatus && isnull(dslDomain)) {
-        img = dslDomain + dsl;
+        img = dsl + dslimg;
       } else {
         return errorWidget;
       }
@@ -141,6 +147,9 @@ class NgImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!isnull(dsl)) {
+      dsl = dslDomain;
+    }
     return _cachednetworkimage();
   }
 }

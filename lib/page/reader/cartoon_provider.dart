@@ -34,7 +34,9 @@ class CartoonProvider {
 
   static Future<dynamic> getremotecontent(
       context, Novel novel, secionid) async {
-    var response = await http('cartoon/get_wap_content',
+    // var response = await http('cartoon/get_wap_content',
+    //     {'cartoon_id': novel.id, 'cart_section_id': secionid}, gethead());
+    var response = await http('content/get_cartoon',
         {'cartoon_id': novel.id, 'cart_section_id': secionid}, gethead());
     var tmp = getdata(context, response);
     var w = {
@@ -52,8 +54,14 @@ class CartoonProvider {
       T('sec').update(update, w);
     }
 
-    Article.setCache(
-        novel.id.toString(), novel.type.toString(), secionid.toString(), tmp);
+    //这里如果获取不到下一章，则缓存记录时间为一天。否则就是缓存记录时间永久
+    if (isnull(tmp, 'next')) {
+      Article.setCache(
+          novel.id.toString(), novel.type.toString(), secionid.toString(), tmp);
+    } else {
+      Article.setCache(novel.id.toString(), novel.type.toString(),
+          secionid.toString(), tmp, "46400");
+    }
     return tmp;
   }
 }

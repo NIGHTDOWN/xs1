@@ -26,7 +26,12 @@ class Mall extends StatefulWidget {
 }
 
 class MallState extends State<Mall> {
-  List banner, newbook, newcart, hotbook, mallcache=[null,null,null,null,null], randdata;
+  List banner,
+      newbook,
+      newcart,
+      hotbook,
+      mallcache = [null, null, null, null, null],
+      randdata;
   List<Widget> more = [SizedBox()];
   var index = 'mallload';
   var cachedata = 'mallload_data', page = 1;
@@ -215,7 +220,9 @@ class MallState extends State<Mall> {
   }
 
   refresh() {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> romget() async {
@@ -244,7 +251,6 @@ class MallState extends State<Mall> {
           children: <Widget>[
             //banner
 
-            // isnull(banner) ? BookBanner(randdata) : SizedBox(),
             isnull(banner)
                 ? HomeBanner(banner)
                 : isnull(randdata) ? BookBanner(randdata) : SizedBox(),
@@ -358,17 +364,19 @@ class MallState extends State<Mall> {
       },
     );
     var cates = Container(
-        width: 25,
-        height: 35,
-        margin: EdgeInsets.only(top: 8, left: 6),
-        child: Image.asset(
-          'assets/images/icon_menu_catalog.png',
-          // size: 35,
-          // width: 25,
-          // height: 35,
-          fit: BoxFit.fill,
-          color: navAlpha <= 0 ? Colors.white : Colors.black38,
-        )
+        width: 35,
+        height: 30,
+        margin: EdgeInsets.only(top: 10, left: 6),
+        child: Container(
+            width: 13,
+            // height: 30,
+            padding: EdgeInsets.only(right: 10, left: 4),
+            // color: Colors.red,
+            child: Image.asset(
+              'assets/images/icon_menu_catalog.png',
+              fit: BoxFit.fill,
+              color: navAlpha <= 0 ? Colors.white : Colors.black38,
+            ))
         //   child: Icon(
         //   Icons.subject,
         //   size: 35,

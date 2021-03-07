@@ -377,7 +377,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
       likebook = cache;
       return cache;
     } else {
-      cache =await romget();
+      cache = await romget();
       if (isnull(cache)) {
         setcache(cahe, cache, '-1');
       }
@@ -464,7 +464,11 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
                     },
                     iconName: 'assets/images/detail_chapter.png',
                     title: lang('目录'),
-                    subtitle: lang('共') + '${novel.chapterCount}' + lang('章'),
+                    subtitle: lang('共') +
+                        " " +
+                        '${novel.chapterCount}' +
+                        " " +
+                        lang('章'),
                   )),
                   // buildTags(),  //标签，此版先不加
                   SizedBox(height: 10),

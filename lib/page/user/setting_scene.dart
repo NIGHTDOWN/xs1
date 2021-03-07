@@ -23,6 +23,7 @@ class SettingScene extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => SettingState();
 }
+
 class SettingState extends State<SettingScene> {
 // class SettingScene extends StatelessWidget {
   var _cacheSizeStr = '0.00B';
@@ -59,7 +60,9 @@ class SettingState extends State<SettingScene> {
   }
 
   reflash() {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   lock() {
@@ -126,7 +129,7 @@ class SettingState extends State<SettingScene> {
 
   @override
   Widget build(BuildContext context) {
-    var setlang = getcache('msg3',false);
+    var setlang = getcache('msg3', false);
 
     bool boo = isnull(setlang);
 
@@ -343,7 +346,6 @@ class SettingState extends State<SettingScene> {
         //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         // ),
         onPressed: () {
-         
           setglang(key);
         },
       ),

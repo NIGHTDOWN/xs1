@@ -4,7 +4,11 @@ import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/chapter.dart';
 import 'package:ng169/obj/novel.dart';
+import 'package:ng169/page/reader/article_provider.dart';
+import 'package:ng169/page/reader/cartoon_provider.dart';
+import 'package:ng169/page/reader/reader_page_agent.dart';
 import 'package:ng169/tool/function.dart';
+import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/t.dart';
 
@@ -22,6 +26,7 @@ class Article {
   List imagestmp = [];
   String contenttmp;
   String section_id;
+  String dsl;
   String book_id;
   String update_time;
   String isfree;
@@ -96,8 +101,7 @@ class Article {
     return cache;
   }
 
-  static setCache(
-      String novelId, String noveltype, String sectionid,  cache,
+  static setCache(String novelId, String noveltype, String sectionid, cache,
       [String time = '-1']) {
     String cacheindex = 'book_' + novelId + noveltype + sectionid;
     setcache(cacheindex, cache, time);
@@ -115,6 +119,8 @@ class Article {
     if (isnull(content)) {
       if (content.toString().length >= cutlength) {
         contenttmp = content.toString().substring(0, cutlength);
+      } else {
+        contenttmp = content;
       }
     }
   }
@@ -206,8 +212,11 @@ class Article {
     var rettmp = await http('user/deblocking', postdata, gethead());
     var ret = getdata(context, rettmp);
     if (isnull(ret)) {
+      Novel novel = await Novel.fromID(novelId, int.parse(booktype));
       //??????
       //??????
+      //拉数据
+      await reload(context, novel, section_id);
       if (isnull(ret['remainder'])) {
         User.upcoin(ret['remainder']);
         var bookcache = getarticlecache();
@@ -222,7 +231,7 @@ class Article {
         //   'bookid': novelId,
         //   'type': booktype,
         // });
-        Novel novel = await Novel.fromID(novelId, int.parse(booktype));
+
         var cache = await Chapter.getcatecache(context, novel);
         //????
         var indexs = await T('sec').where({
@@ -252,6 +261,30 @@ class Article {
     }
 
     return false;
+  }
+
+//重新拉取章节详情
+  reload(context, novel, secid) async {
+    Article article;
+    if (booktype == '1') {
+      await ArticleProvider.getremotecontent(context, novel, section_id);
+      article = await ArticleProvider.fetchArticle(
+          context, novel, int.parse(section_id));
+
+      article.page = ReaderPageAgent.getPage(
+        article.content,
+      );
+    } else {
+      await CartoonProvider.getremotecontent(context, novel, section_id);
+      article = await CartoonProvider.fetchArticle(
+          context, novel, int.parse(section_id));
+    }
+
+    this.content = article.content;
+    this.images = article.images;
+    this.contenttmp = article.content;
+    this.pay = article.pay;
+    this.page = article.page;
   }
 
   Article.fromJson(Map data, Novel novel) {
@@ -301,6 +334,13 @@ class Article {
     title = data['title'].toString();
     images = data['images'];
     content = data['images'].toString();
+    if (dslStatus && isnull(dslDomain)) {
+      if (isnull(data, 'images_dsl')) {
+        dsl = data['dsl'];
+        images = data['images_dsl'];
+        content = data['images_dsl'].toString();
+      }
+    }
 
     isfree = data['isfree'].toString();
     pay = isnull(data['ispay']) ? true : false;
@@ -377,6 +417,7 @@ class Article {
         return page.length;
       } else if (booktype == '2') {
         //漫画分页
+
         return images.length;
       } else if (booktype == '3') {
         //漫画分页

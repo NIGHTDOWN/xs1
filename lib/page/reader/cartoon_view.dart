@@ -479,22 +479,20 @@ class CartoonViewState extends State<CartoonView> {
     // d(widget.article.pay);
     if (widget.article.pay) {
       widget.article.images.forEach((pic) {
-        pics.add(NgImage(
-          pic['url'],
-          width: width,
-          //height: height,
-          placeholder: loadwidget(),
-        ));
+        pics.add(NgImage(pic['url'],
+            width: width,
+            //height: height,
+            placeholder: loadwidget(),
+            dsl: widget.article.dsl));
       });
     } else {
-      // d(widget.article.pay);
+      // d(widget.article.dsl);
       widget.article.imagestmp.forEach((pic) {
-        pics.add(NgImage(
-          pic['url'],
-          width: width,
-          //height: height,
-          placeholder: loadwidget(),
-        ));
+        pics.add(NgImage(pic['url'],
+            width: width,
+            //height: height,
+            placeholder: loadwidget(),
+            dsl: widget.article.dsl));
       });
     }
     pics.add(_buildProgressIndicator());

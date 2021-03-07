@@ -217,7 +217,7 @@ class ReaderSceneState extends State<ReaderScene>
     reflash();
 
     currentArticle = await fetchArticle(articleId);
-   
+
 // d(await currentArticle.ispay());
     if (!isnull(currentArticle)) {
       //章节内容不存在，跳一章
@@ -384,40 +384,48 @@ class ReaderSceneState extends State<ReaderScene>
                   // mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new RaisedButton(
-                        key: null,
-                        onPressed: () {
-                          pop(context);
-                          pop(context);
-                        },
-                        color: const Color(0xFFe0e0e0),
-                        child: new Text(
-                          lang("取消"),
-                          style: new TextStyle(
-                              fontSize: 12.0,
-                              color: const Color(0xFF000000),
-                              fontWeight: FontWeight.w200,
-                              fontFamily: "Roboto"),
-                        )),
                     SizedBox(
                       width: 15,
                     ),
-                    new RaisedButton(
-                        key: null,
-                        onPressed: () {
-                          widget.novel.addgroom();
-                          pop(context);
-                          pop(context);
-                        },
-                        color: SQColor.primary,
-                        child: new Text(
-                          lang("加入书架"),
-                          style: new TextStyle(
-                              fontSize: 12.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w200,
-                              fontFamily: "Roboto"),
-                        ))
+                    Expanded(
+                        child: new RaisedButton(
+                            key: null,
+                            onPressed: () {
+                              pop(context);
+                              pop(context);
+                            },
+                            color: const Color(0xFFe0e0e0),
+                            child: new Text(
+                              lang("取消"),
+                              style: new TextStyle(
+                                  fontSize: 12.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ))),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                        child: new RaisedButton(
+                            key: null,
+                            onPressed: () {
+                              widget.novel.addgroom();
+                              pop(context);
+                              pop(context);
+                            },
+                            color: SQColor.primary,
+                            child: new Text(
+                              lang("加入书架"),
+                              style: new TextStyle(
+                                  fontSize: 12.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ))),
+                    SizedBox(
+                      width: 15,
+                    ),
                   ])
             ]));
 
