@@ -66,7 +66,7 @@
 				<data android:scheme="@string/fb_login_protocol_scheme" />
 			</intent-filter>
 			<!--flutter 开启v2版本支持-->
-			<meta-data android:name="flutterEmbedding" android:value="2" />
+			<!-- <meta-data android:name="flutterEmbedding" android:value="2" /> -->
 		</activity>
 		<!-- fb登入 -->
 		<!-- <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.ng.story.fileprovider" android:exported="false" android:grantUriPermissions="true">
