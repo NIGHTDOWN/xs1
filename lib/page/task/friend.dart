@@ -130,7 +130,7 @@ class Friend extends LoginBase {
     );
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false, //输入框抵住键盘
+      // resizeToAvoidBottomPadding: false, //输入框抵住键盘
       appBar: AppBar(
           title: Container(
         child: Text(lang("邀请有礼")),

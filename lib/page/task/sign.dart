@@ -1312,7 +1312,7 @@ class Sign extends LoginBase {
       ],
     );
     return Scaffold(
-      resizeToAvoidBottomPadding: false, //输入框抵住键盘
+      // resizeToAvoidBottomPadding: false, //输入框抵住键盘
       body: Container(
           height: getScreenHeight(context),
           decoration: topcolor,
