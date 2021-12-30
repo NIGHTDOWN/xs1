@@ -72,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           'nickname': nickname.text,
                           'username': username.text,
                           'password': pwd.text
-                        }).then((data) async {
+                        },gethead()).then((data) async {
                           var gets = getdata(context, data);
 
                           if (gets != false) {

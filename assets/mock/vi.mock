@@ -1,178 +1,18 @@
 {
     "banner":[
        
-        {
-            "scan_seat":"1",
-            "goal_type":"2",
-            "goal_window":"0",
-            "book_id":"22070",
-            "banner_pic":"mock:vi/1287987d5a440f17.jpg",
-            "banner_url":"",
-            "cartoon_id":"0"
-        },
-        {
-            "scan_seat":"1",
-            "goal_type":"2",
-            "goal_window":"0",
-            "book_id":"22460",
-            "banner_pic":"mock:vi/aa7c74b4196864d9.jpg",
-            "banner_url":"",
-            "cartoon_id":"0"
-        },
-        {
-            "scan_seat":"1",
-            "goal_type":"3",
-            "goal_window":"0",
-            "book_id":"0",
-            "banner_pic":"mock:vi/2736bc6324b3f0bc.jpg",
-            "banner_url":"",
-            "cartoon_id":"55278"
-        }
+    
     ],
     "newbook":[
-       
-        {
-            "book_id":"20352",
-            "other_name":"Vực Sâu Ham Muốn",
-            "bpic":"mock:vi/ef1ee70f22f2c82b.png",
-            "type":"1",
-            "bpic_dsl":null,
-            "writer_name":"lookstory",
-            "recommend_num":"1"
-        },
-        {
-            "book_id":"22304",
-            "other_name":"Hôn Là Nghiện!",
-            "bpic":"mock:vi/7935187a502f01b4.jpg",
-            "type":"1",
-            "bpic_dsl":null,
-            "writer_name":"lookstory",
-            "recommend_num":"0"
-        },
-        {
-            "book_id":"20362",
-            "other_name":"Vợ Mới Của Lục Thiếu",
-            "bpic":"mock:vi/220f39860da52f65.jpg",
-            "type":"1",
-            "bpic_dsl":null,
-            "writer_name":"lookstory",
-            "recommend_num":"0"
-        },
-        {
-            "book_id":"22715",
-            "other_name":"Đỉnh Cấp Rể Quý",
-            "bpic":"mock:vi/91d838e94be563c6.jpg",
-            "type":"1",
-            "bpic_dsl":null,
-            "writer_name":"lookstory",
-            "recommend_num":"0"
-        },
-        {
-            "book_id":"20369",
-            "other_name":"Thương Vợ Vô Cùng",
-            "bpic":"mock:vi/b699ac7241773e8a.png",
-            "type":"1",
-            "bpic_dsl":null,
-            "writer_name":"lookstory",
-            "recommend_num":"0"
-        },
-        {
-            "book_id":"20373",
-            "other_name":"Yêu Bà xã hơn tất cả",
-            "bpic":"mock:vi/40482f4aea8dc2ef.png",
-            "type":"1",
-            "bpic_dsl":null,
-            "writer_name":"lookstory",
-            "recommend_num":"1"
-        },
-        {
-            "book_id":"22431",
-            "other_name":"Thỏ Trắng Gặp Sói Xám",
-            "bpic":"mock:vi/eaec07b83f69d474.jpg",
-            "type":"1",
-            "bpic_dsl":null,
-            "writer_name":"lookstory",
-            "recommend_num":"0"
-        }
+      
+      
     ],
     "randdata":[
       
-        {
-            "book_id":"20400",
-            "other_name":"Cô Vợ Dễ Thương",
-            "desc":null,
-            "bpic_dsl":null,
-            "bpic":"mock:vi/1947514dedf8ed67.jpg",
-            "writer_name":"lookstory",
-            "isfree":"1",
-            "update_status":"2",
-            "type":"1"
-        },
-        {
-            "book_id":"20444",
-            "other_name":"Nhị Thiếu Tà Ác",
-            "desc":null,
-            "bpic_dsl":null,
-            "bpic":"mock:vi/0144e19e561c3f43.jpg",
-            "writer_name":"lookstory",
-            "isfree":"1",
-            "update_status":"2",
-            "type":"1"
-        },
-        {
-            "book_id":"21778",
-            "other_name":"Chiếm hữu",
-            "desc":null,
-            "bpic_dsl":null,
-            "bpic":"mock:vi/b471d624ac2b1596.jpg",
-            "writer_name":"lookstory",
-            "isfree":"1",
-            "update_status":"2",
-            "type":"1"
-        },
-        {
-            "book_id":"22426",
-            "other_name":"Tình Yêu Có Độc",
-            "desc":null,
-            "bpic_dsl":null,
-            "bpic":"mock:vi/de1da10683018669.jpg",
-            "writer_name":"lookstory",
-            "isfree":"1",
-            "update_status":"1",
-            "type":"1"
-        },
-        {
-            "book_id":"22457",
-            "other_name":"Em là duy nhất",
-            "desc":null,
-            "bpic_dsl":null,
-            "bpic":"mock:vi/a716594919e16beb.jpg",
-            "writer_name":"lookstory",
-            "isfree":"1",
-            "update_status":"2",
-            "type":"1"
-        },
-        {
-            "book_id":"22592",
-            "other_name":"Đánh Quái Vật Thăng Cấp",
-            "desc":null,
-            "bpic_dsl":null,
-            "bpic":"mock:vi/a8118cfaa4527869.jpg",
-            "writer_name":"lookstory",
-            "isfree":"1",
-            "update_status":"2",
-            "type":"1"
-        }
+      
     ],
     "rack":[
        
-        {
-            "other_name":"Ảnh Hậu Của Chàng Tổng",
-            "bpic":"mock:vi/2175c83cd0789ad7.jpg",
-            "book_id":"20414",
-            "type":"1",
-            "isgroom":"1",
-            "desc":null
-        }
+       
     ]
 }

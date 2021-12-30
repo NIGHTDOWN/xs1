@@ -638,10 +638,11 @@ class _SignInPageState extends State<SignInPage> {
 
           // _signInFormKey.currentState.save();
           if (!ngbrige.data['isload']) {
-            http('login/login', {
-              'username': username.text,
-              'password': pwd.text
-            }).then((data) async {
+            http(
+                    'login/login',
+                    {'username': username.text, 'password': pwd.text},
+                    gethead())
+                .then((data) async {
               var gets = getdata(context, data);
 
               if (isnull(gets)) {
