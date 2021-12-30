@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"  package="com.ng.story">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools" package="com.ng.story">
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.CAMERA" android:required="false"/>
@@ -64,6 +65,8 @@
 				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:scheme="@string/fb_login_protocol_scheme" />
 			</intent-filter>
+			<!--flutter 开启v2版本支持-->
+			<!-- <meta-data android:name="flutterEmbedding" android:value="2" /> -->
 		</activity>
 		<!-- fb登入 -->
 		<!-- <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.ng.story.fileprovider" android:exported="false" android:grantUriPermissions="true">
@@ -75,16 +78,8 @@
 		<!-- <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.ng.story.FileProvider" android:exported="false" android:grantUriPermissions="true" tools:replace="android:authorities">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/filepaths" tools:replace="android:resource"/>
 		</provider> -->
-		<provider
-                android:name="androidx.core.content.FileProvider"
-                android:authorities="${applicationId}.fileProvider"
-                android:exported="false"
-                android:grantUriPermissions="true"
-                tools:replace="android:authorities">
-            <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/filepaths"
-                    tools:replace="android:resource" />
-        </provider>
+		<provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.fileProvider" android:exported="false" android:grantUriPermissions="true" tools:replace="android:authorities">
+			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/filepaths" tools:replace="android:resource" />
+		</provider>
 	</application>
 </manifest>

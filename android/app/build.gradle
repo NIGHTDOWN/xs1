@@ -45,6 +45,8 @@ android {
     // lintOptions {
     //     disable 'InvalidPackage'
     // }
+
+    
     //正式包开这个才能编译
     lintOptions {
             checkReleaseBuilds false

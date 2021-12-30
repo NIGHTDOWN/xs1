@@ -52,43 +52,51 @@ showbox(
   double width,
 ]) {
   var w = isnull(width) ? width : getScreenWidth(g('context')) * .8;
-  var c = Container(
-    child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            // padding: EdgeInsets.all(4),
-            decoration: new BoxDecoration(
-                color: bgcolor,
-                borderRadius: new BorderRadius.circular(radius)),
-            child: body,
-            width: w,
-            // height: 250,
-          ),
-          showclosebtn
-              ? GestureDetector(
-                  onTap: () {
-                    pop(g('context'));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(14),
-                    padding: EdgeInsets.all(4),
-                    decoration: new BoxDecoration(
-                      borderRadius: new BorderRadius.circular(25),
-                      border: new Border.all(color: bgcolor, width: 2),
-                    ),
-                    child: Icon(
-                      Icons.clear,
-                      size: 25,
-                      color: bgcolor,
-                    ),
-                  ),
-                )
-              : Container()
-        ]),
+
+  showDialog(
+    context: g('context'),
+    barrierDismissible: true,
+    builder: (ctx) {
+      var c = Container(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                // padding: EdgeInsets.all(4),
+                decoration: new BoxDecoration(
+                    color: bgcolor,
+                    borderRadius: new BorderRadius.circular(radius)),
+                child: body,
+                width: w,
+                // height: 250,
+              ),
+              showclosebtn
+                  ? GestureDetector(
+                      onTap: () {
+                        pop(g('context'));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(14),
+                        padding: EdgeInsets.all(4),
+                        decoration: new BoxDecoration(
+                          borderRadius: new BorderRadius.circular(25),
+                          border: new Border.all(color: bgcolor, width: 2),
+                        ),
+                        child: Icon(
+                          Icons.clear,
+                          size: 25,
+                          color: bgcolor,
+                        ),
+                      ),
+                    )
+                  : Container()
+            ]),
+      );
+
+      return c;
+    },
   );
-  showDialog(context: g('context'), barrierDismissible: true, child: c);
 }
 
 Future msgbox(BuildContext context, Function event,
@@ -448,7 +456,6 @@ alertupinfo(BuildContext context, [bool alert = false, bool isauto = false]) {
         Down.autodown(context, upurl);
       } else {
         msgbox(context, () {
-         
           Down.downandinstall(context, upurl);
         }, null, Text(serverinfo['upgrade_point']), null, Text(lang('确定升级')));
       }
