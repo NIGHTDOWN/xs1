@@ -186,7 +186,7 @@ class AddComment extends LoginBase {
                                 )
                               : Container()
                         ]),
-                    padding: EdgeInsets.all(13),
+                    padding: EdgeInsets.all(5),
                   )),
             ),
             SizedBox(

@@ -704,6 +704,7 @@ class Kefu extends LoginBase {
     return Container(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           // Button send image
           Material(
@@ -733,22 +734,25 @@ class Kefu extends LoginBase {
 
           // Edit text
           Flexible(
-              child: ExtendedTextField(
-            onSubmitted: (String str) {
-              onSendMessage(str, 0);
-            },
-            minLines: 1,
-            maxLines: 8,
-            style: TextStyle(color: primaryColor, fontSize: 15.0),
-            controller: textEditingController,
-            decoration: InputDecoration.collapsed(
-              hintText: lang('Type your message...'),
-              hintStyle: TextStyle(color: greyColor),
-            ),
-            focusNode: focusNode,
-            specialTextSpanBuilder: RichBuilder(
-                showAtBackground: true, type: BuilderType.extendedTextField),
-          )
+              child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                  child: ExtendedTextField(
+                    onSubmitted: (String str) {
+                      onSendMessage(str, 0);
+                    },
+                    minLines: 1,
+                    maxLines: 8,
+                    style: TextStyle(color: primaryColor, fontSize: 15.0),
+                    controller: textEditingController,
+                    decoration: InputDecoration.collapsed(
+                      hintText: lang('Type your message...'),
+                      hintStyle: TextStyle(color: greyColor),
+                    ),
+                    focusNode: focusNode,
+                    specialTextSpanBuilder: RichBuilder(
+                        showAtBackground: true,
+                        type: BuilderType.extendedTextField),
+                  ))
               // Container(
               //   child: TextField(
               //     onSubmitted: (String str) {

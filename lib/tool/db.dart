@@ -92,13 +92,13 @@ class Db {
 
   Future getone(_sql) async {
     var data = await db.rawQuery(_sql);
-   
+
     _sql = '';
 
     if (data.length <= 0) {
       return null;
     } else {
-      return data[0];
+      return data.first;
     }
   }
 

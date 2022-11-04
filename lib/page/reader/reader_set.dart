@@ -284,7 +284,7 @@ class ReaderSetState extends State<ReaderSet>
               },
               child: Text(
                 "A+",
-                style: TextStyle(fontSize: 21),
+                style: TextStyle(fontSize: 15),
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith((states) {

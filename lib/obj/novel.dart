@@ -211,7 +211,9 @@ class Novel {
   Novel.fromJson(Map data) {
     id = isnull(data['book_id'])
         ? data['book_id']
-        : isnull(data['cartoon_id']) ? data['cartoon_id'] : 0;
+        : isnull(data['cartoon_id'])
+            ? data['cartoon_id']
+            : 0;
     //firstArticleId = data['first_article_id'];
     name = data['other_name'];
     imgUrl = data['bpic'];
@@ -333,40 +335,38 @@ class Novel {
   }
 
   Novel.fromDb(Map data) {
-    //d(data);
-    //d(data['book_id']);
-    id = data['bookid'].toString();
-    dbid = data['id'].toString();
-    //d(id);
-    //firstArticleId = data['first_article_id'];
-    // if (data['bookname'] is int) {
-    //   name = data['bookname'].toString();
-    // } else {
-    name = '' + data['bookname'].toString();
-    // }
-    imgUrl = data['pic'];
-    desc = data['desc'];
-    type = data['type'].toString();
-    isgroom = data['isgroom'].toString();
-    readChapter = isnull(data['readsec']) ? int.parse(data['readsec']) : 0;
-    lastChapter = isnull(data['secnum']) ? int.parse(data['secnum']) : 0;
-    lastsecnum = data['lastsecnum'].toString();
-    nowsecnum = data['nowsecnum'].toString();
-    if (isnull(lastsecnum) && isnull(nowsecnum)) {
-      //执行
+    try {
+      id = data['bookid'].toString();
+      dbid = data['id'].toString();
 
-      upsecnum = int.parse(nowsecnum) - int.parse(lastsecnum);
-    }
+      name = '' + data['bookname'].toString();
 
-    author = isnull(data['author']) ? data['author'] : lang('匿名');
-    _status =
-        isnull(data['update_status']) ? int.parse(data['update_status']) : 0;
-    switch (_status) {
-      case 1:
-        status = lang('完结');
-        break;
-      default:
-        status = lang('连载中');
+      imgUrl = data['pic'];
+      desc = data['desc'];
+      type = data['type'].toString();
+      isgroom = data['isgroom'].toString();
+      readChapter = isnull(data['readsec']) ? int.parse(data['readsec']) : 0;
+      lastChapter = isnull(data['secnum']) ? int.parse(data['secnum']) : 0;
+      lastsecnum = data['lastsecnum'].toString();
+      nowsecnum = data['nowsecnum'].toString();
+      if (isnull(lastsecnum) && isnull(nowsecnum)) {
+        //执行
+
+        upsecnum = int.parse(nowsecnum) - int.parse(lastsecnum);
+      }
+
+      author = isnull(data['author']) ? data['author'] : lang('匿名');
+      _status =
+          isnull(data['update_status']) ? int.parse(data['update_status']) : 0;
+      switch (_status) {
+        case 1:
+          status = lang('完结');
+          break;
+        default:
+          status = lang('连载中');
+      }
+    } catch (e) {
+      d(e);
     }
   }
   //获取书籍信息，先从数据库拉取，数据库没就从远程拉取

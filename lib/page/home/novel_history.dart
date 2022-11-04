@@ -5,7 +5,6 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/url.dart';
 
-
 class NovelHistory extends StatelessWidget {
   final List novelss;
 
@@ -14,8 +13,6 @@ class NovelHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var novels = novelss;
-
-   
 
     List<Widget> children = [];
     for (var i = 0; i < novels.length; i++) {
@@ -68,12 +65,11 @@ class NovelHistory extends StatelessWidget {
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 5),
-      
         SizedBox(height: 5),
         Row(
           children: <Widget>[
             Text(
-              novel.author,
+              novel.author.toString(),
               style: TextStyle(fontSize: 14, color: SQColor.gray),
             ),
             Expanded(child: Container()),
@@ -96,7 +92,7 @@ class NovelHistory extends StatelessWidget {
         borderRadius: BorderRadius.circular(3),
       ),
       child: Text(
-        title,
+        title.toString(),
         style: TextStyle(fontSize: 11, color: color),
       ),
     );

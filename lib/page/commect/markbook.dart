@@ -368,7 +368,7 @@ class MarkBookState extends State<MarkBook> {
                       lang('提交'),
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
-                    padding: EdgeInsets.all(13),
+                    padding: EdgeInsets.all(5),
                   )),
             ),
             SizedBox(

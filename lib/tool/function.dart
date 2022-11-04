@@ -1,24 +1,24 @@
 import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:device_info/device_info.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
+
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/novel.dart';
-import 'package:ng169/style/screen.dart';
+
 import 'package:ng169/tool/down.dart';
 import 'package:ng169/tool/toast.dart';
 import 'package:share/share.dart';
 import 'dart:ui' as ui show instantiateImageCodec, Codec,FrameInfo;
-//import 'package:permission_handler/permission_handler.dart';
+
 
 import 'global.dart';
 import 'http.dart';
 import 'lang.dart';
-import 'notify.dart';
+
 
 void d(data, [index = 1]) {
   if (!isdebug) {

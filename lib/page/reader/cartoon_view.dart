@@ -651,7 +651,7 @@ class CartoonViewState extends State<CartoonView> {
             lang('解锁本章节'),
             style: TextStyle(fontSize: 15),
           ),
-          margin: EdgeInsets.all(13),
+          margin: EdgeInsets.all(5),
         ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
@@ -694,7 +694,7 @@ class CartoonViewState extends State<CartoonView> {
             lang('立即充值'),
             style: TextStyle(fontSize: 15),
           ),
-          margin: EdgeInsets.all(13),
+          margin: EdgeInsets.all(5),
         ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
