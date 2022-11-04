@@ -97,7 +97,11 @@ class SettingState extends State<SettingScene> {
     if (null == value) {
       return 0;
     }
-    List<String> unitArr = List()..add('B')..add('K')..add('M')..add('G');
+    List<String> unitArr = List()
+      ..add('B')
+      ..add('K')
+      ..add('M')
+      ..add('G');
     int index = 0;
     while (value > 1024) {
       index++;
@@ -257,8 +261,15 @@ class SettingState extends State<SettingScene> {
               //     border: Border.all(color: Color(0xff5f6fff), width: 1),
               //     color: Colors.white,
               //     borderRadius: BorderRadius.circular((5.0))),
-              child: RaisedButton(
-                color: Colors.red,
+              child: TextButton(
+                // color: Colors.red,
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.resolveWith((states) =>
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10) //设置圆角
+                            )),
+                    backgroundColor: MaterialStateProperty.resolveWith(
+                        (states) => Colors.red)),
                 child: new Text(lang('注销'),
                     style: TextStyle(
                         color: Colors.white,
@@ -271,9 +282,9 @@ class SettingState extends State<SettingScene> {
                   pop(context);
                 },
                 // splashColor: Colors.pink,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10) //设置圆角
-                    ),
+                // shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(10) //设置圆角
+                //     ),
               )
               // MaterialButton(
               //   color: Colors.red,
@@ -332,13 +343,23 @@ class SettingState extends State<SettingScene> {
           // maxWidth: getScreenWidth(context) * .2,
           // maxHeight: 50,
           ),
-      child: RaisedButton(
+      child: TextButton(
         // child: Text('圆角按钮'),
         // color: Colors.blue,
-        textColor: Colors.white,
-        elevation: 20,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: Colors.grey,
+        // textColor: Colors.white,
+        // elevation: 20,
+        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        // color: Colors.grey,
+
+        style: ButtonStyle(
+            shape: MaterialStateProperty.resolveWith((states) =>
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10) //设置圆角
+                    )),
+            backgroundColor:
+                MaterialStateProperty.resolveWith((states) => Colors.grey),
+            foregroundColor:
+                MaterialStateProperty.resolveWith((states) => Colors.white)),
         child: Text(val),
         // Chip(
         //   label: Text(val),

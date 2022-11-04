@@ -23,7 +23,7 @@ class Notify {
     var initializationSettingsIOS = new IOSInitializationSettings(
         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     var initializationSettings = new InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
@@ -85,12 +85,13 @@ class Notify {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'ng169', 'ng169', 'ng169',
         // 'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max,
-        priority: Priority.High);
+        importance: Importance.max,
+        priority: Priority.high);
     //IOS的通知配置
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
     //显示通知，其中 0 代表通知的 id，用于区分通知。
 
     await Notify.flutterLocalNotificationsPlugin.show(

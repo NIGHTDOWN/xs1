@@ -115,8 +115,9 @@ class HomeBanner extends StatelessWidget {
             },
           );
         }).toList(),
-        aspectRatio: 2,
-        autoPlay: true,
+        // aspectRatio: 2,
+        // autoPlay: true,
+        options: new CarouselOptions(aspectRatio: 2, autoPlay: true),
       ),
     );
   }

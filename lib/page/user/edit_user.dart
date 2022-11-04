@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -194,9 +195,13 @@ class EditUserState extends State<EditUser> {
       ),
       onTap: () async {
         Navigator.pop(context);
-        var tmpimage = await ImagePicker.pickImage(source: ImageSource.camera);
-        cutimg(tmpimage);
+        // var tmpimage = await ImagePicker.pickImage(source: ImageSource.camera);
+        // cutimg(tmpimage);
+        PickedFile tmpimages =
+            await ImagePicker.platform.pickImage(source: ImageSource.camera);
 
+        File f = File(tmpimages.path);
+        cutimg(f);
         reflash();
       },
     );
@@ -208,9 +213,12 @@ class EditUserState extends State<EditUser> {
       ),
       onTap: () async {
         Navigator.pop(context);
-        var tmpimage = await ImagePicker.pickImage(source: ImageSource.gallery);
+        // var tmpimage = await ImagePicker.pickImage(source: ImageSource.gallery);
+        PickedFile tmpimages =
+            await ImagePicker.platform.pickImage(source: ImageSource.gallery);
 
-        cutimg(tmpimage);
+        File f = File(tmpimages.path);
+        cutimg(f);
         reflash();
       },
     );
@@ -448,7 +456,8 @@ class EditUserState extends State<EditUser> {
     var textFormFieldyq = new TextFormField(
       keyboardType: TextInputType.number, //限定数字键盘
       inputFormatters: <TextInputFormatter>[
-        WhitelistingTextInputFormatter.digitsOnly, //只输入数字
+        FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+        // WhitelistingTextInputFormatter.digitsOnly, //只输入数字
         LengthLimitingTextInputFormatter(15) //限制长度
       ],
       maxLines: 1,
@@ -526,11 +535,17 @@ class EditUserState extends State<EditUser> {
                       // mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        new FlatButton(
+                        new TextButton(
                             onPressed: () {
                               pop(context);
                             },
-                            color: Color(0xffd3d3d3),
+                            // color: Color(0xffd3d3d3),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                return Color(0xffd3d3d3);
+                              }),
+                            ),
                             child: new Text(
                               lang("取消"),
                               style: new TextStyle(
@@ -540,11 +555,17 @@ class EditUserState extends State<EditUser> {
                               ),
                             )),
                         SizedBox(width: 10),
-                        new FlatButton(
+                        new TextButton(
                             onPressed: () {
                               sureyq();
                             },
-                            color: SQColor.primary,
+                            // color: SQColor.primary,
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                return SQColor.primary;
+                              }),
+                            ),
                             child: new Text(
                               lang("确定"),
                               style: new TextStyle(

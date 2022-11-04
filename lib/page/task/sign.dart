@@ -292,19 +292,36 @@ class Sign extends LoginBase {
                   color: Colors.black45,
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   pop(context);
                 },
                 child: Text(lang("确定")),
-                color: Color(0xff37a8ff),
-                textColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Color(0x8037a8ff),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(8)),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                    return Color(0xff37a8ff);
+                  }),
+                  foregroundColor: MaterialStateProperty.resolveWith((states) {
+                    return Colors.white;
+                  }),
+                  shape: MaterialStateProperty.resolveWith((states) {
+                    return RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Color(0x8037a8ff),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8));
+                  }),
+                ),
+
+                // color: Color(0xff37a8ff),
+                // textColor: Colors.white,
+                // shape: RoundedRectangleBorder(
+                //     side: BorderSide(
+                //       color: Color(0x8037a8ff),
+                //       width: 1,
+                //     ),
+                //     borderRadius: BorderRadius.circular(8)),
               )
             ]))
       ]),
@@ -642,8 +659,7 @@ class Sign extends LoginBase {
                     } else {
                       type = 1;
                     }
-                    
-                    
+
                     novel = await Novel.fromID(id, type);
                   }
                   boosl = await gourl(context, MarkBook(novel: novel));
@@ -651,15 +667,14 @@ class Sign extends LoginBase {
                   if (isnull(boosl) && boosl > 0) {
                     User.addcoin(tmpcoin);
                     showcai(lang('奖励到账'), tmpcoin);
-                   if (isnull(taskdata, temptype)) {
-                        taskdata[temptype]['num'] =
-                            (1 + int.parse(taskdata[temptype]['num']))
-                                .toString();
-                        reflash();
-                      } else {
-                        taskdata[temptype] = {'num': '1'};
-                        reflash();
-                      }
+                    if (isnull(taskdata, temptype)) {
+                      taskdata[temptype]['num'] =
+                          (1 + int.parse(taskdata[temptype]['num'])).toString();
+                      reflash();
+                    } else {
+                      taskdata[temptype] = {'num': '1'};
+                      reflash();
+                    }
                   } else {}
                   return;
                 } else {
@@ -1319,7 +1334,7 @@ class Sign extends LoginBase {
           child: SingleChildScrollView(
               child: SizedBox(
                   child: Stack(
-            overflow: Overflow.visible,
+            // overflow: Overflow.visible,
             children: <Widget>[
               body,
               _signbottomg(),

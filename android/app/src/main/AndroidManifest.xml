@@ -23,7 +23,7 @@
 	additional functionality it is fine to subclass or reimplement
 	FlutterApplication and put your custom class here.
 	-->
-	<application android:name="io.flutter.app.FlutterApplication" android:label="LookStory" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true">
+	<application  android:label="LookStory" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true">
 		<activity android:name=".MainActivity" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
 			<!--
 			This keeps the window background of the activity showing
@@ -31,6 +31,7 @@
 			there is no splash screen (such as the default splash screen
 			defined in @style/LaunchTheme).
 			-->
+			<meta-data android:name="flutterEmbedding" android:value="2"/>
 			<meta-data android:name="io.flutter.app.android.SplashScreenUntilFirstFrame" android:value="true" />
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -51,10 +52,10 @@
 		<meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true" />
 		<meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="face" />
 		<!-- 谷歌广告 -->
-		<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-1390959630806254~6526996358"/>
-		<meta-data android:name="com.google.android.gms.ads.AD_MANAGER_APP" android:value="true"/>
+		<!-- <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-1390959630806254~6526996358"/>
+		<meta-data android:name="com.google.android.gms.ads.AD_MANAGER_APP" android:value="true"/> -->
 		<!-- fb登入 -->
-		<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+		<!-- <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 		<activity android:name="com.facebook.FacebookActivity" android:configChanges=
             "keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="@string/app_name" />
 
@@ -65,9 +66,8 @@
 				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:scheme="@string/fb_login_protocol_scheme" />
 			</intent-filter>
-			<!--flutter 开启v2版本支持-->
-			<!-- <meta-data android:name="flutterEmbedding" android:value="2" /> -->
-		</activity>
+			
+		</activity> -->
 		<!-- fb登入 -->
 		<!-- <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.ng.story.fileprovider" android:exported="false" android:grantUriPermissions="true">
 

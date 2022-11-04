@@ -292,12 +292,30 @@ class CatePage extends LoginBase {
   var selectc1, selectc2 = 0, selectc3 = 1, selecttype = 1;
   List cateleft = [], tag = [];
   Widget gettbtn(String title, int type) {
-    var btn = RaisedButton(
+    var btn = TextButton(
       child: Text(title),
-      color: selecttype != type ? SQColor.lightGray : SQColor.primary,
-      textColor: selecttype == type ? SQColor.white : SQColor.darkGray,
-      // elevation: 20,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          if (selecttype != type) {
+            return SQColor.lightGray;
+          }
+          return SQColor.primary;
+        }),
+        foregroundColor: MaterialStateProperty.resolveWith((states) {
+          if (selecttype == type) {
+            return SQColor.white;
+          }
+          return SQColor.darkGray;
+        }),
+        shape: MaterialStateProperty.resolveWith((states) {
+          return RoundedRectangleBorder(borderRadius: BorderRadius.circular(7));
+        }),
+      ),
+
+      // color: selecttype != type ? SQColor.lightGray : SQColor.primary,
+      // textColor: selecttype == type ? SQColor.white : SQColor.darkGray,
+      // // elevation: 20,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
       onPressed: () {
         if (selecttype == type) return;
         var s;

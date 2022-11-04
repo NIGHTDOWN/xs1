@@ -5,7 +5,6 @@ import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
 
-
 class AddWrong extends StatefulWidget {
   final Novel novel;
   final String secid;
@@ -185,8 +184,11 @@ class AddWrongState extends State<AddWrong> {
               height: 40,
             ),
             Expanded(
-              child: FlatButton(
-                  color: SQColor.primary,
+              child: TextButton(
+                  // color: SQColor.primary,
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) => SQColor.primary)),
                   onPressed: submit,
                   child: Padding(
                     child: Text(

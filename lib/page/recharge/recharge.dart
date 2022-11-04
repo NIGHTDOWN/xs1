@@ -215,11 +215,25 @@ class Recharge extends LoginBase {
         ),
         margintop,
         //立即充值按钮
-        FlatButton(
-          color: color2,
-          padding: EdgeInsets.all(10),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+              return color2;
+            }),
+            // foregroundColor: MaterialStateProperty.resolveWith((states) {
+            //   return Styles.getTheme()['activefontcolor'];
+            // }),
+            padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+            shape: MaterialStateProperty.resolveWith((states) {
+              return RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10));
+            }),
+          ),
+
+          // color: color2,
+          // padding: EdgeInsets.all(10),
+          // shape:
+          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Text(
             lang('立即充值'),
             style: firstsend1,
@@ -229,11 +243,24 @@ class Recharge extends LoginBase {
           },
         ),
         debug
-            ? FlatButton(
-                color: color2,
-                padding: EdgeInsets.all(10),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+            ? TextButton(
+                // color: color2,
+                // padding: EdgeInsets.all(10),
+                // shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(10)),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                    return color2;
+                  }),
+                  // foregroundColor: MaterialStateProperty.resolveWith((states) {
+                  //   return Styles.getTheme()['activefontcolor'];
+                  // }),
+                  padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                  shape: MaterialStateProperty.resolveWith((states) {
+                    return RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10));
+                  }),
+                ),
                 child: Text(
                   lang('回调测试'),
                   style: firstsend1,
@@ -323,7 +350,7 @@ class Recharge extends LoginBase {
           )),
     );
     var p = Stack(
-      overflow: Overflow.visible,
+      // overflow: Overflow.visible,
       children: <Widget>[
         Container(
           decoration: new BoxDecoration(

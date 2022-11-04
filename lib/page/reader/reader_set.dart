@@ -242,7 +242,7 @@ class ReaderSetState extends State<ReaderSet>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            child: FlatButton(
+            child: TextButton(
               onPressed: () {
                 size--;
                 changesize(size);
@@ -251,10 +251,18 @@ class ReaderSetState extends State<ReaderSet>
                 "A-",
                 style: TextStyle(fontSize: 15),
               ),
-              color: Styles.getTheme()['activecolor'],
-              textColor: Styles.getTheme()['activefontcolor'],
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  return Styles.getTheme()['activecolor'];
+                }),
+                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                  return Styles.getTheme()['activefontcolor'];
+                }),
+                shape: MaterialStateProperty.resolveWith((states) {
+                  return RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8));
+                }),
+              ),
             ),
           ),
           Expanded(
@@ -269,7 +277,7 @@ class ReaderSetState extends State<ReaderSet>
             ),
           ),
           Expanded(
-            child: FlatButton(
+            child: TextButton(
               onPressed: () {
                 size++;
                 changesize(size);
@@ -278,10 +286,18 @@ class ReaderSetState extends State<ReaderSet>
                 "A+",
                 style: TextStyle(fontSize: 21),
               ),
-              color: Styles.getTheme()['activecolor'],
-              textColor: Styles.getTheme()['activefontcolor'],
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  return Styles.getTheme()['activecolor'];
+                }),
+                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                  return Styles.getTheme()['activefontcolor'];
+                }),
+                shape: MaterialStateProperty.resolveWith((states) {
+                  return RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8));
+                }),
+              ),
             ),
           )
         ],
@@ -369,7 +385,7 @@ class ReaderSetState extends State<ReaderSet>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            child: FlatButton(
+            child: TextButton(
               onPressed: () {
                 if (fx == '1') {
                   return;
@@ -379,19 +395,26 @@ class ReaderSetState extends State<ReaderSet>
                 // readfx
               },
               child: Text(lang('左右翻页')),
-              color: fx == '1'
-                  ? Styles.getTheme()['cateon']
-                  : Styles.getTheme()['activecolor'],
-              textColor: Styles.getTheme()['activefontcolor'],
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  if (fx == '1') return Styles.getTheme()['cateon'];
+                  return Styles.getTheme()['activecolor'];
+                }),
+                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                  return Styles.getTheme()['activefontcolor'];
+                }),
+                shape: MaterialStateProperty.resolveWith((states) {
+                  return RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8));
+                }),
+              ),
             ),
           ),
           SizedBox(
             width: 6,
           ),
           Expanded(
-            child: FlatButton(
+            child: TextButton(
               onPressed: () {
                 if (fx == '2') {
                   return;
@@ -400,12 +423,19 @@ class ReaderSetState extends State<ReaderSet>
                 widget.reload();
               },
               child: Text(lang('上下翻页')),
-              color: fx == '2'
-                  ? Styles.getTheme()['cateon']
-                  : Styles.getTheme()['activecolor'],
-              textColor: Styles.getTheme()['activefontcolor'],
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  if (fx == '1') return Styles.getTheme()['cateon'];
+                  return Styles.getTheme()['activecolor'];
+                }),
+                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                  return Styles.getTheme()['activefontcolor'];
+                }),
+                shape: MaterialStateProperty.resolveWith((states) {
+                  return RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8));
+                }),
+              ),
             ),
           )
         ],

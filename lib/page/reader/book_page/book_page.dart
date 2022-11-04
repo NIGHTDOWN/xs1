@@ -114,14 +114,14 @@ class _BookPageState extends State<BookPage>
       ..addListener(() {
         if (animationController.isAnimating) {
           setState(() {
-            var bdx = cancelValue.begin.dx;
-            var bdy = cancelValue.begin.dy;
+            // var bdx = cancelValue.begin.dx;
+            // var bdy = cancelValue.begin.dy;
 
-            var edx = cancelValue.end.dx;
-            var edy = cancelValue.end.dy;
+            // var edx = cancelValue.end.dx;
+            // var edy = cancelValue.end.dy;
 
-            curPoint = CalPoint.data(
-                bdx + edx * cancelAnim.value, bdy + edy * cancelAnim.value);
+            // curPoint = CalPoint.data(
+            //     bdx + edx * cancelAnim.value, bdy + edy * cancelAnim.value);
           });
         }
       })
@@ -147,11 +147,11 @@ class _BookPageState extends State<BookPage>
 
   initstringx() {
     // content = widget.currentArticle.stringAtPageIndex(widget.pageIndex);
-    if(!isnull(widget.currentArticle)){
-      return ;
+    if (!isnull(widget.currentArticle)) {
+      return;
     }
     int ccount = widget.currentArticle.pageCount - 1;
-   
+
     int page2 = widget.pageIndex + 1;
     //未支付的显示截取部分
     if (widget.currentArticle.pay) {

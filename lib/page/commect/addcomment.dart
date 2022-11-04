@@ -156,8 +156,11 @@ class AddComment extends LoginBase {
               height: 40,
             ),
             Expanded(
-              child: FlatButton(
-                  color: SQColor.primary,
+              child: TextButton(
+                  // color: SQColor.primary,
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) => SQColor.primary)),
                   onPressed: submit,
                   child: Padding(
                     child: Row(

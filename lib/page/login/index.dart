@@ -119,10 +119,17 @@ class _Index extends State<Index> {
                 duration: Duration(milliseconds: 500),
                 curve: Curves.decelerate);
           },
-          child: new FlatButton(
+          child: new TextButton(
             // disabledTextColor: Colors.black,
-            disabledTextColor:
-                _currentPage == 0 ? SQColor.darkGray : SQColor.white,
+            // disabledTextColor:
+            //     _currentPage == 0 ? SQColor.darkGray : SQColor.white,
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith((states) {
+              if (_currentPage == 0) {
+                return SQColor.darkGray;
+              }
+              return SQColor.white;
+            })),
             child: new Text(
               lang("登入"),
               style: TextStyle(
@@ -144,8 +151,6 @@ class _Index extends State<Index> {
                   ? BoxDecoration(
                       borderRadius: _borderRadius,
                       color: Colors.white,
-
-                      
                     )
                   : null,
               child: GestureDetector(
@@ -154,12 +159,17 @@ class _Index extends State<Index> {
                       duration: Duration(milliseconds: 500),
                       curve: Curves.decelerate);
                 },
-                child: new FlatButton(
+                child: new TextButton(
                   // shape: RoundedRectangleBorder(
                   //   borderRadius: _borderRadius,
                   // ),
-                  disabledTextColor:
-                      _currentPage == 1 ? SQColor.darkGray : SQColor.white,
+                  style: ButtonStyle(backgroundColor:
+                      MaterialStateProperty.resolveWith((states) {
+                    if (_currentPage == 1) {
+                      return SQColor.darkGray;
+                    }
+                    return SQColor.white;
+                  })),
                   child: new Text(
                     lang("注册"),
                     style: TextStyle(

@@ -72,7 +72,9 @@ class MeHeaderState extends State<MeHeader> {
           child: GestureDetector(
               child: Text(
                 (isnull(user)
-                        ? isnull(user['more']) ? user['more'] : lang('编辑用户')
+                        ? isnull(user['more'])
+                            ? user['more']
+                            : lang('编辑用户')
                         : lang('点击登入')) +
                     '>',
                 style: TextStyle(fontSize: 12, color: SQColor.gray),
@@ -89,7 +91,7 @@ class MeHeaderState extends State<MeHeader> {
           // margin: EdgeInsets.only(
           //     left: isnull(line_padding_left) ? line_padding_left : 60),
         ),
-        FlatButton(
+        TextButton(
           child: Row(
             children: <Widget>[
               // Icon(Icons.card_giftcard),

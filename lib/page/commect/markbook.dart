@@ -232,12 +232,20 @@ class MarkBookState extends State<MarkBook> {
   }
 
   Widget getsnone(obj) {
-    var btn = RaisedButton(
+    var btn = TextButton(
       child: Text(lang("t" + obj['category_name'])),
-      color: SQColor.gray,
-      textColor: Colors.white,
-      elevation: 20,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      // color: SQColor.gray,
+      // textColor: Colors.white,
+      // elevation: 20,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.resolveWith((states) => SQColor.gray),
+          foregroundColor:
+              MaterialStateProperty.resolveWith((states) => SQColor.white),
+          shape: MaterialStateProperty.resolveWith((states) =>
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)))),
+
       onPressed: () {
         _changed3(obj);
       },
@@ -249,12 +257,21 @@ class MarkBookState extends State<MarkBook> {
   }
 
   Widget getson(obj) {
-    var btn = RaisedButton(
+    var btn = TextButton(
       child: Text(lang("t" + obj['category_name'])),
-      color: SQColor.orange,
-      textColor: Colors.white,
-      elevation: 20,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      // color: SQColor.orange,
+      // textColor: Colors.white,
+      // elevation: 20,
+
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+
+      style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.resolveWith((states) => SQColor.orange),
+          foregroundColor:
+              MaterialStateProperty.resolveWith((states) => SQColor.white),
+          shape: MaterialStateProperty.resolveWith((states) =>
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)))),
       onPressed: () {
         _changed4(obj);
       },
@@ -340,8 +357,11 @@ class MarkBookState extends State<MarkBook> {
               height: 40,
             ),
             Expanded(
-              child: FlatButton(
-                  color: SQColor.primary,
+              child: TextButton(
+                  // color: SQColor.primary,
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) => SQColor.primary)),
                   onPressed: submit,
                   child: Padding(
                     child: Text(

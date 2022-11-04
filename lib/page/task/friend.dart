@@ -164,15 +164,24 @@ class Friend extends LoginBase {
   }
 
   Widget getbody() {
-    var box = RaisedButton(
+    var box = TextButton(
       onPressed: () {
         shares();
       },
-      textColor: Colors.white,
-      clipBehavior: Clip.hardEdge,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(22.0))),
-      padding: const EdgeInsets.all(0.0),
+      // textColor: Colors.white,
+      // clipBehavior: Clip.hardEdge,
+      // shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.all(Radius.circular(22.0))),
+      // padding: const EdgeInsets.all(0.0),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          return Colors.white;
+        }),
+        foregroundColor: MaterialStateProperty.resolveWith((states) {
+          return Colors.white;
+        }),
+        padding: MaterialStateProperty.all(EdgeInsets.all(0.0)),
+      ),
       child: Container(
         width: 230,
         height: 44,
@@ -389,7 +398,9 @@ class Friend extends LoginBase {
                 ),
                 invitelist.length < size
                     ? SizedBox()
-                    : isend ? gettext7('已经显示全部') : gettext6('点击加载更多')
+                    : isend
+                        ? gettext7('已经显示全部')
+                        : gettext6('点击加载更多')
               ]))
           : SizedBox(),
     ]);

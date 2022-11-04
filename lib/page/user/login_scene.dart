@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'dart:async';
 
-
-
 import 'code_button.dart';
 
 class LoginScene extends StatefulWidget {
@@ -140,7 +138,7 @@ class LoginSceneState extends State {
                   color: SQColor.primary,
                 ),
                 height: 40,
-                child: FlatButton(
+                child: TextButton(
                   onPressed: login,
                   child: Text(
                     '登录',

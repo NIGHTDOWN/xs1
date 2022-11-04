@@ -354,25 +354,24 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
         backgroundColor: Colors.white,
         activeColor: SQColor.primary,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: getTabIcon(0),
-              title: Text(
-                lang('书架'),
-                style: TextStyle(fontWeight: FontWeight.w600),
-              )),
-          BottomNavigationBarItem(
-              icon: getTabIcon(1),
-              title: Text(
-                lang('书城'),
-                style: TextStyle(fontWeight: FontWeight.w600),
-              )),
+          BottomNavigationBarItem(icon: getTabIcon(0), label: lang('书架')),
+          //     title: Text(
+          //       lang('书架'),
+          //       style: TextStyle(fontWeight: FontWeight.w600),
+          //     )),
+          BottomNavigationBarItem(icon: getTabIcon(1), label: lang('书城')),
+          // title: Text(
+          //   lang('书城'),
+          //   style: TextStyle(fontWeight: FontWeight.w600),
+          // )),
           BottomNavigationBarItem(
               icon: getTabIcon(2),
               // activeIcon: Text('data'),
-              title: Text(
-                lang('我的'),
-                style: TextStyle(fontWeight: FontWeight.w600),
-              )),
+              label: lang('我的')),
+          // title: Text(
+          //   lang('我的'),
+          //   style: TextStyle(fontWeight: FontWeight.w600),
+          // )),
         ],
         currentIndex: _tabIndex,
         onTap: (index) {

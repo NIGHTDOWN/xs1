@@ -202,7 +202,7 @@ class ReaderViewState extends State<ReaderView> {
 
   Widget unlockbtn(context) {
     return Expanded(
-      child: FlatButton(
+      child: TextButton(
         onPressed: () async {
           await unlockbook();
         },
@@ -213,16 +213,25 @@ class ReaderViewState extends State<ReaderView> {
           ),
           margin: EdgeInsets.all(13),
         ),
-        color: Styles.getTheme()['activecolor'],
-        textColor: Styles.getTheme()['activefontcolor'],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith((states) {
+            return Styles.getTheme()['activecolor'];
+          }),
+          foregroundColor: MaterialStateProperty.resolveWith((states) {
+            return Styles.getTheme()['activefontcolor'];
+          }),
+          shape: MaterialStateProperty.resolveWith((states) {
+            return RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8));
+          }),
+        ),
       ),
     );
   }
 
   Widget paybtn(context) {
     return Expanded(
-      child: FlatButton(
+      child: TextButton(
         onPressed: () async {
           await gourl(
               context,
@@ -240,9 +249,18 @@ class ReaderViewState extends State<ReaderView> {
           ),
           margin: EdgeInsets.all(13),
         ),
-        color: Styles.getTheme()['activecolor'],
-        textColor: Styles.getTheme()['activefontcolor'],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith((states) {
+            return Styles.getTheme()['activecolor'];
+          }),
+          foregroundColor: MaterialStateProperty.resolveWith((states) {
+            return Styles.getTheme()['activefontcolor'];
+          }),
+          shape: MaterialStateProperty.resolveWith((states) {
+            return RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8));
+          }),
+        ),
       ),
     );
   }

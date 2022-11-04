@@ -9,7 +9,6 @@ import 'package:ng169/style/theme.dart' as indextheme;
 import 'package:ng169/tool/power.dart';
 import 'package:ng169/conf/conf.dart';
 
-
 Future main() async {
   //flutter 1.9必须执行 WidgetsFlutterBinding.ensureInitialized();
 

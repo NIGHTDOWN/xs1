@@ -30,7 +30,7 @@ i() async {
     // 'tcp': new Tcp(),
     'user': {},
     'coin': '0',
-    'admob': Ads()..init(),
+    // 'admob': Ads()..init(),
     'msg': 0,
     'locallg': '',
     'downthred': Thred(),

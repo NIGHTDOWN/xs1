@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:common_utils/common_utils.dart';
+
 import 'package:dio/dio.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 
@@ -159,7 +159,8 @@ class Kefu extends LoginBase {
       ),
       onTap: () async {
         Navigator.pop(context);
-        var tmpimage = await ImagePicker.pickImage(
+
+        PickedFile tmpimage = await ImagePicker.platform.pickImage(
             source: ImageSource.camera, maxWidth: 500, imageQuality: 80);
         imgtoserver(tmpimage);
         reflash();
@@ -173,7 +174,7 @@ class Kefu extends LoginBase {
       ),
       onTap: () async {
         Navigator.pop(context);
-        var tmpimage = await ImagePicker.pickImage(
+        var tmpimage = await ImagePicker.platform.pickImage(
             source: ImageSource.gallery, maxWidth: 500, imageQuality: 80);
 
         imgtoserver(tmpimage);

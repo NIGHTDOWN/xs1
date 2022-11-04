@@ -485,10 +485,13 @@ class RackSceneState extends State<Rack> {
     try {
       // File file = await FilePicker.getFile(type: FileType.any);
       //目前只支持txt
-      File file = await FilePicker.getFile(
-          type: FileType.custom, allowedExtensions: ['txt']);
+      // File file = await FilePicker.getFile(
+      //     type: FileType.custom, allowedExtensions: ['txt']);
+      // File file;
+      FilePickerResult files = await FilePicker.platform
+          .pickFiles(type: FileType.custom, allowedExtensions: ['txt']);
       //判断是否需要上传
-
+      File file = File(files.files.single.path);
       if (!isnull(file)) return;
 
       // var list = await file.readAsBytes();

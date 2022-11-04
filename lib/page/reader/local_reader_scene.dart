@@ -377,13 +377,17 @@ class LocalReaderSceneState extends State<LocalReaderScene>
                       width: 15,
                     ),
                     Expanded(
-                        child: new RaisedButton(
+                        child: new TextButton(
                             key: null,
                             onPressed: () {
                               pop(context);
                               pop(context);
                             },
-                            color: const Color(0xFFe0e0e0),
+                            // color: const Color(0xFFe0e0e0),
+                            style: ButtonStyle(backgroundColor:
+                                MaterialStateProperty.resolveWith((states) {
+                              return Color(0xFFe0e0e0);
+                            })),
                             child: new Text(
                               lang("取消"),
                               style: new TextStyle(
@@ -396,14 +400,18 @@ class LocalReaderSceneState extends State<LocalReaderScene>
                       width: 15,
                     ),
                     Expanded(
-                        child: new RaisedButton(
+                        child: new TextButton(
                             key: null,
                             onPressed: () {
                               widget.novel.addgroom();
                               pop(context);
                               pop(context);
                             },
-                            color: SQColor.primary,
+                            // color: SQColor.primary,
+                            style: ButtonStyle(backgroundColor:
+                                MaterialStateProperty.resolveWith((states) {
+                              return SQColor.primary;
+                            })),
                             child: new Text(
                               lang("加入书架"),
                               style: new TextStyle(

@@ -12,7 +12,7 @@ import 'package:ng169/style/screen.dart';
 import 'package:ng169/tool/down.dart';
 import 'package:ng169/tool/toast.dart';
 import 'package:share/share.dart';
-import 'dart:ui' as ui;
+import 'dart:ui' as ui show instantiateImageCodec, Codec,FrameInfo;
 //import 'package:permission_handler/permission_handler.dart';
 
 import 'global.dart';
@@ -116,13 +116,13 @@ Future msgbox(BuildContext context, Function event,
         title: title,
         content: body,
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: canceltitle,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          FlatButton(
+          TextButton(
             child: oktitle,
             onPressed: () {
               Navigator.pop(context);
@@ -174,7 +174,7 @@ Future<String> getwifi() async {
   return 'none';
 }
 
-Future<ui.Image> getAssetImage(String asset, {width, height}) async {
+Future<dynamic> getAssetImage(String asset, {width, height}) async {
   ByteData data = await rootBundle.load(asset);
 
   ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),

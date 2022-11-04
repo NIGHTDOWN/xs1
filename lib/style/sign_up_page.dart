@@ -34,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
         padding: EdgeInsets.only(top: 23),
         child: new Stack(
           alignment: Alignment.topCenter,
-          overflow: Overflow.visible,
+          // overflow: Overflow.visible,
           children: <Widget>[
             new Container(
                 decoration: new BoxDecoration(
@@ -68,18 +68,22 @@ class _SignUpPageState extends State<SignUpPage> {
 
                       // _signInFormKey.currentState.save();
                       if (!ngbrige.data['isload']) {
-                        http('login/reg', {
-                          'nickname': nickname.text,
-                          'username': username.text,
-                          'password': pwd.text
-                        },gethead()).then((data) async {
+                        http(
+                                'login/reg',
+                                {
+                                  'nickname': nickname.text,
+                                  'username': username.text,
+                                  'password': pwd.text
+                                },
+                                gethead())
+                            .then((data) async {
                           var gets = getdata(context, data);
 
                           if (gets != false) {
                             _signInFormKey.currentState.reset();
                             username.clear();
                             pwd.clear();
-                          
+
                             User.set(gets);
                             // gourl(context, new App());
                             pop(context);

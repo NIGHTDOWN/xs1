@@ -343,15 +343,16 @@ class Rectangle extends StatelessWidget {
   Widget build(BuildContext context) {
     var bx = new Container(
       constraints: new BoxConstraints.expand(
-        height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 200.0,
+        // height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 200.0,
+        height:
+            Theme.of(context).textTheme.displayMedium.fontSize * 1.1 + 200.0,
       ),
       decoration: new BoxDecoration(
         border: new Border.all(width: 2.0, color: Colors.red),
         color: Colors.grey,
         borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
         image: new DecorationImage(
-          image: new NetworkImage(
-              ''),
+          image: new NetworkImage(''),
           centerSlice: new Rect.fromLTRB(270.0, 180.0, 1360.0, 730.0),
         ),
       ),
@@ -360,9 +361,9 @@ class Rectangle extends StatelessWidget {
       child: new Text('Hello World',
           style: Theme.of(context)
               .textTheme
-              .display1
+              .displayMedium
               .copyWith(color: Colors.black)),
-     // transform: new Matrix4.rotationZ(0.3),
+      // transform: new Matrix4.rotationZ(0.3),
     );
 
     // TODO: implement build

@@ -3,11 +3,11 @@ import 'dart:convert';
 
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+// import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/page/app.dart';
@@ -49,17 +49,17 @@ class _SignInPageState extends State<SignInPage> {
   String tmpfbcode;
   FlutterWebviewPlugin flutterWebviewPlugin;
   StreamSubscription<WebViewStateChanged> _onStateChanged;
-  GoogleSignIn _googleSignIn;
+  // GoogleSignIn _googleSignIn;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _googleSignIn = GoogleSignIn(
-      scopes: [
-        'email',
-        'https://www.googleapis.com/auth/contacts.readonly',
-      ],
-    );
+    // _googleSignIn = GoogleSignIn(
+    //   scopes: [
+    //     'email',
+    //     'https://www.googleapis.com/auth/contacts.readonly',
+    //   ],
+    // );
   }
 
   @override
@@ -297,53 +297,49 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   _fb() async {
-    var facebookLogin = new FacebookLogin();
-    var result = await facebookLogin.logInWithReadPermissions(['email']);
-// keytool -exportcert -alias key -keystore d:\\key.jks | openssl sha1 -binary | openssl base64
-    switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
-        final accessToken = result.accessToken;
+    // keytool -exportcert -alias key -keystore d:\\key.jks | openssl sha1 -binary | openssl base64
+    // var facebookLogin = new FacebookLogin();
+    // var result = await facebookLogin.logInWithReadPermissions(['email']);
 
-        http('https://graph.facebook.com/v2.12/me?fields=id,name,email,age_range,first_name,last_name,birthday,link,gender,locale,picture,timezone,updated_time,verified&access_token=${accessToken.token}')
-            .then((value) {
-          var json = jsonDecode(value);
-          if (!isnull(json)) {
-            d('获取fb信息失败');
-            return false;
-          }
-          // var postdata = {
-          //   'uid': json['id'],
-          //   'nickname': json['name'],
-          //   'icon': json['picture']['data']['url'],
-          //   'login_type': 1,
-          // };
-          thirdlogin(
-              json['id'], json['name'], json['picture']['data']['url'], 1);
-        });
+    // switch (result.status) {
+    //   case FacebookLoginStatus.loggedIn:
+    //     final accessToken = result.accessToken;
 
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        d('Facebook: cancelledByUser');
-        break;
-      case FacebookLoginStatus.error:
-        d('Facebook: ${result.errorMessage}');
-        break;
-    }
+    //     http('https://graph.facebook.com/v2.12/me?fields=id,name,email,age_range,first_name,last_name,birthday,link,gender,locale,picture,timezone,updated_time,verified&access_token=${accessToken.token}')
+    //         .then((value) {
+    //       var json = jsonDecode(value);
+    //       if (!isnull(json)) {
+    //         d('获取fb信息失败');
+    //         return false;
+    //       }
+
+    //       thirdlogin(
+    //           json['id'], json['name'], json['picture']['data']['url'], 1);
+    //     });
+
+    //     break;
+    //   case FacebookLoginStatus.cancelledByUser:
+    //     d('Facebook: cancelledByUser');
+    //     break;
+    //   case FacebookLoginStatus.error:
+    //     d('Facebook: ${result.errorMessage}');
+    //     break;
+    // }
   }
 
   _google() {
-    googleSignIn().then((GoogleSignInAccount userinfo) {
-      thirdlogin(userinfo.id, userinfo.displayName, userinfo.photoUrl, 2);
-    }).catchError((e) {
-      d(e);
-    });
+    // googleSignIn().then((GoogleSignInAccount userinfo) {
+    //   thirdlogin(userinfo.id, userinfo.displayName, userinfo.photoUrl, 2);
+    // }).catchError((e) {
+    //   d(e);
+    // });
   }
 
-  Future<GoogleSignInAccount> googleSignIn() async {
+  Future<dynamic> googleSignIn() async {
     try {
-      GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-
-      return googleUser;
+      // GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      return null;
+      // return googleUser;
     } catch (e) {
       d(e);
     }

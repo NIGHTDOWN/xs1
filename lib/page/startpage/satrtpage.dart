@@ -136,16 +136,32 @@ class _StartPageState extends State<StartPage>
         Positioned(
           right: w,
           top: h,
-          child: FlatButton(
-              shape: CircleBorder(
-                side: BorderSide(
-                  color: SQColor.btm,
-                ),
+          child: TextButton(
+              // shape: CircleBorder(
+              //   side: BorderSide(
+              //     color: SQColor.btm,
+              //   ),
+              // ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  return SQColor.btm;
+                }),
+                // foregroundColor: MaterialStateProperty.resolveWith((states) {
+                //   return Styles.getTheme()['activefontcolor'];
+                // }),
+                // padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                shape: MaterialStateProperty.resolveWith((states) {
+                  return CircleBorder(
+                    side: BorderSide(
+                      color: SQColor.btm,
+                    ),
+                  );
+                }),
               ),
               onPressed: () {
                 goindex();
               },
-              color: SQColor.btm,
+              // color: SQColor.btm,
               child: Text(
                 '$count' + 's',
                 style: TextStyle(color: SQColor.white),

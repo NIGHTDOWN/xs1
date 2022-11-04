@@ -638,7 +638,7 @@ class CartoonViewState extends State<CartoonView> {
 
   Widget unlockbtn(context) {
     return Expanded(
-      child: FlatButton(
+      child: TextButton(
         onPressed: () async {
           // bool b = await widget.article.unlock(context); //解锁逻辑完成需要重载
           // if (b) {
@@ -653,9 +653,18 @@ class CartoonViewState extends State<CartoonView> {
           ),
           margin: EdgeInsets.all(13),
         ),
-        color: Styles.getTheme()['activecolor'],
-        textColor: Styles.getTheme()['activefontcolor'],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith((states) {
+            return Styles.getTheme()['activecolor'];
+          }),
+          foregroundColor: MaterialStateProperty.resolveWith((states) {
+            return Styles.getTheme()['activefontcolor'];
+          }),
+          shape: MaterialStateProperty.resolveWith((states) {
+            return RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8));
+          }),
+        ),
       ),
     );
   }
@@ -669,7 +678,7 @@ class CartoonViewState extends State<CartoonView> {
 
   Widget paybtn(context) {
     return Expanded(
-      child: FlatButton(
+      child: TextButton(
         onPressed: () async {
           await gourl(
               context,
@@ -687,9 +696,18 @@ class CartoonViewState extends State<CartoonView> {
           ),
           margin: EdgeInsets.all(13),
         ),
-        color: Styles.getTheme()['activecolor'],
-        textColor: Styles.getTheme()['activefontcolor'],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith((states) {
+            return Styles.getTheme()['activecolor'];
+          }),
+          foregroundColor: MaterialStateProperty.resolveWith((states) {
+            return Styles.getTheme()['activefontcolor'];
+          }),
+          shape: MaterialStateProperty.resolveWith((states) {
+            return RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8));
+          }),
+        ),
       ),
     );
   }

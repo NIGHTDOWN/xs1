@@ -1,13 +1,12 @@
 buildscript {
+    
     repositories {
          google()
          jcenter()
-       // maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
-        //maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
-    }
+     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:4.1.0'
         //谷歌登入需要引入gms
        
         // classpath 'com.google.gms:google-services:4.2.0'
@@ -18,15 +17,15 @@ buildscript {
     subprojects {
         project.configurations.all {
             resolutionStrategy.eachDependency { details ->
-                if (details.requested.group == 'com.android.support'
-                        && !details.requested.name.contains('multidex') ) {
-                    details.useVersion "27.1.1"
-                }
+                // if (details.requested.group == 'com.android.support'
+                //         && !details.requested.name.contains('multidex') ) {
+                //     details.useVersion "27.1.1"
+                // }
 
-                if (details.requested.group == 'androidx.core'
-                        && !details.requested.name.contains('androidx') ) {
-                    details.useVersion "1.0.1"
-                }
+                // if (details.requested.group == 'androidx.core'
+                //         && !details.requested.name.contains('androidx') ) {
+                //     details.useVersion "1.0.1"
+                // }
                 //  if (details.requested.group == 'androidx.lifecycle') {
                 // details.useVersion "2.0.0"
                 //  }
@@ -59,8 +58,8 @@ allprojects {
         // maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
         // maven { url 'https://maven.aliyun.com/nexus/content/groups/public' }
         // maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        // maven { url 'http://maven.aliyun.com/repositories/google' }
+        // maven { url 'http://maven.aliyun.com/repositories/jcenter'}
     }
     
 }

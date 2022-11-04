@@ -1,13 +1,16 @@
 package com.ng.story;
 
+import io.flutter.embedding.android.FlutterActivity;
 import android.content.Context;
 import android.os.Bundle;
-import io.flutter.app.FlutterActivity;
-import io.flutter.plugins.GeneratedPluginRegistrant;
+import io.flutter.embedding.engine.FlutterEngine;
+
 import io.flutter.plugin.common.MethodCall;
+
 import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-import io.flutter.plugin.common.MethodChannel.Result;
+
+import io.flutter.plugins.GeneratedPluginRegistrant;
+
 
 import java.lang.reflect.ParameterizedType;
 
@@ -23,26 +26,49 @@ public class MainActivity extends FlutterActivity {
 
   public static FlutterActivity _Activity;
   public static Context _context;
-
-  // private static PluginRegistry.Registrar registrar;
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  public void configureFlutterEngine(FlutterEngine flutterEngine){
     MainActivity._Activity = MainActivity.this;
     MainActivity._context = getApplicationContext();
-    
-    GeneratedPluginRegistrant.registerWith(this);
-    // 注册类，函数
-    Bridge.channels = new MethodChannel(getFlutterView(), Bridge.CHANNEL);
-    Bridge.channels.setMethodCallHandler(
+    GeneratedPluginRegistrant.registerWith(flutterEngine);
+      Bridge.channels = new MethodChannel(flutterEngine.getDartExecutor(), Bridge.CHANNEL);
+      Bridge.channels.setMethodCallHandler(
+            new MethodChannel.MethodCallHandler() {
+              @Override
+              public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+//                if (call.method.equals("getLocationAddress")) {
+//                  //do something
+//                } else {
+//                  //没有对应方法
+//                  result.notImplemented();
+//                }
+                Bridge.init(call, result);
+              }
 
-        new MethodCallHandler() {
-          public void onMethodCall(MethodCall call, Result result) {
-            
-            Bridge.init(call, result);
-          }
-        });
+            }
+
+    );
 
   }
+
+  // private static PluginRegistry.Registrar registrar;
+//  @Override
+//  protected void onCreate(Bundle savedInstanceState) {
+//    super.onCreate(savedInstanceState);
+//    MainActivity._Activity = MainActivity.this;
+//    MainActivity._context = getApplicationContext();
+//
+//    GeneratedPluginRegistrant.registerWith(this);
+//    // 注册类，函数
+//    Bridge.channels = new MethodChannel(getFlutterView(), Bridge.CHANNEL);
+//    Bridge.channels.setMethodCallHandler(
+//
+//        new MethodCallHandler() {
+//          public void onMethodCall(MethodCall call, Result result) {
+//
+//            Bridge.init(call, result);
+//          }
+//        });
+//
+//  }
 
 }
