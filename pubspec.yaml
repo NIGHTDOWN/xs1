@@ -63,7 +63,7 @@ dependencies:
   package_info: any
   #打开文件
   open_file: any
-  install_plugin_v2  : any
+  # install_plugin_v2  : any
   connectivity: any
   #设备信息
   #device_info : 0.4.1

@@ -73,11 +73,6 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin image_picker, io.flutter.plugins.imagepicker.ImagePickerPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new com.youxiachai.installplugin.InstallPlugin());
-    } catch (Exception e) {
-      Log.e(TAG, "Error registering plugin install_plugin_v2, com.youxiachai.installplugin.InstallPlugin", e);
-    }
-    try {
       flutterEngine.getPlugins().add(new com.crazecoder.openfile.OpenFilePlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin open_file, com.crazecoder.openfile.OpenFilePlugin", e);

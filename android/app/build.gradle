@@ -1,14 +1,15 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
     }
-}
-
-def flutterRoot = localProperties.getProperty('flutter.sdk')
-if (flutterRoot == null) {
-    // throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -28,11 +29,7 @@ if (flutterVersionName == null) {
 // flutter run --release
 // 创建密钥库
 //  生成签名信息
-plugins {
-  id "com.android.application"
-  id "kotlin-android"
-  id "dev.flutter.flutter-gradle-plugin"
-}
+
 // keytool -genkey -v -keystore d:/key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key
 // keytool -importkeystore -srckeystore d:/key.jks -destkeystore d:/key.jks -deststoretype pkcs12
 
@@ -44,13 +41,19 @@ def keystoreProperties = new Properties()
 }
 
 android {
+    
+ namespace "com.ng.story.story"
+    // compileSdk flutter.compileSdkVersion
     compileSdkVersion 33
-
+    ndkVersion flutter.ndkVersion
     // lintOptions {
     //     disable 'InvalidPackage'
     // }
 
-    
+      compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     //正式包开这个才能编译
     lintOptions {
             checkReleaseBuilds false
@@ -84,8 +87,8 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
+        // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // multiDexEnabled true
     }
 
     buildTypes {
@@ -156,5 +159,5 @@ dependencies {
 }
 
 //谷歌登入,下载googlejosn，复制到android/app目录下
-apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'com.google.gms.google-services'
 
