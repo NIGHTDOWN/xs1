@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/src/cache_managers/base_cache_manager.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ng169/model/user.dart';
@@ -26,7 +27,7 @@ class EditUser extends StatefulWidget {
 class EditUserState extends State<EditUser> {
   // TextEditingController wordname = new TextEditingController();
   // TextEditingController qm = new TextEditingController();
-  TextEditingController qm, wordname, yq;
+  late TextEditingController qm, wordname, yq;
   var user;
   var styles = TextStyle(color: SQColor.gray);
   String sex = '';
@@ -197,10 +198,11 @@ class EditUserState extends State<EditUser> {
         Navigator.pop(context);
         // var tmpimage = await ImagePicker.pickImage(source: ImageSource.camera);
         // cutimg(tmpimage);
-        PickedFile tmpimages =
+        PickedFile? tmpimages =
+            // ignore: invalid_use_of_visible_for_testing_member
             await ImagePicker.platform.pickImage(source: ImageSource.camera);
 
-        File f = File(tmpimages.path);
+        File f = File(tmpimages!.path);
         cutimg(f);
         reflash();
       },
@@ -214,10 +216,10 @@ class EditUserState extends State<EditUser> {
       onTap: () async {
         Navigator.pop(context);
         // var tmpimage = await ImagePicker.pickImage(source: ImageSource.gallery);
-        PickedFile tmpimages =
+        PickedFile? tmpimages =
             await ImagePicker.platform.pickImage(source: ImageSource.gallery);
 
-        File f = File(tmpimages.path);
+        File f = File(tmpimages!.path);
         cutimg(f);
         reflash();
       },
@@ -247,17 +249,21 @@ class EditUserState extends State<EditUser> {
   @override
   Widget build(BuildContext context) {
     //没书的时候显示加号顶部标题栏
+var img;
+if(image != null && image is File){
+  img=FileImage(image);
+}else{
+if(isnull(user) && isnull(user['avater'])){
+img=CachedNetworkImageProvider(user['avater'],Null as BaseCacheManager,(){},{} );
+}else{
+  img=AssetImage('assets/images/placeholder_avatar.png') ;
+}
 
+}
     var head = CircleAvatar(
       radius: 35,
       backgroundColor: SQColor.white,
-      backgroundImage: isnull(image)
-          ? FileImage(image)
-          : isnull(user)
-              ? isnull(user['avater'])
-                  ? CachedNetworkImageProvider(user['avater'])
-                  : AssetImage('assets/images/placeholder_avatar.png')
-              : AssetImage('assets/images/placeholder_avatar.png'),
+      backgroundImage: img,
     );
     var textFormFieldname = new TextFormField(
       inputFormatters: <TextInputFormatter>[
@@ -286,8 +292,8 @@ class EditUserState extends State<EditUser> {
           border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: ( value) {
+        if (value!.isEmpty) {
           //cansubmit = cansubmit && false;
           return lang('昵称不能为空');
         }
@@ -324,8 +330,8 @@ class EditUserState extends State<EditUser> {
           border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: ( value) {
+        if (value!.isEmpty) {
           //cansubmit = cansubmit && false;
           // return lang('昵称不能为空');
         }
@@ -481,12 +487,12 @@ class EditUserState extends State<EditUser> {
         // border: InputBorder.none
         enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-          color: Colors.grey[300], //边框颜色为绿色
+          color: Color.fromARGB(255, 224, 224, 224), //边框颜色为绿色
           width: 1, //宽度为5
         )),
         focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-          color: Colors.grey[300], //边框颜色为绿色
+          color: const Color.fromARGB(255, 224, 224, 224), //边框颜色为绿色
           width: 1, //宽度为5
         )),
         // enabledBorder: OutlineInputBorder(
@@ -507,8 +513,8 @@ class EditUserState extends State<EditUser> {
       ),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: ( value) {
+        if (value!.isEmpty) {
           return lang('请填写邀请人用户ID');
         }
 
@@ -579,7 +585,7 @@ class EditUserState extends State<EditUser> {
   }
 
   sureyq() async {
-    _formKey.currentState.validate();
+    _formKey.currentState!.validate();
     // if (isnull(yq.text)) {
     //   var data =
     //       await http('task/edit_invite', {'inviteid': yq.text}, gethead());
@@ -605,7 +611,7 @@ class EditUserState extends State<EditUser> {
     // }
   }
 
-  Widget getrow(String title, Widget obj, Function click,
+  Widget getrow(String title, Widget obj, GestureTapCallback  click,
       [bool haveink = false]) {
     return Material(
       color: SQColor.white,
@@ -658,7 +664,7 @@ class EditUserState extends State<EditUser> {
         ),
         onTap: () {
           sexid = local;
-          sex = sexname[local];
+          sex = sexname[local]!;
           Navigator.pop(context);
           if (sexid != user['sex'].toString() && sexid != '0') {
             post = true;

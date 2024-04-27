@@ -1,24 +1,24 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:intent/extra.dart';
-import 'package:intent/intent.dart' as inters;
-import 'package:intent/action.dart' as intersaction;
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
+
+// import 'package:intent/intent.dart' as inters;
+// import 'package:intent/action.dart' as intersaction;
+
 import 'package:flutter/services.dart';
-import 'package:ng169/conf/conf.dart';
+
 import 'package:ng169/model/user.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:receive_intent/receive_intent.dart';
+
 // import 'package:url_launcher/url_launcher.dart';
 
 import 'function.dart';
-import 'global.dart';
+
 
 class ListenClip {
   factory ListenClip() => _getInstance();
   static ListenClip get instance => _getInstance();
-  static ListenClip _instance;
+  static ListenClip _instance=Null as ListenClip;
   bool flag = false;
   int seconds = 0;
   ListenClip._internal() {
@@ -63,17 +63,18 @@ class ListenClip {
       //用户已经绑定
       end();
       return false;
+        
     }
 
-    ClipboardData clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
+    ClipboardData? clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
     // 剪贴板不为空时。
-    if (clipboardData != null && clipboardData.text.trim() != '') {
-      String _name = clipboardData.text.trim();
+    if (clipboardData != null && clipboardData.text!.trim() != '') {
+      String _name = clipboardData.text!.trim();
       // 淘口令的正则表达式，能判断类似“￥lookstory￥123456￥”的文本。
       // d(RegExp(r'[\uffe5]lookstory[\uffe5]+.+[\uffe5]').hasMatch(_name));
       RegExp reg = new RegExp(r'[\uffe5]lookstory[\uffe5]+(\d+)[\uffe5]');
       d('剪切板数据监听');
-      String getid;
+      String? getid;
       if (reg.hasMatch(_name)) {
         Iterable<Match> matches = reg.allMatches(_name);
 
@@ -93,7 +94,7 @@ class ListenClip {
           return false;
         }
         clear();
-        User.bindinvite(getid);
+        User.bindinvite(getid!);
         //绑定用户id
         // ListenClip().open();
         // 处理淘口令的业务逻辑。
@@ -122,12 +123,46 @@ class ListenClip {
   clear() {
     Clipboard.setData(new ClipboardData(text: ''));
   }
+// ignore: unused_field
+late StreamSubscription _intentSub;
+  open() async {
+    await ReceiveIntent.setResult(kActivityResultOk, data: {"scheme": "lookstory", "host": 'com.ng.story', "path": "456"});
+    // inters.Intent()
+    //   ..setAction(intersaction.Action.ACTION_VIEW)
+    //   ..setData(Uri(scheme: "lookstory", host: 'com.ng.story', path: "456"))
+    //   ..startActivity().catchError((e) => d(e));
+// Listen to media sharing coming from outside the app while the app is in the memory.
+    // _intentSub = ReceiveSharingIntent.getMediaStream().listen((value) {
+    //   // setState(() {
+    //   //   _sharedFiles.clear();
+    //   //   _sharedFiles.addAll(value);
 
-  open() {
-    inters.Intent()
-      ..setAction(intersaction.Action.ACTION_VIEW)
-      ..setData(Uri(scheme: "lookstory", host: 'com.ng.story', path: "456"))
-      ..startActivity().catchError((e) => d(e));
+    //   //   print(_sharedFiles.map((f) => f.toMap()));
+    //   // });
+    // }, onError: (err) {
+    //   print("getIntentDataStream error: $err");
+    // });
+
+    // // Get the media sharing coming from outside the app while the app is closed.
+    // ReceiveSharingIntent.getInitialMedia().then((value) {
+    //   // setState(() {
+    //   //   _sharedFiles.clear();
+    //   //   _sharedFiles.addAll(value);
+    //   //   print(_sharedFiles.map((f) => f.toMap()));
+
+    //   //   // Tell the library that we are done processing the intent.
+    //   //   ReceiveSharingIntent.reset();
+    //   // });
+    //   ReceiveSharingIntent.reset();
+    // });
+
+
+
+
+
+
+
+
   }
   //检测到了数据之后，
   //持续等待到本次完成，

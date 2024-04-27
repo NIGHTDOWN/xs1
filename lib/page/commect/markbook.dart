@@ -12,7 +12,7 @@ import 'package:ng169/page/commect/mark_detail_header.dart';
 class MarkBook extends StatefulWidget {
   final Novel novel;
 
-  const MarkBook({Key key, this.novel}) : super(key: key);
+  const MarkBook({Key? key, required this.novel}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => MarkBookState();
@@ -26,7 +26,7 @@ class MarkBookState extends State<MarkBook> {
   var groupValue;
   var groupValue2;
   List groupValue3 = [];
-  List cate;
+  late List cate;
   List w2 = [];
   List w3 = [];
   // String cachedata = 'category_data_';
@@ -118,7 +118,7 @@ class MarkBookState extends State<MarkBook> {
     });
     tmp.addAll({'t3': t3});
     var back = await http(subapi, tmp, gethead());
-    var data = getdata(context, back);
+    var data = getdata(context, back!);
 
     if (isnull(data)) {
       // show(context, lang('感谢提交'));
@@ -167,6 +167,7 @@ class MarkBookState extends State<MarkBook> {
 
   List<Widget> getwrong() {
     List<Widget> ret = [];
+    // ignore: unused_local_variable
     int i = 0;
     var tmpobj;
     var tmpobj1;
@@ -196,6 +197,7 @@ class MarkBookState extends State<MarkBook> {
 
   List<Widget> getwrong2() {
     List<Widget> ret = [];
+    // ignore: unused_local_variable
     int i = 0;
     var tmpobj;
     var tmpobj1;

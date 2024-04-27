@@ -33,7 +33,7 @@ void d(data, [index = 1]) {
 }
 
 //弹出消息提示
-void show(BuildContext context, String msg, [ToastPostion positions]) {
+void show(BuildContext context, String msg, [ToastPostion? positions]) {
   if (!isnull(context)) {
     return;
   }
@@ -49,7 +49,7 @@ showbox(
   Color bgcolor = Colors.white10,
   double radius = 10,
   bool showclosebtn = true,
-  double width,
+  double? width,
 ]) {
   var w = isnull(width) ? width : getScreenWidth(g('context')) * .8;
 
@@ -100,7 +100,7 @@ showbox(
 }
 
 Future msgbox(BuildContext context, Function event,
-    [Widget title, Widget body, Widget canceltitle, Widget oktitle]) async {
+    [Widget? title, Widget? body, Widget? canceltitle, Widget? oktitle]) async {
   if (!isnull(context)) {
     return Container();
   }
@@ -117,13 +117,13 @@ Future msgbox(BuildContext context, Function event,
         content: body,
         actions: <Widget>[
           TextButton(
-            child: canceltitle,
+            child: canceltitle!,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           TextButton(
-            child: oktitle,
+            child: oktitle!,
             onPressed: () {
               Navigator.pop(context);
               event();
@@ -236,7 +236,7 @@ setcache(String key, val, String time, [bool needid = true]) {
 
 String gettime() {
   var tmp = new DateTime.now().millisecondsSinceEpoch;
-  tmp = (tmp / 1000).round() as int;
+  tmp = (tmp / 1000).round();
   return tmp.toString();
 }
 
@@ -253,17 +253,18 @@ titlebarcolor(bool lightDark) {
 
 //隐藏状态栏
 hidetitlebar() async {
-  await SystemChrome.setEnabledSystemUIOverlays([]);
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 }
 
 //显示状态栏
 showtitlebar() {
-  SystemChrome.setEnabledSystemUIOverlays(
-      [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+  SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 }
 
 /** 复制到剪粘板 */
 copyToClipboard(final String text) async {
+  // ignore: unnecessary_null_comparison
   if (text == null) return;
   Clipboard.setData(new ClipboardData(text: text));
 }
@@ -395,8 +396,8 @@ pop(context, [data]) {
 }
 
 //
-setDeviceOrientation([DeviceOrientation fx]) {
-  SystemChrome.setPreferredOrientations([fx]);
+setDeviceOrientation([DeviceOrientation? fx]) {
+  SystemChrome.setPreferredOrientations([fx!]);
 
 // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeLeft, DeviceOrientation.portraitUp]);
 }
@@ -413,7 +414,7 @@ void selectbox(BuildContext context, List<Widget> childrens) async {
 checkversion(context, [bool isauto = false]) {
   http('common/add_version', {}, new Map<String, dynamic>.from(gethead()))
       .then((onValue) {
-    var data = getdata(context, onValue);
+    var data = getdata(context, onValue!);
     //获取版本信息
     // d(data['version_code']);
     // d(g('version'));

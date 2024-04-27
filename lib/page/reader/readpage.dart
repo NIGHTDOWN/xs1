@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class Readpage extends StatefulWidget {
   Widget obj;
   Readpage(this.obj);
@@ -11,9 +12,9 @@ class Readpage extends StatefulWidget {
 }
 
 class ReadpageState extends State<Readpage> with TickerProviderStateMixin {
-  AnimationController controller;
+  late AnimationController controller;
 
-  bool isOpenState;
+  late bool isOpenState;
   @override
   void initState() {
     // 初始化动画控制器，这里限定动画时常为200毫秒

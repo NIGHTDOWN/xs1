@@ -11,7 +11,7 @@ class Readertips extends LoginBase {
   var page;
   var textcolor = Colors.white;
   String cachenae = 'bookshowtips';
-  bool havecache, isshow = true;
+  late bool havecache, isshow = true;
   @override
   void initState() {
     super.initState();
@@ -115,10 +115,11 @@ class Readertips extends LoginBase {
     }
 
     ;
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () {
         clicktips();
-        return;
+        return Future.value(false);  
         // Future<bool> canGoBack = flutterWebViewPlugin.canGoBack();
         // canGoBack.then((str) {
         //   if (str) {
@@ -186,8 +187,8 @@ class DashRectPainter extends CustomPainter {
   }
 
   Path getDashedPath({
-    @required math.Point<double> a,
-    @required math.Point<double> b,
+    required math.Point<double> a,
+    required math.Point<double> b,
     @required gap,
   }) {
     Size size = Size(b.x - a.x, b.y - a.y);
@@ -208,8 +209,8 @@ class DashRectPainter extends CustomPainter {
 
     while (currentPoint.x <= b.x && currentPoint.y <= b.y) {
       shouldDraw
-          ? path.lineTo(currentPoint.x, currentPoint.y)
-          : path.moveTo(currentPoint.x, currentPoint.y);
+          ? path.lineTo(currentPoint.x as double, currentPoint.y as double )
+          : path.moveTo(currentPoint.x as double,currentPoint.y as double);
       shouldDraw = !shouldDraw;
       currentPoint = math.Point(
         currentPoint.x + dx,

@@ -1,4 +1,5 @@
 import 'dart:async';
+// ignore: unused_import
 import 'dart:convert';
 import 'dart:isolate';
 
@@ -6,22 +7,22 @@ import 'function.dart';
 
 //线程对象
 class Thred {
-  SendPort sendPort; //发送端口
+  late SendPort sendPort; //发送端口
   ReceivePort getPort = ReceivePort(); //接收端口
-  Isolate _ioIsolate;
+  late Isolate _ioIsolate;
   List _recvdata = [];
   bool _asyn = false;
-  Function callback;
+ late Function callback;
   //杀死线程
   kill() {
-    _ioIsolate?.kill(priority: Isolate.immediate);
-    _ioIsolate = null;
+    _ioIsolate.kill(priority: Isolate.immediate);
+    _ioIsolate = Null as Isolate;
   }
 
-  Future<Thred> init(Function call, [bool asyn]) async {
+  Future<Thred> init(Function call, [bool? asyn]) async {
     callback = call;
     if (isnull(asyn)) {
-      _asyn = asyn;
+      _asyn = asyn!;
     }
     //启动所有线程，在延迟3秒同时执行
     var thredinfo = {

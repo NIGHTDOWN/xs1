@@ -9,10 +9,9 @@ import 'package:ng169/page/commect/kefu.dart';
 import 'package:ng169/page/commect/markbook.dart';
 import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
 import 'package:ng169/page/recharge/recharge.dart';
-import 'package:ng169/page/task/ads.dart';
-import 'package:ng169/page/task/apppj.dart';
+
 import 'package:ng169/page/user/edit_user.dart';
-import 'package:ng169/pay/AdBridge.dart';
+
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/event_bus.dart';
@@ -22,7 +21,7 @@ import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/loadbox.dart';
 import 'package:ng169/tool/t.dart';
-import 'package:ng169/tool/toast.dart';
+
 import 'package:ng169/tool/url.dart';
 import 'package:ng169/tool/Jsq.dart';
 import 'package:package_info/package_info.dart';
@@ -625,7 +624,7 @@ class Sign extends LoginBase {
                       .order('readtime desc')
                       .getall();
 
-              hotbooks = await http('mark/getbook', null, gethead(), 10);
+              hotbooks = (await http('mark/getbook', null, gethead(), 10))!;
               // ]);
               if (hotbooks == null) {
                 return;
@@ -643,7 +642,7 @@ class Sign extends LoginBase {
                 var temptype = '11';
                 var boosl;
                 var type;
-                Novel novel;
+                Novel novel=Null as Novel;
                 if (!isnull(data2)) {
                   if (!isnull(data3)) {
                     novel = Novel.fromDb(book[0]);
@@ -795,7 +794,7 @@ class Sign extends LoginBase {
                 0,
                 0,
                 9, () async {
-              await openStoreListing();
+              await openStoreListing(appStoreId: '');
               //退出对话框，去提交评论截图
               // d('回到评价页面');
               showgokf();
@@ -833,11 +832,12 @@ class Sign extends LoginBase {
 
   Future<void> openStoreListing({
     /// Required for IOS & MacOS
-    String appStoreId,
+    required String appStoreId,
   }) async {
     final bool isIOS = Platform.isIOS;
     final bool isMacOS = Platform.isMacOS;
     if (isIOS || isMacOS) {
+      // ignore: unnecessary_null_comparison
       assert(appStoreId != null);
 
       final Uri uri = Uri(
@@ -1054,28 +1054,28 @@ class Sign extends LoginBase {
     Function callgo,
     Function callget,
   ) {
-    String text;
-    Color c, c2, c3;
-    Function f;
+    String text="";
+    Color c=Color.fromARGB(0, 0, 0, 0), c2=Color.fromARGB(0, 0, 0, 0), c3=Color.fromARGB(0, 0, 0, 0);
+    Function f=(){};
     c2 = Colors.white;
     c3 = Colors.black;
     if (status == 0) {
       //去完成
 
       text = lang('去完成');
-      c = Colors.orange[300];
+      c = const Color.fromARGB(255, 255, 216, 77);
       f = callgo;
     }
     if (status == 1) {
       //领取奖励
       text = lang('领取奖励');
-      c = Colors.orange[200];
-      c2 = Colors.orange[200];
+      c = const Color.fromARGB(255, 255, 211, 128);
+      c2 = const Color.fromARGB(255, 255, 223, 128);
       f = callget;
     }
     if (status == 2) {
       text = lang('已完成');
-      c = Colors.orange[200];
+      c = const Color.fromARGB(255, 255, 238, 128);
       c3 = Colors.grey;
       f = () {};
     }
@@ -1144,12 +1144,12 @@ class Sign extends LoginBase {
     reflash();
   }
 
-  Widget getkongbai([String str]) {
+  Widget getkongbai([String? str]) {
     if (isnull(str)) {
       return Container(
           padding: EdgeInsets.all(5),
           width: objw,
-          child: Text(str, textAlign: TextAlign.center));
+          child: Text(str!, textAlign: TextAlign.center));
     } else {
       return Container(padding: EdgeInsets.all(2), width: objw);
     }

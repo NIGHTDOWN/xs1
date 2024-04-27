@@ -1,6 +1,4 @@
-import 'dart:collection';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ng169/model/base.dart';
 import 'package:ng169/model/user.dart';
@@ -19,10 +17,17 @@ Future gourl(BuildContext context, Object classObject) async {
     return await Navigator.push(
         context, new MaterialPageRoute(builder: (context) => Index()));
   }
+    final widget = classObject is Widget ? classObject : Container();
   return await Navigator.push(
-      context, new MaterialPageRoute(builder: (context) => classObject));
+      context, new MaterialPageRoute(builder: (context) => widget));
 }
-
+// Future gourl(BuildContext context, WidgetBuilder builder) async {
+//   if (!mustlogin(context)) {
+//     return await Navigator.push(
+//         context, MaterialPageRoute(builder: (context) => Index()));
+//   }
+//   return await Navigator.push(context, MaterialPageRoute(builder: builder));
+// }
 bool mustlogin(classObject) {
   if (User.islogin()) {
     return true;
@@ -48,7 +53,7 @@ context 为上下文
 classObject 为页面实列对象
 带动画的页面切换
  */
-void gourl_animation(context, Object classObject, [int type, int time]) {
+void gourl_animation(context, Object? classObject, [int? type, int? time]) {
   var tween;
   switch (type) {
     case 1:
@@ -72,11 +77,13 @@ void gourl_animation(context, Object classObject, [int type, int time]) {
       //默认右侧划入 0.5秒
       tween = Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
   }
+  // 确保 classObject 是一个 Widget
+  final widget = classObject is Widget ? classObject : Container();
   Navigator.push(
       context,
       new PageRouteBuilder(
           pageBuilder: (context, _, __) {
-            return classObject;
+            return widget;
           },
           transitionsBuilder:
               (context, Animation<double> animation, _, Widget child) {
@@ -93,22 +100,22 @@ void gourl_animation(context, Object classObject, [int type, int time]) {
             );
           },
           transitionDuration:
-              Duration(milliseconds: isnull(time) ? time : 500)));
+              Duration(milliseconds: time?? 500)));
 }
 
 formar_url(String url) {
   RegExp reg = new RegExp(r'^lookstory://com\.ng\.story/(.+)\?(.+)');
   RegExp regdata = new RegExp(r'(([a-zA-Z0-9-_]+)\=([a-zA-Z0-9-_]+))&?');
 
-  String action, params;
+  String? action, params;
   var param = {};
 
   if (reg.hasMatch(url)) {
     Iterable<Match> matches = reg.allMatches(url);
 
     for (Match m in matches) {
-      action = m.group(1);
-      params = m.group(2);
+      action = m.group(1)!;
+      params = m.group(2)!;
       if (isnull(params)) {
         if (regdata.hasMatch(params)) {
           Iterable<Match> matchess = regdata.allMatches(params);

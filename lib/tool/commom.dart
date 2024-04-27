@@ -39,28 +39,29 @@ Map<int, int> MONTH_DAY = {
 /// Date Util.
 class DateUtil {
   /// get DateTime By DateStr.
-  static DateTime getDateTime(String dateStr, {bool isUtc}) {
-    DateTime dateTime = DateTime.tryParse(dateStr);
+  static DateTime? getDateTime(String dateStr, {required bool isUtc}) {
+    DateTime? dateTime = DateTime.tryParse(dateStr);
+    // ignore: unnecessary_null_comparison
     if (isUtc != null) {
       if (isUtc) {
-        dateTime = dateTime.toUtc();
+        dateTime = dateTime!.toUtc();
       } else {
-        dateTime = dateTime.toLocal();
+        dateTime = dateTime!.toLocal();
       }
     }
     return dateTime;
   }
 
   /// get DateTime By Milliseconds.
-  static DateTime getDateTimeByMs(int ms, {bool isUtc = false}) {
+  static DateTime? getDateTimeByMs(int ms, {bool isUtc = false}) {
     return ms == null
         ? null
         : DateTime.fromMillisecondsSinceEpoch(ms, isUtc: isUtc);
   }
 
   /// get DateMilliseconds By DateStr.
-  static int getDateMsByTimeStr(String dateStr, {bool isUtc}) {
-    DateTime dateTime = getDateTime(dateStr, isUtc: isUtc);
+  static int? getDateMsByTimeStr(String dateStr, {required bool isUtc}) {
+    DateTime? dateTime = getDateTime(dateStr, isUtc: isUtc);
     return dateTime?.millisecondsSinceEpoch;
   }
 
@@ -71,18 +72,18 @@ class DateUtil {
 
   /// get Now Date Str.(yyyy-MM-dd HH:mm:ss)
   static String getNowDateStr() {
-    return formatDate(DateTime.now());
+    return formatDate(DateTime.now(), format: '');
   }
 
   /// format date by milliseconds.
   /// milliseconds 日期毫秒
-  static String formatDateMs(int ms, {bool isUtc = false, String format}) {
+  static String formatDateMs(int ms, {bool isUtc = false, required String format}) {
     return formatDate(getDateTimeByMs(ms, isUtc: isUtc), format: format);
   }
 
   /// format date by date str.
   /// dateStr 日期字符串
-  static String formatDateStr(String dateStr, {bool isUtc, String format}) {
+  static String formatDateStr(String dateStr, {required bool isUtc, required String format}) {
     return formatDate(getDateTime(dateStr, isUtc: isUtc), format: format);
   }
 
@@ -91,7 +92,8 @@ class DateUtil {
   /// 格式要求
   /// year -> yyyy/yy   month -> MM/M    day -> dd/d
   /// hour -> HH/H      minute -> mm/m   second -> ss/s
-  static String formatDate(DateTime dateTime, {String format}) {
+  static String formatDate(DateTime? dateTime, {required String format}) {
+    // ignore: unnecessary_null_comparison
     if (dateTime == null) return '';
     format = format ?? DateFormats.full;
     if (format.contains('yy')) {
@@ -133,10 +135,10 @@ class DateUtil {
   /// isUtc
   /// languageCode zh or en
   /// short
-  static String getWeekday(DateTime dateTime,
+  static String? getWeekday(DateTime dateTime,
       {String languageCode = 'en', bool short = false}) {
     if (dateTime == null) return null;
-    String weekday;
+    String weekday="";
     switch (dateTime.weekday) {
       case 1:
         weekday = languageCode == 'zh' ? '星期一' : 'Monday';
@@ -168,10 +170,10 @@ class DateUtil {
   }
 
   /// get WeekDay By Milliseconds.
-  static String getWeekdayByMs(int milliseconds,
-      {bool isUtc = false, String languageCode, bool short = false}) {
-    DateTime dateTime = getDateTimeByMs(milliseconds, isUtc: isUtc);
-    return getWeekday(dateTime, languageCode: languageCode, short: short);
+  static String? getWeekdayByMs(int milliseconds,
+      {bool isUtc = false, required String languageCode, bool short = false}) {
+    DateTime? dateTime = getDateTimeByMs(milliseconds, isUtc: isUtc);
+    return getWeekday(dateTime!, languageCode: languageCode, short: short);
   }
 
   /// get day of year.
@@ -181,7 +183,7 @@ class DateUtil {
     int month = dateTime.month;
     int days = dateTime.day;
     for (int i = 1; i < month; i++) {
-      days = days + MONTH_DAY[i];
+      days = days + MONTH_DAY[i]!;
     }
     if (isLeapYearByYear(year) && month > 2) {
       days = days + 1;
@@ -197,17 +199,19 @@ class DateUtil {
 
   /// is today.
   /// 是否是当天.
-  static bool isToday(int milliseconds, {bool isUtc = false, int locMs}) {
+  static bool isToday(int milliseconds, {bool isUtc = false, int? locMs}) {
+     // ignore: unnecessary_null_comparison
     if (milliseconds == null || milliseconds == 0) return false;
     DateTime old =
         DateTime.fromMillisecondsSinceEpoch(milliseconds, isUtc: isUtc);
-    DateTime now;
+    DateTime? now;
+    // ignore: unnecessary_null_comparison
     if (locMs != null) {
       now = DateUtil.getDateTimeByMs(locMs);
     } else {
       now = isUtc ? DateTime.now().toUtc() : DateTime.now().toLocal();
     }
-    return old.year == now.year && old.month == now.month && old.day == now.day;
+    return old.year == now?.year && old.month == now?.month && old.day == now?.day;
   }
 
   /// is yesterday by dateTime.
@@ -234,12 +238,12 @@ class DateUtil {
 
   /// is Week.
   /// 是否是本周.
-  static bool isWeek(int ms, {bool isUtc = false, int locMs}) {
+  static bool isWeek(int ms, {bool isUtc = false, required int locMs}) {
     if (ms == null || ms <= 0) {
       return false;
     }
     DateTime _old = DateTime.fromMillisecondsSinceEpoch(ms, isUtc: isUtc);
-    DateTime _now;
+    DateTime? _now;
     if (locMs != null) {
       _now = DateUtil.getDateTimeByMs(locMs, isUtc: isUtc);
     } else {
@@ -247,7 +251,7 @@ class DateUtil {
     }
 
     DateTime old =
-        _now.millisecondsSinceEpoch > _old.millisecondsSinceEpoch ? _old : _now;
+        _now!.millisecondsSinceEpoch > _old.millisecondsSinceEpoch ? _old : _now;
     DateTime now =
         _now.millisecondsSinceEpoch > _old.millisecondsSinceEpoch ? _now : _old;
     return (now.weekday >= old.weekday) &&
@@ -473,13 +477,13 @@ class TimelineUtil {
   /// locale: output key.
   static String formatByDateTime(
     DateTime dateTime, {
-    DateTime locDateTime,
-    String locale,
-    DayFormat dayFormat,
+    required DateTime locDateTime,
+    required String locale,
+    required DayFormat dayFormat,
   }) {
     return format(
-      dateTime?.millisecondsSinceEpoch,
-      locTimeMs: locDateTime?.millisecondsSinceEpoch,
+      dateTime!.millisecondsSinceEpoch,
+      locTimeMs: locDateTime!.millisecondsSinceEpoch,
       locale: locale,
       dayFormat: dayFormat,
     );
@@ -491,9 +495,9 @@ class TimelineUtil {
   /// locale: output key.
   static String format(
     int ms, {
-    int locTimeMs,
-    String locale,
-    DayFormat dayFormat,
+    required int locTimeMs,
+    required String locale,
+    required DayFormat dayFormat,
   }) {
     int _locTimeMs = locTimeMs ?? DateTime.now().millisecondsSinceEpoch;
     String _locale = locale ?? 'en';
@@ -562,9 +566,9 @@ class TimelineUtil {
   /// yesterday (昨天;Yesterday)
   /// this week (星期一,周一;Monday,Mon)
   /// others (yyyy-MM-dd)
-  static String formatA(
+  static String? formatA(
     int ms, {
-    int locMs,
+    int? locMs,
     String formatToday = 'HH:mm',
     String format = 'yyyy-MM-dd',
     String languageCode = 'en',
@@ -660,24 +664,42 @@ class ZHTimelineInfo implements TimelineInfo {
   String hours(int hours) => '$hours小时';
   String oneDay(int days) => '$days天';
   String days(int days) => '$days天';
-
+  
   @override
   String lessThanOneMinute() {
     // TODO: implement lessThanOneMinute
-    return null;
+    throw UnimplementedError();
   }
-
+  
   @override
   int maxJustNowSecond() {
     // TODO: implement maxJustNowSecond
-    return null;
+    throw UnimplementedError();
   }
-
+  
   @override
   String weeks(int week) {
     // TODO: implement weeks
-    return null;
+    throw UnimplementedError();
   }
+
+  // @override
+  // String? lessThanOneMinute() {
+  //   // TODO: implement lessThanOneMinute
+  //   return null;
+  // }
+
+  // @override
+  // int? maxJustNowSecond() {
+  //   // TODO: implement maxJustNowSecond
+  //   return null;
+  // }
+
+  // @override
+  // String? weeks(int week) {
+  //   // TODO: implement weeks
+  //   return null;
+  // }
 }
 
 class ThreeimelineInfo implements TimelineInfo {
@@ -693,24 +715,26 @@ class ThreeimelineInfo implements TimelineInfo {
   String hours(int hours) => '$hours小时';
   String oneDay(int days) => '$days天';
   String days(int days) => '$days天';
-
+  
   @override
   String lessThanOneMinute() {
     // TODO: implement lessThanOneMinute
-    return null;
+    throw UnimplementedError();
   }
-
+  
   @override
   int maxJustNowSecond() {
     // TODO: implement maxJustNowSecond
-    return null;
+    throw UnimplementedError();
   }
-
+  
   @override
   String weeks(int week) {
     // TODO: implement weeks
-    return null;
+    throw UnimplementedError();
   }
+
+  
 }
 
 class ENTimelineInfo implements TimelineInfo {
@@ -726,34 +750,36 @@ class ENTimelineInfo implements TimelineInfo {
   String hours(int hours) => '$hours hours';
   String oneDay(int days) => 'a day';
   String days(int days) => '$days days';
-
+  
   @override
   String lessThanOneMinute() {
     // TODO: implement lessThanOneMinute
-    return null;
+    throw UnimplementedError();
   }
-
+  
   @override
   int maxJustNowSecond() {
     // TODO: implement maxJustNowSecond
-    return null;
+    throw UnimplementedError();
   }
-
+  
   @override
   String weeks(int week) {
     // TODO: implement weeks
-    return null;
+    throw UnimplementedError();
   }
+
+  
 }
 
 String gettime(String time) {
 //  setLocaleInfo('one', ZHTimelineInfo());
   setLocaleInfo('two', ENTimelineInfo());
-  return TimelineUtil.format(int.parse(time + '000'), locale: ('one'));
+  return TimelineUtil.format(int.parse(time + '000'), locale: ('one'), locTimeMs: 0, dayFormat: DayFormat.Simple);
 }
 
 String gettime2(String time) {
   //setLocaleInfo('three', ThreeimelineInfo());
   setLocaleInfo('two', ENTimelineInfo());
-  return TimelineUtil.format(int.parse(time + '000'), locale: ('two'));
+  return TimelineUtil.format(int.parse(time + '000'), locale: ('two'), locTimeMs: 0, dayFormat: DayFormat.Simple);
 }

@@ -1,8 +1,8 @@
-import 'dart:typed_data';
+
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:ng169/style/styles.dart';
+
+
 import 'package:ng169/tool/function.dart';
 import 'dart:ui' as ui;
 import 'cal_point.dart';
@@ -19,64 +19,64 @@ enum PositionStyle {
 
 ///页面画笔
 class BookPainter extends CustomPainter {
-  CalPoint a, f, g, e, h, c, j, b, k, dd, i;
+ late CalPoint a, f, g, e, h, c, j, b, k, dd, i;
 
-  double viewWidth;
-  double viewHeight;
+ late double viewWidth;
+ late double viewHeight;
 
   ///顶部区域
-  Path pathA;
+  late Path pathA;
 
   ///折叠出来的区域
-  Path pathC;
+  late Path pathC;
 
   ///背部区域
-  Path pathB;
+ late  Path pathB;
 
   ///背景画笔
-  Paint bgPaint;
+ late Paint bgPaint;
 
   ///绘制区域画笔
-  Paint pathAPaint, pathCPaint, pathBPaint;
+ late Paint pathAPaint, pathCPaint, pathBPaint;
 
   ///触摸点的区域
-  PositionStyle style;
+ late  PositionStyle style;
 
   ///回调数据外放
-  ValueChanged changedPoint;
+  late ValueChanged changedPoint;
 
   ///背景色
-  Color bgColor;
+late  Color bgColor;
 
   ///前景色
-  Color frontColor;
+  late Color frontColor;
 
   ///文本一
-  String text;
+  late String text;
 
   ///文本二
-  String text2;
+  late String text2;
 
   ///A区域左阴影矩形短边长度参考值
   double lPathAShadowDis = 0;
-  ui.Picture pica;
+  late ui.Picture pica;
 
   /// A区域右阴影矩形短边长度参考值
   double rPathAShadowDis = 0;
   ui.Image images;
   BookPainter({
-    @required this.text,
-    @required this.text2,
-    @required this.viewWidth,
-    @required this.viewHeight,
-    @required this.frontColor,
-    @required this.bgColor,
-    @required this.images,
-    @required CalPoint cur,
-    @required CalPoint pre,
-    @required this.changedPoint,
-    @required this.style,
-    bool limitAngle,
+    required this.text,
+    required this.text2,
+    required this.viewWidth,
+    required this.viewHeight,
+    required this.frontColor,
+    required this.bgColor,
+    required this.images,
+    required CalPoint cur,
+    required CalPoint pre,
+    required this.changedPoint,
+    required this.style,
+    required bool limitAngle,
   }) {
     init(cur, pre, limitAngle);
   }
@@ -309,7 +309,7 @@ class BookPainter extends CustomPainter {
       Color(0x01333333),
     ];
 
-    double viewDiagonalLength = _hypot(viewWidth, viewHeight); //view对角线长度
+    num viewDiagonalLength = _hypot(viewWidth, viewHeight); //view对角线长度
     double left = h.x;
     double right = (h.x + viewDiagonalLength * 10); //需要足够长的长度
     double top;
@@ -413,8 +413,8 @@ class BookPainter extends CustomPainter {
     int elevation = 6;
     int deepOffset = 0; //深色端的偏移值
     int lightOffset = 0; //浅色端的偏移值
-    double aTof = _hypot((a.x - f.x), (a.y - f.y)); //a到f的距离
-    double viewDiagonalLength = _hypot(viewWidth, viewHeight); //对角线长度
+    num aTof = _hypot((a.x - f.x), (a.y - f.y)); //a到f的距离
+    num viewDiagonalLength = _hypot(viewWidth, viewHeight); //对角线长度
 
     double left;
     double right;
@@ -463,7 +463,7 @@ class BookPainter extends CustomPainter {
     var pn = Path.combine(PathOperation.reverseDifference, pathA, _getPathC());
     canvas.clipPath(pn);
 
-    double eh = _hypot(f.x - e.x, h.y - f.y);
+    num eh = _hypot(f.x - e.x, h.y - f.y);
     double sin0 = (f.x - e.x) / eh;
     double cos0 = (h.y - f.y) / eh;
     //设置翻转和旋转矩阵
@@ -693,7 +693,7 @@ class BookPainter extends CustomPainter {
   ///利用 Paragraph 实现 _drawText
   _drawText(
       Canvas canvas, String text, Color color, double width, Offset offset,
-      {TextAlign textAlign = TextAlign.start, double fontSize}) {
+      {TextAlign textAlign = TextAlign.start, double? fontSize}) {
     ui.ParagraphBuilder pb = ui.ParagraphBuilder(ui.ParagraphStyle(
       textAlign: textAlign,
       fontSize: fontSize,

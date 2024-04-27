@@ -1,15 +1,16 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+
 import 'package:image_crop/image_crop.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
-import 'package:ng169/style/theme.dart' as indextheme;
+
 import 'function.dart';
 import 'lang.dart';
 
+// ignore: must_be_immutable
 class CutImage extends StatefulWidget {
   CutImage(this.image);
 
@@ -20,16 +21,16 @@ class CutImage extends StatefulWidget {
 }
 
 class _CropImageRouteState extends State<CutImage> {
-  double baseLeft; //图片左上角的x坐标
-  double baseTop; //图片左上角的y坐标
-  double imageWidth; //图片宽度，缩放后会变化
-  double imageScale = 1; //图片缩放比例
-  Image imageView;
+  late double baseLeft; //图片左上角的x坐标
+  late double baseTop; //图片左上角的y坐标
+  late double imageWidth; //图片宽度，缩放后会变化
+  late double imageScale = 1; //图片缩放比例
+  late Image imageView;
 
   final cropKey = GlobalKey<CropState>();
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -141,7 +142,7 @@ class _CropImageRouteState extends State<CutImage> {
   Future<void> _crop(File originalFile) async {
     final crop = cropKey.currentState;
     // final scale = crop.scale;
-    final area = crop.area;
+    final area = crop?.area;
 
     if (area == null) {
       //裁剪结果为空
@@ -152,7 +153,7 @@ class _CropImageRouteState extends State<CutImage> {
     if (permissionsGranted) {
       final croppedFile = await ImageCrop.cropImage(
         file: originalFile,
-        area: crop.area,
+        area: crop!.area!,
         scale: 0.1,
       );
 

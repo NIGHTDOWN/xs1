@@ -1,4 +1,4 @@
-import 'dart:ui';
+
 
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/gestures.dart';
@@ -9,12 +9,12 @@ import 'function.dart';
 class EmojiText extends SpecialText {
   static const String flag = "【";
   final int start;
-  EmojiText(TextStyle textStyle, {this.start})
+  EmojiText(TextStyle textStyle, {required this.start})
       : super(EmojiText.flag, "】", textStyle);
 
   @override
   InlineSpan finishText() {
-    // TODO: implement finishText
+   
     var key = toString();
 
     RegExp reg = new RegExp(r'emj_(\d+)');
@@ -23,7 +23,7 @@ class EmojiText extends SpecialText {
       Iterable<Match> matches = reg.allMatches(key);
 
       for (Match m in matches) {
-        index = m.group(1);
+        index = m.group(1)!;
         // print(m.group(0));
         // print(m.group(1));
       }
@@ -37,7 +37,7 @@ class EmojiText extends SpecialText {
       ///fontSize 26 and text height =30.0
       //final double fontSize = 26.0;
       
-      return ImageSpan(AssetImage(EmojiUitl.instance.emojiMap[index]),
+      return ImageSpan(AssetImage(EmojiUitl.instance!.emojiMap[index]!),
           actualText: key,
           imageWidth: size,
           imageHeight: size,
@@ -56,8 +56,8 @@ class EmojiUitl {
 
   final String _emojiFilePath = "assets/images/emjo/emj_";
 
-  static EmojiUitl _instance;
-  static EmojiUitl get instance {
+  static EmojiUitl? _instance;
+  static EmojiUitl? get instance {
     if (_instance == null) _instance = new EmojiUitl._();
     return _instance;
   }
@@ -78,14 +78,14 @@ class AtText extends SpecialText {
 
   final BuilderType type;
   AtText(TextStyle textStyle, SpecialTextGestureTapCallback onTap,
-      {this.showAtBackground: false, this.type, this.start})
+      {this.showAtBackground = false, required this.type, required this.start})
       : super(flag, " ", textStyle, onTap: onTap);
 
   @override
   TextSpan finishText() {
-    // TODO: implement finishText
+  
     TextStyle textStyle =
-        this.textStyle?.copyWith(color: Colors.blue, fontSize: 16.0);
+        this.textStyle!.copyWith(color: Colors.blue, fontSize: 16.0);
 
     final String atText = toString();
 
@@ -95,7 +95,7 @@ class AtText extends SpecialText {
           style: textStyle,
           recognizer: TapGestureRecognizer()
             ..onTap = () {
-              if (onTap != null) onTap(atText);
+              if (onTap != null) onTap!(atText);
             });
 
     return showAtBackground
@@ -109,7 +109,7 @@ class AtText extends SpecialText {
             recognizer: type == BuilderType.extendedText
                 ? (TapGestureRecognizer()
                   ..onTap = () {
-                    if (onTap != null) onTap(atText);
+                    if (onTap != null) onTap!(atText);
                   })
                 : null)
         : SpecialTextSpan(
@@ -121,7 +121,7 @@ class AtText extends SpecialText {
             recognizer: type == BuilderType.extendedText
                 ? (TapGestureRecognizer()
                   ..onTap = () {
-                    if (onTap != null) onTap(atText);
+                    if (onTap != null) onTap!(atText);
                   })
                 : null);
   }
@@ -132,11 +132,11 @@ class RichBuilder extends SpecialTextSpanBuilder {
   final bool showAtBackground;
   final BuilderType type;
   RichBuilder(
-      {this.showAtBackground: false, this.type: BuilderType.extendedText});
+      {this.showAtBackground = false, this.type = BuilderType.extendedText});
 
   @override
-  TextSpan build(String data, {TextStyle textStyle, onTap}) {
-    // TODO: implement build
+  TextSpan build(String data, {TextStyle? textStyle, onTap}) {
+   
     var textSpan = super.build(data, textStyle: textStyle, onTap: onTap);
     //for performance, make sure your all SpecialTextSpan are only in textSpan.children
     //extended_text_field will only check SpecialTextSpan in textSpan.children
@@ -144,10 +144,11 @@ class RichBuilder extends SpecialTextSpanBuilder {
   }
 
   @override
-  SpecialText createSpecialText(String flag,
-      {TextStyle textStyle, SpecialTextGestureTapCallback onTap, int index}) {
-    if (flag == null || flag == "") return null;
-    // TODO: implement createSpecialText
+  SpecialText? createSpecialText(String flag,
+    {required int index, TextStyle? textStyle, void Function(dynamic)? onTap}) {
+    // ignore: unnecessary_null_comparison
+    if (flag == null || flag == "")  return null;
+   
 
     ///index is end index of start flag, so text start index should be index-(flag.length-1)
     // if (isStart(flag, AtText.flag)) {
@@ -157,7 +158,7 @@ class RichBuilder extends SpecialTextSpanBuilder {
     //       type: type);
     // } else 
     if (isStart(flag, EmojiText.flag)) {
-      return EmojiText(textStyle, start: index - (EmojiText.flag.length - 1));
+      return EmojiText(textStyle!, start: index - (EmojiText.flag.length - 1));
     }
     // } else if (isStart(flag, DollarText.flag)) {
     //   return DollarText(textStyle, onTap,

@@ -8,7 +8,7 @@ import 'package:ng169/tool/lang.dart';
 class AddWrong extends StatefulWidget {
   final Novel novel;
   final String secid;
-  const AddWrong({Key key, this.novel, this.secid}) : super(key: key);
+  const AddWrong({Key? key, required this.novel, required this.secid}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => AddWrongState();
@@ -19,8 +19,8 @@ class AddWrongState extends State<AddWrong> {
   double star = 10.0;
   String api = 'common/get_wrongtype';
   String subapi = 'user/correction';
-  String groupValue;
-  List wrong;
+  late String? groupValue;
+  late List wrong;
   String cachedata = 'Comment_wrong_data_';
   @override
   initState() {
@@ -35,7 +35,7 @@ class AddWrongState extends State<AddWrong> {
 
   httpget() async {
     var data = await http(api, {}, gethead());
-    List tmp = getdata(context, data);
+    List tmp = getdata(context, data!);
     if (isnull(tmp)) {
       wrong = tmp;
       setcache(cachedata, tmp, '3600');
@@ -94,18 +94,21 @@ class AddWrongState extends State<AddWrong> {
       tmp.addAll({'wid': widget.novel.id});
     }
     var back = await http(subapi, tmp, gethead());
-    if (isnull(getdata(context, back))) {
+    if (isnull(getdata(context, back!))) {
       // s('pl', 1);
       show(context, lang('感谢提交'));
       pop(context);
     }
   }
 
-  void _changed(String value) {
+void _changed(String? value) {
+  // 现在 value 可以是 String 或 null
+  if (value != null) {
     setState(() {
       groupValue = value;
     });
   }
+}
 
   List<Widget> getwrong() {
     List<Widget> ret = [];
@@ -171,7 +174,7 @@ class AddWrongState extends State<AddWrong> {
                   border: InputBorder.none),
               style: new TextStyle(fontSize: 19, color: Colors.black),
               //验证
-              validator: (String value) {
+              validator: (String? value) {
                 return '';
               },
               onSaved: (value) {},

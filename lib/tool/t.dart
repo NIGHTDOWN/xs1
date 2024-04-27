@@ -1,6 +1,4 @@
 import 'package:ng169/tool/db.dart';
-import 'package:sqflite/sqflite.dart';
-
 import 'function.dart';
 import 'global.dart';
 
@@ -18,11 +16,13 @@ import 'global.dart';
 // 	update,
 // 	insert,
 class T {
-  Db obj;
-  String table;
+  Db obj=Null as Db;
+  String table="";
   String _field = '*',
       _order = '',
       _limit = '',
+      
+      // ignore: unused_field
       _sql = '',
       _where = '',
       _join = '';
@@ -40,6 +40,7 @@ class T {
     table = tablename;
   }
   field(String field) {
+     // ignore: unnecessary_null_comparison
     if (null != field) {
     } else {
       field = '*';
@@ -54,6 +55,7 @@ class T {
       key += ' and `' + var1 + '`=\'' + where[var1].toString() + '\'';
     }
     var k = key.substring(4);
+     // ignore: unnecessary_null_comparison
     if (null != k) {
       if (isnull(this._where)) {
         this._where = this._where + ' AND ' + k;
@@ -86,6 +88,7 @@ class T {
   }
 
   order(String $order) {
+     // ignore: unnecessary_null_comparison
     if (null != $order) {
       $order = " ORDER BY " + $order;
     }
@@ -94,6 +97,7 @@ class T {
   }
 
   limit(String $limit) {
+     // ignore: unnecessary_null_comparison
     if (null != $limit) {
       $limit = " limit " + $limit;
     }
@@ -182,7 +186,7 @@ class T {
     _where = '';
     _order = '';
     _limit = '';
-    this.field(null);
+    this.field(Null as String);
     _reset();
     return await obj.getone(_sql);
   }
@@ -206,7 +210,7 @@ class T {
     _where = '';
     _order = '';
     _limit = '';
-    this.field(null);
+    this.field(Null as String);
     _reset();
     return await obj.getall(_sql);
   }
@@ -229,7 +233,7 @@ class T {
     _where = '';
     _order = '';
     _limit = '';
-    this.field(null);
+    this.field(Null as String);
     _reset();
     return await obj.getcount(_sql);
   }

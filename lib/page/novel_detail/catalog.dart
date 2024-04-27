@@ -11,7 +11,7 @@ import 'package:ng169/tool/url.dart';
 
 class CataLog extends StatefulWidget {
   final Novel novel;
-  const CataLog({Key key, this.novel}) : super(key: key);
+  const CataLog({Key? key, required this.novel}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => CataLogState();
@@ -24,7 +24,7 @@ class CataLogState extends State<CataLog> {
   // final key = GlobalKey<LoadboxState>();
   double goread = 0.0;
   //跳转到阅读指针的位置
-  String readid;
+  late String readid;
   gotoreadsign() {
     getpostion();
     if (scrollController.hasClients && remotedata.length > 0) {
@@ -121,7 +121,7 @@ class CataLogState extends State<CataLog> {
         backgroundColor: Colors.grey,
         controller: scrollController,
         heightScrollThumb: 35.0,
-        child: bookCardWithInfo(),
+        child: bookCardWithInfo() as  BoxScrollView,
       );
     }
 

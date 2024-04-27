@@ -13,10 +13,10 @@ import 'lang.dart';
 dynamic res;
 List times = [];
 var reqlock = {};
-Future<String> http(String url,
-    [Map<String, dynamic> datas,
-    Map<String, dynamic> header,
-    int reqlockmiao]) async {
+Future<String?> http(String url,
+    [Map<String, dynamic>? datas,
+    Map<String, dynamic>? header,
+    int? reqlockmiao]) async {
   Dio dio = Dio();
   //设置代理
   dio.options.baseUrl = apiurl;
@@ -30,7 +30,7 @@ Future<String> http(String url,
     if (isnull(reqlock, index)) {
       int latime = int.parse(reqlock[index]);
       int now = int.parse(gettime());
-      if (now - latime <= reqlockmiao) {
+      if (now - latime <= reqlockmiao!) {
         //时间间隔太短，不请求数据
         // reqlock[index] = now.toString();
         return null;
@@ -90,7 +90,7 @@ Future<String> http(String url,
 
 //不等待响应
 Future<String> httpnodeal(String url,
-    [Map<String, dynamic> datas, Map<String, dynamic> header]) async {
+    [Map<String, dynamic>? datas, Map<String, dynamic>? header]) async {
   Dio dio = Dio();
   dio.options.baseUrl = apiurl;
   dio.options.receiveTimeout = 0;
@@ -110,14 +110,14 @@ dynamic getres() {
   return res;
 }
 
-dynamic getdata(BuildContext context, String responseData) {
+dynamic getdata(BuildContext context, String? responseData) {
   var js;
   if (!isnull(responseData)) {
     //请求无数据返回的时候不要报错
     return null;
   }
   try {
-    js = jsonDecode(responseData);
+    js = jsonDecode(responseData!);
   } catch (e) {
     d(e);
     if (loghttpcn) {
@@ -144,7 +144,7 @@ dynamic getdata(BuildContext context, String responseData) {
     User.clear();
     // show(context, js['msg']);
     show(context, lang('请登入'));
-    gourl(context, new Index());
+    gourl(context, new Index() as WidgetBuilder);
     return null;
   } else {
     if (loghttpcn) {
@@ -157,7 +157,7 @@ dynamic getdata(BuildContext context, String responseData) {
 }
 
 Future<String> httpfile(String url,
-    [Map<String, dynamic> datas, Map<String, dynamic> header]) async {
+    [Map<String, dynamic>? datas, Map<String, dynamic>? header]) async {
   Dio dio = Dio();
   //设置代理
 
@@ -177,7 +177,7 @@ Future<String> httpfile(String url,
 
   try {
     //以表单的形式设置请求参数s
-    FormData datatmp = FormData.fromMap(datas);
+    FormData datatmp = FormData.fromMap(datas!);
     Response response = await dio.post(url, data: datatmp);
     if (response.statusCode == 200) {
       res = response;

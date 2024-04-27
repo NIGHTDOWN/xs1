@@ -21,7 +21,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class SearchPageState extends State<SearchPage> {
-  List hotbook, mallcache;
+  late List hotbook, mallcache;
   List<Widget> more = [SizedBox()];
   var index = 'mallsearch_';
   var cachedata = 'mallsearch_data_', page = 1;
@@ -37,7 +37,7 @@ class SearchPageState extends State<SearchPage> {
   double boxSize = 80.0;
   TextEditingController searword = new TextEditingController();
   Future<void> gethttpdata() async {
-    var hotbooks = await http(api, null, gethead());
+    var hotbooks = await http(api, {}, gethead());
     var data2 = getdata(context, hotbooks);
     if (isnull(data2)) {
       hotbook = data2;
@@ -227,7 +227,7 @@ class SearchPageState extends State<SearchPage> {
           border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: (String value) {
+      validator: (String? value) {
         // if (value.isEmpty) {
         //   cansubmit = cansubmit && false;
         //   return lang('请填写账号');
@@ -315,7 +315,7 @@ class SearchPageState extends State<SearchPage> {
   }
 
   Widget bookCardWithInfo(int style, String title, List json) {
-    Widget card;
+    Widget card=new SizedBox();
     switch (style) {
       case 1:
         card = NovelFourGridView(title, json, false);

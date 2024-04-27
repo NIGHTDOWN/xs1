@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:ng169/conf/conf.dart';
 import 'dart:async';
@@ -8,8 +8,10 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
-import 'package:screen/screen.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../style/screen.dart';
 
 class ReaderSet extends StatefulWidget {
   final List<dynamic> chapters;
@@ -20,12 +22,12 @@ class ReaderSet extends StatefulWidget {
   final VoidCallback reload;
 
   ReaderSet(
-      {this.chapters,
-      this.articleIndex,
-      this.onTap,
-      this.novel,
-      this.reflash,
-      this.reload});
+      {required this.chapters,
+    required this.articleIndex,
+    required this.onTap,
+    required this.novel,
+    required this.reflash,
+    required this.reload});
 
   @override
   ReaderSetState createState() => ReaderSetState();
@@ -33,14 +35,14 @@ class ReaderSet extends StatefulWidget {
 
 class ReaderSetState extends State<ReaderSet>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> animation;
+  late AnimationController animationController;
+  late Animation<double> animation;
 
   double progressValue = 0.0;
   bool isTipVisible = false;
 
   // double brightness; //A??
-  String title;
+  late String title;
   //?????
   @override
   initState() {

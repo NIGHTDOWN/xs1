@@ -8,19 +8,20 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/commect/addcomment.dart';
 import 'package:ng169/page/home/novel_four_grid_view.dart';
 import 'package:ng169/page/login/index.dart';
-import 'package:ng169/style/screen.dart' as screenstyle;
-import 'package:ng169/style/sq_color.dart';
-import 'package:ng169/style/starbar.dart';
 
-import 'package:ng169/style/styles.dart';
+import 'package:ng169/style/sq_color.dart';
+
+
+
 import 'package:ng169/tool/bow.dart';
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/global.dart';
+
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
 
 import 'package:ng169/tool/url.dart';
 
+// ignore: must_be_immutable
 class Lastpage extends LoginBase {
   final Novel novel;
 
@@ -174,6 +175,7 @@ class Lastpage extends LoginBase {
                       reflash();
                       var data = {'wid': novel.id, 'type': novel.type};
                       http(api, data, gethead()).then((value) {
+                        // ignore: unused_local_variable
                         var tmpdata = getdata(context, value);
                         show(context, lang('已经帮你催作者了'));
                       });

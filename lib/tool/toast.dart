@@ -10,31 +10,31 @@ enum ToastPostion {
 
 class Toast {
   // toast靠它加到屏幕上
-  static OverlayEntry _overlayEntry;
+  static OverlayEntry? _overlayEntry;
   // toast是否正在showing
   static bool _showing = false;
   // 开启一个新toast的当前时间，用于对比是否已经展示了足够时间
-  static DateTime _startedTime;
+  static DateTime? _startedTime;
   // 提示内容
-  static String _msg;
+  static String? _msg;
   // toast显示时间
-  static int _showTime;
+  static int? _showTime;
   // 背景颜色
-  static Color _bgColor;
+  static Color? _bgColor;
   // 文本颜色
-  static Color _textColor;
+  static Color? _textColor;
   // 文字大小
-  static double _textSize;
+  static double? _textSize;
   // 显示位置
-  static ToastPostion _toastPosition;
+  static ToastPostion? _toastPosition;
   // 左右边距
-  static double _pdHorizontal;
+  static double? _pdHorizontal;
   // 上下边距
-  static double _pdVertical;
+  static double? _pdVertical;
   static void toast(
     BuildContext context, {
     //显示的文本
-    String msg,
+    String? msg,
     //显示的时间 单位毫秒
     int showTime = 1000,
     //显示的背景
@@ -85,23 +85,23 @@ class Toast {
                     )),
               ));
       //插入到整个布局的最上层
-      overlayState.insert(_overlayEntry);
+      overlayState.insert(_overlayEntry!);
     } else {
       //重新绘制UI，类似setState
-      _overlayEntry.markNeedsBuild();
+      _overlayEntry?.markNeedsBuild();
     }
     // 等待时间
-    await Future.delayed(Duration(milliseconds: _showTime));
+    await Future.delayed(Duration(milliseconds: _showTime!));
     //2秒后 到底消失不消失
-    if (DateTime.now().difference(_startedTime).inMilliseconds >= _showTime) {
+    if (DateTime.now().difference(_startedTime!).inMilliseconds >= _showTime!) {
       _showing = false;
       if (_overlayEntry != null) {
-        _overlayEntry.markNeedsBuild();
+        _overlayEntry?.markNeedsBuild();
       }
 
       await Future.delayed(Duration(milliseconds: 400));
       if (_overlayEntry != null) {
-        _overlayEntry.remove();
+        _overlayEntry?.remove();
       }
 
       _overlayEntry = null;
@@ -115,9 +115,9 @@ class Toast {
         color: _bgColor,
         child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: _pdHorizontal, vertical: _pdVertical),
+              horizontal: _pdHorizontal!, vertical: _pdVertical!),
           child: Text(
-            _msg,
+            _msg!,
             style: TextStyle(
               fontSize: _textSize,
               color: _textColor,

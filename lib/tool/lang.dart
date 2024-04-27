@@ -18,7 +18,7 @@ String lang(index) {
 }
 
 Future inilang() async {
-  String jsonLang;
+  String? jsonLang;
   String lang = getlang();
   if (isnull(lang)) {
     lang = lang.substring(0, 2);

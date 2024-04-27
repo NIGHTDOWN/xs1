@@ -14,7 +14,7 @@ class LogList extends StatelessWidget {
   Widget build(BuildContext context) {
     var novels = data;
     if (novels.length <= 0) {
-      return null;
+      return Container();
     }
 
     List<Widget> children = [];
@@ -261,4 +261,5 @@ Widget cell(json, type) {
       ),
     );
   }
+  return Container();
 }

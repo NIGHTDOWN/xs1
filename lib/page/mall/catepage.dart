@@ -19,7 +19,7 @@ import 'package:ng169/tool/loadbox.dart';
 // ignore: must_be_immutable
 class CatePage extends LoginBase {
   bool needlogin = false;
-  List hotbook, mallcache;
+  late List hotbook, mallcache;
   List<Widget> more = [SizedBox()];
   var index = 'mallcate_';
   var cachedata = 'mallcate_data_', page = 1;
@@ -66,7 +66,7 @@ class CatePage extends LoginBase {
       data = datatmp[1];
     } else {
       var tmpsearchdata = await http(sapi, datap, gethead());
-      data = getdata(context, tmpsearchdata);
+      data = getdata(context, tmpsearchdata!);
 
       if (isnull(data)) {
         setpagecache(datap, data);
@@ -144,8 +144,8 @@ class CatePage extends LoginBase {
   gettagheight() {
     try {
       var tt = listGlobalKey.currentContext
-          .findRenderObject()
-          .semanticBounds
+          ?.findRenderObject()
+          ?.semanticBounds
           .size
           .height;
       if (isnull(tt) && tt != tagHeight) {
@@ -187,7 +187,7 @@ class CatePage extends LoginBase {
       datap.addAll({'page': page++});
 
       var data = await http(sapi, datap, gethead());
-      var tmpmore = getdata(context, data);
+      var tmpmore = getdata(context, data!);
       if (isnull(tmpmore)) {
         more.add(bookCardWithInfo(5, '', tmpmore));
         // page++;
@@ -673,7 +673,7 @@ class CatePage extends LoginBase {
   }
 
   Widget bookCardWithInfo(int style, String title, List json) {
-    Widget card;
+    Widget card=new SizedBox();
     switch (style) {
       case 1:
         card = NovelFourGridView(title, json, false);

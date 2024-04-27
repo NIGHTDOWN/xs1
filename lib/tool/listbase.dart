@@ -10,7 +10,7 @@ class Listbase extends StatefulWidget {
   final MoreClaaback onMore;
   final ScrollBack scroll;
   Listbase(this.childrens,
-      {this.margin, this.onRefresh, this.onMore, this.scroll});
+      {required this.margin, required this.onRefresh, required this.onMore, required this.scroll});
   // const Listbase(this.childrens, {this.margin, this.onRefresh, this.onMore});
   @override
   State<StatefulWidget> createState() => ListbaseState();
@@ -42,6 +42,7 @@ class ListbaseState extends State<Listbase> with AutomaticKeepAliveClientMixin {
    */
   Future _getMore() async {
     //判断是否需要做更多的处理
+    // ignore: unnecessary_null_comparison
     if (widget.onMore != null) {
       if (!isLoading) {
         setState(() {
@@ -81,13 +82,14 @@ class ListbaseState extends State<Listbase> with AutomaticKeepAliveClientMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+  
     super.dispose();
     _scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Stack(
       children: <Widget>[
         Container(
@@ -108,18 +110,22 @@ class ListbaseState extends State<Listbase> with AutomaticKeepAliveClientMixin {
   }
 
   Widget getListView() {
+      // ignore: unnecessary_null_comparison
     if (widget.childrens == null || widget.childrens.length == 0) {
       return Container();
     }
     // return Column(children: widget.childrens);
     int itemCount = widget.childrens.length;
+      // ignore: unnecessary_null_comparison
     if (widget.onMore != null) {
       itemCount = widget.childrens.length + 1;
     }
+      // ignore: unnecessary_null_comparison
     if (widget.onRefresh != null) {
       return RefreshIndicator(
         onRefresh: onloadRefresh,
         child: Container(
+          // ignore: unnecessary_null_comparison
           margin: widget.margin == null
               ? EdgeInsets.fromLTRB(10, 0, 0, 0)
               : widget.margin,
@@ -136,6 +142,7 @@ class ListbaseState extends State<Listbase> with AutomaticKeepAliveClientMixin {
       );
     } else {
       return Container(
+        // ignore: unnecessary_null_comparison
         margin: widget.margin == null
             ? EdgeInsets.fromLTRB(10, 0, 0, 0)
             : widget.margin,

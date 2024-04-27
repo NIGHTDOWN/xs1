@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ng169/model/user.dart';
-import 'package:ng169/page/app.dart';
-import 'package:ng169/page/rack/rack.dart';
+
 import 'package:ng169/style/theme.dart' as theme;
 import 'package:ng169/tool/brige.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
-import 'package:ng169/tool/url.dart';
+
 
 /// 注册界面
 class SignUpPage extends StatefulWidget {
@@ -23,12 +22,13 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController nickname = new TextEditingController();
   TextEditingController cpwd = new TextEditingController();
   GlobalKey<FormState> _signInFormKey = new GlobalKey();
-  NgBrige ngbrige;
+  late NgBrige ngbrige;
   bool isShowPassWord = false, isShowcPassWord = false, cansubmit = true;
   @override
   Widget build(BuildContext context) {
     //this.context = context;
-    ngbrige = NgBrige.of(context);
+    ngbrige = NgBrige.of(context)!;
+    // ignore: unused_local_variable
     var cache = g('cache');
     return new Container(
         padding: EdgeInsets.only(top: 23),
@@ -52,7 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
               可以用过FormState对Form的子孙FromField进行统一的操作
            */
                     cansubmit = true;
-                    _signInFormKey.currentState.validate();
+                    _signInFormKey.currentState?.validate();
 
                     if (cansubmit) {
                       //如果输入都检验通过，则进行登录操作
@@ -77,10 +77,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                 },
                                 gethead())
                             .then((data) async {
-                          var gets = getdata(context, data);
+                          var gets = getdata(context, data!);
 
                           if (gets != false) {
-                            _signInFormKey.currentState.reset();
+                            _signInFormKey.currentState?.reset();
                             username.clear();
                             pwd.clear();
 

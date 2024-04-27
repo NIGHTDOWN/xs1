@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ng169/tool/function.dart';
+
 
 class RatingBar extends StatefulWidget {
   final int count;
@@ -18,21 +18,19 @@ class RatingBar extends StatefulWidget {
       this.count = 5,
       this.value = 10.0,
       this.size = 20,
-      this.nomalImage,
-      this.selectImage,
-      this.padding,
+      required this.nomalImage,
+      required this.selectImage,
+     required this.padding,
       this.selectAble = false,
       this.candouble = false,
-      @required this.onRatingUpdate})
-      : assert(nomalImage != null),
-        assert(selectImage != null);
+      required this.onRatingUpdate});
 
   @override
   _RatingBarState createState() => _RatingBarState();
 }
 
 class _RatingBarState extends State<RatingBar> {
-  double value;
+  late double value;
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +84,7 @@ class _RatingBarState extends State<RatingBar> {
   }
 
   int fullStars() {
+      // ignore: unnecessary_null_comparison
     if (value != null) {
       return (value / (widget.maxRating / widget.count)).floor();
     }
@@ -93,6 +92,7 @@ class _RatingBarState extends State<RatingBar> {
   }
 
   double star() {
+    // ignore: unnecessary_null_comparison
     if (value != null) {
       if (widget.count / fullStars() == widget.maxRating / value) {
         return 0;
@@ -164,7 +164,8 @@ class _RatingBarState extends State<RatingBar> {
 
 class SMClipper extends CustomClipper<Rect> {
   final double rating;
-  SMClipper({this.rating}) : assert(rating != null);
+  // ignore: unnecessary_null_comparison
+  SMClipper({required this.rating}) : assert(rating != null);
   @override
   Rect getClip(Size size) {
     return Rect.fromLTRB(0.0, 0.0, rating, size.height);

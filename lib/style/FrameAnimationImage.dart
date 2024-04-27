@@ -3,6 +3,7 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 
 // 帧动画Image
+// ignore: must_be_immutable
 class FrameAnimationImage extends StatefulWidget {
   final double width;
   final double height;
@@ -11,11 +12,11 @@ class FrameAnimationImage extends StatefulWidget {
   int interval = 200;
   List<String> imageList;
   FrameAnimationImage(
-      {this.imageList,
+      {required this.imageList,
       this.width = 150,
       this.height = 150,
       this.interval = 200,
-      this.bgcolor,
+      required this.bgcolor,
       this.picwidth = 100});
 
   @override
@@ -24,8 +25,8 @@ class FrameAnimationImage extends StatefulWidget {
 
 class FrameAnimationImageState extends State<FrameAnimationImage>
     with SingleTickerProviderStateMixin {
-  Animation<double> _animation;
-  AnimationController _controller;
+  late Animation<double> _animation;
+ late AnimationController _controller;
   int interval = 200;
   List<String> assetList = [
     'assets/images/cy/1.png',
@@ -40,12 +41,13 @@ class FrameAnimationImageState extends State<FrameAnimationImage>
     'assets/images/cy/10.png',
     'assets/images/cy/11.png',
   ];
-  Color bgcolor;
+  late Color bgcolor;
   double picwidth = 100.0;
   @override
   void initState() {
     super.initState();
 
+    // ignore: unnecessary_null_comparison
     if (widget.interval != null) {
       interval = widget.interval;
     }

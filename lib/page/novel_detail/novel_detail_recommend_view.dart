@@ -15,6 +15,7 @@ class NovelDetailRecommendView extends StatelessWidget {
     //   padding: EdgeInsets.symmetric(horizontal: 15),
     //   child: Wrap(spacing: 15, runSpacing: 20, children: children),
     // );
+    return SizedBox();
   }
 
   @override

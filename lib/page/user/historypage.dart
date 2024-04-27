@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ng169/obj/novel.dart';
-import 'package:ng169/page/home/novel_first_hybird_card.dart';
-import 'package:ng169/page/home/novel_four_grid_view.dart';
+
 import 'package:ng169/page/home/novel_history.dart';
-import 'package:ng169/page/home/novel_list_more.dart';
-import 'package:ng169/page/home/novel_normal_card.dart';
-import 'package:ng169/page/home/novel_second_hybird_card.dart';
+
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/http.dart';
+
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/t.dart';
 
@@ -16,17 +12,17 @@ class HistoryPage extends StatefulWidget {
   final String api;
   final String title;
 
-  const HistoryPage({Key key, this.api, this.title}) : super(key: key);
+  const HistoryPage({Key? key, required this.api, required this.title}) : super(key: key);
   @override
   State<StatefulWidget> createState() => HistoryPageState();
 }
 
 class HistoryPageState extends State<HistoryPage> {
-  List hotbook, mallcache;
+  late List hotbook, mallcache;
   List<Widget> more = [SizedBox()];
   var index = 'mallpage_';
   var cachedata = 'mallpage_data_', page = 1, pagesize = 5;
-  String api;
+late  String api;
   bool moredata = false, stop = false;
   ScrollController scrollController = ScrollController();
 
@@ -132,7 +128,7 @@ class HistoryPageState extends State<HistoryPage> {
   }
 
   Widget bookCardWithInfo(int style, List json) {
-    Widget card;
+    Widget card=Container();
     d(json);
     switch (style) {
       case 4:

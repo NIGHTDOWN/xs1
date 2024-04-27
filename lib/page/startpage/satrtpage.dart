@@ -2,15 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:ng169/page/mall/mall.dart';
-import 'package:ng169/style/sign_in_page.dart';
-import 'package:ng169/style/sign_up_page.dart';
+
 import 'package:ng169/style/sq_color.dart';
 
-import 'package:ng169/tool/brige.dart';
+
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/global.dart';
+
 import 'package:ng169/tool/http.dart';
-import 'package:ng169/tool/lang.dart';
+
 import 'package:ng169/tool/url.dart';
 
 import '../app.dart';

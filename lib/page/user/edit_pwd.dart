@@ -120,7 +120,7 @@ class EditPwdState extends State<EditPwd> {
       post = false;
       reflash();
 
-      if (!_tmpformKey.currentState.validate()) {
+      if (!_tmpformKey.currentState!.validate()) {
         return false;
       }
       var data = {
@@ -165,8 +165,8 @@ class EditPwdState extends State<EditPwd> {
           contentPadding: EdgeInsets.only(top: -4.0), border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: ( value) {
+        if (value!.isEmpty) {
           return lang('请输入密码');
         }
         if (value == oldpwd.text) {
@@ -201,8 +201,8 @@ class EditPwdState extends State<EditPwd> {
           contentPadding: EdgeInsets.only(top: -4.0), border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: ( value) {
+        if (value!.isEmpty) {
           return lang('请再次输入密码');
         }
         if (value != pwd.text) {
@@ -234,8 +234,8 @@ class EditPwdState extends State<EditPwd> {
           contentPadding: EdgeInsets.only(top: -4.0), border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: ( value) {
+        if (value!.isEmpty) {
           return lang('请输入旧密码');
         }
         return null;
@@ -266,8 +266,7 @@ class EditPwdState extends State<EditPwd> {
     );
   }
 
-  Widget getrow(String title, Widget obj, Function click,
-      [bool haveink = false]) {
+  Widget getrow(String title, Widget obj, [void Function()? click, bool haveink = false]) {
     return Material(
       color: SQColor.white,
       child: InkWell(

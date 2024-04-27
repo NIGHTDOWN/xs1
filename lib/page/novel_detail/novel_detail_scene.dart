@@ -38,7 +38,7 @@ class NovelDetailScene extends StatefulWidget {
 }
 
 class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
-  Novel novel;
+  late Novel novel;
   List<Novel> recommendNovels = [];
   List likebook = [];
   List<NovelComment> comments = [];
@@ -272,7 +272,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
     var data = await gourl(
         context,
         AddComment(
-          novel: novel,
+          novel: novel, key: null,
         ));
     if (isnull(data)) {
       //提交了评论就刷新
@@ -360,14 +360,14 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
       api = 'book/get_randList';
     }
 
-    var tmpdata = await http(api, null, gethead());
+    var tmpdata = await http(api, {}, gethead());
     var data = getdata(context, tmpdata);
     if (isnull(data)) {
       likebook = data;
       reflash();
       return data;
     }
-    return null;
+    return [];
   }
 
   getrang(Novel novel) async {
@@ -468,7 +468,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
                         " " +
                         '${novel.chapterCount}' +
                         " " +
-                        lang('章'),
+                        lang('章'), attachedWidget: SizedBox(),
                   )),
                   // buildTags(),  //标签，此版先不加
                   SizedBox(height: 10),

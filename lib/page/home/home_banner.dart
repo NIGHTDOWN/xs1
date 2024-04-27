@@ -13,9 +13,10 @@ import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/url.dart';
 
+// ignore: must_be_immutable
 class HomeBanner extends StatelessWidget {
   final List banners;
-  BuildContext context;
+  BuildContext context=Null as BuildContext;
   HomeBanner(this.banners);
   HashMap tmplist = new HashMap();
   Widget banner(info) {
@@ -41,7 +42,7 @@ class HomeBanner extends StatelessWidget {
           gourl(
               context,
               Bow(
-                url: info['banner_url'],
+                url: info['banner_url'], title: '',
               ));
         }
         break;
@@ -90,7 +91,7 @@ class HomeBanner extends StatelessWidget {
           gourl(
               context,
               Bow(
-                url: info['banner_url'],
+                url: info['banner_url'], title: '',
               ));
         }
         break;
@@ -103,6 +104,7 @@ class HomeBanner extends StatelessWidget {
       return SizedBox();
     }
     this.context = context;
+    // ignore: deprecated_member_use
     double top = MediaQueryData.fromWindow(window).padding.top;
     return Container(
       margin: EdgeInsets.only(top: top),

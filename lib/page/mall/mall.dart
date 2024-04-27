@@ -26,7 +26,7 @@ class Mall extends StatefulWidget {
 }
 
 class MallState extends State<Mall> {
-  List banner,
+  late List banner,
       newbook,
       newcart,
       hotbook,
@@ -43,13 +43,13 @@ class MallState extends State<Mall> {
   var hotbooksapi = 'book/new';
   var newCartoonsapi = 'cartoon/hot_cartoon';
   var randapi = 'book/get_randList';
-  Future<List> gethttpdate(String api) async {
-    var jbanner = await http(api, null, gethead());
+  Future gethttpdate(String api) async {
+    var jbanner = await http(api, Null as Map<String, dynamic>, gethead());
     var data = getdata(context, jbanner);
     if (isnull(data)) {
       return data;
     }
-    return null;
+    return Null;
   }
 
   mock() {
@@ -394,7 +394,7 @@ class MallState extends State<Mall> {
   }
 
   Widget bookCardWithInfo(int style, String title, List json) {
-    Widget card;
+    Widget card=new SizedBox();
     switch (style) {
       case 1:
         card = NovelFourGridView(title, json);

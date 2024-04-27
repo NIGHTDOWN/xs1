@@ -16,39 +16,39 @@ import 'package:ng169/tool/url.dart';
 import 'chapter.dart';
 
 class Novel {
-  String id;
-  String dbid;
-  String name;
-  String imgUrl;
-  int firstChapter;
-  int readChapter;
-  int lastChapter;
-  String lastChaptertitle;
-  String lastChapterid;
-  String isgroom;
-  String author;
-  double price;
+  String id="0";
+  String dbid="0";
+  String name="";
+  String imgUrl="";
+  int firstChapter=0;
+  int readChapter =0;
+  int lastChapter =0;
+  String lastChaptertitle="";
+  String lastChapterid="0";
+  String isgroom="0";
+  String author="";
+  double price=0;
   double score = 5.0;
-  String type;
-  String introduction;
-  int chapterCount;
-  int recommendCount;
-  int commentCount;
-  int firstArticleId;
-  String lastsecnum; //上次加入书架最新章节数量
-  String nowsecnum; //本次获取远程书籍最新章节数量
+  String type="0";
+  String introduction="";
+  int chapterCount=0;
+  int recommendCount=0;
+  int commentCount=0;
+  int firstArticleId=0;
+  String lastsecnum="0"; //上次加入书架最新章节数量
+  String nowsecnum="0"; //本次获取远程书籍最新章节数量
   int upsecnum = 0; //书架页面显示更新的章节数量
-  List<String> roles;
-  String status;
-  int _status;
-  String desc;
-  double wordCount;
-  List<String> tags;
-  bool isLimitedFree;
-  String uid;
-  Map comment;
-  List catelog; //目录
-  String isdownload;
+  List<String> roles=[];
+  String status="0";
+  int _status=0;
+  String desc="";
+  double wordCount=0;
+  List<String> tags=[];
+  bool isLimitedFree=false;
+  String uid="0";
+  Map comment={};
+  List catelog=[]; //目录
+  String isdownload="0";
   String downrate = '0';
 
   setcomment(Map comments) {
@@ -112,6 +112,7 @@ class Novel {
 
   updbgroom() async {
     if (!isnull(id)) return false;
+    // ignore: unused_local_variable
     var db = g('db');
     var w = {'bookid': id, 'type': type};
     // var ins = await db.where(w).getone('book');
@@ -385,7 +386,7 @@ class Novel {
         tmpdata = {'cartoon_id': id};
       }
       var tmpremote = await http(api, tmpdata, gethead());
-      var data = getdata(g('context'), tmpremote);
+      var data = getdata(g('context'), tmpremote!);
       if (isnull(data)) {
         return Novel.fromJson(data['data']);
       }
@@ -431,7 +432,7 @@ class Novel {
     // savedb();
     var tmp =
         await http('groom/add_rack', {'book_id': id, 'type': type}, gethead());
-    var data = getdata(g('context'), tmp);
+    var data = getdata(g('context'), tmp!);
     if (isnull(data)) {
       Rackmodel()..addrack(this);
       //状态
@@ -490,7 +491,7 @@ class Novel {
     Rackmodel().rackrf();
   }
 
-  read(context, [int readChapter]) async {
+  read(context, [int readChapter=0]) async {
     Rackmodel()..upreadtime(this);
     if (type == '1') {
       await gourl(context, ReaderScene(this, readChapter));

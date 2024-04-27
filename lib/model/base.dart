@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
+// ignore: must_be_immutable
 abstract class LoginBase extends StatefulWidget {
   bool needlogin = false;
-  State<LoginBase> state;
-  BuildContext context;
-  bool mounted;
-  Function setState;
-  Function reflash;
+  State<LoginBase> state =Null as State<LoginBase>;
+  BuildContext context=Null as BuildContext;
+  bool mounted=false;
+  Function setState=(){};
+  Function reflash=(){};
   @override
   createState() => _LoginBaseState();
 

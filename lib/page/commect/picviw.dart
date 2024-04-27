@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/src/cache_managers/base_cache_manager.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 
 import 'package:photo_view/photo_view.dart';
 
+// ignore: must_be_immutable
 class PicView extends StatelessWidget {
   final String url;
   var primaryColor = Color(0xff203152);
-  PicView({Key key, @required this.url}) : super(key: key);
+  PicView({Key? key, required this.url}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class PicView extends StatelessWidget {
 class FullPhotoScreen extends StatefulWidget {
   final String url;
 
-  FullPhotoScreen({Key key, @required this.url}) : super(key: key);
+  FullPhotoScreen({Key? key, required this.url}) : super(key: key);
 
   @override
   State createState() => FullPhotoScreenState(url: url);
@@ -36,7 +38,7 @@ class FullPhotoScreen extends StatefulWidget {
 class FullPhotoScreenState extends State<FullPhotoScreen> {
   final String url;
 
-  FullPhotoScreenState({Key key, @required this.url});
+  FullPhotoScreenState({Key? key, required this.url});
 
   @override
   void initState() {
@@ -63,7 +65,7 @@ class FullPhotoScreenState extends State<FullPhotoScreen> {
                 pop(context);
               },
               // imageProvider: NetworkImage(url)
-              imageProvider: CachedNetworkImageProvider(url)
+              imageProvider: CachedNetworkImageProvider(url,Null as BaseCacheManager,(){},{})
               
               )),
     );

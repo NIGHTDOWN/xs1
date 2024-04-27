@@ -1,13 +1,13 @@
 import 'package:ng169/tool/function.dart';
 
 class NovelComment {
-  String nickname;
-  String avatar;
-  String content;
-  String discuss_time;
-  String star;
-  String users_id;
-  String discuss_id;
+  String nickname="";
+  String avatar="";
+  String content="";
+  String discuss_time="";
+  String star="0";
+  String users_id="0";
+  String discuss_id="0";
 
   NovelComment.fromJson(Map data) {
     if (!isnull(data)) {

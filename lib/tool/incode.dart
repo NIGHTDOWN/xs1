@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'dart:convert';
-
 import 'package:crypto/crypto.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:sqflite/utils/utils.dart';
@@ -10,7 +7,7 @@ import 'package:sqflite/utils/utils.dart';
 class Incode {
   String string;
   String key;
-  String code;
+  String code="";
   String buweileng = '0';
   int size = 7;
   Incode(this.string, this.key);

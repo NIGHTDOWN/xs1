@@ -10,7 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
-import 'package:ng169/page/app.dart';
+
 
 import 'package:ng169/style/theme.dart' as theme;
 import 'package:ng169/tool/bow.dart';
@@ -40,19 +40,20 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController pwd = new TextEditingController();
   bool cansubmit = true;
   GlobalKey<FormState> _signInFormKey = new GlobalKey();
-  NgBrige ngbrige;
-  Map<String, String> fromdata;
+  late  NgBrige ngbrige;
+  late Map<String, String> fromdata;
   bool isShowPassWord = false;
 
-  BuildContext context;
-  NgCache cache;
-  String tmpfbcode;
-  FlutterWebviewPlugin flutterWebviewPlugin;
-  StreamSubscription<WebViewStateChanged> _onStateChanged;
+  late BuildContext context;
+  late NgCache cache;
+  late String tmpfbcode;
+  late FlutterWebviewPlugin flutterWebviewPlugin;
+  // ignore: unused_field
+  late StreamSubscription<WebViewStateChanged> _onStateChanged;
   // GoogleSignIn _googleSignIn;
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     // _googleSignIn = GoogleSignIn(
     //   scopes: [
@@ -90,7 +91,7 @@ class _SignInPageState extends State<SignInPage> {
 // flutterWebviewPlugin.close();
 
     this.context = context;
-    ngbrige = NgBrige.of(context);
+    ngbrige = NgBrige.of(context)!;
     cache = g('cache');
     var positioned = new Positioned(
       child: buildSignInButton(),
@@ -383,7 +384,7 @@ class _SignInPageState extends State<SignInPage> {
     gourl(
         context,
         new Bow(
-          url: url,
+          url: url, title: '',
           //title: "标题",
         ));
   }
@@ -402,7 +403,7 @@ class _SignInPageState extends State<SignInPage> {
       // Navigator.of(context).pop(1);
       Uri u = Uri.parse(url);
 
-      String code = u.queryParameters['code'];
+      String? code = u.queryParameters['code'];
       if (!isnull(code)) {
         // Bow.close(context);
         return false;
@@ -413,7 +414,7 @@ class _SignInPageState extends State<SignInPage> {
         return false;
         //防止重复执行，code拉一次就失效了
       } else {
-        tmpfbcode = code;
+        tmpfbcode = code!;
       }
       //这里获取fbtoken
       String tokenurl =
@@ -427,7 +428,7 @@ class _SignInPageState extends State<SignInPage> {
           var fbuserinfo =
               "https://graph.facebook.com/me?fields=id,name,email,age_range,first_name,last_name,birthday,link,gender,locale,picture,timezone,updated_time,verified&access_token=$token";
           http(fbuserinfo).then((onValue) {
-            var json = jsonDecode(onValue);
+            var json = jsonDecode(onValue!);
             var postdata = {
               'uid': json['id'],
               'nickname': json['name'],
@@ -438,7 +439,7 @@ class _SignInPageState extends State<SignInPage> {
               //d(onValue);
               // Map json=jsonDecode(onValue);
               // d(json);
-              var getdatas = getdata(context, onValue);
+              var getdatas = getdata(context, onValue!);
 
               //d(getdatas);
               User.set(getdatas);
@@ -466,7 +467,7 @@ class _SignInPageState extends State<SignInPage> {
       'login_type': type,
     };
     http('login/run', postdata, gethead()).then((onValue) async {
-      var getdatas = getdata(context, onValue);
+      var getdatas = getdata(context, onValue!);
 
       User.set(getdatas);
       pop(context);
@@ -497,6 +498,7 @@ class _SignInPageState extends State<SignInPage> {
       focusNode: emailFocusNode,
       controller: username,
       onEditingComplete: () {
+        // ignore: unnecessary_null_comparison
         if (focusScopeNode == null) {
           focusScopeNode = FocusScope.of(context);
         }
@@ -512,8 +514,8 @@ class _SignInPageState extends State<SignInPage> {
           border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: (String? value) {
+        if (value!.isEmpty) {
           cansubmit = cansubmit && false;
           return lang('请填写账号');
         }
@@ -618,7 +620,7 @@ class _SignInPageState extends State<SignInPage> {
               可以用过FormState对Form的子孙FromField进行统一的操作
            */
         cansubmit = true;
-        _signInFormKey.currentState.validate();
+        _signInFormKey.currentState?.validate();
 
         if (cansubmit) {
           //如果输入都检验通过，则进行登录操作
@@ -639,10 +641,10 @@ class _SignInPageState extends State<SignInPage> {
                     {'username': username.text, 'password': pwd.text},
                     gethead())
                 .then((data) async {
-              var gets = getdata(context, data);
+              var gets = getdata(context, data!);
 
               if (isnull(gets)) {
-                _signInFormKey.currentState.reset();
+                _signInFormKey.currentState?.reset();
                 username.clear();
                 pwd.clear();
                 User.set(gets);

@@ -5,7 +5,7 @@ import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
 
-import 'battery_view.dart';
+
 
 class ReaderOverlayer extends StatelessWidget {
   final Article article;
@@ -13,7 +13,7 @@ class ReaderOverlayer extends StatelessWidget {
   final double topSafeHeight;
   final Widget battery;
 
-  ReaderOverlayer({this.article, this.page, this.topSafeHeight, this.battery});
+  ReaderOverlayer({required this.article, required this.page, required this.topSafeHeight, required this.battery});
 
   @override
   Widget build(BuildContext context) {

@@ -5,6 +5,7 @@ import 'package:ng169/tool/bow.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 
+// ignore: must_be_immutable
 class HomeMenu extends StatelessWidget {
   List infos = [
     {
@@ -41,7 +42,7 @@ class HomeMenu extends StatelessWidget {
       "icon": "assets/images/menu_publish.png",
     }
   ];
-  BuildContext context;
+  BuildContext context=Null as BuildContext;
   HomeMenu();
 
   @override

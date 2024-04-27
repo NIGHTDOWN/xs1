@@ -11,14 +11,14 @@ import 'package:ng169/tool/lang.dart';
 class Comment extends StatefulWidget {
   final Novel novel;
 
-  const Comment({Key key, this.novel}) : super(key: key);
+  const Comment({Key? key, required this.novel}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => CommentState();
 }
 
 class CommentState extends State<Comment> {
-  List hotbook, mallcache;
+  late List hotbook, mallcache;
   List<Widget> more = [SizedBox()];
   var index = 'Comment_';
   var cachedata = 'Comment_data_', page = 1;
@@ -31,7 +31,7 @@ class CommentState extends State<Comment> {
     page = 0;
     post.addAll({'page': page});
     var hotbooks = await http(api, post, gethead());
-    var data2 = getdata(context, hotbooks);
+    var data2 = getdata(context, hotbooks!);
     if (isnull(data2)) {
       hotbook = data2;
     }
@@ -78,7 +78,7 @@ class CommentState extends State<Comment> {
       loadingstatu();
       post.addAll({'page': page});
       var data = await http(api, post, gethead());
-      var tmpmore = getdata(context, data);
+      var tmpmore = getdata(context, data!);
 
       if (isnull(tmpmore)) {
         // more.add(bookCardWithInfo(5, '', tmpmore));

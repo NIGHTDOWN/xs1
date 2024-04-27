@@ -1,10 +1,10 @@
-import 'package:css_text/css_text.dart';
+
 import 'package:flutter/material.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/article.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/novel.dart';
-import 'package:ng169/page/novel_detail/novel_detail_header.dart';
+
 import 'package:ng169/page/reader/reader_page_agent.dart';
 import 'package:ng169/page/recharge/recharge.dart';
 import 'package:ng169/style/styles.dart';
@@ -13,7 +13,6 @@ import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 
-import 'battery_view.dart';
 import 'reader_overlayer.dart';
 import 'reader_utils.dart';
 
@@ -24,7 +23,7 @@ class ReaderView extends StatefulWidget {
   final Novel novel;
   final Widget battery;
   ReaderView(
-      {this.novel, this.article, this.page, this.topSafeHeight, this.battery});
+      {required this.novel, required this.article, required this.page, required this.topSafeHeight, required this.battery});
 
   @override
   ReaderViewState createState() => ReaderViewState();
@@ -40,7 +39,7 @@ class ReaderViewState extends State<ReaderView> {
 
   @override
   void initState() {
-    // TODO: implement initState
+ 
     super.initState();
   }
 
@@ -193,6 +192,7 @@ class ReaderViewState extends State<ReaderView> {
   }
 
   unlockbook() async {
+    // ignore: unused_local_variable
     bool b = await widget.article.unlock(context); //解锁逻辑完成需要重载
 
     // if (b) {

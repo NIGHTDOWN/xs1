@@ -10,11 +10,11 @@ class NovelDetailCell extends StatelessWidget {
   final Function onclick;
 
   NovelDetailCell(
-      {this.iconName,
-      this.title,
-      this.subtitle,
-      this.attachedWidget,
-      this.onclick});
+      {required this.iconName,
+      required this.title,
+      required this.subtitle,
+      required this.attachedWidget,
+      required this.onclick});
 
   @override
   Widget build(BuildContext context) {

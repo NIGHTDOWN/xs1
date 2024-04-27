@@ -10,16 +10,16 @@ import 'loglist.dart';
 
 class RecordLog extends LoginBase {
    String api= 'log/record';
-   String title;
+   String title="";
 
   bool needlogin = true;
-  RecordLog({Key key});
+  RecordLog({Key? key});
 //   @override
 //   State<StatefulWidget> createState() => RecordLogState();
 // }
 
 // class RecordLogState extends State<RecordLog> {
-  List htppdata, mallcache;
+  List htppdata=[], mallcache=[];
   List<Widget> more = [SizedBox()];
   var index = 'RecordLog_';
   var cachedata = 'RecordLog_data_', page = 1;

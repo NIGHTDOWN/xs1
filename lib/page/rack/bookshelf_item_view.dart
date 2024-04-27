@@ -20,14 +20,14 @@ class BookshelfItemView extends StatefulWidget {
 }
 
 class _BookshelfItemViewState extends State<BookshelfItemView> {
-  Novel novel;
+  late Novel novel;
   // BookshelfItemView(this.novel);
   bool ischoose = false;
 
-  static Widget onimg;
-  static Widget unimg;
+  static Widget onimg=SizedBox();
+  static Widget unimg=SizedBox();
   var p, pedit, pfun, pclickonebook;
-  int pall;
+  late int pall;
   var width;
 
   @override
@@ -207,10 +207,10 @@ class _BookshelfItemViewState extends State<BookshelfItemView> {
     widget.novel.read(context, widget.novel.readChapter);
   }
 
-  editbook([bool isset, bool isadd]) {
+  editbook([bool? isset, bool? isadd]) {
     if (isnull(isset)) {
       // 全选时候的操作
-      ischoose = isadd;
+      ischoose = isadd!;
       pfun(novel, isadd); //全局设置
     } else {
       //点击某一个的操作

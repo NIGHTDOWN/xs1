@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'function.dart';
+
 
 class NgCache {
-  SharedPreferences cache;
+  SharedPreferences cache=Null as SharedPreferences;
   int outtime = 86400; //有效时间
   NgCache();
   void init() async {
@@ -13,11 +13,19 @@ class NgCache {
   }
 
   dynamic get(String key) {
-    String data = cache.get(key);
+    Object? data = cache.get(key);
     //d(data);
-    if (data == '') {
-      return null;
-    }
+    if (data == null || data is! String) {  
+    return null;  
+  }  
+  
+  // 将 Object 类型的 data 强制转换为 String  
+  String dataString = data;  
+  
+  // 检查 dataString 是否为空字符串  
+  if (dataString.isEmpty) {  
+    return null;  
+  }
     var js;
     try {
       js = jsonDecode(data);
@@ -43,7 +51,7 @@ class NgCache {
     }
   }
 
-  set(String key, dynamic val, [String expretimes]) async {
+  set(String key, dynamic val, [String? expretimes]) async {
     int expretime;
     if (expretimes != null) {
       expretime = int.parse(expretimes);

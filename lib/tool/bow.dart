@@ -7,7 +7,7 @@ import 'package:ng169/tool/global.dart';
 import 'function.dart';
 
 class Bow extends StatelessWidget {
-  const Bow({Key key, this.url, this.title, this.needtoken = false})
+  const Bow({Key? key, required this.url, required this.title, this.needtoken = false})
       : super(key: key);
 
   final String url;
@@ -56,6 +56,7 @@ class Bow extends StatelessWidget {
       ],
     );
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       child: Scaffold(
         // appBar: PreferredSize(
@@ -74,6 +75,7 @@ class Bow extends StatelessWidget {
         //print("返回键点击了");
         //Navigator.pop(context);
         Bow.close(context);
+        return Future.value(false);  
       },
     );
     // return SafeArea(

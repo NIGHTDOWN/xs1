@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -22,13 +22,13 @@ class ReaderCate extends StatefulWidget {
   final void Function(dynamic chapter) onToggleChapter;
 
   ReaderCate(
-      {this.chapters,
-      this.articleIndex,
-      this.onTap,
-      this.onPreviousArticle,
-      this.onNextArticle,
-      this.onToggleChapter,
-      this.novel});
+      {required this.chapters,
+    required this.articleIndex,
+    required this.onTap,
+    required this.onPreviousArticle,
+    required this.onNextArticle,
+    required this.onToggleChapter,
+    required this.novel});
 
   @override
   _ReaderCateState createState() => _ReaderCateState();
@@ -36,12 +36,12 @@ class ReaderCate extends StatefulWidget {
 
 class _ReaderCateState extends State<ReaderCate>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> animation;
+  late AnimationController animationController;
+ late Animation<double> animation;
 
-  double progressValue;
+ late double progressValue;
   bool isTipVisible = false;
-  String title;
+late  String title;
   //初始化动画
   @override
   initState() {

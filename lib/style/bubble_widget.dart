@@ -1,13 +1,12 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
 import 'dart:math';
 
-import 'package:ng169/tool/function.dart';
 
 enum BubbleArrowDirection { top, bottom, right, left }
 
+// ignore: must_be_immutable
 class BubbleWidget extends StatelessWidget {
   // 尖角位置
   final position;
@@ -53,7 +52,7 @@ class BubbleWidget extends StatelessWidget {
   BubbleWidget(
     this.color,
     this.position, {
-    Key key,
+    Key? key,
     this.width,
     this.height,
     this.length = -1.0,
@@ -62,7 +61,7 @@ class BubbleWidget extends StatelessWidget {
     this.radius = 10.0,
     this.strokeWidth = 4.0,
     this.style = PaintingStyle.fill,
-    this.borderColor,
+    required this.borderColor,
     this.child,
     this.innerPadding = 6.0,
     this.maxwidth,
@@ -86,6 +85,7 @@ class BubbleWidget extends StatelessWidget {
 // d(size);
 // d(context);
 // d(this.child.initState());
+    // ignore: unnecessary_null_comparison
     if (style == PaintingStyle.stroke && borderColor == null) {
       borderColor = color;
     }
@@ -334,18 +334,19 @@ double _angle(angle) {
 }
 
 //矩形框
+// ignore: must_be_immutable
 class Rectangle extends StatelessWidget {
   Color color;
   Color bgcolor;
   Widget child;
-  Rectangle(this.child, this.color, this.bgcolor, {Key key}) : super(key: key);
+  Rectangle(this.child, this.color, this.bgcolor, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var bx = new Container(
       constraints: new BoxConstraints.expand(
         // height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 200.0,
         height:
-            Theme.of(context).textTheme.displayMedium.fontSize * 1.1 + 200.0,
+            (Theme.of(context).textTheme.displayMedium!.fontSize)! * 1.1 + 200.0,
       ),
       decoration: new BoxDecoration(
         border: new Border.all(width: 2.0, color: Colors.red),
@@ -362,11 +363,11 @@ class Rectangle extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .displayMedium
-              .copyWith(color: Colors.black)),
+              ?.copyWith(color: Colors.black)),
       // transform: new Matrix4.rotationZ(0.3),
     );
 
-    // TODO: implement build
+
     return bx;
   }
 }

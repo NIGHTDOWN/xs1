@@ -1,17 +1,11 @@
-import 'dart:convert';
 
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:ng169/model/cacheimg.dart';
 import 'package:ng169/style/FrameAnimationImage.dart';
 
-import 'dart:async' show Future;
 import 'dart:io' show File;
-import 'dart:typed_data';
-import 'dart:ui' as ui show instantiateImageCodec, Codec;
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 import 'package:ng169/tool/down.dart';
 
 import 'function.dart';
@@ -26,7 +20,7 @@ class NgImageLocl extends StatefulWidget {
   final Widget placeholder;
 
   NgImageLocl(this.imgUrl,
-      {this.width, this.height, this.fit, this.placeholder});
+      {required this.width, required this.height, required this.fit,required this.placeholder});
 
   @override
   State<StatefulWidget> createState() => NgImageLoclState();
@@ -54,7 +48,7 @@ class NgImageLoclState extends State<NgImageLocl>
     return FrameAnimationImage(
       width: widget.width,
       height: widget.height,
-      interval: 100,
+      interval: 100, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
     );
   }
 

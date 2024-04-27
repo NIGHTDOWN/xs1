@@ -5,10 +5,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ng169/model/notifyfun.dart';
 import 'package:ng169/tool/lang.dart';
 
-import 'function.dart';
+
 
 class Notify {
-  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin=FlutterLocalNotificationsPlugin();
   static var context;
   static var notifyid = 0;
   //设置上下文
@@ -30,25 +30,30 @@ class Notify {
   }
 
   //点击的监听
-  static Future onSelectNotification(String payload) async {
+  static Future onSelectNotification(String? payload) async {
 //回调函数全在/model/notyfyfunction下
     // var call = 'notifyfunction_' + payload as Function;
     // d(call);
     // call.call(context);
-    new Notifyfunction(context, payload);
+    // new Notifyfunction(context, payload);
+    if (payload != null) {
+    // 根据 payload 来执行相应的操作
+    new Notifyfunction(Notify.context, payload);
+  }
     //payload 可作为通知的一个标记，区分点击的通知。
   }
 
 //收到通知所作的处理的方法
   static Future<void> onDidReceiveLocalNotification(
-      int id, String title, String body, String payload) async {
+    int id, String? title, String? body, String? payload
+     ) async {
     // display a dialog with the notification details, tap ok to go to another page
 
     await showDialog(
       context: Notify.context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text(title),
-        content: Text(body),
+        title: Text(title!),
+        content: Text(body!),
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,
@@ -57,7 +62,9 @@ class Notify {
               Navigator.of(context, rootNavigator: true).pop();
               await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (BuildContext context) {}
+                MaterialPageRoute(builder: (BuildContext context) {
+                  return Container();
+                }
                     //builder: (context) => SecondScreen(payload),
                     ),
               );
@@ -69,12 +76,14 @@ class Notify {
   }
 
 //删除单个通知
+  // ignore: unused_element
   static Future _cancelNotification() async {
     //参数 0 为需要删除的通知的id
     await Notify.flutterLocalNotificationsPlugin.cancel(0);
   }
 
 //删除所有通知
+  // ignore: unused_element
   static Future _cancelAllNotifications() async {
     await Notify.flutterLocalNotificationsPlugin.cancelAll();
   }

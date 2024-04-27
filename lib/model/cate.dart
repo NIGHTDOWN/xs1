@@ -1,10 +1,8 @@
-import 'package:ng169/obj/novel.dart';
-import 'package:ng169/tool/event_bus.dart';
+
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
 
-import 'package:ng169/tool/t.dart';
 
 class Catemodel {
   static dynamic cachedata = 'category_data_';
@@ -25,7 +23,7 @@ class Catemodel {
 
   static httpget() async {
     var data = await http(api, {}, gethead(), 30);
-    List tmp = getdata(g('context'), data);
+    List tmp = getdata(g('context'), data!);
     if (isnull(tmp)) {
       setcache(cachedata, tmp, '-1');
       setcache(cachedatatime, 1, '7200');

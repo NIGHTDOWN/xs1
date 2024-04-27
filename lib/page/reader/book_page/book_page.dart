@@ -23,16 +23,16 @@ class _BookPageState extends State<BookPage>
     with SingleTickerProviderStateMixin {
   CalPoint curPoint = CalPoint.data(-1, -1);
   CalPoint prePoint = CalPoint.data(-1, -1);
-  String content, content2;
+  late String content, content2;
   PositionStyle style = PositionStyle.STYLE_LOWER_RIGHT;
-  double width;
-  double height;
-  AnimationController animationController;
-  Animation cancelAnim;
-  Tween cancelValue;
+ late double width;
+ late double height;
+ late AnimationController animationController;
+ late Animation cancelAnim;
+ late Tween cancelValue;
   bool needCancelAnim = true;
 
-  ui.Image bgimage;
+ late ui.Image bgimage;
 
   toNormal([_]) {
     if (needCancelAnim) {

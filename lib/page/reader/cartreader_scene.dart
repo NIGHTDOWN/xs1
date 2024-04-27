@@ -18,7 +18,7 @@ import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/jsq.dart';
 import 'package:ng169/tool/lang.dart';
 
-import 'package:screen/screen.dart' as s2;
+
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
@@ -47,9 +47,9 @@ class CartReaderSceneState extends State<CartReaderScene>
 
   double topSafeHeight = 0;
 
-  Article preArticle;
-  Article currentArticle;
-  Article nextArticle;
+ late Article preArticle;
+ late Article currentArticle;
+  late Article nextArticle;
 
   List<Chapter> chapters = [];
   List chaptersResponse = [];
@@ -61,7 +61,7 @@ class CartReaderSceneState extends State<CartReaderScene>
     super.initState();
     sysinit();
     kongbai = FrameAnimationImage(
-      interval: 100,
+      interval: 100, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
     );
 
     chaptersResponse = Chapter.get(context, this.widget.novel);
@@ -105,21 +105,21 @@ class CartReaderSceneState extends State<CartReaderScene>
     //记录当前页面
     getnowpage(pageController);
 
-    if (pageController.page > 1.0) {}
+    if (pageController.page! > 1.0) {}
   }
 
   Future<Article> next() async {
     if (isnull(currentArticle.nextArticleId)) {
       await resetContent(currentArticle.nextArticleId, PageJumpType.firstPage);
     }
-    return null;
+    return  Null as Article  ;
   }
 
   Future<Article> pre() async {
     if (isnull(currentArticle.preArticleId)) {
       await resetContent(currentArticle.preArticleId, PageJumpType.lastPage);
     }
-    return null;
+    return  Null as Article  ;
   }
 
   @override
@@ -133,14 +133,14 @@ class CartReaderSceneState extends State<CartReaderScene>
     Jsq()..end();
     showtitlebar();
     eventBus.off('read_reflash');
-    s2.Screen.keepOn(false); //屏幕常亮
+    Screen.keepOn(false); //屏幕常亮
   }
 
   sysinit() async {
     await hidetitlebar();
 
     titlebarcolor(false);
-    s2.Screen.keepOn(true); //屏幕常亮
+    Screen.keepOn(true); //屏幕常亮
     s('isMenuVisiable', false);
     await Future.delayed(const Duration(milliseconds: 100), () {});
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
@@ -208,7 +208,7 @@ class CartReaderSceneState extends State<CartReaderScene>
     //获取当前章节内容
     // islock = true;
     // reflash();
-    currentArticle = await fetchArticle(articleId);
+    currentArticle = (await fetchArticle(articleId))!;
 
     if (!isnull(currentArticle)) {
       //章节内容不存在，跳一章
@@ -219,7 +219,7 @@ class CartReaderSceneState extends State<CartReaderScene>
           .order('`section_id` asc')
           .getone();
 
-      currentArticle = await fetchArticle(tmp['section_id']);
+      currentArticle = (await fetchArticle(tmp['section_id']))!;
     }
     if (!isnull(currentArticle)) {
       //重试获取下一章还是失败，则退出。
@@ -236,21 +236,21 @@ class CartReaderSceneState extends State<CartReaderScene>
     if (currentArticle.preArticleId > 0) {
       //预加载上一章
       fetchArticle(currentArticle.preArticleId).then((onValue) {
-        preArticle = onValue;
+        preArticle = onValue!;
         reflash();
       });
     } else {
-      preArticle = null;
+      preArticle = Null as Article  ;
     }
 
     if (currentArticle.nextArticleId > 0) {
       //预加载下一章
       fetchArticle(currentArticle.nextArticleId).then((onValuen) {
-        nextArticle = onValuen;
+        nextArticle = onValuen!;
         reflash();
       });
     } else {
-      nextArticle = null;
+      nextArticle =  Null as Article  ;
     }
 
     // islock = false;
@@ -259,7 +259,7 @@ class CartReaderSceneState extends State<CartReaderScene>
     reflash();
   }
 
-  Future<Article> resetContentdata(int articleId) async {
+  Future<Article?> resetContentdata(int articleId) async {
     //目录定位
     //获取当前章节内容
 
@@ -280,18 +280,19 @@ class CartReaderSceneState extends State<CartReaderScene>
       //重试获取下一章还是失败，则退出。
       return null;
     }
-    tmpcurrentArticle.cartoonisinit = false;
+    tmpcurrentArticle?.cartoonisinit = false;
     //islock = false;
     //reflash();
     return tmpcurrentArticle;
   }
 
   fetchPreviousArticle(int articleId) async {
+    // ignore: unnecessary_null_comparison
     if (preArticle != null || isLoading || articleId == 0) {
       return;
     }
 
-    preArticle = await fetchArticle(articleId);
+    preArticle = (await fetchArticle(articleId))!;
 
     reflash();
   }
@@ -301,13 +302,13 @@ class CartReaderSceneState extends State<CartReaderScene>
       return;
     }
     isLoading = true;
-    nextArticle = await fetchArticle(articleId);
+    nextArticle = (await fetchArticle(articleId))!;
     isLoading = false;
     reflash();
   }
 
   //获取章节内容
-  Future<Article> fetchArticle(int articleId) async {
+  Future<Article?> fetchArticle(int articleId) async {
     //获取章节内容，并且根据字体大小分页
     var article =
         await CartoonProvider.fetchArticle(context, widget.novel, articleId);
@@ -331,7 +332,7 @@ class CartReaderSceneState extends State<CartReaderScene>
       width: getScreenWidth(context),
       height: getScreenHeight(context),
       picwidth: 100,
-      interval: 100,
+      interval: 100, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
     );
   }
 
@@ -433,6 +434,7 @@ class CartReaderSceneState extends State<CartReaderScene>
             ]));
 
     return Scaffold(
+        // ignore: deprecated_member_use
         body: WillPopScope(
             onWillPop: () {
               if (isnull(widget.novel.isgroom)) {
@@ -444,6 +446,7 @@ class CartReaderSceneState extends State<CartReaderScene>
                   pop(context);
                 }
               }
+              return Future.value(false);  
             },
             child: Stack(
               children: children2,

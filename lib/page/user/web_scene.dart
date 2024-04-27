@@ -6,7 +6,7 @@ class WebScene extends StatefulWidget {
   final String url;
   final String title;
 
-  WebScene({@required this.url, this.title});
+  WebScene({required this.url, required this.title});
 
   @override
   _WebSceneState createState() => _WebSceneState();
@@ -18,7 +18,7 @@ class _WebSceneState extends State<WebScene> {
     return WebviewScaffold(
       url: this.widget.url,
       appBar: AppBar(
-        title: Text(this.widget.title ?? ''),
+        title: Text(this.widget.title),
         actions: <Widget>[
           GestureDetector(
             onTap: () {

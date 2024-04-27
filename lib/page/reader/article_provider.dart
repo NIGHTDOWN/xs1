@@ -6,7 +6,7 @@ import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/t.dart';
 
 class ArticleProvider {
-  static Future<Article> fetchArticle(
+  static Future<Article?> fetchArticle(
       BuildContext context, Novel novel, int articleId) async {
     var artiicle, article;
     if (novel.type != '3') {

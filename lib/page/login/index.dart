@@ -17,9 +17,9 @@ class Index extends StatefulWidget {
 class _Index extends State<Index> {
   int _currentPage = 0;
 
-  PageController _pageController;
-  PageView _pageView;
-  List<Widget> page, centerbtn;
+  late PageController _pageController;
+  late PageView _pageView;
+  late List<Widget> page, centerbtn;
   bool isload = false;
   var w;
   @override

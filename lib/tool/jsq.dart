@@ -10,11 +10,12 @@ import 'global.dart';
 class Jsq {
   factory Jsq() => _getInstance();
   static Jsq get instance => _getInstance();
-  static Jsq _instance;
+  static Jsq _instance=Null as Jsq ;
   Jsq._internal() {
     // 初始化
   }
   static Jsq _getInstance() {
+    // ignore: unnecessary_null_comparison
     if (_instance == null) {
       _instance = new Jsq._internal();
     }
@@ -52,7 +53,7 @@ class Jsq {
     //计时
   }
 
-  start({Novel novel}) {
+  start({ Novel? novel}) {
     _init();
 
     Timer.periodic(Duration(seconds: 1), (timer) {

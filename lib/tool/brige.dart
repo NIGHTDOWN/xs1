@@ -15,14 +15,14 @@ class NgBrige extends InheritedWidget{
     @required this.data,//接收参数泛型
     @required this.fun,//接收方法泛型
     // @required this.funs,//接收方法泛型
-    Widget child
+    required Widget child
   }) :super(child: child);
 
   // static of(BuildContext context) {
   //    return context.dependOnInheritedWidgetOfExactType(aspect:NgBrige);
   //   //  return context.inheritFromWidgetOfExactType(NgBrige);
   // }
-  static NgBrige of(BuildContext context) =>
+  static NgBrige? of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<NgBrige>();
 // static ShareDataWidget of(BuildContext context) {
    

@@ -4,7 +4,7 @@ import 'package:ng169/model/article.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/novel_detail/novel_detail_header.dart';
-import 'package:ng169/page/reader/lastpage.dart';
+
 import 'package:ng169/page/recharge/recharge.dart';
 import 'package:ng169/style/FrameAnimationImage.dart';
 import 'package:ng169/style/screen.dart';
@@ -17,31 +17,32 @@ import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 import 'reader_utils.dart';
 
+// ignore: must_be_immutable
 class CartoonView extends StatefulWidget {
-  final Article article;
-  final int page;
-  final Function lock;
-  final Function unlock;
-  final bool islock;
-  final double topSafeHeight;
-  final Novel novel;
-  final Function scroll;
-  final Function showmenu;
-  final Function next;
-  final Function pre;
-
+  late Article article;
+late int page;
+late Function lock;
+late Function unlock;
+late bool islock;
+late double topSafeHeight;
+late Novel novel;
+late Function scroll;
+late Function showmenu;
+late Function next;
+late Function pre;
+ 
   CartoonView(
-      {this.novel,
-      this.article,
-      this.page,
-      this.topSafeHeight,
-      this.scroll,
-      this.next,
-      this.pre,
-      this.lock,
-      this.islock,
-      this.unlock,
-      this.showmenu});
+      {required this.novel,
+      required this.article,
+      required this.page,
+      required this.topSafeHeight,
+      required this.scroll,
+      required this.next,
+      required this.pre,
+      required this.lock,
+      required this.islock,
+      required this.unlock,
+      required this.showmenu});
 
   @override
   CartoonViewState createState() => CartoonViewState();
@@ -56,14 +57,14 @@ class CartoonViewState extends State<CartoonView> {
     'assets/images/loading/4.png',
     'assets/images/loading/5.png',
   ];
-  double width;
-  PageController pageController;
-  double height;
-  Widget loadanmianl;
-  Widget loadimg;
+  late double width;
+ late PageController pageController;
+ late double height;
+ late Widget loadanmianl;
+ late Widget loadimg;
   int locktime = 0;
   bool lock = false, lastpagelock = false;
-  int pageindex;
+  late int pageindex;
   @override
   void initState() {
     super.initState();
@@ -72,7 +73,7 @@ class CartoonViewState extends State<CartoonView> {
       width: g('swidth'),
       height: g('sheight'),
       picwidth: 100,
-      interval: 200,
+      interval: 200, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
     );
     pageindex = widget.page;
 
@@ -81,7 +82,7 @@ class CartoonViewState extends State<CartoonView> {
       width: g('swidth'),
       // height: g('sheight'),
       picwidth: 50,
-      interval: 200,
+      interval: 200, bgcolor: Color.fromARGB(0, 0, 0, 0),
     );
     init();
   }

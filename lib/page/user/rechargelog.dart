@@ -13,13 +13,13 @@ class RechargeLog extends LoginBase {
   // final String title;
 
   bool needlogin = true;
-  RechargeLog({Key key});
+  RechargeLog({Key? key});
 //   @override
 //   State<StatefulWidget> createState() => RechargeLogState();
 // }
 
 // class RechargeLogState extends State<RechargeLog> {
-  List htppdata, mallcache;
+  List htppdata=[], mallcache=[];
   List<Widget> more = [SizedBox()];
   var index = 'RechargeLog_';
   var cachedata = 'RechargeLog_data_', page = 1;

@@ -1,37 +1,39 @@
-import 'dart:convert';
+
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:crypto/crypto.dart';
+
 import 'package:flutter/material.dart';
-import 'package:ng169/model/cacheimg.dart';
+import 'package:flutter/widgets.dart';
+
 import 'package:ng169/style/FrameAnimationImage.dart';
 
 import 'dart:async' show Future;
 import 'dart:io' show File;
-import 'dart:typed_data';
+
 import 'dart:ui' as ui show instantiateImageCodec, Codec;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:ng169/tool/down.dart';
+
 
 import 'function.dart';
 import 'global.dart';
 
+// ignore: must_be_immutable
 class NgImage extends StatelessWidget {
   final String imgUrl;
   final double width;
   final double height;
   final BoxFit fit;
-  final Widget placeholder;
+   Widget placeholder;
   bool localcache = false;
   String dsl;
   NgImage(this.imgUrl,
-      {this.width,
-      this.height,
+      {double? width,
+      double? height,
       this.fit = BoxFit.cover,
-      this.placeholder,
-      this.dsl});
+         Widget? placeholder,
+       this.dsl=""}) : this.placeholder = placeholder!,this.width = width!,this.height = height!;
 
 //   @override
 //   State<StatefulWidget> createState() => NgImageState();
@@ -117,7 +119,7 @@ class NgImage extends StatelessWidget {
           return FrameAnimationImage(
             width: width,
             height: height,
-            interval: 100,
+            interval: 100, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
           );
         },
         // decoration: BoxDecoration(border: Border.all(color: SQColor.paper)),
@@ -160,10 +162,9 @@ class CachedNetworkImageProvider
     extends ImageProvider<CachedNetworkImageProvider> {
   /// Creates an ImageProvider which loads an image from the [url], using the [scale].
   /// When the image fails to load [errorListener] is called.
-  const CachedNetworkImageProvider(this.url,
-      {this.scale: 1.0, this.errorListener, this.headers, this.cacheManager})
-      : assert(url != null),
-        assert(scale != null);
+  const CachedNetworkImageProvider(this.url, this.cacheManager, this.errorListener, this.headers,
+      {this.scale = 1.0,  })
+      ;
 
   final BaseCacheManager cacheManager;
 
@@ -185,12 +186,12 @@ class CachedNetworkImageProvider
     return new SynchronousFuture<CachedNetworkImageProvider>(this);
   }
 
-  @override
+
   ImageStreamCompleter load(CachedNetworkImageProvider key, decode) {
     return new MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,
-// TODO enable information collector on next stable release of flutter
+
 //      informationCollector: () sync* {
 //        yield DiagnosticsProperty<ImageProvider>(
 //          'Image provider: $this \n Image key: $key',
@@ -203,13 +204,15 @@ class CachedNetworkImageProvider
 
 // @override
 //   ImageStreamCompleter load(CachedNetworkImageProvider key, decode) {
-//     // TODO: implement load
+
 //     return null;
 //   }
   Future<ui.Codec> _loadAsync(CachedNetworkImageProvider key) async {
     var mngr = cacheManager ?? DefaultCacheManager();
     var file = await mngr.getSingleFile(url, headers: headers);
+    // ignore: unnecessary_null_comparison
     if (file == null) {
+      // ignore: unnecessary_null_comparison
       if (errorListener != null) errorListener();
       return Future<ui.Codec>.error("Couldn't download or retrieve file.");
     }
@@ -223,6 +226,7 @@ class CachedNetworkImageProvider
     final Uint8List bytes = await file.readAsBytes();
 
     if (bytes.lengthInBytes == 0) {
+      // ignore: unnecessary_null_comparison
       if (errorListener != null) errorListener();
       throw new Exception("File was empty");
     }
@@ -231,6 +235,7 @@ class CachedNetworkImageProvider
   }
 
   @override
+  // ignore: non_nullable_equals_parameter
   bool operator ==(dynamic other) {
     if (other.runtimeType != runtimeType) return false;
     final CachedNetworkImageProvider typedOther = other;
@@ -238,6 +243,7 @@ class CachedNetworkImageProvider
   }
 
   @override
+  // ignore: deprecated_member_use
   int get hashCode => hashValues(url, scale);
 
   @override

@@ -6,6 +6,7 @@ import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/url.dart';
 
+// ignore: must_be_immutable
 class NovelsearchCell extends StatelessWidget {
   final Novel novel;
   final String search;
@@ -114,9 +115,9 @@ class NovelsearchCell extends StatelessWidget {
   }
 
   Widget buildRight() {
-    var title = gettxt(_findword(novel.name, search), search,
+    var title = gettxt(_findword(novel.name, search).cast<String>(), search,
         TextStyle(fontSize: 17, fontWeight: FontWeight.bold));
-    var author = gettxt(_findword(novel.author, search), search,
+    var author = gettxt(_findword(novel.author, search).cast<String>(), search,
         TextStyle(fontSize: 14, color: SQColor.gray));
     // var desc = gettxt(_findword(novel.desc, search), search,
     //     TextStyle(fontSize: 14, color: SQColor.gray));

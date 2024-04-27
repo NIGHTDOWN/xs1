@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,9 +9,9 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/bow.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
-import 'package:ng169/tool/http.dart';
+
 import 'package:ng169/tool/lang.dart';
-import 'package:ng169/tool/notify.dart';
+
 import 'package:ng169/tool/url.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
@@ -30,6 +30,7 @@ class SettingState extends State<SettingScene> {
   bool _value = false;
   String _version = '';
   @override
+  // ignore: must_call_super
   void initState() {
     loadCache();
     _value = isnull(getcache(autounlock));
@@ -39,9 +40,12 @@ class SettingState extends State<SettingScene> {
 
   Future<Null> loadCache() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    // ignore: unused_local_variable
     String appName = packageInfo.appName;
+     // ignore: unused_local_variable
     String packageName = packageInfo.packageName;
     String version = packageInfo.version;
+     // ignore: unused_local_variable
     String buildNumber = packageInfo.buildNumber;
 
     _version = version;
@@ -85,6 +89,7 @@ class SettingState extends State<SettingScene> {
     if (file is Directory) {
       final List<FileSystemEntity> children = file.listSync();
       double total = 0;
+      // ignore: unnecessary_null_comparison
       if (children != null)
         for (final FileSystemEntity child in children)
           total += await _getTotalSizeOfFilesInDir(child);
@@ -94,10 +99,11 @@ class SettingState extends State<SettingScene> {
   }
 
   _renderSize(double value) {
+    // ignore: unnecessary_null_comparison
     if (null == value) {
       return 0;
     }
-    List<String> unitArr = List()
+    List<String> unitArr = List<String>.empty(growable: true)
       ..add('B')
       ..add('K')
       ..add('M')
@@ -156,7 +162,7 @@ class SettingState extends State<SettingScene> {
         title: lang('自动解锁章节'),
         onPressed: () {},
         line_padding_left: 10,
-        right_widget: s,
+        right_widget: s, iconName: '',
       ),
       MeCell(
         title: lang('清除缓存'),
@@ -172,7 +178,7 @@ class SettingState extends State<SettingScene> {
               width: 12,
             ),
           ],
-        ),
+        ), iconName: '',
       ),
       boo
           ? MeCell(
@@ -188,7 +194,7 @@ class SettingState extends State<SettingScene> {
                     width: 12,
                   ),
                 ],
-              ),
+              ), iconName: '',
             )
           : Container(),
       MeCellss(
@@ -209,7 +215,7 @@ class SettingState extends State<SettingScene> {
               color: SQColor.gray,
             )
           ],
-        ),
+        ), iconName: '',
       ),
       MeCell(
         title: lang('隐私策略'),
@@ -217,10 +223,10 @@ class SettingState extends State<SettingScene> {
           gourl(
               context,
               Bow(
-                url: serverurl + '/index/privacy/index',
+                url: serverurl + '/index/privacy/index', title: '',
               ));
         },
-        line_padding_left: 10,
+        line_padding_left: 10, iconName: '', right_widget: Container(),
       ),
       MeCell(
         title: lang('版权声明'),
@@ -228,10 +234,10 @@ class SettingState extends State<SettingScene> {
           gourl(
               context,
               Bow(
-                url: serverurl + '/index/privacy/copyright',
+                url: serverurl + '/index/privacy/copyright', title: '',
               ));
         },
-        line_padding_left: 10,
+        line_padding_left: 10, iconName: '',  right_widget: Container(),
       ),
       MeCell(
         title: lang('关于我们'),
@@ -244,13 +250,13 @@ class SettingState extends State<SettingScene> {
           gourl(
               context,
               Bow(
-                url: serverurl + '/index/privacy/announcement',
+                url: serverurl + '/index/privacy/announcement', title: '',
               ));
           //通知
           // Notify.setcontext(context);
           // Notify.showNotification();
         },
-        line_padding_left: 10,
+        line_padding_left: 10, iconName: '',  right_widget: Container(),
       ),
       isnull(User.get())
           ? Container(
@@ -360,7 +366,7 @@ class SettingState extends State<SettingScene> {
                 MaterialStateProperty.resolveWith((states) => Colors.grey),
             foregroundColor:
                 MaterialStateProperty.resolveWith((states) => Colors.white)),
-        child: Text(val),
+        child: Text(val!),
         // Chip(
         //   label: Text(val),
         //   shape:

@@ -8,10 +8,11 @@ import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
 
+// ignore: must_be_immutable
 class AddComment extends LoginBase {
   final Novel novel;
   bool needlogin = true;
-  AddComment({Key key, this.novel});
+  AddComment({ Key? key, required this.novel});
 
 //   @override
 //   State<StatefulWidget> createState() => AddCommentState();
@@ -85,7 +86,7 @@ class AddComment extends LoginBase {
       tmp.addAll({'book_id': novel.id});
     }
     var back = await http(api, tmp, gethead());
-    if (isnull(getdata(context, back))) {
+    if (isnull(getdata(context, back!))) {
       s('pl', 1);
       pop(context, 1);
     }
@@ -143,7 +144,7 @@ class AddComment extends LoginBase {
                   border: InputBorder.none),
               style: new TextStyle(fontSize: 19, color: Colors.black),
               //验证
-              validator: (String value) {
+              validator: (String? value) {
                 return '';
               },
               onSaved: (value) {},

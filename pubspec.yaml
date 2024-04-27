@@ -12,11 +12,11 @@ description: ervery look story by no advertion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 9.0.0+22
+version: 9.1.0+22
 
 
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -36,7 +36,7 @@ dependencies:
   #barcode_scan: ^0.0.3
   image_picker: any
   # image_picker: 0.6.0
-  image_crop: 0.4.1
+  image_crop: any
   #image_cropper: any
 
   flutter_easyrefresh: any
@@ -44,19 +44,19 @@ dependencies:
   web_socket_channel: any
   cached_network_image: any 
   # banner滑动
-  flutter_swiper: any 
+  flutter_card_swiper: any 
   #权限
-  permission_handler: 4.2.0
+  permission_handler: any
   #工具类库
   # url_launcher: 2.8.0
   # dart_json_mapper: any
   # 打开app工具
-  intent: 1.4.0
+  receive_intent  : any
   
-  url_launcher: 6.0.15
+  url_launcher: any
   # 监听浏览器唤醒路劲
   uni_links: any
-  flutter_webview_plugin: 0.4.0
+  flutter_webview_plugin: any
   #app缓存
   path_provider: any
   #app信息
@@ -64,22 +64,22 @@ dependencies:
   #打开文件
   open_file: any
   install_plugin_v2  : any
-  connectivity: ^0.4.2
+  connectivity: any
   #设备信息
   #device_info : 0.4.1
   # dio:any
   battery: any 
   #intl: ^0.15.8
   device_info: any
-  device_apps: 2.0.0
+  device_apps: any
   carousel_slider: any
   # 富文本
   css_text: any
   #通知栏
-  flutter_local_notifications: 8.1.1+1
+  flutter_local_notifications: any
   draggable_scrollbar: any
   #支付插件已集成到项目
-  screen: any
+  flutter_screen_wake: any
   crypto: any
   share: any
   #谷歌登入
@@ -90,7 +90,7 @@ dependencies:
   # firebase_auth: any  
   # google_sign_in: any
   # flutter_facebook_login: any
-  flutter_datetime_picker: 1.5.0
+  flutter_datetime_picker: any
   # facebook广告
   # facebook_audience_network: 0.6.2
   #设备idfa ，广告唯一编码

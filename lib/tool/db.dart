@@ -18,7 +18,7 @@ import 'function.dart';
 // 	update,
 // 	insert,
 class Db {
-  Database db;
+  late Database db;
 
   static getpath(dbname) async {
     var databasesPath = await getDatabasesPath();
@@ -107,7 +107,7 @@ class Db {
   }
 
   Future getcount(_sql) async {
-    int count = Sqflite.firstIntValue(await db.rawQuery(_sql));
+    int? count = Sqflite.firstIntValue(await db.rawQuery(_sql));
     _sql = '';
 
     return count;

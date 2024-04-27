@@ -1,4 +1,4 @@
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
 
@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 class NovelPagePainter extends CustomPainter {
   // ReaderPageManager pageManager;
   // TouchEvent currentTouchData;
-  int currentPageIndex;
-  int currentChapterId;
+  int currentPageIndex=0;
+  int currentChapterId=0;
 
   NovelPagePainter();
 

@@ -24,7 +24,7 @@ import 'me_cells.dart';
 import 'me_cellss.dart';
 
 class MeScene extends StatelessWidget {
-  BuildContext context;
+  late BuildContext context;
   Widget buildCells(BuildContext context) {
     return Container(
       child: Column(
@@ -43,7 +43,7 @@ class MeScene extends StatelessWidget {
             ),
             onPressed: () {
               gourl(context, Sign());
-            },
+            }, line_padding_left: 0,
           ),
           MeCell(
             title: lang('邀请好友'),
@@ -51,7 +51,7 @@ class MeScene extends StatelessWidget {
             // right_widget: Icon(Icons.group_add),
             onPressed: () {
               gourl(context, Friend());
-            },
+            }, right_widget: Container(),
           ),
            MeCell(
             title: lang('我要写作'),
@@ -84,21 +84,21 @@ class MeScene extends StatelessWidget {
             iconName: 'assets/images/u6.png',
             onPressed: () {
               gourl(context, ExpendLog());
-            },
+            }, right_widget: Container(),
           ),
           MeCell(
             title: lang('充值记录'),
             iconName: 'assets/images/u2.png',
             onPressed: () {
               gourl(context, RechargeLog());
-            },
+            },right_widget: Container(),
           ),
           MeCell(
             title: lang('奖励记录'),
             iconName: 'assets/images/u3.png',
             onPressed: () {
               gourl(context, RecordLog());
-            },
+            },right_widget: Container(),
             haveline: false,
           ),
           Container(
@@ -109,8 +109,8 @@ class MeScene extends StatelessWidget {
             title: lang('阅读记录'),
             iconName: 'assets/images/me_buy.png',
             onPressed: () {
-              gourl(context, HistoryPage());
-            },
+              gourl(context, HistoryPage(api: '', title: '',));
+            },right_widget: Container(),
           ),
           // MeCell(
           //   title: lang('打赏记录'),
@@ -133,7 +133,7 @@ class MeScene extends StatelessWidget {
             onPressed: () async {
               await gourl(context, Kefu());
               eventBus.emit('reflashuser', User.get());
-            },
+            },right_widget: Container(), line_padding_left: 0,
           ),
           MeCellss(
             title: lang('设置'),
@@ -142,7 +142,7 @@ class MeScene extends StatelessWidget {
             onPressed: () async {
               await gourl(context, SettingScene());
               eventBus.emit('reflashuser', User.get());
-            },
+            },right_widget: Container(), line_padding_left: 0,
           ),
         ],
       ),

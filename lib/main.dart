@@ -35,12 +35,12 @@ checkpower() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Widget app;
+    Widget app=new SizedBox();
     s('context', context);
 
     try {
       app = new MaterialApp(
-        debugShowCheckedModeBanner: isdebug ?? false, //关闭debug标志
+        debugShowCheckedModeBanner: isdebug, //关闭debug标志
         title: lang('LookStory'),
         theme: new ThemeData(
           // primarySwatch: indextheme.Theme.loginGradientStart,

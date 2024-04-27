@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 
 import 'package:dio/dio.dart';
 import 'package:extended_text_field/extended_text_field.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ng169/model/base.dart';
 import 'package:ng169/model/user.dart';
-import 'package:ng169/obj/novel.dart';
+
 import 'package:ng169/page/commect/picviw.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
@@ -23,16 +23,16 @@ import 'package:ng169/tool/url.dart';
 // ignore: must_be_immutable
 class Kefu extends LoginBase {
   bool needlogin = true;
-  String peerId;
-  String peerAvatar;
-  String id;
+  late String peerId;
+  late String peerAvatar;
+  late String id;
 
   var listMessage;
-  String groupChatId;
+  late String groupChatId;
 
-  bool isLoading, issend = true;
-  bool isShowSticker;
-  String imageUrl;
+  late bool isLoading, issend = true;
+  late bool isShowSticker;
+  late String imageUrl;
   int page = 0, size = 11;
   int lasttime = 0;
   TextEditingController textEditingController = TextEditingController();
@@ -46,7 +46,7 @@ class Kefu extends LoginBase {
   List<Widget> emjo = [];
   var showdata = [], senddata = [], history = [];
   List<ListTile> chosimgobj = [];
-  Widget mehead, gmhead;
+  late Widget mehead, gmhead;
   bool canscrool = true;
   @override
   void initState() {
@@ -77,7 +77,7 @@ class Kefu extends LoginBase {
           ? NgImage(
               user['avater'],
               width: headsize,
-              fit: BoxFit.cover,
+              fit: BoxFit.cover, height: null,
             )
           : Image.asset(
               'assets/images/placeholder_avatar.png',
@@ -160,7 +160,8 @@ class Kefu extends LoginBase {
       onTap: () async {
         Navigator.pop(context);
 
-        PickedFile tmpimage = await ImagePicker.platform.pickImage(
+        // ignore: invalid_use_of_visible_for_testing_member
+        PickedFile? tmpimage = await ImagePicker.platform.pickImage(
             source: ImageSource.camera, maxWidth: 500, imageQuality: 80);
         imgtoserver(tmpimage);
         reflash();
@@ -174,6 +175,7 @@ class Kefu extends LoginBase {
       ),
       onTap: () async {
         Navigator.pop(context);
+        // ignore: invalid_use_of_visible_for_testing_member
         var tmpimage = await ImagePicker.platform.pickImage(
             source: ImageSource.gallery, maxWidth: 500, imageQuality: 80);
 
@@ -292,7 +294,7 @@ class Kefu extends LoginBase {
           borderRadius: BorderRadius.circular(10),
           child: NgImage(
             msgs.content,
-            fit: BoxFit.cover,
+            fit: BoxFit.cover, width: 0, height: 0, placeholder: SizedBox(), dsl: '',
           ),
         ),
         decoration: BoxDecoration(
@@ -574,7 +576,8 @@ class Kefu extends LoginBase {
 
   strtoobj(String str) {
     RegExp reg = new RegExp(r'【emj_(\d+)】');
-    var index = '0';
+    // ignore: unused_local_variable
+    String? index = '0';
 
     if (reg.hasMatch(str)) {
       Iterable<Match> matches = reg.allMatches(str);
@@ -965,7 +968,7 @@ class Kefu extends LoginBase {
       var mg = await T('msg').order('id desc').getone();
       var tmp = await http(
           'chat/list', {'msgid': isnull(mg) ? mg['id'] : ''}, gethead());
-      var data = getdata(context, tmp);
+      var data = getdata(context, tmp!);
       if (isnull(data)) {
         //更新本地数据库
         for (var item in data) {

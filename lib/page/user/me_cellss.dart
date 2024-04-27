@@ -17,11 +17,11 @@ class MeCellss extends LoginBase {
   var size = 10.0;
 
   MeCellss(
-      {this.title,
-      this.iconName,
-      this.onPressed,
-      this.line_padding_left,
-      this.right_widget,
+      {required this.title,
+    required  this.iconName,
+    required  this.onPressed,
+    required  this.line_padding_left,
+    required  this.right_widget,
       this.havemsg = false,
       this.haveline = true});
   @override

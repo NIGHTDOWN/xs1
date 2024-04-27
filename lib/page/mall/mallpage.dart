@@ -14,22 +14,22 @@ class MallPage extends StatefulWidget {
   final String api;
   final String title;
 
-  const MallPage({Key key, this.api, this.title}) : super(key: key);
+  const MallPage({Key? key, required this.api, required this.title}) : super(key: key);
   @override
   State<StatefulWidget> createState() => MallPageState();
 }
 
 class MallPageState extends State<MallPage> {
-  List hotbook, mallcache;
+  late List hotbook, mallcache;
   List<Widget> more = [SizedBox()];
   var index = 'mallpage_';
   var cachedata = 'mallpage_data_', page = 1;
-  String api;
+  late String api;
   bool moredata = false, stop = false, lock = false;
   ScrollController scrollController = ScrollController();
 
   Future<void> gethttpdata() async {
-    var hotbooks = await http(api, null, gethead());
+    var hotbooks = await http(api, {}, gethead());
     var data2 = getdata(context, hotbooks);
     if (isnull(data2)) {
       hotbook = data2;
@@ -138,7 +138,7 @@ class MallPageState extends State<MallPage> {
           controller: scrollController,
           children: <Widget>[
             isnull(hotbook)
-                ? bookCardWithInfo(4, null, hotbook)
+                ? bookCardWithInfo(4, Null as String, hotbook)
                 : Column(
                     children: [
                       SizedBox(
@@ -170,7 +170,7 @@ class MallPageState extends State<MallPage> {
   }
 
   Widget bookCardWithInfo(int style, String title, List json) {
-    Widget card;
+    Widget card=new SizedBox();
     switch (style) {
       case 1:
         card = NovelFourGridView(title, json);

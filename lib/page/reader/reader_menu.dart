@@ -15,8 +15,9 @@ import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
-import 'package:screen/screen.dart';
 
+
+import '../../style/screen.dart';
 import 'lastpage.dart';
 
 class ReaderMenu extends StatefulWidget {
@@ -33,16 +34,16 @@ class ReaderMenu extends StatefulWidget {
   final void Function(String theme) onToggleTheme;
 
   ReaderMenu(
-      {this.chapters,
-      this.articleIndex,
-      this.onTap,
-      this.onPreviousArticle,
-      this.onNextArticle,
-      this.onToggleChapter,
-      this.novel,
-      this.showcate,
-      this.showset,
-      this.onToggleTheme});
+      {required this.chapters,
+   required  this.articleIndex,
+   required  this.onTap,
+   required  this.onPreviousArticle,
+   required  this.onNextArticle,
+   required  this.onToggleChapter,
+   required  this.novel,
+   required  this.showcate,
+   required  this.showset,
+   required  this.onToggleTheme});
 
   @override
   _ReaderMenuState createState() => _ReaderMenuState();
@@ -50,15 +51,15 @@ class ReaderMenu extends StatefulWidget {
 
 class _ReaderMenuState extends State<ReaderMenu>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> animation;
+ late AnimationController animationController;
+  late Animation<double> animation;
 
   double progressValue = 1;
   bool isTipVisible = false;
-  String title;
-  List<dynamic> chapters;
-  double lightValue = 0.0;
-  int size;
+late String title;
+late List<dynamic> chapters;
+ double lightValue = 0.0;
+late int size;
   //初始化动画
   @override
   initState() {

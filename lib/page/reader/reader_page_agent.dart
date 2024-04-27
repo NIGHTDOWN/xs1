@@ -4,7 +4,7 @@ import 'package:ng169/page/reader/reader_utils.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/global.dart';
+
 
 class ReaderPageAgent {
   // static List<Map<String, int>> getPageOffsets(String content) {
@@ -184,7 +184,7 @@ class ReaderPageAgent {
     List<String> rawTextLines = strings.replaceAll("\r", "").split("\n");
 
     // List<InlineSpan> txet = [];
-    String text;
+    String text="";
     // InlineSpan tmpp;
 
     //两个字符串宽度的缩进

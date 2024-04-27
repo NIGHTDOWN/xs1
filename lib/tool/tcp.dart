@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+
 
 import 'function.dart';
 
 class Tcp {
-  IOWebSocketChannel channel;
-  Function callbacks;
+  late IOWebSocketChannel channel;
+  late Function callbacks;
 
   // Tcp(String ws) {
   //   open(ws);
@@ -32,6 +32,7 @@ class Tcp {
     StreamBuilder(
       stream: this.channel.stream,
       builder: (context, snapshot) {
+        // ignore: unnecessary_null_comparison
         if (snapshot.hasData && null != callbacks) {
           this.callbacks(snapshot.data);
         }
@@ -50,7 +51,7 @@ class Tcp {
             d('\$${snapshot.data} (closed)');
             break;
         }
-        return null;
+        return SizedBox();
         //return Text(snapshot.hasData ? '${snapshot.data}' : '');
       },
     );
@@ -66,7 +67,8 @@ class Tcp {
 }
 
 class MessageUtils {
-  static WebSocket _webSocket;
+  static WebSocket? _webSocket;
+  // ignore: unused_field
   static num _id = 0;
 
   static void open(ws) {
@@ -92,7 +94,7 @@ class MessageUtils {
         WebSocket.connect(ws); // Api.WS_URL 为服务器端的 websocket 服务
     futureWebSocket.then((WebSocket ws) {
       _webSocket = ws;
-      _webSocket.readyState;
+      _webSocket?.readyState;
       // send('sdfsdf');
       // 监听事件
       void onData(dynamic content) {
@@ -101,25 +103,25 @@ class MessageUtils {
         // _createNotification("新消息", content + _id.toString());
       }
 
-      _webSocket.listen(onData,
+      _webSocket?.listen(onData,
           onError: (a) => print("error"), onDone: () => print("done"));
     });
   }
 
   static void closeSocket() {
-    _webSocket.close();
+    _webSocket?.close();
   }
 
   // 向服务器发送消息
   static void send(String message) {
     d(message);
     //_webSocket.add('0x1');
-    _webSocket.add(message);
+    _webSocket?.add(message);
   }
 
   //接收数据
   static void g(String message) {
-    _webSocket.add(message);
+    _webSocket?.add(message);
   }
   // 手机状态栏弹出推送的消息
   // static void _createNotification(String title, String content) async {

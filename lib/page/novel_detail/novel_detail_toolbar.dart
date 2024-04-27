@@ -19,8 +19,8 @@ class NovelDetailToolbar extends StatefulWidget {
 }
 
 class _NovelDetailToolbarState extends State<NovelDetailToolbar> {
-  String isgroom;
-  String isdown;
+  late String isgroom;
+  late String isdown;
   read(context) {
     //获取当前书阅读章节id
     widget.novel.read(context, widget.novel.readChapter);

@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
 
-import 'package:device_apps/device_apps.dart';
-import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ng169/conf/conf.dart';
@@ -17,7 +13,7 @@ import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
-import 'package:ng169/tool/incode.dart';
+
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/listenclip.dart';
 import 'package:ng169/tool/notify.dart';
@@ -73,11 +69,11 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     //d('首次加载');
   }
 
-  @override
-  void didUpdateWidget(Widget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    //d('更新组件');
-  }
+  // @override
+  // void didUpdateWidget(Widget oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   //d('更新组件');
+  // }
 
   @override
   void deactivate() {
@@ -110,12 +106,16 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
       //   break;
       case AppLifecycleState.detached:
         break;
+      case AppLifecycleState.hidden:
+     
+        break;
     }
   }
 
   //唤醒app
   Future<Null> weakAPP() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
+    // ignore: unused_local_variable, deprecated_member_use
     var _sub = getLinksStream().listen((String link) async {
       d('获取外部参数' + link);
       var data = formar_url(link);
@@ -175,7 +175,6 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
             return false;
           }
 
-          break;
         case 'read':
           //跳转到阅读页面内 参数三个，type ， bookid(必要) ，secid
 
@@ -197,10 +196,9 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
           // widget.novel.read(context, widget.novel.readChapter);
           //转到app印度页面
           return true;
-          break;
         // default:
       }
-    }, onError: (err) {
+    } as void Function(String? event)?, onError: (err) {
       // Handle exception by warning the user their action did not succeed
       d('接受外部参数失败');
     });
@@ -382,11 +380,14 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
         },
       ),
     );
+    // ignore: deprecated_member_use
     return WillPopScope(
       child: body,
       onWillPop: () async {
         //回倒桌面
-        AdBridge.call('backDesktop');
+        // AdBridge.call('backDesktop');
+        bool shouldPop = await AdBridge.call('backDesktop');
+    return shouldPop; // 返回异步调用的结果
       },
     );
   }

@@ -6,55 +6,38 @@ import 'package:ng169/tool/global.dart';
 
 class Msg {
   // ignore: non_constant_identifier_names
-  String fuid;
-  String msgid;
-  String tuid;
+  String fuid='0';
+  String msgid='0';
+  String tuid='0';
   String type = '0';
-  String sendtime;
+  String sendtime='0';
   String contenttype = '0';
-  String content;
+  String content='';
   bool flag = false;
-  int id;
-  Msg.fromJson(Map data) {
-    if (isnull(data)) {
-      fuid = data['fuid'] is int ? data['fuid'].toString() : data['fuid'];
-      msgid = data['msgid'] is int ? data['msgid'].toString() : data['msgid'];
-      type = data['type'] is int ? data['type'].toString() : data['type'];
-      tuid = data['tuid'] is int ? data['tuid'].toString() : data['tuid'];
-      flag = isnull(data['flag']);
-      sendtime = data['sendtime'] is int
-          ? data['sendtime'].toString()
-          : data['sendtime'];
-      contenttype = data['contenttype'] is int
-          ? data['contenttype'].toString()
-          : data['contenttype'];
-
-      content = data['content'];
-      id = data['id'];
-    }
+  int id= 0;
+ Msg.fromJson(Map<String, dynamic> data) : content = data['content'] ?? '', id = data['id'] ?? 0 {
+    fuid = data['fuid'] ?? '';
+    msgid = data['msgid'] ?? '';
+    tuid = data['tuid'] ?? '';
+    type = data['type'] ?? '0';
+    flag = data['flag'] ?? false;
+    sendtime = data['sendtime'] ?? '';
+    contenttype = data['contenttype'] ?? '0';
   }
-  Msg.fromhttpJson(Map data) {
-    if (isnull(data)) {
-      msgid = User.getuid().toString();
-      if (isnull(data['type'])) {
-        fuid = '0';
-        tuid = msgid;
-      } else {
-        fuid = msgid;
-        tuid = '0';
-      }
-      // flag = isnull(data['flag']);
-      type = data['type'] is int ? data['type'].toString() : data['type'];
-      id = data['id'] is int ? data['id'] : int.parse(data['id']);
-      sendtime = data['sendtime'] is int
-          ? data['sendtime'].toString()
-          : data['sendtime'];
-      contenttype = data['contenttype'] is int
-          ? data['contenttype'].toString()
-          : data['contenttype'];
-
-      content = data['content'];
+ Msg.fromhttpJson(Map<String, dynamic> data) : content = '', id = 0 {
+    msgid = User.getuid().toString();
+    if (data['type'] == null) {
+      fuid = '0';
+      tuid = msgid;
+    } else {
+      fuid = msgid;
+      tuid = '0';
     }
+    type = data['type']?.toString() ?? '0';
+    id = data['id'] ?? 0;
+    sendtime = data['sendtime']?.toString() ?? '';
+    contenttype = data['contenttype']?.toString() ?? '0';
+    content = data['content'] ?? '';
   }
   savedb() async {
     var insert = {
@@ -100,7 +83,7 @@ class Msg {
           'content': content,
         },
         gethead());
-    var data = getdata(g('context'), tmp);
+    var data = getdata(g('context'), tmp!);
     var insert;
     if (isnull(data)) {
       //发送成功
@@ -138,7 +121,7 @@ class Msg {
     if (!User.islogin()) return false;
     //10秒只能一次
     var checktmp = await http('chat/havemsg', {}, gethead(), 60);
-    var check = getdata(g('context'), checktmp);
+    var check = getdata(g('context'), checktmp!);
     // d(check);
     if (isnull(check)) {
       //不为空才保存

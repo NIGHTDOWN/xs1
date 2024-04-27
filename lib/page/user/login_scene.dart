@@ -13,7 +13,7 @@ class LoginSceneState extends State {
   TextEditingController phoneEditer = TextEditingController();
   TextEditingController codeEditer = TextEditingController();
   int coldDownSeconds = 0;
-  Timer timer;
+  late Timer timer;
 
   fetchSmsCode() async {
     if (phoneEditer.text.length == 0) {
@@ -34,7 +34,9 @@ class LoginSceneState extends State {
   }
 
   login() async {
+    // ignore: unused_local_variable
     var phone = phoneEditer.text;
+     // ignore: unused_local_variable
     var code = codeEditer.text;
 
     // try {

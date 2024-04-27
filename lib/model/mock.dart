@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/global.dart';
+
 
 class Mock {
   //初始化mock数据
-  static Map<String, dynamic> mockjson;
+  static Map<String, dynamic> mockjson={};
   static init(String city) async {
     d('加载mock' + city);
     if (!isnull(city)) {
       return false;
     }
-    mockjson = null;
+    mockjson = {};
     try {
       var tmp = await rootBundle.loadString('assets/mock/$city.mock'); //加载语言文件
       mockjson = json.decode(tmp);

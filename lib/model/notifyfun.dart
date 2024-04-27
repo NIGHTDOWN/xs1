@@ -5,9 +5,9 @@ import 'package:ng169/tool/down.dart';
 import 'package:ng169/tool/function.dart';
 
 class Notifyfunction {
-  BuildContext context;
-  String args;
-  String function;
+  BuildContext context=Null as BuildContext;
+  String args="";
+  String function="";
   Notifyfunction(context, function) {
     this.context = context;
     this.function = function;

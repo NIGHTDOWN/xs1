@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/cacheimg.dart';
-import 'package:ng169/page/task/ads.dart';
-import 'package:ng169/pay/AdBridge.dart';
+
 import 'package:ng169/tool/http.dart';
-import 'package:ng169/tool/listenclip.dart';
-import 'package:ng169/tool/tcp.dart';
+
 import 'package:ng169/tool/thred.dart';
 import 'package:package_info/package_info.dart';
 
@@ -17,8 +15,8 @@ import 'db.dart';
 import 'function.dart';
 import 'lang.dart';
 
-Map<String, dynamic> globalKeys;
-PackageInfo packageInfo;
+Map<String, dynamic> globalKeys={};
+PackageInfo packageInfo=Null as PackageInfo;
 //dsl状态
 bool dslStatus = false;
 //dsl域名
@@ -91,9 +89,9 @@ getdsl() async {
     dslStatus = false;
   }
   var domian = await http('index/dsl', {}, gethead());
-  domian = getdata(g('context'), domian);
+  domian = getdata(g('context'), domian!);
   if (isnull(domian)) {
-    dslDomain = domian;
+    dslDomain = domian!;
     dslStatus = true;
   } else {
     // dslDomain=domian;

@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
@@ -13,29 +13,29 @@ import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/t.dart';
 
 class Article {
-  int id;
-  int novelId;
-  int price;
-  String booktype;
-  int index;
-  int nextArticleId;
-  int preArticleId;
-  String title;
-  String content;
-  List images;
+  int id=0;
+  int novelId=0;
+  int price=0;
+  String booktype="";
+  int index=0;
+  int nextArticleId=0;
+  int preArticleId=0;
+  String title="";
+  String content="";
+  List images= [];
   List imagestmp = [];
-  String contenttmp;
-  String section_id;
-  String dsl;
-  String book_id;
-  String update_time;
-  String isfree;
+  String contenttmp="";
+  String section_id="";
+  String dsl="";
+  String book_id="";
+  String update_time="";
+  String isfree="";
   double coin = 0.0;
   int cutlength = 300; //????
   bool pay = false; //????
   bool cartoonisinit = true; //????
-  List<Map<String, int>> pageOffsets;
-  List<String> page;
+  List<Map<String, int>> pageOffsets=[];
+  List<String> page=[];
 
   var context;
   Future<bool> ispay() async {
@@ -210,7 +210,7 @@ class Article {
     }
     postdata.addAll({'isauto': isnull(getcache(autounlock)) ? 1 : 0});
     var rettmp = await http('user/deblocking', postdata, gethead());
-    var ret = getdata(context, rettmp);
+    var ret = getdata(context, rettmp!);
     if (isnull(ret)) {
       Novel novel = await Novel.fromID(novelId, int.parse(booktype));
       //??????
@@ -268,16 +268,16 @@ class Article {
     Article article;
     if (booktype == '1') {
       await ArticleProvider.getremotecontent(context, novel, section_id);
-      article = await ArticleProvider.fetchArticle(
-          context, novel, int.parse(section_id));
+      article = (await ArticleProvider.fetchArticle(
+          context, novel, int.parse(section_id)))!;
 
       article.page = ReaderPageAgent.getPage(
         article.content,
       );
     } else {
       await CartoonProvider.getremotecontent(context, novel, section_id);
-      article = await CartoonProvider.fetchArticle(
-          context, novel, int.parse(section_id));
+      article = (await CartoonProvider.fetchArticle(
+          context, novel, int.parse(section_id)))!;
     }
 
     this.content = article.content;
@@ -430,5 +430,6 @@ class Article {
       //  d(this.content.toString().substring(0, 200));
       return 1;
     }
+    return 0;
   }
 }

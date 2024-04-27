@@ -11,7 +11,7 @@ import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 class InCataLog extends StatefulWidget {
   final Novel novel;
   final void Function(Chapter chapter) clickChapter;
-  const InCataLog({Key key, this.novel, this.clickChapter}) : super(key: key);
+  const InCataLog({Key? key, required this.novel, required this.clickChapter}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => InCataLogState();
@@ -23,7 +23,7 @@ class InCataLogState extends State<InCataLog> {
   ScrollController scrollController = new ScrollController();
   double goread = 0.0;
   //跳转到阅读指针的位置
-  String readid;
+  late String readid;
   gotoreadsign() {
     getpostion();
     if (scrollController.hasClients && remotedata.length > 0) {
@@ -104,7 +104,7 @@ class InCataLogState extends State<InCataLog> {
       backgroundColor: Colors.grey,
       controller: scrollController,
       heightScrollThumb: 35.0,
-      child: bookCardWithInfo(),
+      child: bookCardWithInfo() as BoxScrollView  ,
     );
 
     var h = 90.0;

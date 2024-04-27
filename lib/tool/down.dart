@@ -1,22 +1,21 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
+
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ng169/conf/conf.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 import 'function.dart';
 import 'global.dart';
 import 'lang.dart';
 import 'notify.dart';
 
 class Down {
-  static StateSetter reflash; //进度条刷新入口
+  static StateSetter reflash=Null as StateSetter; //进度条刷新入口
   static var progress = 0.0;
   static Future<bool> checkpath(String path) async {
     var directory = await new Directory(path).create(recursive: true);
@@ -25,7 +24,7 @@ class Down {
   }
 
   static getfile(String urlPath,
-      [String savePath, Function success, Function fail, Function load]) async {
+      [String? savePath, Function? success, Function? fail, Function? load]) async {
     if (!isnull(savePath)) {
       savePath = await Down.getFilePath(urlPath);
     }
@@ -34,7 +33,7 @@ class Down {
     var tmp = getcache(cachename);
 
     if (isnull(tmp)) {
-      success.call(tmp);
+      success?.call(tmp);
       return tmp;
     }
     Response response;
@@ -44,19 +43,19 @@ class Down {
           onReceiveProgress: (int count, int total) {
         //进度
         if (isnull(load)) {
-          load.call(count, total);
+          load?.call(count, total);
         }
         //print("$count $total");
       });
       if (isnull(success)) {
-        success.call(savePath);
+        success?.call(savePath);
         setcache(cachename, savePath, '-1');
       } else {
         d('downloadFile success---------${response.data}');
       }
     } on DioError catch (e) {
       if (isnull(fail)) {
-        fail.call(e);
+        fail?.call(e);
       } else {
         d('downloadFile error---------$e');
       }
@@ -103,7 +102,7 @@ class Down {
   }
 
 //要保存的文件后缀
-  static Future<String> getFilePath(String filename, [String fileExt]) async {
+  static Future<String> getFilePath(String filename, [String? fileExt]) async {
     // 获取文档目录的路径
     String dir;
     if (isnull(getcache(downdocment))) {
@@ -119,7 +118,7 @@ class Down {
     var name = tmpname[tmpname.length - 1];
     var file = '$dir/$name';
     if (isnull(fileExt)) {
-      file = file + '.' + fileExt;
+      file = file + '.' + fileExt!;
     }
     return file;
   }
@@ -183,7 +182,7 @@ class Down {
     });
   }
 
-  static Future loadbox(BuildContext context, [Widget body]) async {
+  static Future loadbox(BuildContext context, [Widget? body]) async {
     var boxw = getScreenWidth(context);
     var boxh = getScreenHeight(context);
     var boxsize = boxw > boxh ? boxh : boxw;
@@ -260,6 +259,7 @@ class Down {
             ],
           ),
         );
+        // ignore: deprecated_member_use
         return WillPopScope(
             child: Center(child: theam),
             onWillPop: () {
@@ -269,6 +269,7 @@ class Down {
                   pop(g('context'));
                 }
               }
+              return Future.value(false);
             });
       },
     );

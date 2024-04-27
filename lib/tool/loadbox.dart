@@ -19,9 +19,9 @@ class Loadbox extends StatefulWidget {
   final bool hasmask;
 
   Loadbox(
-      {Key key,
-      @required this.loading,
-      @required this.child,
+      {Key? key,
+      required this.loading,
+      required this.child,
       this.color = Colors.blue,
       this.bgColor = Colors.black45,
       this.width = 80,
@@ -39,24 +39,24 @@ class Loadbox extends StatefulWidget {
 }
 
 class LoadboxState extends State<Loadbox> {
-  Timer timer;
+  late Timer timer;
 
   // Widget child;
-  double height;
-  double width;
-  Color color;
-  Color bgColor;
-  int count;
-  int speed;
-  double opacity;
+ late double height;
+ late double width;
+ late Color color;
+ late Color bgColor;
+ late int count;
+ late int speed;
+ late double opacity;
 
   List<Offset> offsetList = [];
   List<double> radiusList = [];
   List<double> radianList = [];
-  double moveViewSize;
-  double moveSize;
-  double w;
-  double r;
+  late double moveViewSize;
+  late double moveSize;
+  late double w;
+  late double r;
 
   void updateLoad(bool loading) {
     if (!mounted) return;
@@ -198,7 +198,7 @@ class RoundPainter extends CustomPainter {
   List<double> radiusList;
   Color color;
 
-  RoundPainter({this.offsetList, this.radiusList, this.color});
+  RoundPainter({required this.offsetList, required this.radiusList, required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

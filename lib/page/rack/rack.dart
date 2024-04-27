@@ -40,8 +40,8 @@ class RackSceneState extends State<Rack> {
   var api2 = 'groom/to_rack';
   List<Novel> favoriteNovels = [];
 
-  File file;
-  IOSink isk;
+  late File file;
+  late IOSink isk;
   ScrollController scrollControllerrack = ScrollController();
   double navAlpha = 0;
   bool isedit = false;
@@ -49,8 +49,8 @@ class RackSceneState extends State<Rack> {
   List choosesbook = []; //选中的小说
   List choosescartoon = []; //选中的漫画
   List<Novel> choosenovel = []; //选中
-  static Widget onimg;
-  static Widget unimg;
+  static Widget onimg=SizedBox();
+  static Widget unimg=SizedBox();
   @override
   void initState() {
     super.initState();
@@ -213,7 +213,7 @@ class RackSceneState extends State<Rack> {
     } else {
       apitmp = api2;
     }
-    http(apitmp, null, gethead(), 30).then((data) {
+    http(apitmp, {}, gethead(), 30).then((data) {
       // getdata
       var json = getdata(context, data);
 
@@ -275,7 +275,7 @@ class RackSceneState extends State<Rack> {
             gourl(context, Sign());
           },
         ));
-    bool b;
+    bool b=false;
     if (chooseall == 2 || chooseall == 4) {
       b = true;
     }
@@ -477,7 +477,7 @@ class RackSceneState extends State<Rack> {
             ),
           ],
         ));
-    showbox(bo, null, null, false, getScreenWidth(context) * .7);
+    showbox(bo, Null as Color, Null as double, false, getScreenWidth(context) * .7);
   }
 
   loadlocalbook() async {
@@ -488,10 +488,10 @@ class RackSceneState extends State<Rack> {
       // File file = await FilePicker.getFile(
       //     type: FileType.custom, allowedExtensions: ['txt']);
       // File file;
-      FilePickerResult files = await FilePicker.platform
+      FilePickerResult? files = await FilePicker.platform
           .pickFiles(type: FileType.custom, allowedExtensions: ['txt']);
       //判断是否需要上传
-      File file = File(files.files.single.path);
+      File file = File(files!.files.single.path!);
       if (!isnull(file)) return;
 
       // var list = await file.readAsBytes();

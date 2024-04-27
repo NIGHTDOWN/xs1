@@ -4,24 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:ng169/model/base.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/page/commect/kefu.dart';
-import 'package:ng169/page/login/index.dart';
+
 
 import 'package:ng169/pay/googlepay.dart';
 
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/global.dart';
+
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/loadbox.dart';
 import 'package:ng169/tool/url.dart';
 
+// ignore: must_be_immutable
 class Recharge extends LoginBase {
   final String bookid;
   final String type;
   final String secid;
-  bool needlogin = true;
+ late bool needlogin = true;
 
   List<Widget> more = [SizedBox()];
   bool debug = false;
@@ -34,16 +35,16 @@ class Recharge extends LoginBase {
   String cancel_order_api = 'order/fail';
   String order_log_api = 'order/order_log';
   String order_sure_api = 'google/payv3';
-  String order_num;
+late  String order_num;
   //2 是用户取消，3是其他
-  int pay_status;
+ late int pay_status;
   int pay_type = 4; //1为paypal 4为google 5 appstore
   int click = 0;
-  var select;
+ late var select;
   List sign_data = [];
-  var user;
-  String failmsg;
-  Googlepay googlepayobj;
+ late var user;
+ late String failmsg;
+ late Googlepay googlepayobj;
   var style1 = new TextStyle(
       fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500);
   var style11 = new TextStyle(
@@ -446,6 +447,7 @@ class Recharge extends LoginBase {
   _initgooglepay() {
     googlepayobj = new Googlepay();
     sign_data.add("初始化googlePay" + gettime());
+   
     googlepayobj.init(func_success: isok, func_fail: initfail);
   }
 
@@ -567,7 +569,7 @@ class Recharge extends LoginBase {
         reflash();
         pop(context);
       }
-      sign_data.add("服务端回调结果" + gettime() + tmp2);
+      sign_data.add("服务端回调结果" + gettime() + tmp2!);
     } else {
       sign_data.add("googlePay成功,json解析失败" + gettime() + data);
     }
@@ -604,7 +606,7 @@ class Recharge extends LoginBase {
     pop(context);
   }
 
-  static Future loadbox(BuildContext context, [Widget body]) async {
+  static Future loadbox(BuildContext context, [Widget? body]) async {
     var boxw = getScreenWidth(context);
     var boxh = getScreenHeight(context);
     var boxsize = boxw > boxh ? boxh : boxw;
@@ -681,9 +683,11 @@ class Recharge extends LoginBase {
             ],
           ),
         );
+        // ignore: deprecated_member_use
         return WillPopScope(
             child: Center(child: theam),
             onWillPop: () {
+              return Future.value(false);  
               // pop(context);
             });
       },

@@ -15,7 +15,7 @@ class NovelmorechooseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var novels = novelss;
     if (novels.length <= 0) {
-      return null;
+      return SizedBox();
     }
 
     List<Widget> children = [];

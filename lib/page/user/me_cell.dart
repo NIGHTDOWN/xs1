@@ -11,11 +11,11 @@ class MeCell extends StatelessWidget {
   final bool haveline;
 
   MeCell(
-      {this.title,
-      this.iconName,
-      this.onPressed,
-      this.line_padding_left,
-      this.right_widget,
+      {required this.title,
+      required this.iconName,
+      required this.onPressed,
+       this.line_padding_left=0,
+      required this.right_widget,
       this.haveline = true});
   @override
   Widget build(BuildContext context) {

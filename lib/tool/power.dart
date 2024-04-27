@@ -66,13 +66,25 @@ class Power {
     // /// iOS: MPMediaLibrary
     // mediaLibrary
     //androidX需要实例化对象，低版本的是静态方法
-    PermissionHandler obj = new PermissionHandler();
-    // PermissionHandler obj = PermissionHandlerPlatform.get;
-    Map<PermissionGroup, PermissionStatus> permissions =
-        await obj.requestPermissions([
-      PermissionGroup.storage,
-      PermissionGroup.location,
-    ]);
+    // PermissionHandler obj = new PermissionHandler();
+    // // PermissionHandler obj = PermissionHandlerPlatform.get;
+    // Map<PermissionGroup, PermissionStatus> permissions =
+    //     await obj.requestPermissions([
+    //   PermissionGroup.storage,
+    //   PermissionGroup.location,
+    // ]);
+Map<Permission, PermissionStatus> permissions = await [
+  Permission.location,
+  Permission.storage,
+].request();
+
+
+
+
+
+
+
+
 
     List<bool> results = permissions.values.toList().map((status) {
       //var PermissionStatus;

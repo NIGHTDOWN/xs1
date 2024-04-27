@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:ng169/model/base.dart';
-import 'package:ng169/style/screen.dart';
-import 'package:ng169/style/sq_color.dart';
-import 'package:ng169/style/styles.dart';
+
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
@@ -34,13 +32,13 @@ class Friend extends LoginBase {
     // },
   ];
   var nums = '0', numyx = '0';
-  List rand;
+  late List rand;
   var coin = '500';
   var size = 10;
   var cachename = 'friendcache';
   var api = 'task/friendinfo';
   var api2 = 'task/friendmore';
-  Timer time;
+ late Timer time;
   bool start = true;
   int randindex = 0, page = 1;
   bool isend = false;

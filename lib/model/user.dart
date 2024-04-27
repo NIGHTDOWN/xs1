@@ -113,7 +113,7 @@ class User {
         return false;
       }
       var data = await http('task/edit_invite', {'inviteid': pid}, gethead());
-      var data2 = getdata(g('context'), data);
+      var data2 = getdata(g('context'), data!);
       if (isnull(data2)) {
         //更新用户界面
         var user = User.get();
@@ -187,7 +187,7 @@ class User {
 
   static gethttpuser(context) async {
     var tmp = await http('user/userinfo', {}, gethead());
-    var httpuser = getdata(context, tmp);
+    var httpuser = getdata(context, tmp!);
     if (isnull(httpuser)) {
       Map user = get();
       user.addAll(httpuser);

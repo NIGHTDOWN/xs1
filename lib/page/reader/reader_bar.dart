@@ -32,7 +32,7 @@ class ReaderBarState extends State<ReaderBar> with RouteAware {
   bool isCateVisiable = false; //显示目录
   bool isSetVisiable = false; //显示设置
 
-  int articleIndex;
+  late int articleIndex;
   var chapets;
   @override
   void initState() {

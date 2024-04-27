@@ -8,17 +8,18 @@ import 'package:ng169/tool/lang.dart';
 
 import 'loglist.dart';
 
+// ignore: must_be_immutable
 class ExpendLog extends LoginBase {
   // final String api;
   // final String title;
   bool needlogin = true;
-  ExpendLog({Key key});
+  ExpendLog({Key? key});
 //   @override
 //   State<StatefulWidget> createState() => ExpendLogState();
 // }
 
 // class ExpendLogState extends State<ExpendLog> {
-  List htppdata, mallcache;
+  List htppdata=[], mallcache=[];
   List<Widget> more = [SizedBox()];
   var index = 'ExpendLog_';
   var cachedata = 'ExpendLog_data_', page = 1;

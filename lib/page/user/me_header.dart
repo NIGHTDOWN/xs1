@@ -19,8 +19,8 @@ class MeHeader extends StatefulWidget {
 }
 
 class MeHeaderState extends State<MeHeader> {
-  Map user;
-  BuildContext contexttmp;
+  late Map user;
+late  BuildContext contexttmp;
   // MeHeader()
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,13 @@ class MeHeaderState extends State<MeHeader> {
     contexttmp = context;
     //var user = UserManager.currentUser;
     user = User.get();
+var img;
 
+if(isnull(user) && isnull(user['avater'])){
+img=CachedNetworkImageProvider(user['avater']);
+}else{
+  img=AssetImage('assets/images/placeholder_avatar.png') ;
+}
     var b = GestureDetector(
       onTap: () {},
 
@@ -42,11 +48,7 @@ class MeHeaderState extends State<MeHeader> {
             child: CircleAvatar(
               radius: 40,
               backgroundColor: SQColor.white,
-              backgroundImage: isnull(user)
-                  ? isnull(user['avater'])
-                      ? CachedNetworkImageProvider(user['avater'])
-                      : AssetImage('assets/images/placeholder_avatar.png')
-                  : AssetImage('assets/images/placeholder_avatar.png'),
+              backgroundImage: img,
             ),
             onTap: clickhead,
           ),

@@ -41,6 +41,7 @@ class MarkDetailHeader extends StatelessWidget {
 
   Widget buildContent(BuildContext context) {
     //判断标题是否超过两行
+    // ignore: unused_local_variable
     var h = novel.name.length >= 22 ? 4.0 : 10.0;
     h = 0;
     var width = Screen.width;

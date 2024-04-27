@@ -9,12 +9,12 @@ class NgDashedLine extends StatelessWidget {
   final Color color;
 
   NgDashedLine(
-      {@required this.axis,
-      this.dashedWidth = 1,
-      this.dashedHeight = 1,
-      this.count,
-      this.width,
-      this.color = const Color(0xffff0000)});
+      {required this.axis,
+    this.dashedWidth = 1,
+     this.dashedHeight = 1,
+    required this.count,
+    required this.width,
+     this.color = const Color(0xffff0000)});
 
   @override
   Widget build(BuildContext context) {
