@@ -7,7 +7,6 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/commect/addcomment.dart';
 import 'package:ng169/page/commect/wrong.dart';
 import 'package:ng169/page/novel_detail/novel_detail_header.dart';
-import 'package:ng169/page/reader/reader_set.dart';
 import 'package:ng169/style/screen.dart' as screenstyle;
 
 import 'package:ng169/style/sq_color.dart';
@@ -18,7 +17,6 @@ import 'package:ng169/tool/url.dart';
 
 
 import '../../style/screen.dart';
-import 'lastpage.dart';
 
 class ReaderMenu extends StatefulWidget {
   final List<dynamic> chapters;

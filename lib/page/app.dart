@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ng169/conf/conf.dart';
@@ -23,6 +22,7 @@ import 'mall/mall.dart';
 import 'package:ng169/obj/novel.dart';
 
 class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => AppSceneState();
 }
@@ -83,7 +83,8 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
 
 // 系统窗口相关改变回调
   void didChangeMetrics() {
-    //d('切换窗口');
+    super.didChangeMetrics();
+    d('切换窗口');
   }
 
   @override
@@ -106,99 +107,111 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
       //   break;
       case AppLifecycleState.detached:
         break;
-      case AppLifecycleState.hidden:
-     
-        break;
+      // case AppLifecycleState.hidden:
+      // case AppLifecycleState.:
+      //   break;
+      // case AppLifecycleState.hidden:
+      // TODO: Handle this case.
+    }
+  }
+
+  dolink(String link) async {
+    d('获取外部参数' + link);
+    var data = formar_url(link);
+    if (!isnull(data, 'action')) {
+      // d('参数获取失败');
+      return false;
+    }
+    String action = data['action'];
+    var datatmp = data['data'];
+    var user;
+    switch (action) {
+      case 'reg':
+        //参数一个 pid
+        if (!isnull(datatmp, 'pid')) {
+          return false;
+        }
+        if (!User.islogin()) {
+          await gourl(g('context'), Index());
+          // return false;
+        }
+        user = User.get();
+        if (!isnull(user)) {
+          ts('请登入');
+          return false;
+        }
+        String uid = User.getuid().toString();
+        if (uid == datatmp['pid']) {
+          ts('无法给自己助力哦！请分享给好友');
+          return false;
+        }
+        if (isnull(user, 'invite_id')) {
+          //不相同就弹出已经阻力过了
+          String inviteid = user['invite_id'];
+          if (datatmp['pid'] == inviteid) {
+            ts('助力成功了');
+          } else {
+            // showbox(Text(
+            ts('您已经助力过了');
+            //   style: new TextStyle(
+            //     decoration: TextDecoration.none,
+            //     fontSize: 16.0,
+            //     color: const Color(0xFF000000),
+            //     fontWeight: FontWeight.w200,
+            //   ),
+            // ));
+            // msgbox(g('context'), () {}, Text(lang('您已经助力过了')));
+          }
+          return false;
+        }
+        bool bind = await User.bindinvite(datatmp['pid']);
+        //判断是否已经助力了，如果助力id跟当前参数id一样就弹出成功
+        if (bind) {
+          ts('助力成功了');
+          return true;
+        } else {
+          ts('助力失败了！');
+          return false;
+        }
+
+      case 'read':
+        //跳转到阅读页面内 参数三个，type ， bookid(必要) ，secid
+
+        if (!isnull(datatmp, 'bookid')) {
+          return false;
+        }
+        if (!isnull(datatmp, 'type')) {
+          return false;
+        }
+        Novel novel = await Novel.fromID(
+            int.parse(datatmp['bookid']), int.parse(datatmp['type']));
+        if (isnull(novel)) {
+          if (isnull(datatmp, 'secid')) {
+            novel.read(context, int.parse(datatmp['secid']));
+          } else {
+            novel.read(context);
+          }
+        }
+        // widget.novel.read(context, widget.novel.readChapter);
+        //转到app印度页面
+        return true;
+      // default:
     }
   }
 
   //唤醒app
-  Future<Null> weakAPP() async {
+  void weakAPP() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // ignore: unused_local_variable, deprecated_member_use
-    var _sub = getLinksStream().listen((String link) async {
-      d('获取外部参数' + link);
-      var data = formar_url(link);
-      if (!isnull(data, 'action')) {
-        // d('参数获取失败');
-        return false;
+    var _sub = getLinksStream().listen((String? data) {
+      // 这里是处理数据的回调函数
+      // 处理接收到的数据
+      if (data != null) {
+        dolink(data);
       }
-      String action = data['action'];
-      var datatmp = data['data'];
-      var user;
-      switch (action) {
-        case 'reg':
-          //参数一个 pid
-          if (!isnull(datatmp, 'pid')) {
-            return false;
-          }
-          if (!User.islogin()) {
-            await gourl(g('context'), Index());
-            // return false;
-          }
-          user = User.get();
-          if (!isnull(user)) {
-            ts('请登入');
-            return false;
-          }
-          String uid = User.getuid().toString();
-          if (uid == datatmp['pid']) {
-            ts('无法给自己助力哦！请分享给好友');
-            return false;
-          }
-          if (isnull(user, 'invite_id')) {
-            //不相同就弹出已经阻力过了
-            String inviteid = user['invite_id'];
-            if (datatmp['pid'] == inviteid) {
-              ts('助力成功了');
-            } else {
-              // showbox(Text(
-              ts('您已经助力过了');
-              //   style: new TextStyle(
-              //     decoration: TextDecoration.none,
-              //     fontSize: 16.0,
-              //     color: const Color(0xFF000000),
-              //     fontWeight: FontWeight.w200,
-              //   ),
-              // ));
-              // msgbox(g('context'), () {}, Text(lang('您已经助力过了')));
-            }
-            return false;
-          }
-          bool bind = await User.bindinvite(datatmp['pid']);
-          //判断是否已经助力了，如果助力id跟当前参数id一样就弹出成功
-          if (bind) {
-            ts('助力成功了');
-            return true;
-          } else {
-            ts('助力失败了！');
-            return false;
-          }
-
-        case 'read':
-          //跳转到阅读页面内 参数三个，type ， bookid(必要) ，secid
-
-          if (!isnull(datatmp, 'bookid')) {
-            return false;
-          }
-          if (!isnull(datatmp, 'type')) {
-            return false;
-          }
-          Novel novel = await Novel.fromID(
-              int.parse(datatmp['bookid']), int.parse(datatmp['type']));
-          if (isnull(novel)) {
-            if (isnull(datatmp, 'secid')) {
-              novel.read(context, int.parse(datatmp['secid']));
-            } else {
-              novel.read(context);
-            }
-          }
-          // widget.novel.read(context, widget.novel.readChapter);
-          //转到app印度页面
-          return true;
-        // default:
-      }
-    } as void Function(String? event)?, onError: (err) {
+    }, onDone: () {
+      // 流完成时执行的操作
+    }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
       d('接受外部参数失败');
     });
@@ -228,6 +241,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     showtitlebar();
     setupApp();
     weakAPP();
+
     //这里开启监听剪切板
     // globalKeys['listenclip'].send('1');
     //ce
@@ -244,7 +258,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     //     _tabIndex = arg;
     //   });
     // });
-    ListenClip.start(true);
+    ListenClip().start(true);
     eventBus.on('EventToggleTabBarIndex', (arg) {
       qiehuan(arg);
     });
@@ -337,6 +351,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     // AdBridge.call("getnet");
     //加载通知栏
     Notify.init('app_icon');
+
     //  dir();
     var body = Scaffold(
       body: IndexedStack(
@@ -387,7 +402,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
         //回倒桌面
         // AdBridge.call('backDesktop');
         bool shouldPop = await AdBridge.call('backDesktop');
-    return shouldPop; // 返回异步调用的结果
+        return shouldPop; // 返回异步调用的结果
       },
     );
   }

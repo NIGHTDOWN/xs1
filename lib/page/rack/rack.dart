@@ -1,11 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-import 'package:device_apps/device_apps.dart';
-import 'package:device_info/device_info.dart';
+
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ng169/model/mock.dart';
@@ -19,10 +15,8 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/brige.dart';
 import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/global.dart';
 import 'package:dio/dio.dart';
 import 'package:ng169/tool/http.dart';
-import 'package:ng169/tool/incode.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/t.dart';
 import 'package:ng169/tool/url.dart';
@@ -31,6 +25,7 @@ import 'book_parse.dart';
 import 'bookshelf_item_view.dart';
 
 class Rack extends StatefulWidget {
+  const Rack({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => RackSceneState();
 }
@@ -49,8 +44,8 @@ class RackSceneState extends State<Rack> {
   List choosesbook = []; //选中的小说
   List choosescartoon = []; //选中的漫画
   List<Novel> choosenovel = []; //选中
-  static Widget onimg=SizedBox();
-  static Widget unimg=SizedBox();
+  static Widget onimg = SizedBox();
+  static Widget unimg = SizedBox();
   @override
   void initState() {
     super.initState();
@@ -61,6 +56,7 @@ class RackSceneState extends State<Rack> {
         width: 17.0,
       );
     }
+
     if (!isnull(unimg)) {
       unimg = Image.asset(
         'assets/images/choose_unclick.png',
@@ -82,6 +78,7 @@ class RackSceneState extends State<Rack> {
     mock();
     loadlocals();
     loadhttp();
+
     scrollControllerrack.addListener(() {
       var offset = scrollControllerrack.offset;
 
@@ -275,7 +272,7 @@ class RackSceneState extends State<Rack> {
             gourl(context, Sign());
           },
         ));
-    bool b=false;
+    bool b = false;
     if (chooseall == 2 || chooseall == 4) {
       b = true;
     }
@@ -477,7 +474,8 @@ class RackSceneState extends State<Rack> {
             ),
           ],
         ));
-    showbox(bo, Null as Color, Null as double, false, getScreenWidth(context) * .7);
+    showbox(bo, Color.fromARGB(0, 0, 0, 0), 0.0, false,
+        getScreenWidth(context) * .7);
   }
 
   loadlocalbook() async {
@@ -490,6 +488,7 @@ class RackSceneState extends State<Rack> {
       // File file;
       FilePickerResult? files = await FilePicker.platform
           .pickFiles(type: FileType.custom, allowedExtensions: ['txt']);
+      if (!isnull(files)) return;
       //判断是否需要上传
       File file = File(files!.files.single.path!);
       if (!isnull(file)) return;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/src/cache_managers/base_cache_manager.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 
@@ -65,9 +64,7 @@ class FullPhotoScreenState extends State<FullPhotoScreen> {
                 pop(context);
               },
               // imageProvider: NetworkImage(url)
-              imageProvider: CachedNetworkImageProvider(url,Null as BaseCacheManager,(){},{})
-              
-              )),
+              imageProvider: CachedNetworkImageProvider(url, null, () {}, {}))),
     );
   }
 }

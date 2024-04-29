@@ -11,7 +11,8 @@ import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 class InCataLog extends StatefulWidget {
   final Novel novel;
   final void Function(Chapter chapter) clickChapter;
-  const InCataLog({Key? key, required this.novel, required this.clickChapter}) : super(key: key);
+  const InCataLog({Key? key, required this.novel, required this.clickChapter})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => InCataLogState();
@@ -104,7 +105,7 @@ class InCataLogState extends State<InCataLog> {
       backgroundColor: Colors.grey,
       controller: scrollController,
       heightScrollThumb: 35.0,
-      child: bookCardWithInfo() as BoxScrollView  ,
+      child: bookCardWithInfo() as BoxScrollView,
     );
 
     var h = 90.0;
@@ -126,6 +127,7 @@ class InCataLogState extends State<InCataLog> {
                   : NgImage(
                       widget.novel.imgUrl,
                       width: 50,
+                      placeholder: Container(),
                     ),
               SizedBox(
                 width: 15,

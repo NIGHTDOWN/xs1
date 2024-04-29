@@ -31,6 +31,7 @@ class NovelDetailHeader extends StatelessWidget {
             fit: BoxFit.fitWidth,
             width: width,
             height: height,
+            placeholder: Container(),
           ),
           // Image(
           //   image: CachedNetworkImageProvider(novel.imgUrl),
@@ -117,7 +118,12 @@ class NovelDetailHeader extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          NgImage(novel.imgUrl, width: 100, height: 133),
+          NgImage(
+            novel.imgUrl,
+            width: 100,
+            height: 133,
+            placeholder: Container(),
+          ),
           SizedBox(width: 15),
           Expanded(
             child: Column(

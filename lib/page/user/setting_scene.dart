@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -42,10 +41,10 @@ class SettingState extends State<SettingScene> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     // ignore: unused_local_variable
     String appName = packageInfo.appName;
-     // ignore: unused_local_variable
+    // ignore: unused_local_variable
     String packageName = packageInfo.packageName;
     String version = packageInfo.version;
-     // ignore: unused_local_variable
+    // ignore: unused_local_variable
     String buildNumber = packageInfo.buildNumber;
 
     _version = version;
@@ -162,7 +161,8 @@ class SettingState extends State<SettingScene> {
         title: lang('自动解锁章节'),
         onPressed: () {},
         line_padding_left: 10,
-        right_widget: s, iconName: '',
+        right_widget: s,
+        iconName: '',
       ),
       MeCell(
         title: lang('清除缓存'),
@@ -178,7 +178,8 @@ class SettingState extends State<SettingScene> {
               width: 12,
             ),
           ],
-        ), iconName: '',
+        ),
+        iconName: '',
       ),
       boo
           ? MeCell(
@@ -194,7 +195,8 @@ class SettingState extends State<SettingScene> {
                     width: 12,
                   ),
                 ],
-              ), iconName: '',
+              ),
+              iconName: '',
             )
           : Container(),
       MeCellss(
@@ -215,7 +217,8 @@ class SettingState extends State<SettingScene> {
               color: SQColor.gray,
             )
           ],
-        ), iconName: '',
+        ),
+        iconName: '',
       ),
       MeCell(
         title: lang('隐私策略'),
@@ -223,10 +226,13 @@ class SettingState extends State<SettingScene> {
           gourl(
               context,
               Bow(
-                url: serverurl + '/index/privacy/index', title: '',
+                url: serverurl + '/index/privacy/index',
+                title: '',
               ));
         },
-        line_padding_left: 10, iconName: '', right_widget: Container(),
+        line_padding_left: 10,
+        iconName: '',
+        right_widget: Container(),
       ),
       MeCell(
         title: lang('版权声明'),
@@ -234,10 +240,13 @@ class SettingState extends State<SettingScene> {
           gourl(
               context,
               Bow(
-                url: serverurl + '/index/privacy/copyright', title: '',
+                url: serverurl + '/index/privacy/copyright',
+                title: '',
               ));
         },
-        line_padding_left: 10, iconName: '',  right_widget: Container(),
+        line_padding_left: 10,
+        iconName: '',
+        right_widget: Container(),
       ),
       MeCell(
         title: lang('关于我们'),
@@ -250,13 +259,14 @@ class SettingState extends State<SettingScene> {
           gourl(
               context,
               Bow(
-                url: serverurl + '/index/privacy/announcement', title: '',
+                url: serverurl + '/index/privacy/announcement',
+                title: '',
               ));
           //通知
           // Notify.setcontext(context);
           // Notify.showNotification();
         },
-        line_padding_left: 10, iconName: '',  right_widget: Container(),
+        line_padding_left: 10, iconName: '', right_widget: Container(),
       ),
       isnull(User.get())
           ? Container(
@@ -270,11 +280,11 @@ class SettingState extends State<SettingScene> {
               child: TextButton(
                 // color: Colors.red,
                 style: ButtonStyle(
-                    shape: MaterialStateProperty.resolveWith((states) =>
+                    shape: WidgetStateProperty.resolveWith((states) =>
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10) //设置圆角
                             )),
-                    backgroundColor: MaterialStateProperty.resolveWith(
+                    backgroundColor: WidgetStateProperty.resolveWith(
                         (states) => Colors.red)),
                 child: new Text(lang('注销'),
                     style: TextStyle(
@@ -358,14 +368,14 @@ class SettingState extends State<SettingScene> {
         // color: Colors.grey,
 
         style: ButtonStyle(
-            shape: MaterialStateProperty.resolveWith((states) =>
+            shape: WidgetStateProperty.resolveWith((states) =>
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10) //设置圆角
                     )),
             backgroundColor:
-                MaterialStateProperty.resolveWith((states) => Colors.grey),
+                WidgetStateProperty.resolveWith((states) => Colors.grey),
             foregroundColor:
-                MaterialStateProperty.resolveWith((states) => Colors.white)),
+                WidgetStateProperty.resolveWith((states) => Colors.white)),
         child: Text(val!),
         // Chip(
         //   label: Text(val),

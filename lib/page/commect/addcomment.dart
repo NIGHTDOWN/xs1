@@ -160,7 +160,7 @@ class AddComment extends LoginBase {
               child: TextButton(
                   // color: SQColor.primary,
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith(
+                      backgroundColor: WidgetStateProperty.resolveWith(
                           (states) => SQColor.primary)),
                   onPressed: submit,
                   child: Padding(

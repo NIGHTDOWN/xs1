@@ -15,8 +15,8 @@ import 'db.dart';
 import 'function.dart';
 import 'lang.dart';
 
-Map<String, dynamic> globalKeys={};
-PackageInfo packageInfo=Null as PackageInfo;
+Map<String, dynamic> globalKeys = {};
+PackageInfo? packageInfo;
 //dsl状态
 bool dslStatus = false;
 //dsl域名
@@ -32,7 +32,6 @@ i() async {
     'msg': 0,
     'locallg': '',
     'downthred': Thred(),
-    // 'listenclip': Thred()
   };
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =
@@ -55,7 +54,6 @@ i() async {
   getdsl();
   //下载线程
   globalKeys['downthred'].init(Cacheimg.islocol, true);
-  // await globalKeys['listenclip'].init(ListenClip.start, true);
 
 //  await globalKeys['tcp'].open('ws://192.168.6.6:8888');
   //MessageUtils.open('ws://192.168.6.6:8888');
@@ -67,7 +65,7 @@ i() async {
 // await Future.wait<dynamic>([demo1,demo2,demo3])
   //String appName = packageInfo.appName;
   //String packageName = packageInfo.packageName;
-  String version = packageInfo.version;
+  String version = packageInfo!.version;
   //String buildNumber = packageInfo.buildNumber;
   globalKeys['version'] = version;
 
@@ -112,7 +110,7 @@ initpackinfo() async {
 //初始化手机系统语言
 initmblang() async {
   String cachename = 'locallg';
-  String lang = getcache(cachename);
+  String? lang = getcache(cachename);
   if (isnull(lang)) {
     s(cachename, lang);
   } else {
@@ -126,7 +124,7 @@ initmblang() async {
 //获取语言
 getlang() {
   String cachename = 'locallg';
-  String lang = g(cachename);
+  String? lang = g(cachename);
   return lang;
 }
 

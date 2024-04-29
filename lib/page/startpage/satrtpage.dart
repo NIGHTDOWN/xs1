@@ -142,14 +142,14 @@ class _StartPageState extends State<StartPage>
               //   ),
               // ),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                backgroundColor: WidgetStateProperty.resolveWith((states) {
                   return SQColor.btm;
                 }),
                 // foregroundColor: MaterialStateProperty.resolveWith((states) {
                 //   return Styles.getTheme()['activefontcolor'];
                 // }),
                 // padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                shape: MaterialStateProperty.resolveWith((states) {
+                shape: WidgetStateProperty.resolveWith((states) {
                   return CircleBorder(
                     side: BorderSide(
                       color: SQColor.btm,

@@ -172,13 +172,13 @@ class Friend extends LoginBase {
       //     borderRadius: BorderRadius.all(Radius.circular(22.0))),
       // padding: const EdgeInsets.all(0.0),
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.resolveWith((states) {
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
           return Colors.white;
         }),
-        foregroundColor: MaterialStateProperty.resolveWith((states) {
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
           return Colors.white;
         }),
-        padding: MaterialStateProperty.all(EdgeInsets.all(0.0)),
+        padding: WidgetStateProperty.all(EdgeInsets.all(0.0)),
       ),
       child: Container(
         width: 230,

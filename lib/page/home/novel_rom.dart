@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
-import 'home_section_view.dart';
 import 'home_novel_cover_view.dart';
 
 class NovelRomView extends StatelessWidget {

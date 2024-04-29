@@ -137,7 +137,6 @@ class DateUtil {
   /// short
   static String? getWeekday(DateTime dateTime,
       {String languageCode = 'en', bool short = false}) {
-    if (dateTime == null) return null;
     String weekday="";
     switch (dateTime.weekday) {
       case 1:
@@ -239,17 +238,13 @@ class DateUtil {
   /// is Week.
   /// 是否是本周.
   static bool isWeek(int ms, {bool isUtc = false, required int locMs}) {
-    if (ms == null || ms <= 0) {
+    if (ms <= 0) {
       return false;
     }
     DateTime _old = DateTime.fromMillisecondsSinceEpoch(ms, isUtc: isUtc);
     DateTime? _now;
-    if (locMs != null) {
-      _now = DateUtil.getDateTimeByMs(locMs, isUtc: isUtc);
-    } else {
-      _now = isUtc ? DateTime.now().toUtc() : DateTime.now().toLocal();
-    }
-
+    _now = DateUtil.getDateTimeByMs(locMs, isUtc: isUtc);
+  
     DateTime old =
         _now!.millisecondsSinceEpoch > _old.millisecondsSinceEpoch ? _old : _now;
     DateTime now =
@@ -464,8 +459,6 @@ Map<String, TimelineInfo> _timelineInfoMap = {
 
 /// add custom configuration.
 void setLocaleInfo(String locale, TimelineInfo timelineInfo) {
-  assert(locale != null, '[locale] must not be null');
-  assert(timelineInfo != null, '[timelineInfo] must not be null');
   _timelineInfoMap[locale] = timelineInfo;
 }
 
@@ -482,8 +475,8 @@ class TimelineUtil {
     required DayFormat dayFormat,
   }) {
     return format(
-      dateTime!.millisecondsSinceEpoch,
-      locTimeMs: locDateTime!.millisecondsSinceEpoch,
+      dateTime.millisecondsSinceEpoch,
+      locTimeMs: locDateTime.millisecondsSinceEpoch,
       locale: locale,
       dayFormat: dayFormat,
     );

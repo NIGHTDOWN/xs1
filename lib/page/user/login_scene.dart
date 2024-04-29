@@ -54,10 +54,8 @@ class LoginSceneState extends State {
 
   @override
   void dispose() {
-    if (timer != null) {
-      timer.cancel();
-    }
-    super.dispose();
+    timer.cancel();
+      super.dispose();
   }
 
   coldDown() {

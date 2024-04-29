@@ -7,16 +7,16 @@ import 'function.dart';
 
 //线程对象
 class Thred {
-  late SendPort sendPort; //发送端口
+   SendPort? sendPort=null; //发送端口
   ReceivePort getPort = ReceivePort(); //接收端口
-  late Isolate _ioIsolate;
+  late Isolate? _ioIsolate;
   List _recvdata = [];
   bool _asyn = false;
- late Function callback;
+  late Function callback;
   //杀死线程
   kill() {
-    _ioIsolate.kill(priority: Isolate.immediate);
-    _ioIsolate = Null as Isolate;
+    _ioIsolate!.kill(priority: Isolate.immediate);
+    _ioIsolate = null;
   }
 
   Future<Thred> init(Function call, [bool? asyn]) async {
@@ -62,7 +62,7 @@ class Thred {
     // d((sendPort));
     // d(isnull(sendPort));
     if (isnull(sendPort)) {
-      sendPort.send(message);
+      sendPort!.send(message);
     }
   }
 

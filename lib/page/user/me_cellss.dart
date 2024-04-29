@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ng169/model/base.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/global.dart';
 
 class MeCellss extends LoginBase {
   final VoidCallback onPressed;

@@ -15,14 +15,13 @@ import 'package:ng169/tool/url.dart';
 class BookBanner extends LoginBase {
   List banners;
   static var novels = {};
-  BuildContext context=Null as BuildContext;
+  late BuildContext context;
   BookBanner(this.banners);
   HashMap tmplist = new HashMap();
-  static String bgimg="";
+  static String bgimg = "";
   // SwiperController sw = SwiperController();
   static double hd = 8;
   void initState() {
-    
     hd = g('swidth') / 25;
     if (isnull(banners)) {
       // banners=banners.reversed;
@@ -53,7 +52,10 @@ class BookBanner extends LoginBase {
     Novel novel = getnovel(info);
     var bneer = ClipRRect(
       borderRadius: BorderRadius.circular(BookBanner.hd),
-      child: NgImage(novel.imgUrl),
+      child: NgImage(
+        novel.imgUrl,
+        placeholder: Container(),
+      ),
     );
     // return bneer;
     return GestureDetector(
@@ -65,7 +67,6 @@ class BookBanner extends LoginBase {
   }
 
   _bannerclick(novel) async {
-    
     gourl(context, NovelDetailScene(novel));
   }
 
@@ -102,6 +103,7 @@ class BookBanner extends LoginBase {
                             child: NgImage(
                               BookBanner.bgimg,
                               width: w,
+                              placeholder: Container(),
                             ))
                         : SizedBox(),
                     //透明遮罩
@@ -130,9 +132,8 @@ class BookBanner extends LoginBase {
                   return banner(banners[index]);
                 },
                 cardsCount: banners.length,
-                duration: Duration(milliseconds :2500),
+                duration: Duration(milliseconds: 2500),
                 isLoop: true,
-                
               ),
               // child: CardSwiper(
               //   itemBuilder: (BuildContext context, int index) {
@@ -184,7 +185,9 @@ class BookBanner extends LoginBase {
         s.add(GestureDetector(
             onTap: () {
               // controller.move(i, animation: false);
-              controller.moveTo(i);
+              // controller.moveTo(i);
+
+              controller.swipe();
             },
             child: Container(
               margin: EdgeInsets.all(size / 2),
@@ -200,7 +203,8 @@ class BookBanner extends LoginBase {
         s.add(GestureDetector(
             onTap: () {
               // controller.move(i, animation: false);
-              controller.moveTo(i);
+              // controller.moveTo(i);
+              controller.swipe();
             },
             child: Container(
               margin: EdgeInsets.all(size / 2),

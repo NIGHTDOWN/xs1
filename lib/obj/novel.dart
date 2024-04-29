@@ -16,39 +16,39 @@ import 'package:ng169/tool/url.dart';
 import 'chapter.dart';
 
 class Novel {
-  String id="0";
-  String dbid="0";
-  String name="";
-  String imgUrl="";
-  int firstChapter=0;
-  int readChapter =0;
-  int lastChapter =0;
-  String lastChaptertitle="";
-  String lastChapterid="0";
-  String isgroom="0";
-  String author="";
-  double price=0;
+  String id = "0";
+  String dbid = "0";
+  String name = "";
+  String imgUrl = "";
+  int firstChapter = 0;
+  int readChapter = 0;
+  int lastChapter = 0;
+  String lastChaptertitle = "";
+  String lastChapterid = "0";
+  String isgroom = "0";
+  String author = "";
+  double price = 0;
   double score = 5.0;
-  String type="0";
-  String introduction="";
-  int chapterCount=0;
-  int recommendCount=0;
-  int commentCount=0;
-  int firstArticleId=0;
-  String lastsecnum="0"; //上次加入书架最新章节数量
-  String nowsecnum="0"; //本次获取远程书籍最新章节数量
+  String type = "0";
+  String introduction = "";
+  int chapterCount = 0;
+  int recommendCount = 0;
+  int commentCount = 0;
+  int firstArticleId = 0;
+  String lastsecnum = "0"; //上次加入书架最新章节数量
+  String nowsecnum = "0"; //本次获取远程书籍最新章节数量
   int upsecnum = 0; //书架页面显示更新的章节数量
-  List<String> roles=[];
-  String status="0";
-  int _status=0;
-  String desc="";
-  double wordCount=0;
-  List<String> tags=[];
-  bool isLimitedFree=false;
-  String uid="0";
-  Map comment={};
-  List catelog=[]; //目录
-  String isdownload="0";
+  List<String> roles = [];
+  String status = "0";
+  int _status = 0;
+  String desc = "";
+  double wordCount = 0;
+  List<String> tags = [];
+  bool isLimitedFree = false;
+  String uid = "0";
+  Map comment = {};
+  List catelog = []; //目录
+  String isdownload = "0";
   String downrate = '0';
 
   setcomment(Map comments) {
@@ -241,8 +241,8 @@ class Novel {
         ? double.parse(data['replynum'].toString())
         : 5.0;
     // type = data['class_name'];
-    lastChaptertitle = data['new_section_title'];
-    lastChapterid = data['new_section_id'];
+    lastChaptertitle = data['new_section_title'] ?? "";
+    lastChapterid = data['new_section_id'] ?? "";
     introduction = data['desc'];
     if (isnull(data, 'update_section')) {
       chapterCount = int.parse(data['update_section'] ?? 0);
@@ -343,7 +343,7 @@ class Novel {
       name = '' + data['bookname'].toString();
 
       imgUrl = data['pic'];
-      desc = data['desc'];
+      desc = data['desc'] ?? "";
       type = data['type'].toString();
       isgroom = data['isgroom'].toString();
       readChapter = isnull(data['readsec']) ? int.parse(data['readsec']) : 0;
@@ -491,7 +491,7 @@ class Novel {
     Rackmodel().rackrf();
   }
 
-  read(context, [int readChapter=0]) async {
+  read(context, [int readChapter = 0]) async {
     Rackmodel()..upreadtime(this);
     if (type == '1') {
       await gourl(context, ReaderScene(this, readChapter));

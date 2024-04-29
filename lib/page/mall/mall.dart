@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:ng169/page/home/book_banner.dart';
 import 'package:ng169/page/home/home_banner.dart';
@@ -26,12 +28,12 @@ class Mall extends StatefulWidget {
 }
 
 class MallState extends State<Mall> {
-  late List banner,
-      newbook,
-      newcart,
-      hotbook,
+  late List banner = [],
+      newbook = [],
+      newcart = [],
+      hotbook = [],
       mallcache = [null, null, null, null, null],
-      randdata;
+      randdata = [];
   List<Widget> more = [SizedBox()];
   var index = 'mallload';
   var cachedata = 'mallload_data', page = 1;
@@ -44,7 +46,7 @@ class MallState extends State<Mall> {
   var newCartoonsapi = 'cartoon/hot_cartoon';
   var randapi = 'book/get_randList';
   Future gethttpdate(String api) async {
-    var jbanner = await http(api, Null as Map<String, dynamic>, gethead());
+    var jbanner = await http(api, {}, gethead());
     var data = getdata(context, jbanner);
     if (isnull(data)) {
       return data;
@@ -53,21 +55,38 @@ class MallState extends State<Mall> {
   }
 
   mock() {
-    banner = Mock.get('banner') as List;
-    newbook = Mock.get('newbook') as List;
-    randdata = Mock.get('randdata') as List;
+    try {
+      banner = Mock.get('banner');
+      newbook = Mock.get('newbook');
+      randdata = Mock.get('randdata');
+    } catch (e) {}
   }
 
   bool isdart = false;
   Future<void> gethttpdata() async {
-    await Future.wait<dynamic>([
+    // await Future.wait<dynamic>([
+    //   setdata(null, bannerapi, 0),
+    //   setdata(null, newBookapi, 1),
+    //   setdata(null, newCartoonsapi, 2),
+    //   setdata(null, hotbooksapi, 3),
+    //   setdata(null, randapi, 4),
+    // ]);
+    List<Future<void>> futures = [
       setdata(null, bannerapi, 0),
       setdata(null, newBookapi, 1),
       setdata(null, newCartoonsapi, 2),
       setdata(null, hotbooksapi, 3),
       setdata(null, randapi, 4),
-    ]);
+    ];
 
+    try {
+      await Future.wait(futures);
+      // 所有 future 完成之后的代码
+    } catch (e) {
+      // 异常处理
+      d(e);
+    }
+    // await Future.wait(futures);
     mallcache = [banner, newbook, newcart, hotbook, randdata];
 
     setcache(cachedata, mallcache, '-1');
@@ -155,7 +174,7 @@ class MallState extends State<Mall> {
   //加载页面
   //先读缓存
   //在读http数据
-  loadpage() async {
+  Future<void> loadpage() async {
     //20分钟刷新缓存数据重新加载
     var mallcachebool = getcache(index);
 
@@ -167,27 +186,43 @@ class MallState extends State<Mall> {
       mallcache = getcache(cachedata);
       d(mallcache);
       if (isnull(mallcache)) {
-        await Future.wait<dynamic>([
+        // await Future.wait<dynamic>([
+        //   setdata(mallcache, bannerapi, 0),
+        //   setdata(mallcache, newBookapi, 1),
+        //   setdata(mallcache, newCartoonsapi, 2),
+        //   setdata(mallcache, hotbooksapi, 3),
+        //   setdata(mallcache, randapi, 4),
+        // ]);
+
+        List<Future<void>> futures = [
           setdata(mallcache, bannerapi, 0),
           setdata(mallcache, newBookapi, 1),
           setdata(mallcache, newCartoonsapi, 2),
           setdata(mallcache, hotbooksapi, 3),
           setdata(mallcache, randapi, 4),
-        ]);
+        ];
+
+        try {
+          await Future.wait(futures);
+          // 所有 future 完成之后的代码
+        } catch (e) {
+          // 异常处理
+          d(e);
+        }
       } else {
         setcache(index, 0, '0');
       }
     }
   }
 
-  setdata(cache, String api, int cacheid) async {
+  setdata<T>(cache, String api, int cacheid) async {
     // if (!isnull(cache)) return false;
 
     if (isnull(cache, cacheid)) {
-      setval(cacheid, cache[cacheid]);
+      setval(cacheid, cache![cacheid]);
     } else {
       var tmp = await gethttpdate(api);
-
+      d(tmp);
       if (isnull(tmp)) {
         setval(cacheid, tmp);
         if (mallcache == null) {
@@ -253,7 +288,9 @@ class MallState extends State<Mall> {
 
             isnull(banner)
                 ? HomeBanner(banner)
-                : isnull(randdata) ? BookBanner(randdata) : SizedBox(),
+                : isnull(randdata)
+                    ? BookBanner(randdata)
+                    : SizedBox(),
             //菜单
             HomeMenu(),
             isnull(randdata)
@@ -394,7 +431,7 @@ class MallState extends State<Mall> {
   }
 
   Widget bookCardWithInfo(int style, String title, List json) {
-    Widget card=new SizedBox();
+    Widget card = new SizedBox();
     switch (style) {
       case 1:
         card = NovelFourGridView(title, json);

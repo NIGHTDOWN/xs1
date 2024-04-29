@@ -1,7 +1,5 @@
 import 'dart:async';
 
-
-
 // import 'package:intent/intent.dart' as inters;
 // import 'package:intent/action.dart' as intersaction;
 
@@ -14,30 +12,43 @@ import 'package:receive_intent/receive_intent.dart';
 
 import 'function.dart';
 
-
 class ListenClip {
-  factory ListenClip() => _getInstance();
-  static ListenClip get instance => _getInstance();
-  static ListenClip _instance=Null as ListenClip;
+//   static _ListenClip? _instance = null;
+//   ListenClip() {
+//     if (isnull(_instance)) {
+//       _instance = _ListenClip();
+//     }
+//   }
+//   start(var b) {
+//     _instance!.start(b);
+//   }
+
+//   end() {
+//     _instance!.end();
+//   }
+
+//   getClipboardContents() {
+//     _instance!.getClipboardContents();
+//   }
+// }
+  static ListenClip? _instance = null;
+  ListenClip() {}
+// class _ListenClip {
+  // 声明一个静态的 late 变量
+
   bool flag = false;
   int seconds = 0;
-  ListenClip._internal() {
-    // 初始化
-  }
-  static ListenClip _getInstance() {
-    if (_instance == null) {
-      _instance = new ListenClip._internal();
-    }
-    return _instance;
-  }
 
-  static start(var b) {
+  // 私有构造函数
+
+  start(var b) {
     Timer.periodic(Duration(seconds: 30), (timer) {
-      if (ListenClip().flag) {
+      if (flag) {
         timer.cancel(); // 取消重复计时
         return;
       }
-      ListenClip().getClipboardContents();
+      ListenClip.getClipboardContents();
+      // getClipboardContents();
       // d('剪切板' + ListenClip().seconds.toString());
       // if (g('gstat') != AppLifecycleState.paused) {
       //   ListenClip().seconds++; // 秒数+1
@@ -51,7 +62,7 @@ class ListenClip {
   }
 
   /// 使用异步调用获取系统剪贴板的返回值。
-  getClipboardContents() async {
+  static getClipboardContents() async {
     // 访问剪贴板的内容。
     var user = User.get();
     if (!isnull(user)) {
@@ -61,12 +72,12 @@ class ListenClip {
 
     if (isnull(user, 'invite_id')) {
       //用户已经绑定
-      end();
+      _instance!.end();
       return false;
-        
     }
 
-    ClipboardData? clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
+    ClipboardData? clipboardData =
+        await Clipboard.getData(Clipboard.kTextPlain);
     // 剪贴板不为空时。
     if (clipboardData != null && clipboardData.text!.trim() != '') {
       String _name = clipboardData.text!.trim();
@@ -85,15 +96,15 @@ class ListenClip {
         }
         if (!isnull(getid)) {
           //参数获取失败
-          clear();
+          _instance!.clear();
           return false;
         }
         if (User.getuid().toString() == getid) {
           //id跟自己相同
-          clear();
+          _instance!.clear();
           return false;
         }
-        clear();
+        _instance!.clear();
         User.bindinvite(getid!);
         //绑定用户id
         // ListenClip().open();
@@ -123,10 +134,12 @@ class ListenClip {
   clear() {
     Clipboard.setData(new ClipboardData(text: ''));
   }
+
 // ignore: unused_field
-late StreamSubscription _intentSub;
+  late StreamSubscription _intentSub;
   open() async {
-    await ReceiveIntent.setResult(kActivityResultOk, data: {"scheme": "lookstory", "host": 'com.ng.story', "path": "456"});
+    await ReceiveIntent.setResult(kActivityResultOk,
+        data: {"scheme": "lookstory", "host": 'com.ng.story', "path": "456"});
     // inters.Intent()
     //   ..setAction(intersaction.Action.ACTION_VIEW)
     //   ..setData(Uri(scheme: "lookstory", host: 'com.ng.story', path: "456"))
@@ -155,14 +168,6 @@ late StreamSubscription _intentSub;
     //   // });
     //   ReceiveSharingIntent.reset();
     // });
-
-
-
-
-
-
-
-
   }
   //检测到了数据之后，
   //持续等待到本次完成，

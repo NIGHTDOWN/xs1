@@ -16,12 +16,12 @@ import 'global.dart';
 // 	update,
 // 	insert,
 class T {
-  Db obj=Null as Db;
-  String table="";
+  late Db obj;
+  String table = "";
   String _field = '*',
       _order = '',
       _limit = '',
-      
+
       // ignore: unused_field
       _sql = '',
       _where = '',
@@ -39,8 +39,8 @@ class T {
     obj = g('db');
     table = tablename;
   }
-  field(String field) {
-     // ignore: unnecessary_null_comparison
+  field(String? field) {
+    // ignore: unnecessary_null_comparison
     if (null != field) {
     } else {
       field = '*';
@@ -55,7 +55,7 @@ class T {
       key += ' and `' + var1 + '`=\'' + where[var1].toString() + '\'';
     }
     var k = key.substring(4);
-     // ignore: unnecessary_null_comparison
+    // ignore: unnecessary_null_comparison
     if (null != k) {
       if (isnull(this._where)) {
         this._where = this._where + ' AND ' + k;
@@ -88,7 +88,7 @@ class T {
   }
 
   order(String $order) {
-     // ignore: unnecessary_null_comparison
+    // ignore: unnecessary_null_comparison
     if (null != $order) {
       $order = " ORDER BY " + $order;
     }
@@ -97,7 +97,7 @@ class T {
   }
 
   limit(String $limit) {
-     // ignore: unnecessary_null_comparison
+    // ignore: unnecessary_null_comparison
     if (null != $limit) {
       $limit = " limit " + $limit;
     }
@@ -186,7 +186,7 @@ class T {
     _where = '';
     _order = '';
     _limit = '';
-    this.field(Null as String);
+    this.field(null);
     _reset();
     return await obj.getone(_sql);
   }
@@ -210,7 +210,7 @@ class T {
     _where = '';
     _order = '';
     _limit = '';
-    this.field(Null as String);
+    this.field(null);
     _reset();
     return await obj.getall(_sql);
   }
@@ -233,7 +233,7 @@ class T {
     _where = '';
     _order = '';
     _limit = '';
-    this.field(Null as String);
+    this.field(null);
     _reset();
     return await obj.getcount(_sql);
   }

@@ -36,11 +36,11 @@ class NovelCommentCell extends StatelessWidget {
     //   head = AssetImage('assets/images/placeholder_avatar.png');
     // });
     if (isnull(comment.avatar)) {
-      head = CachedNetworkImageProvider(comment.avatar, errorListener: () {
+      head = CachedNetworkImageProvider(comment.avatar, errorListener: (data) {
         head = AssetImage('assets/images/placeholder_avatar.png');
       });
     }
-    
+
     return Container(
       padding: EdgeInsets.all(15),
       child: Column(
@@ -78,7 +78,6 @@ class NovelCommentCell extends StatelessWidget {
                         maxRating: 10,
                         count: 5,
                       ),
-                    
                     ]),
               )
             ],

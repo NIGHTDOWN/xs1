@@ -9,7 +9,6 @@ import 'package:ng169/page/reader/reader_scene.dart';
 import 'package:ng169/page/reader/reader_set.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
-import 'package:ng169/tool/url.dart';
 import 'reader_menu.dart';
 
 typedef setCallback = dynamic Function(int articleId, PageJumpType jumpType);

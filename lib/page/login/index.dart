@@ -124,7 +124,7 @@ class _Index extends State<Index> {
             // disabledTextColor:
             //     _currentPage == 0 ? SQColor.darkGray : SQColor.white,
             style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                foregroundColor: WidgetStateProperty.resolveWith((states) {
               if (_currentPage == 0) {
                 return SQColor.darkGray;
               }
@@ -164,7 +164,7 @@ class _Index extends State<Index> {
                   //   borderRadius: _borderRadius,
                   // ),
                   style: ButtonStyle(foregroundColor:
-                      MaterialStateProperty.resolveWith((states) {
+                      WidgetStateProperty.resolveWith((states) {
                     if (_currentPage == 1) {
                       return SQColor.darkGray;
                     }

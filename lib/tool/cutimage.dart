@@ -1,9 +1,10 @@
 import 'dart:io';
 
 
+import 'package:crop_your_image/crop_your_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import 'package:image_crop/image_crop.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 
@@ -27,11 +28,22 @@ class _CropImageRouteState extends State<CutImage> {
   late double imageScale = 1; //图片缩放比例
   late Image imageView;
 
-  final cropKey = GlobalKey<CropState>();
+  late Uint8List img;
+  final _controller = CropController();
+  // final cropKey = GlobalKey<CropState>();
   @override
   void initState() {
-
     super.initState();
+    loadimng();
+  }
+
+  Future<Uint8List> _load(String assetName) async {
+    final assetData = await rootBundle.load(assetName);
+    return assetData.buffer.asUint8List();
+  }
+
+  loadimng() async {
+    img = await _load(widget.image.path);
   }
 
   @override
@@ -48,13 +60,19 @@ class _CropImageRouteState extends State<CutImage> {
             Container(
               width: Screen.width,
               height: Screen.height - kToolbarHeight - Screen.topSafeHeight,
-              child: Crop.file(
-                widget.image,
-                key: cropKey,
-                aspectRatio: 1.0,
-                //aspectRatio: 0.3 / 0.3,
-                alwaysShowGrid: true,
-              ),
+              // child: Crop.file(
+              //   widget.image,
+              //   key: cropKey,
+              //   aspectRatio: 1.0,
+              //   //aspectRatio: 0.3 / 0.3,
+              //   alwaysShowGrid: true,
+              // ),
+              child: Crop(
+                  image: img,
+                  controller: _controller,
+                  onCropped: (image) {
+                    // do something with cropped image data
+                  }),
             ),
           ])),
           buildNavigationBar(),
@@ -77,9 +95,9 @@ class _CropImageRouteState extends State<CutImage> {
     return Stack(
       children: <Widget>[
         Container(
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             color: SQColor.white,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(color: Color(0xdddddddd), offset: Offset(1.0, 1.0)),
             ],
           ),
@@ -90,6 +108,8 @@ class _CropImageRouteState extends State<CutImage> {
             children: <Widget>[
               //SizedBox(width: 103),
               GestureDetector(
+                onTap: close,
+                // ignore: sized_box_for_whitespace
                 child: Container(
                     height: kToolbarHeight,
                     width: 44,
@@ -97,7 +117,6 @@ class _CropImageRouteState extends State<CutImage> {
                       Icons.arrow_back,
                       color: SQColor.darkGray,
                     )),
-                onTap: close,
               ),
 
               Expanded(
@@ -125,11 +144,12 @@ class _CropImageRouteState extends State<CutImage> {
                     ),
                   )),
                   onTap: () {
-                    _crop(widget.image);
+                    // _crop(widget.image);
+                    _controller.crop();
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
             ],
@@ -140,27 +160,27 @@ class _CropImageRouteState extends State<CutImage> {
   }
 
   Future<void> _crop(File originalFile) async {
-    final crop = cropKey.currentState;
+    // final crop = cropKey.currentState;
     // final scale = crop.scale;
-    final area = crop?.area;
+    // final area = crop?.area;
 
-    if (area == null) {
-      //裁剪结果为空
-      d('裁剪不成功');
-    }
-    final permissionsGranted = await ImageCrop.requestPermissions();
+    // if (area == null) {
+    //   //裁剪结果为空
+    //   d('裁剪不成功');
+    // }
+    // final permissionsGranted = await ImageCrop.requestPermissions();
 
-    if (permissionsGranted) {
-      final croppedFile = await ImageCrop.cropImage(
-        file: originalFile,
-        area: crop!.area!,
-        scale: 0.1,
-      );
+    // if (permissionsGranted) {
+    //   final croppedFile = await ImageCrop.cropImage(
+    //     file: originalFile,
+    //     area: crop!.area!,
+    //     scale: 0.1,
+    //   );
 
-      close(croppedFile);
-    } else {
-      close(originalFile);
-    }
+    //   close(croppedFile);
+    // } else {
+    //   close(originalFile);
+    // }
 
     // await ImageCrop.requestPermissions().then((value) {
     //   if (value) {

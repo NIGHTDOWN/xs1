@@ -21,9 +21,9 @@ Future<String?> http(String url,
   //设置代理
   dio.options.baseUrl = apiurl;
   //设置连接超时时间
-  dio.options.connectTimeout = 10000;
+  dio.options.connectTimeout = Duration(seconds: 10);
   //设置数据接收超时时间
-  dio.options.receiveTimeout = 10000;
+  dio.options.receiveTimeout = Duration(seconds: 10);
   var index = url.hashCode;
   if (isnull(reqlockmiao)) {
     //配置了避免重复请求
@@ -93,7 +93,7 @@ Future<String> httpnodeal(String url,
     [Map<String, dynamic>? datas, Map<String, dynamic>? header]) async {
   Dio dio = Dio();
   dio.options.baseUrl = apiurl;
-  dio.options.receiveTimeout = 0;
+  dio.options.receiveTimeout = Duration(seconds: 1);
   // dio.options.connectTimeout = 1;
   // dio.options.receiveTimeout = 1;
   if (null != header) {
@@ -163,9 +163,9 @@ Future<String> httpfile(String url,
 
   dio.options.baseUrl = apiurl;
   //设置连接超时时间
-  dio.options.connectTimeout = 10000;
+  dio.options.connectTimeout = Duration(seconds: 10);
   //设置数据接收超时时间
-  dio.options.receiveTimeout = 10000;
+  dio.options.receiveTimeout = Duration(seconds: 10);
   // dio.options.headers[HttpHeaders.authorizationHeader] = '1233';
   // dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -187,7 +187,7 @@ Future<String> httpfile(String url,
       d(responseData);
       return responseData;
     }
-  } on DioError catch (e) {
+  } on DioException catch (e) {
     d("请求失败: $e");
   }
 

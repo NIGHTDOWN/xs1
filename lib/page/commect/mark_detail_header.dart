@@ -17,7 +17,7 @@ class MarkDetailHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = Screen.width;
-    var height = 218.0-54 + Screen.topSafeHeight;
+    var height = 218.0 - 54 + Screen.topSafeHeight;
     return Container(
       width: width,
       height: height,
@@ -28,6 +28,7 @@ class MarkDetailHeader extends StatelessWidget {
             fit: BoxFit.fitWidth,
             width: width,
             height: height,
+            placeholder: Container(),
           ),
           Container(color: Color(0xbb000000), width: width, height: height),
           BackdropFilter(
@@ -87,12 +88,17 @@ class MarkDetailHeader extends StatelessWidget {
     }
     return Container(
       width: width,
-      padding: EdgeInsets.fromLTRB(15,  Screen.topSafeHeight, 10, 0),
+      padding: EdgeInsets.fromLTRB(15, Screen.topSafeHeight, 10, 0),
       color: Colors.transparent,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          NgImage(novel.imgUrl, width: 100, height: 133),
+          NgImage(
+            novel.imgUrl,
+            width: 100,
+            height: 133,
+            placeholder: Container(),
+          ),
           SizedBox(width: 15),
           Flexible(
             child: Column(

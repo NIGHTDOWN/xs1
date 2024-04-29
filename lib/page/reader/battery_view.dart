@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:battery/battery.dart';
-import 'package:device_info/device_info.dart';
-import 'dart:io';
 
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';

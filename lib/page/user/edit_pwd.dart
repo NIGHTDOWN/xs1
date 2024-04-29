@@ -1,17 +1,12 @@
-import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/page/login/index.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
-import 'package:ng169/tool/cutimage.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/http.dart';
-import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 

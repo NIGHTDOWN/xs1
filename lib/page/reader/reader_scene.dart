@@ -51,19 +51,19 @@ class ReaderSceneState extends State<ReaderScene>
   GlobalKey _readkey = new GlobalKey();
   double topSafeHeight = 0;
 
-  late Article preArticle;
-late Article currentArticle;
-late Article nextArticle;
-late Widget bar;
+  late Article? preArticle;
+  late Article currentArticle;
+  late Article? nextArticle;
+  late Widget bar;
   List<Chapter> chapters = [];
   List chaptersResponse = [];
   Widget kongbai = SizedBox();
- late String fx;
+  late String fx;
   bool showload = true;
   final loadkey = GlobalKey<LoadboxState>();
- late CustomPainter mPainter;
+  late CustomPainter mPainter;
   GlobalKey canvasKey = new GlobalKey();
- late AnimationController percentageAnimationController;
+  late AnimationController percentageAnimationController;
   Widget btter = SizedBox();
   var page;
   @override
@@ -113,7 +113,7 @@ late Widget bar;
 
     if (pageIndex >= currentArticle.pageCount - 1 &&
         currentArticle.nextArticleId == 0 &&
-        pageController.page !> 1.4) {
+        pageController.page! > 1.4) {
       // pageIndex = currentArticle.pageCount - 1;
       golast();
       // show(context, lang('已经是最后一页了'));
@@ -187,7 +187,8 @@ late Widget bar;
     await resetContent(tmparticleId, PageJumpType.stay);
     //初始化指针
     //大于的时候是改变字体的时候，需要把页面大小重新调整
-    pageIndex = (isnull(getpoint(tmparticleId)) ? (getpoint(tmparticleId)) : 0)!;
+    pageIndex =
+        (isnull(getpoint(tmparticleId)) ? (getpoint(tmparticleId)) : 0)!;
 
     if (pageIndex > currentArticle.pageCount - 1) {
       pageIndex = currentArticle.pageCount - 1;
@@ -243,7 +244,7 @@ late Widget bar;
         reflash();
       });
     } else {
-      preArticle = Null as Article;
+      preArticle = null;
     }
 
     if (currentArticle.nextArticleId > 0) {
@@ -253,7 +254,7 @@ late Widget bar;
         reflash();
       });
     } else {
-      nextArticle = Null as Article;
+      nextArticle = null;
     }
     if (jumpType == PageJumpType.firstPage) {
       //跳首页
@@ -273,7 +274,7 @@ late Widget bar;
     }
     isLoading = true;
     preArticle = (await fetchArticle(articleId))!;
-    pageController.jumpToPage(preArticle.pageCount + pageIndex);
+    pageController.jumpToPage(preArticle!.pageCount + pageIndex);
     isLoading = false;
     reflash();
   }
@@ -399,7 +400,7 @@ late Widget bar;
                             // color: const Color(0xFFe0e0e0),
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.resolveWith((states) {
+                                  WidgetStateProperty.resolveWith((states) {
                                 return Color(0xFFe0e0e0);
                               }),
                               // foregroundColor: MaterialStateProperty.resolveWith((states) {
@@ -431,7 +432,7 @@ late Widget bar;
                             },
                             // color: SQColor.primary,
                             style: ButtonStyle(backgroundColor:
-                                MaterialStateProperty.resolveWith((states) {
+                                WidgetStateProperty.resolveWith((states) {
                               return SQColor.primary;
                             })),
                             child: new Text(
@@ -464,7 +465,7 @@ late Widget bar;
                   pop(context);
                 }
               }
-              return Future.value(false);  
+              return Future.value(false);
             },
             child: Stack(
               children: children2,
@@ -564,7 +565,7 @@ late Widget bar;
       reflash();
     }
     if (index > currentArticle.pageCount - 1) {
-      currentArticle = nextArticle;
+      currentArticle = nextArticle!;
       reflash();
       if (isnull(currentArticle)) {
         resetContent(currentArticle.id, PageJumpType.firstPage);
@@ -572,7 +573,7 @@ late Widget bar;
       // pageIndex=0;
     }
     if (index < 0) {
-      currentArticle = preArticle;
+      currentArticle = preArticle!;
       reflash();
       if (isnull(currentArticle)) {
         resetContent(currentArticle.id, PageJumpType.lastPage);
@@ -607,9 +608,9 @@ late Widget bar;
       if (isnull(preArticle)) {
         return ReaderView(
             novel: widget.novel,
-            article: preArticle,
+            article: preArticle!,
             battery: btter,
-            page: preArticle.pageCount - 1,
+            page: preArticle!.pageCount - 1,
             topSafeHeight: topSafeHeight);
       } else {
         return kongbai;
@@ -634,7 +635,7 @@ late Widget bar;
       if (isnull(nextArticle)) {
         return ReaderView(
             novel: widget.novel,
-            article: nextArticle,
+            article: nextArticle!,
             battery: btter,
             page: 0,
             topSafeHeight: topSafeHeight);

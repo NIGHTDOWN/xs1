@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ng169/page/app.dart';
 
-import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/lang.dart';
 
@@ -21,43 +20,46 @@ Future main() async {
 
   // runApp(new MyApp());
   i().then((data) {
-    //加载缓存
-    //加载sql
+    // 加载缓存
+    // 加载sql
 
-    runApp(new MyApp());
+    Widget w = MyApp();
+    runApp(w);
   });
 }
 
 checkpower() async {
   await Power.requestPermissions();
+  // await i();
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Widget app=new SizedBox();
+    Widget app = new SizedBox();
     s('context', context);
 
-    try {
-      app = new MaterialApp(
-        debugShowCheckedModeBanner: isdebug, //关闭debug标志
-        title: lang('LookStory'),
-        theme: new ThemeData(
-          // primarySwatch: indextheme.Theme.loginGradientStart,
-          // primarySwatch: Colors.black,
-          primaryColor: indextheme.Theme.appbar,
-        ),
-        home: new App(),
-        // localeResolutionCallback: (deviceLocale, supportedLocales) {
-        //  d('deviceLocale: $deviceLocale');
+    // try {
+    app = new MaterialApp(
+      debugShowCheckedModeBanner: isdebug, //关闭debug标志
+      title: lang('Love-Novel'),
+      theme: new ThemeData(
+        // primarySwatch: indextheme.Theme.loginGradientStart,
+        // primarySwatch: Colors.black,
+        primaryColor: indextheme.Theme.appbar,
+      ),
+      home: new App(),
+      // localeResolutionCallback: (deviceLocale, supportedLocales) {
+      //  d('deviceLocale: $deviceLocale');
 
-        //   s('locallg', deviceLocale);
-        // },
-        // home: new StartPage()
-      );
-    } catch (e) {
-      d(e);
-    }
+      //   s('locallg', deviceLocale);
+      // },
+      // home: new StartPage()
+    );
+    // } catch (e) {
+    //   d(e);
+    // }
     return app;
   }
 }

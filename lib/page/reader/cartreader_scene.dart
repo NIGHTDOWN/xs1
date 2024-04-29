@@ -18,7 +18,6 @@ import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/jsq.dart';
 import 'package:ng169/tool/lang.dart';
 
-
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
@@ -47,9 +46,9 @@ class CartReaderSceneState extends State<CartReaderScene>
 
   double topSafeHeight = 0;
 
- late Article preArticle;
- late Article currentArticle;
-  late Article nextArticle;
+  late Article? preArticle;
+  late Article? currentArticle;
+  late Article? nextArticle;
 
   List<Chapter> chapters = [];
   List chaptersResponse = [];
@@ -61,7 +60,9 @@ class CartReaderSceneState extends State<CartReaderScene>
     super.initState();
     sysinit();
     kongbai = FrameAnimationImage(
-      interval: 100, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
+      interval: 100,
+      imageList: [],
+      bgcolor: Color.fromARGB(0, 0, 0, 0),
     );
 
     chaptersResponse = Chapter.get(context, this.widget.novel);
@@ -72,15 +73,15 @@ class CartReaderSceneState extends State<CartReaderScene>
   getnowpage(PageController pageController) {
     double index = pageController.position.pixels /
         pageController.position.maxScrollExtent *
-        currentArticle.pageCount;
+        currentArticle!.pageCount;
     if (index.toString() == 'NaN') {
       return;
     }
     if (index <= 1.0) {
       index = 1.0;
     }
-    if (index >= currentArticle.pageCount) {
-      index = currentArticle.pageCount.toDouble();
+    if (index >= currentArticle!.pageCount) {
+      index = currentArticle!.pageCount.toDouble();
     }
     pageIndex = int.parse(index.toStringAsFixed(0));
     setpoint(currentArticle);
@@ -108,18 +109,18 @@ class CartReaderSceneState extends State<CartReaderScene>
     if (pageController.page! > 1.0) {}
   }
 
-  Future<Article> next() async {
-    if (isnull(currentArticle.nextArticleId)) {
-      await resetContent(currentArticle.nextArticleId, PageJumpType.firstPage);
+  Future<Article?> next() async {
+    if (isnull(currentArticle!.nextArticleId)) {
+      await resetContent(currentArticle!.nextArticleId, PageJumpType.firstPage);
     }
-    return  Null as Article  ;
+    return null;
   }
 
-  Future<Article> pre() async {
-    if (isnull(currentArticle.preArticleId)) {
-      await resetContent(currentArticle.preArticleId, PageJumpType.lastPage);
+  Future<Article?> pre() async {
+    if (isnull(currentArticle!.preArticleId)) {
+      await resetContent(currentArticle!.preArticleId, PageJumpType.lastPage);
     }
-    return  Null as Article  ;
+    return null;
   }
 
   @override
@@ -231,26 +232,26 @@ class CartReaderSceneState extends State<CartReaderScene>
     } else if (jumpType == PageJumpType.lastPage) {
       //跳最后一页
 
-      pageIndex = currentArticle.pageCount - 1;
+      pageIndex = currentArticle!.pageCount - 1;
     }
-    if (currentArticle.preArticleId > 0) {
+    if (currentArticle!.preArticleId > 0) {
       //预加载上一章
-      fetchArticle(currentArticle.preArticleId).then((onValue) {
+      fetchArticle(currentArticle!.preArticleId).then((onValue) {
         preArticle = onValue!;
         reflash();
       });
     } else {
-      preArticle = Null as Article  ;
+      preArticle = null;
     }
 
-    if (currentArticle.nextArticleId > 0) {
+    if (currentArticle!.nextArticleId > 0) {
       //预加载下一章
-      fetchArticle(currentArticle.nextArticleId).then((onValuen) {
+      fetchArticle(currentArticle!.nextArticleId).then((onValuen) {
         nextArticle = onValuen!;
         reflash();
       });
     } else {
-      nextArticle =  Null as Article  ;
+      nextArticle = null;
     }
 
     // islock = false;
@@ -332,7 +333,9 @@ class CartReaderSceneState extends State<CartReaderScene>
       width: getScreenWidth(context),
       height: getScreenHeight(context),
       picwidth: 100,
-      interval: 100, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
+      interval: 100,
+      imageList: [],
+      bgcolor: Color.fromARGB(0, 0, 0, 0),
     );
   }
 
@@ -345,7 +348,7 @@ class CartReaderSceneState extends State<CartReaderScene>
     var children2 = <Widget>[
       buildPageView(),
       topinfo(),
-      ReaderBar(widget.novel, chaptersResponse, currentArticle, reflash,
+      ReaderBar(widget.novel, chaptersResponse, currentArticle!, reflash,
           resetContent),
       !isnull(getcache('carshowtips', false)) ? Readertipscar() : Container(),
     ];
@@ -393,7 +396,7 @@ class CartReaderSceneState extends State<CartReaderScene>
                             },
                             // color: const Color(0xFFe0e0e0),
                             style: ButtonStyle(backgroundColor:
-                                MaterialStateProperty.resolveWith((states) {
+                                WidgetStateProperty.resolveWith((states) {
                               return Color(0xFFe0e0e0);
                             })),
                             child: new Text(
@@ -416,7 +419,7 @@ class CartReaderSceneState extends State<CartReaderScene>
                               pop(context);
                             },
                             style: ButtonStyle(backgroundColor:
-                                MaterialStateProperty.resolveWith((states) {
+                                WidgetStateProperty.resolveWith((states) {
                               return SQColor.primary;
                             })),
                             child: new Text(
@@ -446,7 +449,7 @@ class CartReaderSceneState extends State<CartReaderScene>
                   pop(context);
                 }
               }
-              return Future.value(false);  
+              return Future.value(false);
             },
             child: Stack(
               children: children2,
@@ -477,11 +480,11 @@ class CartReaderSceneState extends State<CartReaderScene>
               Expanded(child: Container()),
               Text(
                   // '${widget.page + 1}/' + widget.article.pageCount.toString(),
-                  currentArticle.title,
+                  currentArticle!.title,
                   style: TextStyle(fontSize: fixedFontSize(11), color: color)),
               //分页
               Expanded(child: Container()),
-              Text('${pageIndex}/' + currentArticle.pageCount.toString(),
+              Text('${pageIndex}/' + currentArticle!.pageCount.toString(),
                   style: TextStyle(fontSize: fixedFontSize(11), color: color)),
               SizedBox(
                 width: 3,
@@ -549,7 +552,7 @@ class CartReaderSceneState extends State<CartReaderScene>
 // d(currentArticle);
     Widget obj = CartoonView(
       novel: widget.novel,
-      article: currentArticle,
+      article: currentArticle!,
       page: pageIndex,
       topSafeHeight: topSafeHeight,
       scroll: onScroll,

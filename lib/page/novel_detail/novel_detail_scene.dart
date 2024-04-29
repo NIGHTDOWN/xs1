@@ -411,9 +411,6 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    if (this.novel == null) {
-      return Scaffold(appBar: AppBar(elevation: 0));
-    }
     if (isnull(g('pl'))) {
       s('pl', 0);
       fetchData();

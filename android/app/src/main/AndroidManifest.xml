@@ -24,10 +24,10 @@
 	additional functionality it is fine to subclass or reimplement
 	FlutterApplication and put your custom class here.
 	-->
-	<application  android:label="LookStory" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true">
+	<application    android:name="androidx.multidex.MultiDexApplication"  android:label="LookStory" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true">
 		<activity android:name=".MainActivity" 
 		
-		android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
+		android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize"  android:exported="true">
 			<!--
 			This keeps the window background of the activity showing
 			until Flutter renders its first frame. It can be removed if

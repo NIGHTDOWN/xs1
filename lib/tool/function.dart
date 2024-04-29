@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:connectivity/connectivity.dart';
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,13 +12,11 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/tool/down.dart';
 import 'package:ng169/tool/toast.dart';
 import 'package:share/share.dart';
-import 'dart:ui' as ui show instantiateImageCodec, Codec,FrameInfo;
-
+import 'dart:ui' as ui show instantiateImageCodec, Codec, FrameInfo;
 
 import 'global.dart';
 import 'http.dart';
 import 'lang.dart';
-
 
 void d(data, [index = 1]) {
   if (!isdebug) {
@@ -258,8 +256,8 @@ hidetitlebar() async {
 
 //显示状态栏
 showtitlebar() {
-  SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 }
 
 /** 复制到剪粘板 */
@@ -379,7 +377,6 @@ bool isnull(dynamic data, [var index]) {
       }
     }
     //d('是Map');
-
   }
   return true;
 }
@@ -549,7 +546,8 @@ Future<String> getUniqueId() async {
 
     // StorageManager.sharedPreferences.setString(StorageManager.KEY_SERIALID, androidDeviceInfo.androidId);
 
-    idfas = androidDeviceInfo.androidId; // unique ID on Android
+    // idfas = androidDeviceInfo.androidId; // unique ID on Android
+    idfas = androidDeviceInfo.serialNumber;
   }
   if (isnull(idfas)) {
     setcache(cache, idfas, '-1');

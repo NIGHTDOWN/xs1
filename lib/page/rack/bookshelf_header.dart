@@ -2,14 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ng169/obj/novel.dart';
-import 'package:ng169/page/reader/reader_scene.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/styles.dart';
-import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/lang.dart';
-import 'package:ng169/tool/url.dart';
 
 import 'bookshelf_cloud_widget.dart';
 
@@ -97,7 +94,12 @@ class _BookshelfHeaderState extends State<BookshelfHeader>
             top: height - bgHeight,
             child: widget.novel.type == '3'
                 ? getbookbg2(width, bgHeight)
-                : NgImage(pic, width: width, height: bgHeight),
+                : NgImage(
+                    pic,
+                    width: width,
+                    height: bgHeight,
+                    placeholder: Container(),
+                  ),
             //  Image.asset(
 
             //    'assets/images/bookshelf_bg.png',
@@ -145,7 +147,12 @@ class _BookshelfHeaderState extends State<BookshelfHeader>
             DecoratedBox(
               child: widget.novel.type == '3'
                   ? getbookbg2(120, 160)
-                  : NgImage(novel.imgUrl, width: 120, height: 160),
+                  : NgImage(
+                      novel.imgUrl,
+                      width: 120,
+                      height: 160,
+                      placeholder: Container(),
+                    ),
               decoration: BoxDecoration(boxShadow: Styles.borderShadow),
             ),
             SizedBox(width: 20),

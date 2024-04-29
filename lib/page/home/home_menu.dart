@@ -42,7 +42,7 @@ class HomeMenu extends StatelessWidget {
       "icon": "assets/images/menu_publish.png",
     }
   ];
-  BuildContext context=Null as BuildContext;
+  BuildContext? context;
   HomeMenu();
 
   @override
@@ -76,11 +76,11 @@ class HomeMenu extends StatelessWidget {
         switch (int.parse(info['api'])) {
           case 1:
             //浏览器
-            gourl(context, new Bow(url: info['url'], title: info['title']));
+            gourl(context!, new Bow(url: info['url'], title: info['title']));
             break;
           default:
             gourl(
-                context, new MallPage(api: info['url'], title: info['title']));
+                context!, new MallPage(api: info['url'], title: info['title']));
           //页面
         }
       },

@@ -12,9 +12,9 @@ typedef ACancelCallback = void Function([dynamic data]);
 class AdBridge {
   static MethodChannel _channel = MethodChannel('com.ng.story/adbridge');
 
-  static ASuccessCallback success = Null as ASuccessCallback;
-  static AFailureCallback fail = Null as AFailureCallback;
-  static ACancelCallback cancel = Null as ACancelCallback;
+  static ASuccessCallback? success = null;
+  static AFailureCallback? fail = null;
+  static ACancelCallback? cancel = null;
 
   static Future<dynamic> call(String functions,
       [Map<String, dynamic>? params]) async {
@@ -24,10 +24,9 @@ class AdBridge {
   }
 
   static void callback(
-  {  required ASuccessCallback function_success,
-    required AFailureCallback function_fail,
-    required ACancelCallback function_cancel}
-  ) {
+      {required ASuccessCallback function_success,
+      required AFailureCallback function_fail,
+      required ACancelCallback function_cancel}) {
     if (isnull(function_success)) {
       success = function_success;
     }
@@ -50,19 +49,19 @@ class AdBridge {
         case 'success':
           // ignore: unnecessary_null_comparison
           if (success != null) {
-            success(result);
+            success!(result);
           }
           break;
         case 'fail':
           // ignore: unnecessary_null_comparison
           if (fail != null) {
-            fail(result);
+            fail!(result);
           }
           break;
         case 'cancel':
           // ignore: unnecessary_null_comparison
           if (cancel != null) {
-            cancel(result);
+            cancel!(result);
           }
           break;
         default:

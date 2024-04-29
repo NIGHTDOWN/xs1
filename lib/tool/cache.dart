@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class NgCache {
-  SharedPreferences cache=Null as SharedPreferences;
+  late SharedPreferences cache;
   int outtime = 86400; //有效时间
   NgCache();
   void init() async {
@@ -15,17 +13,17 @@ class NgCache {
   dynamic get(String key) {
     Object? data = cache.get(key);
     //d(data);
-    if (data == null || data is! String) {  
-    return null;  
-  }  
-  
-  // 将 Object 类型的 data 强制转换为 String  
-  String dataString = data;  
-  
-  // 检查 dataString 是否为空字符串  
-  if (dataString.isEmpty) {  
-    return null;  
-  }
+    if (data == null || data is! String) {
+      return null;
+    }
+
+    // 将 Object 类型的 data 强制转换为 String
+    String dataString = data;
+
+    // 检查 dataString 是否为空字符串
+    if (dataString.isEmpty) {
+      return null;
+    }
     var js;
     try {
       js = jsonDecode(data);
@@ -60,7 +58,7 @@ class NgCache {
     }
 
     if (expretime < 0) {
-     // expretime = 0;
+      // expretime = 0;
     } else if (expretime == 0) {
       expretime = int.parse(new DateTime.now()
               .millisecondsSinceEpoch
@@ -76,9 +74,9 @@ class NgCache {
     }
     dynamic data = {'data': val, 'time': expretime};
 
-   await cache.setString(key, jsonEncode(data)).then((bools){
+    await cache.setString(key, jsonEncode(data)).then((bools) {
       //d(data);//这里缓存更新后的回调结果
-     // d(bools);//这里缓存更新后的回调结果
+      // d(bools);//这里缓存更新后的回调结果
     });
   }
 

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ import 'lang.dart';
 import 'notify.dart';
 
 class Down {
-  static StateSetter reflash=Null as StateSetter; //进度条刷新入口
+  static StateSetter? reflash = null; //进度条刷新入口
   static var progress = 0.0;
   static Future<bool> checkpath(String path) async {
     var directory = await new Directory(path).create(recursive: true);
@@ -24,7 +23,10 @@ class Down {
   }
 
   static getfile(String urlPath,
-      [String? savePath, Function? success, Function? fail, Function? load]) async {
+      [String? savePath,
+      Function? success,
+      Function? fail,
+      Function? load]) async {
     if (!isnull(savePath)) {
       savePath = await Down.getFilePath(urlPath);
     }
@@ -53,7 +55,7 @@ class Down {
       } else {
         d('downloadFile success---------${response.data}');
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (isnull(fail)) {
         fail?.call(e);
       } else {
@@ -177,7 +179,7 @@ class Down {
     }, (count, total) {
       //d(Down.reflash);
       Down.progress = count / total;
-      Down.reflash(() {});
+      Down.reflash!(() {});
       //msgbox(context, () {});
     });
   }

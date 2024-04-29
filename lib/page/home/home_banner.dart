@@ -16,7 +16,7 @@ import 'package:ng169/tool/url.dart';
 // ignore: must_be_immutable
 class HomeBanner extends StatelessWidget {
   final List banners;
-  BuildContext context=Null as BuildContext;
+  late BuildContext context;
   HomeBanner(this.banners);
   HashMap tmplist = new HashMap();
   Widget banner(info) {
@@ -24,7 +24,10 @@ class HomeBanner extends StatelessWidget {
         width: Screen.width,
         margin: EdgeInsets.symmetric(horizontal: 5.0),
         child: isnull(info, 'banner_pic')
-            ? NgImage(info['banner_pic'])
+            ? NgImage(
+                info['banner_pic'],
+                placeholder: Container(),
+              )
             : Container());
     return GestureDetector(
       child: bneer,
@@ -42,7 +45,8 @@ class HomeBanner extends StatelessWidget {
           gourl(
               context,
               Bow(
-                url: info['banner_url'], title: '',
+                url: info['banner_url'],
+                title: '',
               ));
         }
         break;
@@ -91,7 +95,8 @@ class HomeBanner extends StatelessWidget {
           gourl(
               context,
               Bow(
-                url: info['banner_url'], title: '',
+                url: info['banner_url'],
+                title: '',
               ));
         }
         break;

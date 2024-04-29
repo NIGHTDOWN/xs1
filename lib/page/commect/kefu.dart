@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 
@@ -77,7 +75,9 @@ class Kefu extends LoginBase {
           ? NgImage(
               user['avater'],
               width: headsize,
-              fit: BoxFit.cover, height: null,
+              fit: BoxFit.cover,
+              height: null,
+              placeholder: Container(),
             )
           : Image.asset(
               'assets/images/placeholder_avatar.png',
@@ -294,7 +294,11 @@ class Kefu extends LoginBase {
           borderRadius: BorderRadius.circular(10),
           child: NgImage(
             msgs.content,
-            fit: BoxFit.cover, width: 0, height: 0, placeholder: SizedBox(), dsl: '',
+            fit: BoxFit.cover,
+            width: 0,
+            height: 0,
+            placeholder: SizedBox(),
+            dsl: '',
           ),
         ),
         decoration: BoxDecoration(

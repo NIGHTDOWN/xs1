@@ -1,5 +1,4 @@
 
-
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
@@ -15,25 +14,26 @@ import 'dart:ui' as ui show instantiateImageCodec, Codec;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-
 import 'function.dart';
 import 'global.dart';
 
 // ignore: must_be_immutable
 class NgImage extends StatelessWidget {
   final String imgUrl;
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final BoxFit fit;
-   Widget placeholder;
+  final Widget placeholder;
   bool localcache = false;
   String dsl;
   NgImage(this.imgUrl,
       {double? width,
       double? height,
       this.fit = BoxFit.cover,
-         Widget? placeholder,
-       this.dsl=""}) : this.placeholder = placeholder!,this.width = width!,this.height = height!;
+      this.dsl = "",
+      required this.placeholder})
+      : this.width = width ?? 0,
+        this.height = height ?? 0;
 
 //   @override
 //   State<StatefulWidget> createState() => NgImageState();
@@ -117,9 +117,11 @@ class NgImage extends StatelessWidget {
             return placeholder;
           }
           return FrameAnimationImage(
-            width: width,
-            height: height,
-            interval: 100, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
+            width: width!,
+            height: height!,
+            interval: 100,
+            imageList: [],
+            bgcolor: Color.fromARGB(0, 0, 0, 0),
           );
         },
         // decoration: BoxDecoration(border: Border.all(color: SQColor.paper)),
@@ -162,11 +164,15 @@ class CachedNetworkImageProvider
     extends ImageProvider<CachedNetworkImageProvider> {
   /// Creates an ImageProvider which loads an image from the [url], using the [scale].
   /// When the image fails to load [errorListener] is called.
-  const CachedNetworkImageProvider(this.url, this.cacheManager, this.errorListener, this.headers,
-      {this.scale = 1.0,  })
-      ;
+  const CachedNetworkImageProvider(
+    this.url,
+    this.cacheManager,
+    this.errorListener,
+    this.headers, {
+    this.scale = 1.0,
+  });
 
-  final BaseCacheManager cacheManager;
+  final BaseCacheManager? cacheManager;
 
   /// Web url of the image to load
   final String url;
@@ -185,7 +191,6 @@ class CachedNetworkImageProvider
       ImageConfiguration configuration) {
     return new SynchronousFuture<CachedNetworkImageProvider>(this);
   }
-
 
   ImageStreamCompleter load(CachedNetworkImageProvider key, decode) {
     return new MultiFrameImageStreamCompleter(

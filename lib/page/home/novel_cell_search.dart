@@ -24,7 +24,12 @@ class NovelsearchCell extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            NgImage(novel.imgUrl, width: 70, height: 93),
+            NgImage(
+              novel.imgUrl,
+              width: 70,
+              height: 93,
+              placeholder: Container(),
+            ),
             SizedBox(width: 15),
             Expanded(
               child: buildRight(),

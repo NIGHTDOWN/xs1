@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/login/index.dart';
-import 'package:ng169/page/reader/reader_scene.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/styles.dart';

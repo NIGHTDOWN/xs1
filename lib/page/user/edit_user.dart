@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/src/cache_managers/base_cache_manager.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
+
 import 'package:ng169/model/user.dart';
 import 'package:ng169/page/user/edit_pwd.dart';
 import 'package:ng169/style/screen.dart';
@@ -246,20 +246,21 @@ class EditUserState extends State<EditUser> {
     }
   }
 
+  // ignore: unused_field
+  DateTime? _selectedDate;
   @override
   Widget build(BuildContext context) {
     //没书的时候显示加号顶部标题栏
-var img;
-if(image != null && image is File){
-  img=FileImage(image);
-}else{
-if(isnull(user) && isnull(user['avater'])){
-img=CachedNetworkImageProvider(user['avater'],Null as BaseCacheManager,(){},{} );
-}else{
-  img=AssetImage('assets/images/placeholder_avatar.png') ;
-}
-
-}
+    var img;
+    if (image != null && image is File) {
+      img = FileImage(image);
+    } else {
+      if (isnull(user) && isnull(user['avater'])) {
+        img = CachedNetworkImageProvider(user['avater'], null, () {}, {});
+      } else {
+        img = AssetImage('assets/images/placeholder_avatar.png');
+      }
+    }
     var head = CircleAvatar(
       radius: 35,
       backgroundColor: SQColor.white,
@@ -292,7 +293,7 @@ img=CachedNetworkImageProvider(user['avater'],Null as BaseCacheManager,(){},{} )
           border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: ( value) {
+      validator: (value) {
         if (value!.isEmpty) {
           //cansubmit = cansubmit && false;
           return lang('昵称不能为空');
@@ -330,7 +331,7 @@ img=CachedNetworkImageProvider(user['avater'],Null as BaseCacheManager,(){},{} )
           border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: ( value) {
+      validator: (value) {
         if (value!.isEmpty) {
           //cansubmit = cansubmit && false;
           // return lang('昵称不能为空');
@@ -379,56 +380,82 @@ img=CachedNetworkImageProvider(user['avater'],Null as BaseCacheManager,(){},{} )
               getrow(lang('性别'), Text(sex), () {
                 selectbox(context, _sex());
               }),
-              getrow(lang('生日'), Text(showborth(borth)), () {
-                // selectbox(context, _sex());
-                String langs = getlang();
-                LocaleType tmp = LocaleType.en;
-                switch (langs) {
-                  case 'vi':
-                    tmp = LocaleType.vi;
-                    break;
-                  case 'id':
-                    tmp = LocaleType.id;
-                    break;
-                  case 'ko':
-                    tmp = LocaleType.ko;
-                    break;
-                  case 'th':
-                    tmp = LocaleType.th;
-                    break;
-                  case 'en':
-                    tmp = LocaleType.en;
-                    break;
-                  default:
-                }
-                DatePicker.showDatePicker(context,
-                    // 是否展示顶部操作按钮
-                    showTitleActions: true,
-                    // 最小时间
-                    // minTime: DateTime(2018, 3, 5),
-                    // 最大时间
-                    maxTime: DateTime.now(),
-                    // change事件
-                    onChanged: (date) {
-                  //print('change $date');
-                },
-                    // 确定事件
-                    onConfirm: (date) {
-                  // print('confirm $date');
-                  borth = date.toString();
-                  user['borth'] = borth;
-                  User.set(user);
-                  post = true;
-                  reflash();
-                },
-                    // 当前时间
-                    currentTime: isnull(user, 'borth')
+              getrow(
+                lang('生日'),
+                Text(showborth(borth)),
+                () {
+                  // selectbox(context, _sex());
+                  String langs = getlang();
+                  showDatePicker(
+                    context: context,
+                    initialDate: isnull(user, 'borth')
                         ? DateTime.parse(user['borth'])
                         : DateTime.now(),
-                    // 语言
-                    // locale: LocaleType.th);
-                    locale: tmp);
-              }),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime.now(),
+                  ).then((date) {
+                    if (date != null) {
+                      setState(() {
+                        _selectedDate = date;
+                        borth = date.toString();
+                        user['borth'] = borth;
+                        User.set(user);
+                        post = true;
+                        reflash();
+                      });
+                    }
+                  });
+                },
+              ),
+              // LocaleType tmp = LocaleType.en;
+              // switch (langs) {
+              //   case 'vi':
+              //     tmp = LocaleType.vi;
+              //     break;
+              //   case 'id':
+              //     tmp = LocaleType.id;
+              //     break;
+              //   case 'ko':
+              //     tmp = LocaleType.ko;
+              //     break;
+              //   case 'th':
+              //     tmp = LocaleType.th;
+              //     break;
+              //   case 'en':
+              //     tmp = LocaleType.en;
+              //     break;
+              //   default:
+              // }
+
+              //   DatePicker.showDatePicker(context,
+              //       // 是否展示顶部操作按钮
+              //       showTitleActions: true,
+              //       // 最小时间
+              //       // minTime: DateTime(2018, 3, 5),
+              //       // 最大时间
+              //       maxTime: DateTime.now(),
+              //       // change事件
+              //       onChanged: (date) {
+              //     //print('change $date');
+              //   },
+              //       // 确定事件
+              //       onConfirm: (date) {
+              //     // print('confirm $date');
+              //     borth = date.toString();
+              //     user['borth'] = borth;
+              //     User.set(user);
+              //     post = true;
+              //     reflash();
+              //   },
+              //       // 当前时间
+              //       currentTime: isnull(user, 'borth')
+              //           ? DateTime.parse(user['borth'])
+              //           : DateTime.now(),
+              //       // 语言
+              //       // locale: LocaleType.th);
+              //       locale: tmp);
+              // }),
+
               getrow(lang('我的签名'), Expanded(child: textFormFieldqm), () {}),
               getrow(lang('密码'),
                   Text(lang('修改密码'), style: TextStyle(color: SQColor.primary)),
@@ -513,7 +540,7 @@ img=CachedNetworkImageProvider(user['avater'],Null as BaseCacheManager,(){},{} )
       ),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: ( value) {
+      validator: (value) {
         if (value!.isEmpty) {
           return lang('请填写邀请人用户ID');
         }
@@ -548,7 +575,7 @@ img=CachedNetworkImageProvider(user['avater'],Null as BaseCacheManager,(){},{} )
                             // color: Color(0xffd3d3d3),
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.resolveWith((states) {
+                                  WidgetStateProperty.resolveWith((states) {
                                 return Color(0xffd3d3d3);
                               }),
                             ),
@@ -568,7 +595,7 @@ img=CachedNetworkImageProvider(user['avater'],Null as BaseCacheManager,(){},{} )
                             // color: SQColor.primary,
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.resolveWith((states) {
+                                  WidgetStateProperty.resolveWith((states) {
                                 return SQColor.primary;
                               }),
                             ),
@@ -611,7 +638,7 @@ img=CachedNetworkImageProvider(user['avater'],Null as BaseCacheManager,(){},{} )
     // }
   }
 
-  Widget getrow(String title, Widget obj, GestureTapCallback  click,
+  Widget getrow(String title, Widget obj, GestureTapCallback click,
       [bool haveink = false]) {
     return Material(
       color: SQColor.white,

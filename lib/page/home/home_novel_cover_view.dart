@@ -6,18 +6,16 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/url.dart';
 
-
 class HomeNovelCoverView extends StatelessWidget {
   final Novel novel;
   HomeNovelCoverView(this.novel);
 
   @override
   Widget build(BuildContext context) {
-   
     var width = (Screen.width - 15 * 2 - 15 * 3) / 4;
     return GestureDetector(
       onTap: () {
-       // AppNavigator.pushNovelDetail(context, novel);
+        // AppNavigator.pushNovelDetail(context, novel);
         gourl(context, NovelDetailScene(novel));
       },
       child: Container(
@@ -25,7 +23,12 @@ class HomeNovelCoverView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            NgImage(novel.imgUrl, width: width, height: width / 0.75),
+            NgImage(
+              novel.imgUrl,
+              width: width,
+              height: width / 0.75,
+              placeholder: Container(),
+            ),
             SizedBox(height: 5),
             Text(
               novel.name,

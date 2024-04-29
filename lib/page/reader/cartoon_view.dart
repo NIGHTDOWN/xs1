@@ -655,13 +655,13 @@ class CartoonViewState extends State<CartoonView> {
           margin: EdgeInsets.all(5),
         ),
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
             return Styles.getTheme()['activecolor'];
           }),
-          foregroundColor: MaterialStateProperty.resolveWith((states) {
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
             return Styles.getTheme()['activefontcolor'];
           }),
-          shape: MaterialStateProperty.resolveWith((states) {
+          shape: WidgetStateProperty.resolveWith((states) {
             return RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8));
           }),
@@ -698,13 +698,13 @@ class CartoonViewState extends State<CartoonView> {
           margin: EdgeInsets.all(5),
         ),
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
             return Styles.getTheme()['activecolor'];
           }),
-          foregroundColor: MaterialStateProperty.resolveWith((states) {
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
             return Styles.getTheme()['activefontcolor'];
           }),
-          shape: MaterialStateProperty.resolveWith((states) {
+          shape: WidgetStateProperty.resolveWith((states) {
             return RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8));
           }),

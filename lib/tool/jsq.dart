@@ -6,22 +6,28 @@ import 'package:ng169/obj/novel.dart';
 import 'function.dart';
 import 'global.dart';
 
-// ignore: camel_case_types
 class Jsq {
-  factory Jsq() => _getInstance();
-  static Jsq get instance => _getInstance();
-  static Jsq _instance=Null as Jsq ;
-  Jsq._internal() {
-    // 初始化
-  }
-  static Jsq _getInstance() {
-    // ignore: unnecessary_null_comparison
-    if (_instance == null) {
-      _instance = new Jsq._internal();
+  static _Jsq? _instance = null;
+  Jsq() {
+    if (!isnull(_instance)) {
+      _instance = _Jsq();
     }
-    return _instance;
+  }
+  start() {
+    _instance!.start();
   }
 
+  end() {
+    _instance!.end();
+  }
+
+  int gettime() {
+    return _instance!.gettime();
+  }
+}
+
+// ignore: camel_case_types
+class _Jsq {
   int seconds = 0;
   bool flag = true;
   String timecachepre = 'timecachename';
@@ -53,13 +59,12 @@ class Jsq {
     //计时
   }
 
-  start({ Novel? novel}) {
+  start({Novel? novel}) {
     _init();
 
     Timer.periodic(Duration(seconds: 1), (timer) {
       // d('计时中...$seconds');
       // d(g('gstat'));
-
       if (!flag) {
         timer.cancel(); // 取消重复计时
         return;

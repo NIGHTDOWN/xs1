@@ -6,7 +6,6 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/url.dart';
 
-
 class NovelGridItem extends StatelessWidget {
   final Novel novel;
 
@@ -24,7 +23,12 @@ class NovelGridItem extends StatelessWidget {
         width: width,
         child: Row(
           children: <Widget>[
-            NgImage(novel.imgUrl, width: 50, height: 66),
+            NgImage(
+              novel.imgUrl,
+              width: 50,
+              height: 66,
+              placeholder: Container(),
+            ),
             SizedBox(width: 10),
             Expanded(
               child: Column(
@@ -33,7 +37,8 @@ class NovelGridItem extends StatelessWidget {
                   Text(
                     novel.name,
                     maxLines: 2,
-                    style: TextStyle(fontSize: 16, height: 0.9, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 16, height: 0.9, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     // 'sss',

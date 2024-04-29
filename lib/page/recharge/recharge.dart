@@ -218,14 +218,14 @@ late  String order_num;
         //立即充值按钮
         TextButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.resolveWith((states) {
+            backgroundColor: WidgetStateProperty.resolveWith((states) {
               return color2;
             }),
             // foregroundColor: MaterialStateProperty.resolveWith((states) {
             //   return Styles.getTheme()['activefontcolor'];
             // }),
-            padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-            shape: MaterialStateProperty.resolveWith((states) {
+            padding: WidgetStateProperty.all(EdgeInsets.all(10)),
+            shape: WidgetStateProperty.resolveWith((states) {
               return RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10));
             }),
@@ -250,14 +250,14 @@ late  String order_num;
                 // shape: RoundedRectangleBorder(
                 //     borderRadius: BorderRadius.circular(10)),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  backgroundColor: WidgetStateProperty.resolveWith((states) {
                     return color2;
                   }),
                   // foregroundColor: MaterialStateProperty.resolveWith((states) {
                   //   return Styles.getTheme()['activefontcolor'];
                   // }),
-                  padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                  shape: MaterialStateProperty.resolveWith((states) {
+                  padding: WidgetStateProperty.all(EdgeInsets.all(10)),
+                  shape: WidgetStateProperty.resolveWith((states) {
                     return RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10));
                   }),

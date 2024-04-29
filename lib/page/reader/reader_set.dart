@@ -254,13 +254,13 @@ class ReaderSetState extends State<ReaderSet>
                 style: TextStyle(fontSize: 15),
               ),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                backgroundColor: WidgetStateProperty.resolveWith((states) {
                   return Styles.getTheme()['activecolor'];
                 }),
-                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                foregroundColor: WidgetStateProperty.resolveWith((states) {
                   return Styles.getTheme()['activefontcolor'];
                 }),
-                shape: MaterialStateProperty.resolveWith((states) {
+                shape: WidgetStateProperty.resolveWith((states) {
                   return RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8));
                 }),
@@ -289,13 +289,13 @@ class ReaderSetState extends State<ReaderSet>
                 style: TextStyle(fontSize: 15),
               ),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                backgroundColor: WidgetStateProperty.resolveWith((states) {
                   return Styles.getTheme()['activecolor'];
                 }),
-                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                foregroundColor: WidgetStateProperty.resolveWith((states) {
                   return Styles.getTheme()['activefontcolor'];
                 }),
-                shape: MaterialStateProperty.resolveWith((states) {
+                shape: WidgetStateProperty.resolveWith((states) {
                   return RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8));
                 }),
@@ -398,14 +398,14 @@ class ReaderSetState extends State<ReaderSet>
               },
               child: Text(lang('左右翻页')),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                backgroundColor: WidgetStateProperty.resolveWith((states) {
                   if (fx == '1') return Styles.getTheme()['cateon'];
                   return Styles.getTheme()['activecolor'];
                 }),
-                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                foregroundColor: WidgetStateProperty.resolveWith((states) {
                   return Styles.getTheme()['activefontcolor'];
                 }),
-                shape: MaterialStateProperty.resolveWith((states) {
+                shape: WidgetStateProperty.resolveWith((states) {
                   return RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8));
                 }),
@@ -426,14 +426,14 @@ class ReaderSetState extends State<ReaderSet>
               },
               child: Text(lang('上下翻页')),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                backgroundColor: WidgetStateProperty.resolveWith((states) {
                   if (fx == '1') return Styles.getTheme()['cateon'];
                   return Styles.getTheme()['activecolor'];
                 }),
-                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                foregroundColor: WidgetStateProperty.resolveWith((states) {
                   return Styles.getTheme()['activefontcolor'];
                 }),
-                shape: MaterialStateProperty.resolveWith((states) {
+                shape: WidgetStateProperty.resolveWith((states) {
                   return RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8));
                 }),

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/page/login/index.dart';
 import 'package:ng169/page/recharge/recharge.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 
@@ -19,22 +17,25 @@ class MeHeader extends StatefulWidget {
 }
 
 class MeHeaderState extends State<MeHeader> {
-  late Map user;
-late  BuildContext contexttmp;
+  late Map user = {};
+  late BuildContext contexttmp;
   // MeHeader()
   @override
   Widget build(BuildContext context) {
     //this.context = context;
     contexttmp = context;
     //var user = UserManager.currentUser;
-    user = User.get();
-var img;
+    try {
+      user = User.get();
+    } catch (e) {}
 
-if(isnull(user) && isnull(user['avater'])){
-img=CachedNetworkImageProvider(user['avater']);
-}else{
-  img=AssetImage('assets/images/placeholder_avatar.png') ;
-}
+    var img;
+
+    if (isnull(user) && isnull(user['avater'])) {
+      img = CachedNetworkImageProvider(user['avater']);
+    } else {
+      img = AssetImage('assets/images/placeholder_avatar.png');
+    }
     var b = GestureDetector(
       onTap: () {},
 

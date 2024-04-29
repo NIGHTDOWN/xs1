@@ -1,14 +1,11 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
 import 'package:ng169/obj/novel.dart';
-import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/tool/brige.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
-import 'package:ng169/tool/url.dart';
 
 class BookshelfItemView extends StatefulWidget {
   final Novel novel;
@@ -24,8 +21,8 @@ class _BookshelfItemViewState extends State<BookshelfItemView> {
   // BookshelfItemView(this.novel);
   bool ischoose = false;
 
-  static Widget onimg=SizedBox();
-  static Widget unimg=SizedBox();
+  static Widget onimg = SizedBox();
+  static Widget unimg = SizedBox();
   var p, pedit, pfun, pclickonebook;
   late int pall;
   var width;
@@ -71,7 +68,7 @@ class _BookshelfItemViewState extends State<BookshelfItemView> {
   @override
   Widget build(BuildContext context) {
     novel = this.widget.novel;
-   
+
     width = (Screen.width - 15 * 2 - 24 * 2) / 3;
     p = NgBrige.of(context);
     pedit = p.data['isedit'];
@@ -132,8 +129,13 @@ class _BookshelfItemViewState extends State<BookshelfItemView> {
                   // top:0,
                   child: this.widget.novel.type == '3'
                       ? getbookbg()
-                      : NgImage(this.widget.novel.imgUrl,
-                          width: width, height: width / 0.75, fit: BoxFit.fill),
+                      : NgImage(
+                          this.widget.novel.imgUrl,
+                          width: width,
+                          height: width / 0.75,
+                          fit: BoxFit.fill,
+                          placeholder: Container(),
+                        ),
                 ),
                 getnum(),
                 zhezao,
@@ -159,11 +161,11 @@ class _BookshelfItemViewState extends State<BookshelfItemView> {
     if (pedit) {
       return Container();
     }
-   
+
     if (!isnull(widget.novel.upsecnum)) {
       return Container();
     }
-    if (widget.novel.upsecnum<1) {
+    if (widget.novel.upsecnum < 1) {
       return Container();
     }
     Color c3 = Colors.white;

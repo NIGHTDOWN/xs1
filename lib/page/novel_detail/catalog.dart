@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ng169/obj/chapter.dart';
 import 'package:ng169/obj/novel.dart';
-import 'package:ng169/page/reader/reader_scene.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:ng169/tool/loadbox.dart';
-import 'package:ng169/tool/url.dart';
 
 class CataLog extends StatefulWidget {
   final Novel novel;

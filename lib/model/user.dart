@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_apps/device_apps.dart';
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/pay/AdBridge.dart';
 import 'package:ng169/tool/event_bus.dart';
@@ -70,7 +71,7 @@ class User {
         onlyAppsWithLaunchIntent: true, includeSystemApps: true);
     ;
     //  d(JsonMapper().toJson(times));
-    String netrate=await AdBridge.call("getnet");
+    String netrate = await AdBridge.call("getnet");
     times.add(netrate);
     var appstmp = [];
     data.add({'wifi': wifi});
@@ -142,7 +143,7 @@ class User {
 
   static double getcoin() {
     var user = get();
-    if (isnull(user,'remainder')) {
+    if (isnull(user, 'remainder')) {
       if (user['remainder'] is int) {
         return double.parse(user['remainder'].toString());
       }

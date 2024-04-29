@@ -297,13 +297,13 @@ class Sign extends LoginBase {
                 },
                 child: Text(lang("确定")),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  backgroundColor: WidgetStateProperty.resolveWith((states) {
                     return Color(0xff37a8ff);
                   }),
-                  foregroundColor: MaterialStateProperty.resolveWith((states) {
+                  foregroundColor: WidgetStateProperty.resolveWith((states) {
                     return Colors.white;
                   }),
-                  shape: MaterialStateProperty.resolveWith((states) {
+                  shape: WidgetStateProperty.resolveWith((states) {
                     return RoundedRectangleBorder(
                         side: BorderSide(
                           color: Color(0x8037a8ff),
@@ -625,10 +625,6 @@ class Sign extends LoginBase {
                       .getall();
 
               hotbooks = (await http('mark/getbook', null, gethead(), 10))!;
-              // ]);
-              if (hotbooks == null) {
-                return;
-              }
               if (!isnull(book)) {
                 show(context, lang('你还没阅读任何书籍哦'));
                 return;
@@ -642,7 +638,7 @@ class Sign extends LoginBase {
                 var temptype = '11';
                 var boosl;
                 var type;
-                Novel novel=Null as Novel;
+                Novel? novel = null;
                 if (!isnull(data2)) {
                   if (!isnull(data3)) {
                     novel = Novel.fromDb(book[0]);
@@ -661,7 +657,7 @@ class Sign extends LoginBase {
 
                     novel = await Novel.fromID(id, type);
                   }
-                  boosl = await gourl(context, MarkBook(novel: novel));
+                  boosl = await gourl(context, MarkBook(novel: novel!));
 
                   if (isnull(boosl) && boosl > 0) {
                     User.addcoin(tmpcoin);
@@ -705,7 +701,7 @@ class Sign extends LoginBase {
                   }
 
                   if (isnull(novel)) {
-                    boosl = await gourl(context, MarkBook(novel: novel));
+                    boosl = await gourl(context, MarkBook(novel: novel!));
 
                     if (isnull(boosl) && boosl > 0) {
                       User.addcoin(tmpcoin);
@@ -1054,9 +1050,11 @@ class Sign extends LoginBase {
     Function callgo,
     Function callget,
   ) {
-    String text="";
-    Color c=Color.fromARGB(0, 0, 0, 0), c2=Color.fromARGB(0, 0, 0, 0), c3=Color.fromARGB(0, 0, 0, 0);
-    Function f=(){};
+    String text = "";
+    Color c = Color.fromARGB(0, 0, 0, 0),
+        c2 = Color.fromARGB(0, 0, 0, 0),
+        c3 = Color.fromARGB(0, 0, 0, 0);
+    Function f = () {};
     c2 = Colors.white;
     c3 = Colors.black;
     if (status == 0) {

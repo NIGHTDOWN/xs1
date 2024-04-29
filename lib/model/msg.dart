@@ -6,16 +6,18 @@ import 'package:ng169/tool/global.dart';
 
 class Msg {
   // ignore: non_constant_identifier_names
-  String fuid='0';
-  String msgid='0';
-  String tuid='0';
+  String fuid = '0';
+  String msgid = '0';
+  String tuid = '0';
   String type = '0';
-  String sendtime='0';
+  String sendtime = '0';
   String contenttype = '0';
-  String content='';
+  String content = '';
   bool flag = false;
-  int id= 0;
- Msg.fromJson(Map<String, dynamic> data) : content = data['content'] ?? '', id = data['id'] ?? 0 {
+  int id = 0;
+  Msg.fromJson(Map<String, dynamic> data)
+      : content = data['content'] ?? '',
+        id = data['id'] ?? 0 {
     fuid = data['fuid'] ?? '';
     msgid = data['msgid'] ?? '';
     tuid = data['tuid'] ?? '';
@@ -24,7 +26,9 @@ class Msg {
     sendtime = data['sendtime'] ?? '';
     contenttype = data['contenttype'] ?? '0';
   }
- Msg.fromhttpJson(Map<String, dynamic> data) : content = '', id = 0 {
+  Msg.fromhttpJson(Map<String, dynamic> data)
+      : content = '',
+        id = 0 {
     msgid = User.getuid().toString();
     if (data['type'] == null) {
       fuid = '0';
@@ -121,7 +125,7 @@ class Msg {
     if (!User.islogin()) return false;
     //10秒只能一次
     var checktmp = await http('chat/havemsg', {}, gethead(), 60);
-    var check = getdata(g('context'), checktmp!);
+    var check = getdata(g('context'), checktmp ?? "");
     // d(check);
     if (isnull(check)) {
       //不为空才保存

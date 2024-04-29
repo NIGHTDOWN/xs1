@@ -295,19 +295,19 @@ class CatePage extends LoginBase {
     var btn = TextButton(
       child: Text(title),
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.resolveWith((states) {
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
           if (selecttype != type) {
             return SQColor.lightGray;
           }
           return SQColor.primary;
         }),
-        foregroundColor: MaterialStateProperty.resolveWith((states) {
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (selecttype == type) {
             return SQColor.white;
           }
           return SQColor.darkGray;
         }),
-        shape: MaterialStateProperty.resolveWith((states) {
+        shape: WidgetStateProperty.resolveWith((states) {
           return RoundedRectangleBorder(borderRadius: BorderRadius.circular(7));
         }),
       ),

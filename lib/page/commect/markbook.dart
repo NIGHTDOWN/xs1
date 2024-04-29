@@ -242,10 +242,10 @@ class MarkBookState extends State<MarkBook> {
       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.resolveWith((states) => SQColor.gray),
+              WidgetStateProperty.resolveWith((states) => SQColor.gray),
           foregroundColor:
-              MaterialStateProperty.resolveWith((states) => SQColor.white),
-          shape: MaterialStateProperty.resolveWith((states) =>
+              WidgetStateProperty.resolveWith((states) => SQColor.white),
+          shape: WidgetStateProperty.resolveWith((states) =>
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)))),
 
       onPressed: () {
@@ -269,10 +269,10 @@ class MarkBookState extends State<MarkBook> {
 
       style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.resolveWith((states) => SQColor.orange),
+              WidgetStateProperty.resolveWith((states) => SQColor.orange),
           foregroundColor:
-              MaterialStateProperty.resolveWith((states) => SQColor.white),
-          shape: MaterialStateProperty.resolveWith((states) =>
+              WidgetStateProperty.resolveWith((states) => SQColor.white),
+          shape: WidgetStateProperty.resolveWith((states) =>
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)))),
       onPressed: () {
         _changed4(obj);
@@ -362,7 +362,7 @@ class MarkBookState extends State<MarkBook> {
               child: TextButton(
                   // color: SQColor.primary,
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith(
+                      backgroundColor: WidgetStateProperty.resolveWith(
                           (states) => SQColor.primary)),
                   onPressed: submit,
                   child: Padding(

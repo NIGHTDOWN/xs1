@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/msg.dart';
 import 'package:ng169/model/user.dart';
@@ -11,7 +10,6 @@ import 'package:ng169/page/user/recordlog.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/bow.dart';
 import 'package:ng169/tool/event_bus.dart';
-import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 import 'package:ng169/page/commect/kefu.dart';
