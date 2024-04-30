@@ -29,7 +29,7 @@ class Incode {
         tmp += String.fromCharCode(
             int.parse(value.substring(index, index + size)));
       } catch (e) {
-        d(e);
+       dt(e);
       }
     }
 

@@ -19,53 +19,45 @@ class _BatteryViewState extends State<BatteryView> {
   }
 
   getBatteryLevel() async {
-    // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    // if (Platform.isAndroid) {
-    //   var androidInfo = await deviceInfo.androidInfo;
-    //   if (!androidInfo.isPhysicalDevice) {
-    //     return;
-    //   }
-    // }
-    // if (Platform.isIOS) {
-    //   var iosInfo = await deviceInfo.iosInfo;
-    //   if (!iosInfo.isPhysicalDevice) {
-    //     return;
-    //   }
-    // }
-
-    this.level = await Battery().batteryLevel;
-    if (!mounted) return;
-    setState(() {
-      levels = level;
-      this.batteryLevel = level / 100.0;
-    });
+    try {
+      this.level = await Battery().batteryLevel;
+      if (this.level != null && mounted) {
+        setState(() {
+          levels = level;
+          this.batteryLevel = level / 100.0;
+        });
+      }
+    } catch (e) {
+      // 处理错误情况，例如设置 batteryLevel 为 0 或者其他默认值
+      dt(e);
+      setState(() {
+        this.batteryLevel = 0;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 27,
-      height: 12,
+    var a = UnconstrainedBox(
+      // width: 50,
+      // height: 12,
       child: Stack(
         children: <Widget>[
-          Image.asset(
-            'assets/images/reader_battery.png',
-            color: Styles.getTheme()['batterycolor'],
-          ),
+          Image.asset('assets/images/reader_battery.png',
+              color: Styles.getTheme()['batterycolor'], width: 50, height: 12),
           Container(
             margin: EdgeInsets.fromLTRB(2, 2, 2, 2),
-            width: 20 * batteryLevel,
+            width: batteryLevel > 0 ? 20 * batteryLevel : 0,
             color: Styles.getTheme()['titlefontcolor'],
           ),
           isnull(levels)
               ? Container(
                   margin: EdgeInsets.fromLTRB(2, 2, 2, 2),
                   //width: 20 * batteryLevel,
-
                   child: Text(
                     levels.toString(),
                     style: TextStyle(
-                      fontSize: 8.0,
+                      fontSize: 1.0,
                       fontWeight: FontWeight.bold,
                       color: Styles.getTheme()['batteryfontcolor'],
                     ),
@@ -74,6 +66,11 @@ class _BatteryViewState extends State<BatteryView> {
               : Container()
         ],
       ),
+    );
+    return Container(
+      child: a,
+      width: 50,
+      height: 12,
     );
   }
 }

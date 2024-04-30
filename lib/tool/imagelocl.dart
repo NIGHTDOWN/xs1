@@ -1,13 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:ng169/model/cacheimg.dart';
-import 'package:ng169/style/FrameAnimationImage.dart';
-
+import 'package:ng169/page/smallwidget/gifcartoon.dart';
 import 'dart:io' show File;
-
-
 import 'package:ng169/tool/down.dart';
-
 import 'function.dart';
 import 'global.dart';
 
@@ -45,11 +41,7 @@ class NgImageLoclState extends State<NgImageLocl>
     if (isnull(widget.placeholder)) {
       return widget.placeholder;
     }
-    return FrameAnimationImage(
-      width: widget.width,
-      height: widget.height,
-      interval: 100, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
-    );
+    return GifCartoon();
   }
 
   //返回图片本地名

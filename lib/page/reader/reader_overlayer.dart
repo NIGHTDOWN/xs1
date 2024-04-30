@@ -36,7 +36,8 @@ class ReaderOverlayer extends StatelessWidget {
           //????
           Row(
             children: <Widget>[
-              battery,
+            // Container(child: battery,width: 350,),
+            battery,
               SizedBox(width: 10),
               Expanded(
                   child: Container(

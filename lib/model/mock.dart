@@ -20,15 +20,19 @@ class Mock {
       // d('加载完成');
       // d(mockjson);
     } catch (e) {
-      d(e);
+      dt(e);
     }
   }
 
   static get(name) {
     
     if (isnull(mockjson, name)) {
-      return mockjson[name];
+      var val= mockjson[name];
+      if(isnull(val)){
+        return val;
+      }
+      
     }
-    return null;
+    return [];
   }
 }

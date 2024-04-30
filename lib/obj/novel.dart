@@ -367,7 +367,7 @@ class Novel {
           status = lang('连载中');
       }
     } catch (e) {
-      d(e);
+       dt(e);
     }
   }
   //获取书籍信息，先从数据库拉取，数据库没就从远程拉取

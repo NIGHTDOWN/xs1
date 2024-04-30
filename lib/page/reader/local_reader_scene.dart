@@ -172,7 +172,7 @@ class LocalReaderSceneState extends State<LocalReaderScene>
                   Chapter.getReadSecId(widget.novel.id, widget.novel.type))]
               ['section_id']);
     } catch (e) {
-      d(e);
+       dt(e);
       return;
     }
 

@@ -1,4 +1,6 @@
 //订阅者回调签名
+import 'package:ng169/tool/function.dart';
+
 typedef void EventCallback(arg);
 
 class EventBus {
@@ -28,8 +30,9 @@ class EventBus {
   void off(eventName, [EventCallback? f]) {
     var list = _emap[eventName];
     if (eventName == null || list == null) return;
-    if (f == null) {
-      _emap[eventName] = () {} as List<EventCallback>;
+    if (!isnull(f)) {
+      // _emap[eventName] = null;
+      _emap.remove(eventName);
     } else {
       list.remove(f);
     }

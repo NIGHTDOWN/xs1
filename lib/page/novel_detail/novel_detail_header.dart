@@ -63,7 +63,8 @@ class NovelDetailHeader extends StatelessWidget {
             style: TextStyle(
                 fontSize: fixedFontSize(18),
                 color: Colors.white,
-                fontWeight: FontWeight.bold)),
+                fontWeight: FontWeight.bold),maxLines: 2, // 限制为两行
+  overflow: TextOverflow.ellipsis, ),
         SizedBox(height: h),
         Text(
             lang('作者') +
@@ -93,7 +94,8 @@ class NovelDetailHeader extends StatelessWidget {
             style: TextStyle(
                 fontSize: fixedFontSize(18),
                 color: Colors.white,
-                fontWeight: FontWeight.bold)),
+                fontWeight: FontWeight.bold),maxLines: 2, // 限制为两行
+  overflow: TextOverflow.ellipsis, ),
         SizedBox(height: h),
         Text((isnull(novel.author) ? novel.author : lang('匿名')),
             style:

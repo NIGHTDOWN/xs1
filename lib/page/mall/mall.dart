@@ -59,8 +59,23 @@ class MallState extends State<Mall> {
       banner = Mock.get('banner');
       newbook = Mock.get('newbook');
       randdata = Mock.get('randdata');
-    } catch (e) {}
+    } catch (e) {
+       dt(e);
+    }
   }
+Future<void> processAsyncTasks2() async {
+  List<Future> tasks = [
+      setdata(null, bannerapi, 0),
+      setdata(null, newBookapi, 1),
+      setdata(null, newCartoonsapi, 2),
+      setdata(null, hotbooksapi, 3),
+      setdata(null, randapi, 4),
+    // ... 更多异步任务
+  ];
+
+  Future.wait(tasks);
+  // 所有异步任务都已完成，处理results
+}
 
   bool isdart = false;
   Future<void> gethttpdata() async {
@@ -71,21 +86,21 @@ class MallState extends State<Mall> {
     //   setdata(null, hotbooksapi, 3),
     //   setdata(null, randapi, 4),
     // ]);
-    List<Future<void>> futures = [
-      setdata(null, bannerapi, 0),
-      setdata(null, newBookapi, 1),
-      setdata(null, newCartoonsapi, 2),
-      setdata(null, hotbooksapi, 3),
-      setdata(null, randapi, 4),
-    ];
-
-    try {
-      await Future.wait(futures);
-      // 所有 future 完成之后的代码
-    } catch (e) {
-      // 异常处理
-      d(e);
-    }
+    // List<Future<void>> futures = [
+    //   setdata(null, bannerapi, 0),
+    //   setdata(null, newBookapi, 1),
+    //   setdata(null, newCartoonsapi, 2),
+    //   setdata(null, hotbooksapi, 3),
+    //   setdata(null, randapi, 4),
+    // ];
+processAsyncTasks2();
+    // try {
+    //   await Future.wait(futures);
+    //   // 所有 future 完成之后的代码
+    // } catch (e) {
+    //   // 异常处理
+    //    dt(e);
+    // }
     // await Future.wait(futures);
     mallcache = [banner, newbook, newcart, hotbook, randdata];
 
@@ -170,7 +185,19 @@ class MallState extends State<Mall> {
     }
   }
   //  gethttpdata(); //加载数据
+Future<void> processAsyncTasks() async {
+  List<Future> tasks = [
+          setdata(mallcache, bannerapi, 0),
+          setdata(mallcache, newBookapi, 1),
+          setdata(mallcache, newCartoonsapi, 2),
+          setdata(mallcache, hotbooksapi, 3),
+          setdata(mallcache, randapi, 4),
+    // ... 更多异步任务
+  ];
 
+  Future.wait(tasks);
+  // 所有异步任务都已完成，处理results
+}
   //加载页面
   //先读缓存
   //在读http数据
@@ -194,28 +221,14 @@ class MallState extends State<Mall> {
         //   setdata(mallcache, randapi, 4),
         // ]);
 
-        List<Future<void>> futures = [
-          setdata(mallcache, bannerapi, 0),
-          setdata(mallcache, newBookapi, 1),
-          setdata(mallcache, newCartoonsapi, 2),
-          setdata(mallcache, hotbooksapi, 3),
-          setdata(mallcache, randapi, 4),
-        ];
-
-        try {
-          await Future.wait(futures);
-          // 所有 future 完成之后的代码
-        } catch (e) {
-          // 异常处理
-          d(e);
-        }
+        processAsyncTasks();
       } else {
         setcache(index, 0, '0');
       }
     }
   }
 
-  setdata<T>(cache, String api, int cacheid) async {
+  setdata(List<dynamic>? cache, String api, int cacheid) async {
     // if (!isnull(cache)) return false;
 
     if (isnull(cache, cacheid)) {

@@ -10,7 +10,10 @@ import 'package:ng169/page/novel_detail/novel_detail_header.dart';
 import 'package:ng169/page/reader/reader_bar.dart';
 import 'package:ng169/page/reader/reader_scene.dart';
 import 'package:ng169/page/reader/reader_tips_car.dart';
-import 'package:ng169/style/FrameAnimationImage.dart';
+import 'package:ng169/page/smallwidget/gifcartoon.dart';
+import 'package:ng169/page/smallwidget/gifload.dart';
+
+
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 
@@ -59,11 +62,7 @@ class CartReaderSceneState extends State<CartReaderScene>
   void initState() {
     super.initState();
     sysinit();
-    kongbai = FrameAnimationImage(
-      interval: 100,
-      imageList: [],
-      bgcolor: Color.fromARGB(0, 0, 0, 0),
-    );
+    kongbai = Container();
 
     chaptersResponse = Chapter.get(context, this.widget.novel);
     setup();
@@ -164,7 +163,7 @@ class CartReaderSceneState extends State<CartReaderScene>
                   Chapter.getReadSecId(widget.novel.id, widget.novel.type))]
               ['section_id']);
     } catch (e) {
-      d(e);
+      dt(e);
       return;
     }
 
@@ -176,7 +175,7 @@ class CartReaderSceneState extends State<CartReaderScene>
     await resetContent(tmparticleId, PageJumpType.stay);
     //初始化指针
     pageIndex = isnull(getpoint(tmparticleId)) ? (getpoint(tmparticleId)) : 1;
-
+    // await Future.delayed(Duration(seconds: 1));
     isFirst = false;
     reflash();
   }
@@ -329,14 +328,8 @@ class CartReaderSceneState extends State<CartReaderScene>
   }
 
   Widget cartoonload() {
-    return FrameAnimationImage(
-      width: getScreenWidth(context),
-      height: getScreenHeight(context),
-      picwidth: 100,
-      interval: 100,
-      imageList: [],
-      bgcolor: Color.fromARGB(0, 0, 0, 0),
-    );
+    // return Container();
+    return GifCartoon();
   }
 
   @override
@@ -344,7 +337,7 @@ class CartReaderSceneState extends State<CartReaderScene>
     if (isFirst) {
       return cartoonload();
     }
-
+return cartoonload();
     var children2 = <Widget>[
       buildPageView(),
       topinfo(),

@@ -480,7 +480,9 @@ class EditUserState extends State<EditUser> {
             '/' +
             dates.year.toString();
       }
-    } catch (e) {}
+    } catch (e) {
+       dt(e);
+    }
 
     return datestr;
   }

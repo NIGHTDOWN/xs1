@@ -342,7 +342,7 @@ class _SignInPageState extends State<SignInPage> {
       return null;
       // return googleUser;
     } catch (e) {
-      d(e);
+      dt(e);
     }
 
     // d(googleUser);

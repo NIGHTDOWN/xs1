@@ -52,7 +52,7 @@ class ReaderSceneState extends State<ReaderScene>
   double topSafeHeight = 0;
 
   late Article? preArticle;
-  late Article currentArticle;
+  late Article? currentArticle;
   late Article? nextArticle;
   late Widget bar;
   List<Chapter> chapters = [];
@@ -65,17 +65,22 @@ class ReaderSceneState extends State<ReaderScene>
   GlobalKey canvasKey = new GlobalKey();
   late AnimationController percentageAnimationController;
   Widget btter = SizedBox();
+  Widget  load=Container();
+  bool loadflag=false;
   var page;
   @override
   void initState() {
     super.initState();
     getfx();
     sysinit();
+     resetContent(widget.articleId,PageJumpType.stay);
     pageController.addListener(onScroll);
     chaptersResponse = Chapter.get(context, this.widget.novel);
     btter = BatteryView();
+    // btter = Container();
     setup();
     Jsq()..start();
+    
   }
 
   getfx() {
@@ -104,15 +109,15 @@ class ReaderSceneState extends State<ReaderScene>
     }
 
     if (pageIndex == 0 &&
-        currentArticle.preArticleId == 0 &&
+        currentArticle!.preArticleId == 0 &&
         pageController.page! < 0.6) {
       show(context, lang('已经是第一页了'));
       pageController.jumpToPage(1);
       return;
     }
 
-    if (pageIndex >= currentArticle.pageCount - 1 &&
-        currentArticle.nextArticleId == 0 &&
+    if (pageIndex >= currentArticle!.pageCount - 1 &&
+        currentArticle!.nextArticleId == 0 &&
         pageController.page! > 1.4) {
       // pageIndex = currentArticle.pageCount - 1;
       golast();
@@ -175,7 +180,7 @@ class ReaderSceneState extends State<ReaderScene>
                   Chapter.getReadSecId(widget.novel.id, widget.novel.type))]
               ['section_id']);
     } catch (e) {
-      d(e);
+       dt(e);
       return;
     }
 
@@ -190,8 +195,8 @@ class ReaderSceneState extends State<ReaderScene>
     pageIndex =
         (isnull(getpoint(tmparticleId)) ? (getpoint(tmparticleId)) : 0)!;
 
-    if (pageIndex > currentArticle.pageCount - 1) {
-      pageIndex = currentArticle.pageCount - 1;
+    if (pageIndex > currentArticle!.pageCount - 1) {
+      pageIndex = currentArticle!.pageCount - 1;
     }
     // d(currentArticle.pageCount);
   }
@@ -217,7 +222,7 @@ class ReaderSceneState extends State<ReaderScene>
     showload = true;
     reflash();
 
-    currentArticle = (await fetchArticle(articleId))!;
+    currentArticle = (await fetchArticle(articleId));
 
 // d(await currentArticle.ispay());
     if (!isnull(currentArticle)) {
@@ -228,8 +233,10 @@ class ReaderSceneState extends State<ReaderScene>
           .wherestring(' section_id> ' + articleId.toString())
           .order('`section_id` asc')
           .getone();
-
-      currentArticle = (await fetchArticle(tmp['section_id']))!;
+if(isnull(tmp)){
+currentArticle = (await fetchArticle(tmp['section_id']));
+}
+      
     }
     if (!isnull(currentArticle)) {
       //重试获取下一章还是失败，则退出。
@@ -237,20 +244,20 @@ class ReaderSceneState extends State<ReaderScene>
     }
     showload = false;
     reflash();
-    if (currentArticle.preArticleId > 0) {
+    if (currentArticle!.preArticleId > 0) {
       //预加载上一章
-      fetchArticle(currentArticle.preArticleId).then((onValue) {
-        preArticle = onValue!;
+      fetchArticle(currentArticle!.preArticleId).then((onValue) {
+        preArticle = onValue;
         reflash();
       });
     } else {
       preArticle = null;
     }
 
-    if (currentArticle.nextArticleId > 0) {
+    if (currentArticle!.nextArticleId > 0) {
       //预加载下一章
-      fetchArticle(currentArticle.nextArticleId).then((onValuen) {
-        nextArticle = onValuen!;
+      fetchArticle(currentArticle!.nextArticleId).then((onValuen) {
+        nextArticle = onValuen;
         reflash();
       });
     } else {
@@ -261,9 +268,10 @@ class ReaderSceneState extends State<ReaderScene>
       pageIndex = 0;
     } else if (jumpType == PageJumpType.lastPage) {
       //跳最后一页
-      pageIndex = currentArticle.pageCount - 1;
+      pageIndex = currentArticle!.pageCount - 1;
     }
     showload = false;
+    loadflag=true;
     reflash();
   }
 
@@ -328,6 +336,7 @@ class ReaderSceneState extends State<ReaderScene>
 
   @override
   Widget build(BuildContext context) {
+    if(!loadflag)return load;
     // try {
     //   bar = ReaderBar(widget.novel, chaptersResponse, currentArticle, reflash,
     //       resetContent);
@@ -336,7 +345,7 @@ class ReaderSceneState extends State<ReaderScene>
     //   bar = Container();
     // }
     bar = ReaderBar(
-        widget.novel, chaptersResponse, currentArticle, reflash, resetContent);
+        widget.novel, chaptersResponse, currentArticle!, reflash, resetContent);
     var stack = Stack(children: [
       Positioned(
           left: 0,
@@ -536,8 +545,8 @@ class ReaderSceneState extends State<ReaderScene>
     if (!isnull(currentArticle)) {
       return;
     }
-    if (pageIndex >= currentArticle.pageCount - 1 &&
-        currentArticle.nextArticleId == 0) {
+    if (pageIndex >= currentArticle!.pageCount - 1 &&
+        currentArticle!.nextArticleId == 0) {
       golast();
 
       // show(context, lang('已经是最后一页了'));
@@ -549,7 +558,7 @@ class ReaderSceneState extends State<ReaderScene>
   //上一页
   previousPage() {
     //上一页
-    if (pageIndex == 0 && currentArticle.preArticleId == 0) {
+    if (pageIndex == 0 && currentArticle!.preArticleId == 0) {
       show(context, lang('已经是第一页了'));
       return;
     }
@@ -560,15 +569,15 @@ class ReaderSceneState extends State<ReaderScene>
   //翻页公共库
   setpage(int nums) {
     int index = pageIndex + nums;
-    if (index < currentArticle.pageCount && index >= 0) {
+    if (index < currentArticle!.pageCount && index >= 0) {
       pageIndex = index;
       reflash();
     }
-    if (index > currentArticle.pageCount - 1) {
-      currentArticle = nextArticle!;
+    if (index > currentArticle!.pageCount - 1) {
+      currentArticle = nextArticle;
       reflash();
       if (isnull(currentArticle)) {
-        resetContent(currentArticle.id, PageJumpType.firstPage);
+        resetContent(currentArticle!.id, PageJumpType.firstPage);
       }
       // pageIndex=0;
     }
@@ -576,7 +585,7 @@ class ReaderSceneState extends State<ReaderScene>
       currentArticle = preArticle!;
       reflash();
       if (isnull(currentArticle)) {
-        resetContent(currentArticle.id, PageJumpType.lastPage);
+        resetContent(currentArticle!.id, PageJumpType.lastPage);
       }
     }
   }
@@ -586,7 +595,7 @@ class ReaderSceneState extends State<ReaderScene>
     if (!isnull(currentArticle)) return kongbai;
     Widget obj = ReaderView(
         novel: widget.novel,
-        article: currentArticle,
+        article: currentArticle!,
         battery: btter,
         page: pageIndex,
         topSafeHeight: topSafeHeight);
@@ -600,7 +609,7 @@ class ReaderSceneState extends State<ReaderScene>
     if (pageIndex != 0) {
       return ReaderView(
           novel: widget.novel,
-          article: currentArticle,
+          article: currentArticle!,
           battery: btter,
           page: pageIndex - 1,
           topSafeHeight: topSafeHeight);
@@ -622,12 +631,12 @@ class ReaderSceneState extends State<ReaderScene>
   pagecontent2() {
     var tmpindex = pageIndex + 1;
     if (!isnull(currentArticle)) return kongbai;
-    int ccount = currentArticle.pageCount - 1;
+    int ccount = currentArticle!.pageCount - 1;
 
     if (tmpindex <= ccount) {
       return ReaderView(
           novel: widget.novel,
-          article: currentArticle,
+          article: currentArticle!,
           page: tmpindex,
           battery: btter,
           topSafeHeight: topSafeHeight);

@@ -71,7 +71,7 @@ dependencies:
   # dio:any
   battery: any 
   #intl: ^0.15.8
-  device_info_plus: any
+  device_info_plus: 9.1.0
   device_apps: any
   carousel_slider: any
   # 富文本

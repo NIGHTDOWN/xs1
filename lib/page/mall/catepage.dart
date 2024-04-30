@@ -151,7 +151,9 @@ class CatePage extends LoginBase {
       if (isnull(tt) && tt != tagHeight) {
         tagHeight = tt;
       }
-    } catch (e) {}
+    } catch (e) {
+       dt(e);
+    }
   }
 
   loadcate() async {
@@ -162,7 +164,9 @@ class CatePage extends LoginBase {
       tag = cate[0]['child'][0]['child'];
       gethttpdata();
       setState(() {});
-    } catch (e) {}
+    } catch (e) {
+       dt(e);
+    }
   }
 
   loadingstatu() {

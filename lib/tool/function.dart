@@ -17,7 +17,9 @@ import 'dart:ui' as ui show instantiateImageCodec, Codec, FrameInfo;
 import 'global.dart';
 import 'http.dart';
 import 'lang.dart';
-
+void dt(var e){
+  throw e;
+}
 void d(data, [index = 1]) {
   if (!isdebug) {
     return;
@@ -333,6 +335,12 @@ bool isnull(dynamic data, [var index]) {
   if (data is String) {
     //d('是string');
     data = data.trim();
+    if ([] == data) {
+      return false;
+    }
+     if ({} == data) {
+      return false;
+    }
     if ('null' == data) {
       return false;
     }
@@ -344,6 +352,11 @@ bool isnull(dynamic data, [var index]) {
     }
   }
   if (data is int) {
+    if (0 == data) {
+      return false;
+    }
+  }
+   if (data is double) {
     if (0 == data) {
       return false;
     }

@@ -110,8 +110,11 @@ dynamic getres() {
   return res;
 }
 
-dynamic getdata(BuildContext context, String? responseData) {
+dynamic getdata(BuildContext? context, String? responseData) {
   var js;
+  if(!isnull(context)){
+    context=g("context");
+  }
   if (!isnull(responseData)) {
     //请求无数据返回的时候不要报错
     return null;
@@ -119,12 +122,12 @@ dynamic getdata(BuildContext context, String? responseData) {
   try {
     js = jsonDecode(responseData!);
   } catch (e) {
-    d(e);
+    dt(e);
     if (loghttpcn) {
-      show(context, lang('请求错误：1'));
+      show(context!, lang('请求错误：1'));
     } else {
       if (isdebug) {
-        show(context, '404');
+        show(context!, '404');
       }
     }
     return null;
@@ -143,14 +146,14 @@ dynamic getdata(BuildContext context, String? responseData) {
     g('cache').del('user');
     User.clear();
     // show(context, js['msg']);
-    show(context, lang('请登入'));
-    gourl(context, new Index() as WidgetBuilder);
+    show(context!, lang('请登入'));
+    gourl(context!, new Index() as WidgetBuilder);
     return null;
   } else {
     if (loghttpcn) {
-      show(context, js['msg']);
+      show(context!, js['msg']);
     } else {
-      show(context, js['code']);
+      show(context!, js['code']);
     }
     return null;
   }

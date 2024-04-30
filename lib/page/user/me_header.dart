@@ -17,7 +17,7 @@ class MeHeader extends StatefulWidget {
 }
 
 class MeHeaderState extends State<MeHeader> {
-  late Map user = {};
+  late Map? user ;
   late BuildContext contexttmp;
   // MeHeader()
   @override
@@ -27,12 +27,14 @@ class MeHeaderState extends State<MeHeader> {
     //var user = UserManager.currentUser;
     try {
       user = User.get();
-    } catch (e) {}
+    } catch (e) {
+       dt(e);
+    }
 
     var img;
 
-    if (isnull(user) && isnull(user['avater'])) {
-      img = CachedNetworkImageProvider(user['avater']);
+    if (isnull(user) && isnull(user!['avater'])) {
+      img = CachedNetworkImageProvider(user!['avater']);
     } else {
       img = AssetImage('assets/images/placeholder_avatar.png');
     }
@@ -60,7 +62,7 @@ class MeHeaderState extends State<MeHeader> {
         Center(
           child: GestureDetector(
               child: Text(
-                isnull(user) ? user['nickname'] : lang('游客'),
+                isnull(user) ? user!['nickname'] : lang('游客'),
                 style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'LoveCraft',
@@ -75,8 +77,8 @@ class MeHeaderState extends State<MeHeader> {
           child: GestureDetector(
               child: Text(
                 (isnull(user)
-                        ? isnull(user['more'])
-                            ? user['more']
+                        ? isnull(user!['more'])
+                            ? user!['more']
                             : lang('编辑用户')
                         : lang('点击登入')) +
                     '>',
@@ -158,7 +160,7 @@ class MeHeaderState extends State<MeHeader> {
 
   reflashuser(httpuser) {
     if (isnull(httpuser)) {
-      user.addAll(httpuser);
+      user!.addAll(httpuser);
     }
 
     // User.set(user);
@@ -205,7 +207,7 @@ class MeHeaderState extends State<MeHeader> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       // crossAxisAlignment :CrossAxisAlignment.end,
       children: <Widget>[
-        buildItem(user != null ? user['uid'].toString() : '0', lang('ID')),
+        buildItem(user != null ? user!['uid'].toString() : '0', lang('ID')),
         GestureDetector(
           child: buildItem(
               //user != null ? user['remainder'].toStringAsFixed(1) : '0.0',

@@ -242,7 +242,9 @@ class RackSceneState extends State<Rack> {
   Future<void> fetchData() async {
     try {
       loadhttp();
-    } catch (e) {}
+    } catch (e) {
+       dt(e);
+    }
   }
 
   Widget buildActions(Color iconColor) {
@@ -505,7 +507,7 @@ class RackSceneState extends State<Rack> {
       try {
         text = await file.readAsString();
       } catch (e) {
-        d(e);
+         dt(e);
         text = 'Please import utf8 novel';
       }
 
@@ -543,7 +545,7 @@ class RackSceneState extends State<Rack> {
             {'file': await MultipartFile.fromFile(path)}, gethead());
       }
     } catch (e) {
-      d(e);
+      dt(e);
     }
   }
 

@@ -6,7 +6,9 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/novel_detail/novel_detail_header.dart';
 
 import 'package:ng169/page/recharge/recharge.dart';
-import 'package:ng169/style/FrameAnimationImage.dart';
+import 'package:ng169/page/smallwidget/gifcartoon.dart';
+import 'package:ng169/page/smallwidget/gifload.dart';
+
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/event_bus.dart';
@@ -50,13 +52,7 @@ late Function pre;
 
 class CartoonViewState extends State<CartoonView> {
   List<Widget> pics = [];
-  List<String> loading = [
-    'assets/images/loading/1.png',
-    'assets/images/loading/2.png',
-    'assets/images/loading/3.png',
-    'assets/images/loading/4.png',
-    'assets/images/loading/5.png',
-  ];
+ 
   late double width;
  late PageController pageController;
  late double height;
@@ -69,21 +65,10 @@ class CartoonViewState extends State<CartoonView> {
   void initState() {
     super.initState();
 
-    loadanmianl = FrameAnimationImage(
-      width: g('swidth'),
-      height: g('sheight'),
-      picwidth: 100,
-      interval: 200, imageList: [], bgcolor: Color.fromARGB(0, 0, 0, 0),
-    );
+     loadimg= GifCartoon();
     pageindex = widget.page;
 
-    loadimg = FrameAnimationImage(
-      imageList: loading,
-      width: g('swidth'),
-      // height: g('sheight'),
-      picwidth: 50,
-      interval: 200, bgcolor: Color.fromARGB(0, 0, 0, 0),
-    );
+    loadanmianl = Gifload();
     init();
   }
 
@@ -228,37 +213,6 @@ class CartoonViewState extends State<CartoonView> {
     // golastpage();
   }
 
-  // golastpage() async {
-  //   if (lastpagelock) {
-  //     return;
-  //   }
-  //   if (!widget.article.pay) {
-  //     return;
-  //   }
-  //   if (!isnull(pageController.hasClients)) {
-  //     return;
-  //   }
-  //   if (pageController.position.pixels <
-  //       (pageController.position.maxScrollExtent)) {
-  //     return;
-  //   }
-  //   lastpagelock = true;
-
-  //   if (!isnull(widget.article.nextArticleId) && pageController.position.pixels >
-  //       (pageController.position.maxScrollExtent+10)) {
-  //     //这里滑动过去
-  //      Future.delayed(Duration(milliseconds: 200)).then((e) async {
-  //     // setState(() {
-  //     //   indexs.add(indexs.length + 1);
-  //     // });
-  //     await gourl(context, Lastpage(widget.novel));
-  //     lastpagelock = false;
-  //     reflash();
-  //   });
-
-  //   }
-  // }
-
   Widget _buildProgressIndicator() {
     if (!widget.article.pay) {
       return SizedBox();
@@ -292,11 +246,7 @@ class CartoonViewState extends State<CartoonView> {
         ),
       );
     }
-    // var circular = new CircularProgressIndicator(
-    //   backgroundColor: Colors.white,
-    //   strokeWidth: 5.0,
-    //   valueColor: AlwaysStoppedAnimation(Colors.green[200]),
-    // );
+   
     var circular = Icon(
       Icons.arrow_downward,
       size: 17,
@@ -445,6 +395,7 @@ class CartoonViewState extends State<CartoonView> {
     width = g('swidth');
     height = g('sheight');
     pics = [];
+  
     getpic();
 
     if (widget.article.cartoonisinit) {
@@ -478,6 +429,7 @@ class CartoonViewState extends State<CartoonView> {
     pics.add(SizedBox(height: 18));
     pics.add(_buildtopIndicator());
     // d(widget.article.pay);
+   
     if (widget.article.pay) {
       widget.article.images.forEach((pic) {
         pics.add(NgImage(pic['url'],

@@ -1,10 +1,10 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ng169/page/smallwidget/gifcartoon.dart';
 
-import 'package:ng169/style/FrameAnimationImage.dart';
+
 
 import 'dart:async' show Future;
 import 'dart:io' show File;
@@ -35,64 +35,45 @@ class NgImage extends StatelessWidget {
       : this.width = width ?? 0,
         this.height = height ?? 0;
 
-//   @override
-//   State<StatefulWidget> createState() => NgImageState();
-// }
+  Widget getpathimg(String img) {
+    if (isnull(height) && isnull(width))
+      return Image.asset(
+        img,
+        width: width,
+        height: height,
+      );
+    if (isnull(height))
+      return Image.asset(
+        img,
+        height: height,
+      );
+    if (isnull(width))
+      return Image.asset(
+        img,
+        width: width,
+      );
 
-// class NgImageState extends State<NgImage> with SingleTickerProviderStateMixin {
-  // bool isloclpic = false;
-  // String getlocalname(String url) {
-  //   return Cacheimg.getloclpicname(url);
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   islocol(widget.imgUrl);
-  // }
-
-  //返回图片本地名
-  // Widget getloclpic(String url) {
-  //   try {
-  //     var file =new File(getlocalname(url));
-  //     d(url);
-  //     d(file);
-  //     if (isnull(file)) {
-  //       return Image.file(
-  //         File(getlocalname(url)),
-  //         width: widget.width,
-  //         height: widget.height,
-  //       );
-  //     }
-  //   } catch (e) {
-  //     return _cachednetworkimage();
-  //   }
-  //   return _cachednetworkimage();
-  // }
+    return Image.asset(
+      img,
+    );
+  }
 
   Widget _cachednetworkimage() {
     //匹配mock数据
     String ismock = imgUrl.substring(0, 5);
-
+    String imgp;
     if (ismock == 'mock:') {
       String mockpng = imgUrl.substring(5);
-      return Image.asset(
-        "assets/images/mock/" + mockpng,
-        width: width,
-        height: height,
-      );
+      imgp = "assets/images/mock/" + mockpng;
+      return getpathimg(imgp);
     }
-    var errorWidget = Image.asset(
+    var errorWidget = getpathimg(
       'assets/images/bookbg.jpg',
-      width: width,
-      height: height,
     );
     var img = imgUrl;
 
     if (ismock == 'dsl:/') {
       String dslimg = imgUrl.substring(5);
-      // var domian=false;
-      //
       if (dslStatus && isnull(dslDomain)) {
         img = dsl + dslimg;
       } else {
@@ -104,50 +85,25 @@ class NgImage extends StatelessWidget {
         imageUrl: img,
         fit: fit,
         // useOldImageOnUrlChange: true,
-        width: width,
-        height: height,
+        width: isnull(width)?width:null,
+        height: isnull(height)?height:null,
         //添加预加载视图
-        // errorWidget: (context, url, error) => new Icon(
-        //   Icons.error,
-        //   size: width,
-        // ),
+      
         errorWidget: (context, url, error) => errorWidget,
         placeholder: (context, index) {
           if (isnull(placeholder)) {
             return placeholder;
           }
-          return FrameAnimationImage(
-            width: width!,
-            height: height!,
-            interval: 100,
-            imageList: [],
-            bgcolor: Color.fromARGB(0, 0, 0, 0),
-          );
+          return GifCartoon();
         },
         // decoration: BoxDecoration(border: Border.all(color: SQColor.paper)),
       );
     } catch (e) {
       //远程加载失败，直接返回错误图片
+      dt(e);
       return errorWidget;
     }
   }
-
-  // islocol(String url) async {
-  //   if (!await Down.isexits(getlocalname(url))) {
-  //     //下载
-  //     g('downthred').send(url);
-  //     if (mounted) {
-  //       setState(() {
-  //         isloclpic = false;
-  //       });
-  //     }
-  //   }
-  //   if (mounted) {
-  //     setState(() {
-  //       isloclpic = true;
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
