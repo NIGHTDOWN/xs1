@@ -8,6 +8,8 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/reader/lastpage.dart';
 import 'package:ng169/page/reader/reader_bar.dart';
 import 'package:ng169/page/reader/reader_tips.dart';
+import 'package:ng169/page/smallwidget/gifcartoon.dart';
+import 'package:ng169/page/smallwidget/gifload.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/event_bus.dart';
@@ -68,9 +70,27 @@ class ReaderSceneState extends State<ReaderScene>
   Widget  load=Container();
   bool loadflag=false;
   var page;
+    loadw() {
+    // return Container();
+   load= Scaffold(
+      // appBar: AppBar(
+      //   title: Text('全屏白色背景'),
+      // ),
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Gifload(),
+        ),
+      ),
+    );
+    // return GifCartoon();
+  }
   @override
   void initState() {
     super.initState();
+
+loadw();
+   
     getfx();
     sysinit();
      resetContent(widget.articleId,PageJumpType.stay);

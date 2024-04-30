@@ -46,6 +46,8 @@ dependencies:
   cached_network_image: 3.3.1
   # banner滑动
   flutter_card_swiper: any 
+
+ 
   #权限
   permission_handler: any
   #工具类库

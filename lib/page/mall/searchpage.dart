@@ -21,7 +21,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class SearchPageState extends State<SearchPage> {
-  late List hotbook, mallcache;
+  late List hotbook=[], mallcache=[];
   List<Widget> more = [SizedBox()];
   var index = 'mallsearch_';
   var cachedata = 'mallsearch_data_', page = 1;

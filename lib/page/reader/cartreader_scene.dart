@@ -329,7 +329,18 @@ class CartReaderSceneState extends State<CartReaderScene>
 
   Widget cartoonload() {
     // return Container();
-    return GifCartoon();
+   return Scaffold(
+      // appBar: AppBar(
+      //   title: Text('全屏白色背景'),
+      // ),
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: GifCartoon(),
+        ),
+      ),
+    );
+    // return GifCartoon();
   }
 
   @override
@@ -337,7 +348,7 @@ class CartReaderSceneState extends State<CartReaderScene>
     if (isFirst) {
       return cartoonload();
     }
-return cartoonload();
+
     var children2 = <Widget>[
       buildPageView(),
       topinfo(),
