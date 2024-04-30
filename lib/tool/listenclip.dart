@@ -13,24 +13,7 @@ import 'package:receive_intent/receive_intent.dart';
 import 'function.dart';
 
 class ListenClip {
-//   static _ListenClip? _instance = null;
-//   ListenClip() {
-//     if (isnull(_instance)) {
-//       _instance = _ListenClip();
-//     }
-//   }
-//   start(var b) {
-//     _instance!.start(b);
-//   }
 
-//   end() {
-//     _instance!.end();
-//   }
-
-//   getClipboardContents() {
-//     _instance!.getClipboardContents();
-//   }
-// }
   static ListenClip? _instance = null;
   ListenClip() {}
 // class _ListenClip {
@@ -72,7 +55,10 @@ class ListenClip {
 
     if (isnull(user, 'invite_id')) {
       //用户已经绑定
-      _instance!.end();
+      if(isnull(_instance)){
+ _instance!.end();
+      }
+     
       return false;
     }
 

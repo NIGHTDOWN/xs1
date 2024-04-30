@@ -28,7 +28,7 @@ class _CropImageRouteState extends State<CutImage> {
   late double imageScale = 1; //图片缩放比例
   late Image imageView;
 
-  late Uint8List img;
+  late Uint8List? img=null;
   final _controller = CropController();
   // final cropKey = GlobalKey<CropState>();
   @override
@@ -44,6 +44,7 @@ class _CropImageRouteState extends State<CutImage> {
 
   loadimng() async {
     img = await _load(widget.image.path);
+    reflash();
   }
 
   @override
@@ -67,12 +68,12 @@ class _CropImageRouteState extends State<CutImage> {
               //   //aspectRatio: 0.3 / 0.3,
               //   alwaysShowGrid: true,
               // ),
-              child: Crop(
-                  image: img,
+              child: img != null?Crop(
+                  image: img!,
                   controller: _controller,
                   onCropped: (image) {
                     // do something with cropped image data
-                  }),
+                  }):Container(),
             ),
           ])),
           buildNavigationBar(),

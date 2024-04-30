@@ -199,7 +199,7 @@ class EditUserState extends State<EditUser> {
         PickedFile? tmpimages =
             // ignore: invalid_use_of_visible_for_testing_member
             await ImagePicker.platform.pickImage(source: ImageSource.camera);
-
+if(!isnull(tmpimages))return ;
         File f = File(tmpimages!.path);
         cutimg(f);
         reflash();
@@ -216,7 +216,7 @@ class EditUserState extends State<EditUser> {
         // var tmpimage = await ImagePicker.pickImage(source: ImageSource.gallery);
         PickedFile? tmpimages =
             await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-
+if(!isnull(tmpimages))return ;
         File f = File(tmpimages!.path);
         cutimg(f);
         reflash();
