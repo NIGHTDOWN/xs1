@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +17,6 @@ import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/loadbox.dart';
 import 'package:ng169/tool/url.dart';
-import 'package:share/share.dart';
 import 'catalog.dart';
 import 'novel_comment.dart';
 import 'novel_detail_header.dart';

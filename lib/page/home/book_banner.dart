@@ -8,13 +8,11 @@ import 'package:ng169/model/base.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
 
-import 'package:ng169/page/recharge/recharge.dart';
 import 'package:ng169/page/smallwidget/gifcartoon.dart';
 import 'package:ng169/page/smallwidget/src/swiper_controller.dart';
 import 'package:ng169/page/smallwidget/src/swiper_pagination.dart';
 import 'package:ng169/page/smallwidget/swiper.dart';
 import 'package:ng169/style/screen.dart';
-import 'package:ng169/tool/bow.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/image.dart';
@@ -117,7 +115,7 @@ class BookBanner extends LoginBase {
                     BackdropFilter(
                       filter: new ImageFilter.blur(sigmaX: 1, sigmaY: 1),
                       child: new Container(
-                        color: Colors.black12.withOpacity(0.3),
+                        color: Colors.black12.withOpacity(0.7),
                         width: w,
                         height: h + th,
                       ),

@@ -5,7 +5,6 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/theme.dart' as indextheme;
 import 'package:ng169/tool/brige.dart';
 import 'package:ng169/tool/function.dart';
-import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/lang.dart';
 
 //登入页面

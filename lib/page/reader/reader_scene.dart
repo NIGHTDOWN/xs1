@@ -8,7 +8,6 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/reader/lastpage.dart';
 import 'package:ng169/page/reader/reader_bar.dart';
 import 'package:ng169/page/reader/reader_tips.dart';
-import 'package:ng169/page/smallwidget/gifcartoon.dart';
 import 'package:ng169/page/smallwidget/gifload.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';

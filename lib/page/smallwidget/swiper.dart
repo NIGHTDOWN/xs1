@@ -118,23 +118,23 @@ class Swiper extends StatefulWidget {
 
   Swiper({
     this.itemBuilder,
-    this.indicatorLayout: PageIndicatorLayout.NONE,
+    this.indicatorLayout = PageIndicatorLayout.NONE,
 
     ///
     this.transformer,
     required this.itemCount,
-    this.autoplay: false,
-    this.layout: SwiperLayout.DEFAULT,
-    this.autoplayDelay: kDefaultAutoplayDelayMs,
-    this.autoplayDisableOnInteraction: true,
-    this.duration: kDefaultAutoplayTransactionDuration,
+    this.autoplay = false,
+    this.layout = SwiperLayout.DEFAULT,
+    this.autoplayDelay = kDefaultAutoplayDelayMs,
+    this.autoplayDisableOnInteraction = true,
+    this.duration = kDefaultAutoplayTransactionDuration,
     this.onIndexChanged,
     this.index,
     this.onTap,
     this.control,
-    this.loop: true,
-    this.curve: Curves.ease,
-    this.scrollDirection: Axis.horizontal,
+    this.loop = true,
+    this.curve = Curves.ease,
+    this.scrollDirection = Axis.horizontal,
     this.pagination,
     this.plugins,
     this.physics,
@@ -145,10 +145,10 @@ class Swiper extends StatefulWidget {
     /// since v1.0.0
     this.containerHeight,
     this.containerWidth,
-    this.viewportFraction: 1.0,
+    this.viewportFraction = 1.0,
     this.itemHeight,
     this.itemWidth,
-    this.outer: false,
+    this.outer = false,
     this.scale,
     this.fade,
   })  : assert(itemBuilder != null || transformer != null,
@@ -166,18 +166,18 @@ class Swiper extends StatefulWidget {
 
   factory Swiper.children({
     List<Widget>? children,
-    bool autoplay: false,
+    bool autoplay = false,
     PageTransformer? transformer,
-    int autoplayDelay: kDefaultAutoplayDelayMs,
-    bool reverse: false,
-    bool autoplayDisableOnInteraction: true,
-    int duration: kDefaultAutoplayTransactionDuration,
+    int autoplayDelay = kDefaultAutoplayDelayMs,
+    bool reverse = false,
+    bool autoplayDisableOnInteraction = true,
+    int duration = kDefaultAutoplayTransactionDuration,
     ValueChanged<int>? onIndexChanged,
     int? index,
     SwiperOnTap? onTap,
-    bool loop: true,
-    Curve curve: Curves.ease,
-    Axis scrollDirection: Axis.horizontal,
+    bool loop = true,
+    Curve curve = Curves.ease,
+    Axis scrollDirection = Axis.horizontal,
     SwiperPlugin? pagination,
     SwiperPlugin? control,
     List<SwiperPlugin>? plugins,
@@ -187,11 +187,11 @@ class Swiper extends StatefulWidget {
     ScrollPhysics? physics,
     double? containerHeight,
     double? containerWidth,
-    double viewportFraction: 1.0,
+    double viewportFraction = 1.0,
     double? itemHeight,
     double? itemWidth,
-    bool outer: false,
-    double scale: 1.0,
+    bool outer = false,
+    double scale = 1.0,
   }) {
     assert(children != null, "children must not be null");
 
@@ -232,17 +232,17 @@ class Swiper extends StatefulWidget {
     List? list,
     CustomLayoutOption? customLayoutOption,
     SwiperDataBuilder? builder,
-    bool autoplay: false,
-    int autoplayDelay: kDefaultAutoplayDelayMs,
-    bool reverse: false,
-    bool autoplayDisableOnInteraction: true,
-    int duration: kDefaultAutoplayTransactionDuration,
+    bool autoplay = false,
+    int autoplayDelay = kDefaultAutoplayDelayMs,
+    bool reverse = false,
+    bool autoplayDisableOnInteraction = true,
+    int duration = kDefaultAutoplayTransactionDuration,
     ValueChanged<int>? onIndexChanged,
     int? index,
     SwiperOnTap? onTap,
-    bool loop: true,
-    Curve curve: Curves.ease,
-    Axis scrollDirection: Axis.horizontal,
+    bool loop = true,
+    Curve curve = Curves.ease,
+    Axis scrollDirection = Axis.horizontal,
     SwiperPlugin? pagination,
     SwiperPlugin? control,
     List<SwiperPlugin>? plugins,
@@ -251,11 +251,11 @@ class Swiper extends StatefulWidget {
     ScrollPhysics? physics,
     double? containerHeight,
     double? containerWidth,
-    double? viewportFraction: 1.0,
+    double? viewportFraction = 1.0,
     double? itemHeight,
     double? itemWidth,
-    bool outer: false,
-    double scale: 1.0,
+    bool outer = false,
+    double scale = 1.0,
   }) {
     return new Swiper(
         transformer: transformer,
@@ -347,11 +347,9 @@ abstract class _SwiperTimerMixin extends State<Swiper> {
 
   @override
   void dispose() {
-    if (_controller != null) {
-      _controller.removeListener(_onController);
-      //  _controller.dispose();
-    }
-
+    _controller.removeListener(_onController);
+    //  _controller.dispose();
+  
     _stopAutoplay();
     super.dispose();
   }
@@ -679,7 +677,7 @@ abstract class _SubSwiper extends StatefulWidget {
       this.controller,
       this.index,
       this.itemCount,
-      this.scrollDirection: Axis.horizontal,
+      this.scrollDirection = Axis.horizontal,
       this.onIndexChanged})
       : super(key: key);
 
@@ -892,8 +890,8 @@ class _StackViewState extends _CustomLayoutStateBase<_StackSwiper> {
 
     //Array below this line, '0' index is 1.0 ,witch is the first item show in swiper.
     _startIndex = -3;
-    scales = [0.7, 0.8, 0.9, 1.0, 1.0];
-    opacity = [0.0, 0.5, 1.0, 1.0, 1.0];
+    scales = [0.5, 0.6, 0.7, 1.0, 1.0];
+    opacity = [0.0, 0.8, 2.0, 2.0, 2.0];
 
     _updateValues();
   }
@@ -935,7 +933,7 @@ class ScaleAndFadeTransformer extends PageTransformer {
   final double _scale;
   final double _fade;
 
-  ScaleAndFadeTransformer({double fade: 0.3, double scale: 0.8})
+  ScaleAndFadeTransformer({double fade = 0.3, double scale = 0.8})
       : _fade = fade,
         _scale = scale;
 
@@ -943,25 +941,21 @@ class ScaleAndFadeTransformer extends PageTransformer {
   Widget transform(Widget item, TransformInfo info) {
     double? position = info.position;
     Widget child = item;
-    if (_scale != null) {
-      double scaleFactor = (1 - position!.abs()) * (1 - _scale);
-      double scale = _scale + scaleFactor;
+    double scaleFactor = (1 - position!.abs()) * (1 - _scale);
+    double scale = _scale + scaleFactor;
 
-      child = new Transform.scale(
-        scale: scale,
-        child: item,
-      );
-    }
-
-    if (_fade != null) {
-      double fadeFactor = (1 - position!.abs()) * (1 - _fade);
-      double opacity = _fade + fadeFactor;
-      child = new Opacity(
-        opacity: opacity,
-        child: child,
-      );
-    }
-
+    child = new Transform.scale(
+      scale: scale,
+      child: item,
+    );
+  
+    double fadeFactor = (1 - position!.abs()) * (1 - _fade);
+    double opacity = _fade + fadeFactor;
+    child = new Opacity(
+      opacity: opacity,
+      child: child,
+    );
+  
     return child;
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:ng169/model/base.dart';
@@ -8,7 +7,6 @@ import 'package:ng169/page/home/novel_four_grid_view.dart';
 import 'package:ng169/page/home/novel_list_more_choose.dart';
 import 'package:ng169/page/home/novel_normal_card.dart';
 import 'package:ng169/page/home/novel_second_hybird_card.dart';
-import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';

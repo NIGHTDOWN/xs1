@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ng169/style/sq_color.dart'; // 确保这个路径是正确的
-import 'package:ng169/tool/function.dart'; // 确保这个路径是正确的
+// 确保这个路径是正确的
+// 确保这个路径是正确的
 
 class FrameAnimationImage extends StatefulWidget {
   final double width;

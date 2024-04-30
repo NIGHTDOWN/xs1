@@ -147,7 +147,7 @@ dynamic getdata(BuildContext? context, String? responseData) {
     User.clear();
     // show(context, js['msg']);
     show(context!, lang('请登入'));
-    gourl(context!, new Index() as WidgetBuilder);
+    gourl(context, new Index() as WidgetBuilder);
     return null;
   } else {
     if (loghttpcn) {

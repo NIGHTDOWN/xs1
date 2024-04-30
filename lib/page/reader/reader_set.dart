@@ -9,7 +9,6 @@ import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../style/screen.dart';
 

@@ -341,18 +341,17 @@ class PageIndicator extends StatefulWidget {
 
   PageIndicator(
       {Key? key,
-      this.size: 20.0,
-      this.space: 5.0,
+      this.size = 20.0,
+      this.space = 5.0,
       required this.count,
-        this.activeSize : 20.0,
+        this.activeSize = 20.0,
       required this.controller,
-      this.color: Colors.white30,
-      this.layout: PageIndicatorLayout.SLIDE,
-      this.activeColor: Colors.white,
-      this.scale: 0.6,
-      this.dropHeight: 20.0})
-      : assert(count != null),
-        assert(controller!=null),
+      this.color = Colors.white30,
+      this.layout = PageIndicatorLayout.SLIDE,
+      this.activeColor = Colors.white,
+      this.scale = 0.6,
+      this.dropHeight = 20.0})
+      : assert(controller!=null),
         super(key: key);
 
   @override

@@ -11,7 +11,6 @@ import 'package:ng169/page/reader/reader_bar.dart';
 import 'package:ng169/page/reader/reader_scene.dart';
 import 'package:ng169/page/reader/reader_tips_car.dart';
 import 'package:ng169/page/smallwidget/gifcartoon.dart';
-import 'package:ng169/page/smallwidget/gifload.dart';
 
 
 import 'package:ng169/style/screen.dart';

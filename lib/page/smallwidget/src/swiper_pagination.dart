@@ -23,10 +23,10 @@ class FractionPaginationBuilder extends SwiperPlugin {
 
   const FractionPaginationBuilder(
       {this.color,
-      this.fontSize: 20.0,
+      this.fontSize = 20.0,
       this.key,
       this.activeColor,
-      this.activeFontSize: 35.0});
+      this.activeFontSize = 35.0});
 
   @override
   Widget build(BuildContext context, SwiperPluginConfig config) {
@@ -94,9 +94,9 @@ class RectSwiperPaginationBuilder extends SwiperPlugin {
       { this.activeColor,
       this.color,
       this.key,
-      this.size: const Size(10.0, 2.0),
-      this.activeSize: const Size(10.0, 2.0),
-      this.space: 3.0});
+      this.size = const Size(10.0, 2.0),
+      this.activeSize = const Size(10.0, 2.0),
+      this.space = 3.0});
 
   @override
   Widget build(BuildContext context, SwiperPluginConfig config) {
@@ -166,9 +166,9 @@ class DotSwiperPaginationBuilder extends SwiperPlugin {
       {this.activeColor,
       this.color,
       this.key,
-      this.size: 10.0,
-      this.activeSize: 10.0,
-      this.space: 3.0});
+      this.size = 10.0,
+      this.activeSize = 10.0,
+      this.space = 3.0});
 
   @override
   Widget build(BuildContext context, SwiperPluginConfig config) {
@@ -240,7 +240,7 @@ typedef Widget SwiperPaginationBuilder(
 class SwiperCustomPagination extends SwiperPlugin {
   final SwiperPaginationBuilder builder;
 
-  SwiperCustomPagination({required this.builder}) : assert(builder != null);
+  SwiperCustomPagination({required this.builder});
 
   @override
   Widget build(BuildContext context, SwiperPluginConfig config) {
@@ -272,8 +272,8 @@ class SwiperPagination extends SwiperPlugin {
   const SwiperPagination(
       {this.alignment,
       this.key,
-      this.margin: const EdgeInsets.all(10.0),
-      this.builder: SwiperPagination.dots});
+      this.margin = const EdgeInsets.all(10.0),
+      this.builder = SwiperPagination.dots});
 
   Widget build(BuildContext context, SwiperPluginConfig config) {
     Alignment alignment = this.alignment ??

@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_cache_manager/src/cache_managers/base_cache_manager.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:ng169/model/user.dart';

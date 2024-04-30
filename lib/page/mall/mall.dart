@@ -45,13 +45,14 @@ class MallState extends State<Mall> {
   var hotbooksapi = 'book/new';
   var newCartoonsapi = 'cartoon/hot_cartoon';
   var randapi = 'book/get_randList';
-  Future gethttpdate(String api) async {
+  Future<dynamic>? gethttpdate(String api) async {
     var jbanner = await http(api, {}, gethead());
     var data = getdata(context, jbanner);
     if (isnull(data)) {
       return data;
     }
-    return Null;
+    // return Future.error(e);
+    return null;
   }
 
   mock() {
@@ -213,14 +214,7 @@ Future<void> processAsyncTasks() async {
       mallcache = getcache(cachedata);
       d(mallcache);
       if (isnull(mallcache)) {
-        // await Future.wait<dynamic>([
-        //   setdata(mallcache, bannerapi, 0),
-        //   setdata(mallcache, newBookapi, 1),
-        //   setdata(mallcache, newCartoonsapi, 2),
-        //   setdata(mallcache, hotbooksapi, 3),
-        //   setdata(mallcache, randapi, 4),
-        // ]);
-
+      
         processAsyncTasks();
       } else {
         setcache(index, 0, '0');
@@ -234,10 +228,16 @@ Future<void> processAsyncTasks() async {
     if (isnull(cache, cacheid)) {
       setval(cacheid, cache![cacheid]);
     } else {
-      var tmp = await gethttpdate(api);
-      d(tmp);
+      var tmp ;
+      try {
+       tmp = await gethttpdate(api);
+      } catch (e) {
+        dt(e);
+      }
+     
+    
       if (isnull(tmp)) {
-        setval(cacheid, tmp);
+        setval(cacheid, tmp as List);
         if (mallcache == null) {
           mallcache = [];
         }
@@ -245,9 +245,10 @@ Future<void> processAsyncTasks() async {
         setcache(cachedata, mallcache, '-1');
       }
     }
+    return ;
   }
 
-  setval(cacheid, val) {
+  setval(int cacheid, List<dynamic> val) {
     switch (cacheid) {
       case 0:
         banner = val;
@@ -380,11 +381,16 @@ Future<void> processAsyncTasks() async {
       height: Screen.navigationBarHeight * .4,
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
+      //    border: Border.all(
+      //    color:  Colors.white,
+      // width: 1,
+      //   ),
         //中间按钮背景框
         borderRadius: BorderRadius.all(Radius.circular(25)),
-        color: navAlpha <= 0 ? Color(0x202B2B2B) : Colors.grey[200],
+        color: navAlpha <= 0 ? Color.fromARGB(176, 91, 93, 91) : Colors.grey[200],
       ),
       child: Center(
+        
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
