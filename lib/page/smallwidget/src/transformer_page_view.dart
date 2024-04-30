@@ -338,7 +338,7 @@ class TransformerPageView extends StatefulWidget {
 }
 
 class _TransformerPageViewState extends State<TransformerPageView> {
-  late Size _size;
+  late Size? _size;
  late int _activeIndex;
  late double _currentPixels;
  late bool _done = false;
@@ -385,8 +385,8 @@ class _TransformerPageViewState extends State<TransformerPageView> {
 
           TransformInfo info = new TransformInfo(
               index: renderIndex,
-              width: _size.width,
-              height: _size.height,
+              width: _size!.width,
+              height: _size!.height,
               position: position.clamp(-1.0, 1.0),
               activeIndex:
                   _pageController.getRenderIndexFromRealIndex(_activeIndex),

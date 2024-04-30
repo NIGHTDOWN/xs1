@@ -1,30 +1,40 @@
 import 'dart:collection';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+
+
 import 'package:ng169/model/base.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
+
+import 'package:ng169/page/recharge/recharge.dart';
+import 'package:ng169/page/smallwidget/gifcartoon.dart';
+import 'package:ng169/page/smallwidget/src/swiper_controller.dart';
+import 'package:ng169/page/smallwidget/src/swiper_pagination.dart';
+import 'package:ng169/page/smallwidget/swiper.dart';
 import 'package:ng169/style/screen.dart';
+import 'package:ng169/tool/bow.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/url.dart';
 
+import '../smallwidget/src/swiper_plugin.dart';
+
 // ignore: must_be_immutable
 class BookBanner extends LoginBase {
-  List banners;
+  final List banners;
   static var novels = {};
-  late BuildContext context;
+  
   BookBanner(this.banners);
   HashMap tmplist = new HashMap();
-  static String bgimg = "";
-  // SwiperController sw = SwiperController();
+  static String? bgimg;
+  SwiperController sw = SwiperController();
   static double hd = 8;
   void initState() {
     hd = g('swidth') / 25;
     if (isnull(banners)) {
-      // banners=banners.reversed;
       BookBanner.bgimg = banners[0]['bpic'];
     }
   }
@@ -45,17 +55,14 @@ class BookBanner extends LoginBase {
 
   void dispose() {
     super.dispose();
-    // sw.dispose();
+    sw.dispose();
   }
 
   Widget banner(info) {
     Novel novel = getnovel(info);
     var bneer = ClipRRect(
       borderRadius: BorderRadius.circular(BookBanner.hd),
-      child: NgImage(
-        novel.imgUrl,
-        placeholder: Container(),
-      ),
+      child: NgImage(novel.imgUrl, placeholder: GifCartoon(),),
     );
     // return bneer;
     return GestureDetector(
@@ -67,6 +74,7 @@ class BookBanner extends LoginBase {
   }
 
   _bannerclick(novel) async {
+    
     gourl(context, NovelDetailScene(novel));
   }
 
@@ -101,9 +109,8 @@ class BookBanner extends LoginBase {
                         ? Positioned(
                             top: height - bgHeight,
                             child: NgImage(
-                              BookBanner.bgimg,
-                              width: w,
-                              placeholder: Container(),
+                              BookBanner.bgimg!,
+                              width: w, placeholder: GifCartoon(),
                             ))
                         : SizedBox(),
                     //透明遮罩
@@ -124,54 +131,45 @@ class BookBanner extends LoginBase {
             Container(
               height: h,
               margin: EdgeInsets.only(top: th),
-              child: CardSwiper(
-                cardBuilder: (BuildContext context,
-                    int index,
-                    int horizontalOffsetPercentage,
-                    int verticalOffsetPercentage) {
+              child: Swiper(
+                itemBuilder: (BuildContext context, int index) {
                   return banner(banners[index]);
                 },
-                cardsCount: banners.length,
-                duration: Duration(milliseconds: 2500),
-                isLoop: true,
+                autoplayDisableOnInteraction: true, // 用户进行操作时停止自动翻页
+                //默认分夜指示器
+                // pagination: new SwiperPagination(
+                //     builder: DotSwiperPaginationBuilder(
+                //         color: Colors.black54,
+                //         activeColor: Colors.white,
+                //         size: 35,
+                //         activeSize: 35)),
+                //白色小点分页指示器
+                pagination: new SwiperCustomPagination(
+                    builder: (BuildContext context, SwiperPluginConfig config) {
+                  return initpage(
+                      config.itemCount!, config.activeIndex!, config.controller!);
+                }),
+                controller: sw,
+                itemCount: banners.length,
+                viewportFraction: s,
+                scale: 0.8,
+                loop: true,
+                duration: 2500,
+                // onTap: (index) => print('点击了第$index个'),
+                autoplay: true,
+                onIndexChanged: (index) {
+                  if (isnull(banners[index]['bpic'])) {
+                    BookBanner.bgimg = banners[index]['bpic'];
+                    reflash();
+                  }
+                },
               ),
-              // child: CardSwiper(
-              //   itemBuilder: (BuildContext context, int index) {
-              //     return banner(banners[index]);
-              //   },
-              //   autoplayDisableOnInteraction: true, // 用户进行操作时停止自动翻页
-              //   // pagination: new SwiperPagination(
-              //   //     builder: DotSwiperPaginationBuilder(
-              //   //         color: Colors.black54,
-              //   //         activeColor: Colors.white,
-              //   //         size: 35,
-              //   //         activeSize: 35)),
-              //   pagination: new SwiperCustomPagination(
-              //       builder: (BuildContext context, SwiperPluginConfig config) {
-              //     return initpage(
-              //         config.itemCount, config.activeIndex, config.controller);
-              //   }),
-              //   // controller: sw,
-              //   itemCount: banners.length,
-              //   viewportFraction: s,
-              //   scale: 0.8,
-              //   loop: true,
-              //   duration: 2500,
-              //   // onTap: (index) => print('点击了第$index个'),
-              //   autoplay: true,
-              //   onIndexChanged: (index) {
-              //     if (isnull(banners[index]['bpic'])) {
-              //       BookBanner.bgimg = banners[index]['bpic'];
-              //       reflash();
-              //     }
-              //   }, cardBuilder: (BuildContext context, int index, int horizontalOffsetPercentage, int verticalOffsetPercentage) {  },
-              // ),
             )
           ],
         ));
   }
 
-  Widget initpage(int count, int index, CardSwiperController controller) {
+  Widget initpage(int count, int index, SwiperController controller) {
     List<Widget> s = [];
     double size = 7;
     Color colore = Colors.white;
@@ -184,10 +182,7 @@ class BookBanner extends LoginBase {
       if (i == index) {
         s.add(GestureDetector(
             onTap: () {
-              // controller.move(i, animation: false);
-              // controller.moveTo(i);
-
-              controller.swipe();
+              controller.move(i, animation: false);
             },
             child: Container(
               margin: EdgeInsets.all(size / 2),
@@ -202,9 +197,7 @@ class BookBanner extends LoginBase {
       } else {
         s.add(GestureDetector(
             onTap: () {
-              // controller.move(i, animation: false);
-              // controller.moveTo(i);
-              controller.swipe();
+              controller.move(i, animation: false);
             },
             child: Container(
               margin: EdgeInsets.all(size / 2),

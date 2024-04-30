@@ -22,7 +22,7 @@ late  SwiperPluginConfig config;
 late double pos;
 late int index;
 late bool animation;
-late bool autoplay;
+late bool autoplay=true;
 
   SwiperController();
 

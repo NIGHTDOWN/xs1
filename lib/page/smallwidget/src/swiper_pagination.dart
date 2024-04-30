@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 import 'flutter_page_indicator.dart';
-import 'swiper.dart';
+import '../swiper.dart';
 import 'swiper_plugin.dart';
 
 
@@ -40,7 +40,7 @@ class FractionPaginationBuilder extends SwiperPlugin {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           new Text(
-            "${config.activeIndex + 1}",
+            "${config.activeIndex! + 1}",
             style: TextStyle(color: activeColor, fontSize: activeFontSize),
           ),
           new Text(
@@ -59,7 +59,7 @@ class FractionPaginationBuilder extends SwiperPlugin {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           new Text(
-            "${config.activeIndex + 1}",
+            "${config.activeIndex! + 1}",
             style: TextStyle(color: activeColor, fontSize: activeFontSize),
           ),
           new Text(
@@ -106,13 +106,13 @@ class RectSwiperPaginationBuilder extends SwiperPlugin {
 
     List<Widget> list = [];
 
-    if (config.itemCount > 20) {
+    if (config.itemCount! > 20) {
       print(
           "The itemCount is too big, we suggest use FractionPaginationBuilder instead of DotSwiperPaginationBuilder in this sitituation");
     }
 
-    int itemCount = config.itemCount;
-    int activeIndex = config.activeIndex;
+    int itemCount = config.itemCount!;
+    int activeIndex = config.activeIndex!;
 
     for (int i = 0; i < itemCount; ++i) {
       bool active = i == activeIndex;
@@ -172,7 +172,7 @@ class DotSwiperPaginationBuilder extends SwiperPlugin {
 
   @override
   Widget build(BuildContext context, SwiperPluginConfig config) {
-    if (config.itemCount > 20) {
+    if (config.itemCount! > 20) {
       print(
           "The itemCount is too big, we suggest use FractionPaginationBuilder instead of DotSwiperPaginationBuilder in this sitituation");
     }
@@ -188,9 +188,9 @@ class DotSwiperPaginationBuilder extends SwiperPlugin {
     if (config.indicatorLayout != PageIndicatorLayout.NONE &&
         config.layout == SwiperLayout.DEFAULT) {
       return new PageIndicator(
-        count: config.itemCount,
-        controller: config.pageController,
-        layout: config.indicatorLayout,
+        count: config.itemCount!,
+        controller: config.pageController!,
+        layout: config.indicatorLayout!,
         size: size,
         activeColor: activeColor,
         color: color,
@@ -200,8 +200,8 @@ class DotSwiperPaginationBuilder extends SwiperPlugin {
 
     List<Widget> list = [];
 
-    int itemCount = config.itemCount;
-    int activeIndex = config.activeIndex;
+    int itemCount = config.itemCount!;
+    int activeIndex = config.activeIndex!;
 
     for (int i = 0; i < itemCount; ++i) {
       bool active = i == activeIndex;
@@ -284,7 +284,7 @@ class SwiperPagination extends SwiperPlugin {
       margin: margin,
       child: this.builder.build(context, config),
     );
-    if (!config.outer) {
+    if (!config.outer!) {
       child = new Align(
         key: key,
         alignment: alignment,

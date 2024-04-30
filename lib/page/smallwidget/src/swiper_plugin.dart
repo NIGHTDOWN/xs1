@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'flutter_page_indicator.dart';
-import 'swiper.dart';
+import '../swiper.dart';
 import 'swiper_controller.dart';
 
 
