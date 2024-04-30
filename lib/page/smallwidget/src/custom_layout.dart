@@ -85,7 +85,7 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
     );
   }
 
-  Widget _buildAnimation(BuildContext context, Widget w) {
+  Widget _buildAnimation(BuildContext? context, Widget? w) {
     List<Widget> list = [];
 
     double animationValue = _animation!.value;

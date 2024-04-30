@@ -1,7 +1,6 @@
 library transformer_page_view;
 
 import 'package:flutter/widgets.dart';
-import 'package:ng169/tool/function.dart';
 
 import 'index_controller.dart';
 
@@ -107,7 +106,7 @@ class TransformerPageController extends PageController {
     bool keepPage = true,
     double viewportFraction = 1.0,
     this.loop: false,
-    this.itemCount,
+    required this.itemCount,
     this.reverse: false,
   }) : super(
             initialPage: TransformerPageController._getRealIndexFromRenderIndex(
@@ -362,11 +361,11 @@ class _TransformerPageViewState extends State<TransformerPageView> {
         animation: _pageController,
         builder: (BuildContext c, Widget? w) {
           int renderIndex = _pageController.getRenderIndexFromRealIndex(index);
-          Widget child;
+          Widget? child;
           if (widget.itemBuilder != null) {
             child = widget.itemBuilder!(context, renderIndex);
           }
-          if (isnull(child)) {
+          if (child == null) {
             child = new Container();
           }
           if (_size == null) {
@@ -382,7 +381,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
           } else {
             position = index - page;
           }
-          position *= widget.viewportFraction;
+          position *= widget.viewportFraction!;
 
           TransformInfo info = new TransformInfo(
               index: renderIndex,
@@ -403,7 +402,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
   double _calcCurrentPixels() {
     _currentPixels = _pageController.getRenderIndexFromRealIndex(_activeIndex) *
         _pageController.position.viewportDimension *
-        widget.viewportFraction;
+        widget.viewportFraction!;
 
     //  print("activeIndex:$_activeIndex , pix:$_currentPixels");
 
@@ -503,7 +502,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
 
   @override
   void didUpdateWidget(TransformerPageView oldWidget) {
-    _transformer = widget.transformer;
+    _transformer = widget.transformer!;
     int index = widget.index ?? 0;
     bool created = false;
     if (_pageController != widget.pageController) {

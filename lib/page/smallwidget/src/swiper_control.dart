@@ -39,9 +39,9 @@ class SwiperControl extends SwiperPlugin {
       behavior: HitTestBehavior.opaque,
       onTap: () {
         if (previous) {
-          config.controller.previous(animation: true);
+          config.controller!.previous(animation: true);
         } else {
-          config.controller.next(animation: true);
+          config.controller!.next(animation: true);
         }
       },
       child: Padding(
@@ -66,11 +66,11 @@ class SwiperControl extends SwiperPlugin {
     Color prevColor;
     Color nextColor;
 
-    if (config.loop) {
+    if (config.loop!) {
       prevColor = nextColor = color;
     } else {
-      bool next = config.activeIndex < config.itemCount - 1;
-      bool prev = config.activeIndex > 0;
+      bool next = config.activeIndex! < config.itemCount! - 1;
+      bool prev = config.activeIndex! > 0;
       prevColor = prev ? color : disableColor;
       nextColor = next ? color : disableColor;
     }
