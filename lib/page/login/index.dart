@@ -88,8 +88,8 @@ class _Index extends State<Index> {
               /**这里要手动设置container的高度和宽度，不然显示不了
                      * 利用MediaQuery可以获取到跟屏幕信息有关的数据
                      */
-              // height: MediaQuery.of(context).size.height,
-              height: 750,
+              height: MediaQuery.of(context).size.height,
+              // height: 750,
               width: MediaQuery.of(context).size.width,
 
               //设置渐变的背景

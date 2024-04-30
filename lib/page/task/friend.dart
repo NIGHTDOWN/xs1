@@ -32,7 +32,7 @@ class Friend extends LoginBase {
     // },
   ];
   var nums = '0', numyx = '0';
-  late List rand;
+  late List? rand;
   var coin = '500';
   var size = 10;
   var cachename = 'friendcache';
@@ -85,7 +85,7 @@ class Friend extends LoginBase {
         return;
       }
       var rng = Random();
-      randindex = rng.nextInt(rand.length);
+      randindex = rng.nextInt(rand!.length);
 
       reflash();
     });
@@ -152,7 +152,7 @@ class Friend extends LoginBase {
   getpmd(int index) {
     if (isnull(rand, index)) {
       String str;
-      var name = fixname(rand[index]['nickname']);
+      var name = fixname(rand![index]['nickname']);
       str = name + lang('刚刚领取') + coin + lang('金豆');
       return Text(str,
           overflow: TextOverflow.ellipsis,
