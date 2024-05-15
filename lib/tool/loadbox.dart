@@ -42,13 +42,13 @@ class LoadboxState extends State<Loadbox> {
   late Timer timer;
 
   // Widget child;
- late double height;
- late double width;
- late Color color;
- late Color bgColor;
- late int count;
- late int speed;
- late double opacity;
+  late double height;
+  late double width;
+  late Color color;
+  late Color bgColor;
+  late int count;
+  late int speed;
+  late double opacity;
 
   List<Offset> offsetList = [];
   List<double> radiusList = [];
@@ -143,6 +143,7 @@ class LoadboxState extends State<Loadbox> {
               opacity: this.opacity,
               child: ModalBarrier(
                 color: Colors.black,
+                dismissible: false, //点击黑色背景是否退出
               )),
         );
       }
@@ -175,6 +176,8 @@ class LoadboxState extends State<Loadbox> {
       ),
       onTap: () {
         //loading = false;
+        //这里是加载进度条图形点击事件
+
         reflash();
       },
     );
@@ -198,7 +201,10 @@ class RoundPainter extends CustomPainter {
   List<double> radiusList;
   Color color;
 
-  RoundPainter({required this.offsetList, required this.radiusList, required this.color});
+  RoundPainter(
+      {required this.offsetList,
+      required this.radiusList,
+      required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

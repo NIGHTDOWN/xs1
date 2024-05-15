@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import 'transformer_page_view.dart';
 
-
 typedef void PaintCallback(Canvas canvas, Size siz);
 
 class ColorPainter extends CustomPainter {
@@ -111,8 +110,7 @@ class ParallaxContainer extends StatelessWidget {
       {required this.child,
       required this.position,
       this.translationFactor = 100.0,
-      this.opacityFactor = 1.0})
-      : assert(translationFactor != null);
+      this.opacityFactor = 1.0});
 
   @override
   Widget build(BuildContext context) {

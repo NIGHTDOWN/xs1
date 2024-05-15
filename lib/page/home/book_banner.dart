@@ -52,8 +52,12 @@ class BookBanner extends LoginBase {
   }
 
   void dispose() {
+    //  if(isnull(sw)){
+    // sw.dispose();
+    // }
     super.dispose();
-    sw.dispose();
+   
+   
   }
 
   Widget banner(info) {

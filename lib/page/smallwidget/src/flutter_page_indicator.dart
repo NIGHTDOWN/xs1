@@ -61,13 +61,12 @@ class NonePainter extends BasePainter {
   @override
   void draw(Canvas canvas, double space, double size, double radius) {
     double progress = page - index;
-    double secondOffset = index == widget.count-1 ? radius : radius + ((index + 1) * (size + space));
+    double secondOffset = index == widget.count - 1
+        ? radius
+        : radius + ((index + 1) * (size + space));
 
     if (progress > 0.5) {
-      canvas.drawCircle(
-          new Offset(secondOffset, radius),
-          radius,
-          _paint);
+      canvas.drawCircle(new Offset(secondOffset, radius), radius, _paint);
     } else {
       canvas.drawCircle(new Offset(radius + (index * (size + space)), radius),
           radius, _paint);
@@ -87,17 +86,14 @@ class SlidePainter extends BasePainter {
 }
 
 class ScalePainter extends BasePainter {
-
-  ScalePainter(
-      PageIndicator widget, double page, int index, Paint paint)
+  ScalePainter(PageIndicator widget, double page, int index, Paint paint)
       : super(widget, page, index, paint);
-
 
   // 连续的两个点，含有最后一个和第一个
   @override
   bool _shouldSkip(int i) {
-    if(index == widget.count-1){
-      return i==0 || i == index;
+    if (index == widget.count - 1) {
+      return i == 0 || i == index;
     }
     return (i == index || i == index + 1);
   }
@@ -116,15 +112,15 @@ class ScalePainter extends BasePainter {
           radius * widget.scale, _paint);
     }
 
-
     _paint.color = widget.activeColor;
     draw(canvas, space, size, radius);
   }
 
   @override
   void draw(Canvas canvas, double space, double size, double radius) {
-
-    double secondOffset = index == widget.count-1 ? radius : radius + ((index + 1) * (size + space));
+    double secondOffset = index == widget.count - 1
+        ? radius
+        : radius + ((index + 1) * (size + space));
 
     double progress = page - index;
     _paint.color = Color.lerp(widget.activeColor, widget.color, progress)!;
@@ -133,11 +129,8 @@ class ScalePainter extends BasePainter {
         lerp(radius, radius * widget.scale, progress), _paint);
     //first
     _paint.color = Color.lerp(widget.color, widget.activeColor, progress)!;
-    canvas.drawCircle(
-        new Offset(secondOffset, radius),
-        lerp(radius * widget.scale, radius, progress),
-        _paint);
-
+    canvas.drawCircle(new Offset(secondOffset, radius),
+        lerp(radius * widget.scale, radius, progress), _paint);
   }
 }
 
@@ -148,8 +141,8 @@ class ColorPainter extends BasePainter {
   // 连续的两个点，含有最后一个和第一个
   @override
   bool _shouldSkip(int i) {
-    if(index == widget.count-1){
-      return i==0 || i == index;
+    if (index == widget.count - 1) {
+      return i == 0 || i == index;
     }
     return (i == index || i == index + 1);
   }
@@ -157,7 +150,9 @@ class ColorPainter extends BasePainter {
   @override
   void draw(Canvas canvas, double space, double size, double radius) {
     double progress = page - index;
-    double secondOffset = index == widget.count-1 ? radius : radius + ((index + 1) * (size + space));
+    double secondOffset = index == widget.count - 1
+        ? radius
+        : radius + ((index + 1) * (size + space));
 
     _paint.color = Color.lerp(widget.activeColor, widget.color, progress)!;
     //left
@@ -165,10 +160,7 @@ class ColorPainter extends BasePainter {
         new Offset(radius + (index * (size + space)), radius), radius, _paint);
     //right
     _paint.color = Color.lerp(widget.color, widget.activeColor, progress)!;
-    canvas.drawCircle(
-        new Offset(secondOffset, radius),
-        radius,
-        _paint);
+    canvas.drawCircle(new Offset(secondOffset, radius), radius, _paint);
   }
 }
 
@@ -181,8 +173,6 @@ abstract class BasePainter extends CustomPainter {
   double lerp(double begin, double end, double progress) {
     return begin + (end - begin) * progress;
   }
-
-
 
   BasePainter(this.widget, this.page, this.index, this._paint);
 
@@ -287,7 +277,7 @@ class _PageIndicatorState extends State<PageIndicator> {
 
   @override
   void didUpdateWidget(PageIndicator oldWidget) {
-    if(widget.controller != oldWidget.controller){
+    if (widget.controller != oldWidget.controller) {
       oldWidget.controller.removeListener(_onController);
       widget.controller.addListener(_onController);
     }
@@ -344,15 +334,14 @@ class PageIndicator extends StatefulWidget {
       this.size = 20.0,
       this.space = 5.0,
       required this.count,
-        this.activeSize = 20.0,
+      this.activeSize = 20.0,
       required this.controller,
       this.color = Colors.white30,
       this.layout = PageIndicatorLayout.SLIDE,
       this.activeColor = Colors.white,
       this.scale = 0.6,
       this.dropHeight = 20.0})
-      : assert(controller!=null),
-        super(key: key);
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

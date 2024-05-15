@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -54,7 +53,6 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
     novel = this.widget.novel;
     super.initState();
     fetchData();
-
     Rackmodel()..upreadtime(novel);
     scrolllistener();
     // d(widget.opshare);
@@ -174,6 +172,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
         }
         break;
     }
+    if (!mounted) return;
     var tpdata = getdata(context, novelResponse);
     httpnum = 0;
     if (isnull(tpdata)) {
@@ -270,7 +269,8 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
     var data = await gourl(
         context,
         AddComment(
-          novel: novel, key: null,
+          novel: novel,
+          key: null,
         ));
     if (isnull(data)) {
       //提交了评论就刷新
@@ -359,6 +359,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
     }
 
     var tmpdata = await http(api, {}, gethead());
+    if (!mounted) return [];
     var data = getdata(context, tmpdata);
     if (isnull(data)) {
       likebook = data;
@@ -463,7 +464,8 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
                         " " +
                         '${novel.chapterCount}' +
                         " " +
-                        lang('章'), attachedWidget: SizedBox(),
+                        lang('章'),
+                    attachedWidget: SizedBox(),
                   )),
                   // buildTags(),  //标签，此版先不加
                   SizedBox(height: 10),

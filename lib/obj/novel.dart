@@ -346,13 +346,12 @@ class Novel {
       desc = data['desc'] ?? "";
       type = data['type'].toString();
       isgroom = data['isgroom'].toString();
-      readChapter = isnull(data['readsec']) ? int.parse(data['readsec']) : 0;
-      lastChapter = isnull(data['secnum']) ? int.parse(data['secnum']) : 0;
+      readChapter = isnull(data['readsec']) ? data['readsec'] : 0;
+      lastChapter = isnull(data['secnum']) ? data['secnum'] : 0;
       lastsecnum = data['lastsecnum'].toString();
       nowsecnum = data['nowsecnum'].toString();
       if (isnull(lastsecnum) && isnull(nowsecnum)) {
         //执行
-
         upsecnum = int.parse(nowsecnum) - int.parse(lastsecnum);
       }
 
@@ -367,7 +366,7 @@ class Novel {
           status = lang('连载中');
       }
     } catch (e) {
-       dt(e);
+      dt(e);
     }
   }
   //获取书籍信息，先从数据库拉取，数据库没就从远程拉取

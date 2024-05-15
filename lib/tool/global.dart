@@ -6,6 +6,7 @@ import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/cacheimg.dart';
 
 import 'package:ng169/tool/http.dart';
+import 'package:ng169/tool/im.dart';
 
 import 'package:ng169/tool/thred.dart';
 import 'package:package_info/package_info.dart';
@@ -32,6 +33,7 @@ i() async {
     'msg': 0,
     'locallg': '',
     'downthred': Thred(),
+    'im': Im(),
   };
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =

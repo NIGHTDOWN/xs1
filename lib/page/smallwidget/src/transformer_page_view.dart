@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 
 import 'index_controller.dart';
 
-
 ///
 /// NOTICE::
 ///
@@ -144,11 +143,7 @@ class TransformerPageController extends PageController {
 
   double get realPage {
     double page;
-    if (position.minScrollExtent == null) {
-      page = 0.0;
-    } else {
-      page = super.page!;
-    }
+    page = super.page!;
 
     return page;
   }
@@ -315,7 +310,10 @@ class TransformerPageView extends StatefulWidget {
   }
 
   static int getRealIndexFromRenderIndex(
-      {required bool reverse, required int index, required int itemCount, required bool loop}) {
+      {required bool reverse,
+      required int index,
+      required int itemCount,
+      required bool loop}) {
     int initPage = reverse ? (itemCount - index - 1) : index;
     if (loop) {
       initPage += kMiddleValue;
@@ -331,23 +329,26 @@ class TransformerPageView extends StatefulWidget {
       double? viewportFraction}) {
     return new PageController(
         initialPage: getRealIndexFromRenderIndex(
-            reverse: reverse!, index: index!, itemCount: itemCount!, loop: loop!),
+            reverse: reverse!,
+            index: index!,
+            itemCount: itemCount!,
+            loop: loop!),
         viewportFraction: viewportFraction!);
   }
 }
 
 class _TransformerPageViewState extends State<TransformerPageView> {
-   Size? _size;
- late int _activeIndex;
- late double _currentPixels;
- late bool _done = false;
+  Size? _size;
+  late int _activeIndex;
+  late double _currentPixels;
+  late bool _done = false;
 
   ///This value will not change until user end drag.
- late int _fromIndex;
+  late int _fromIndex;
 
- late PageTransformer _transformer;
+  late PageTransformer _transformer;
 
- late TransformerPageController _pageController;
+  late TransformerPageController _pageController;
 
   Widget _buildItemNormal(BuildContext context, int index) {
     int renderIndex = _pageController.getRenderIndexFromRealIndex(index);
@@ -447,23 +448,20 @@ class _TransformerPageViewState extends State<TransformerPageView> {
   }
 
   void _onGetSize(_) {
-   late Size? size;
+    late Size? size;
     RenderObject renderObject = context.findRenderObject()!;
     Rect bounds = renderObject.paintBounds;
-    if (bounds != null) {
-      size = bounds.size;
-    }
-      _calcCurrentPixels();
+    size = bounds.size;
+    _calcCurrentPixels();
     onGetSize(size);
   }
 
   void onGetSize(Size? size) {
-    if(mounted){
+    if (mounted) {
       setState(() {
         _size = size!;
       });
     }
-
   }
 
   @override
@@ -477,7 +475,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
 
     _controller = getNotifier();
     _controller.addListener(onChangeNotifier);
-      super.initState();
+    super.initState();
   }
 
   @override
@@ -512,9 +510,9 @@ class _TransformerPageViewState extends State<TransformerPageView> {
 
     if (_controller != getNotifier()) {
       _controller.removeListener(onChangeNotifier);
-          _controller = getNotifier();
+      _controller = getNotifier();
       _controller.addListener(onChangeNotifier);
-        }
+    }
     super.didUpdateWidget(oldWidget);
   }
 
@@ -591,5 +589,5 @@ class _TransformerPageViewState extends State<TransformerPageView> {
   void dispose() {
     super.dispose();
     _controller.removeListener(onChangeNotifier);
-    }
+  }
 }

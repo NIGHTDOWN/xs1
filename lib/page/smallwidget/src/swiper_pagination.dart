@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 import 'flutter_page_indicator.dart';
 import '../swiper.dart';
 import 'swiper_plugin.dart';
-
 
 class FractionPaginationBuilder extends SwiperPlugin {
   ///color ,if set null , will be Theme.of(context).scaffoldBackgroundColor
@@ -91,7 +89,7 @@ class RectSwiperPaginationBuilder extends SwiperPlugin {
   final Key? key;
 
   const RectSwiperPaginationBuilder(
-      { this.activeColor,
+      {this.activeColor,
       this.color,
       this.key,
       this.size = const Size(10.0, 2.0),
@@ -255,7 +253,8 @@ class SwiperPagination extends SwiperPlugin {
   /// fraction style pagination
   static const SwiperPlugin fraction = const FractionPaginationBuilder();
 
-  static const SwiperPlugin rect = const RectSwiperPaginationBuilder(activeColor: null);
+  static const SwiperPlugin rect =
+      const RectSwiperPaginationBuilder(activeColor: null);
 
   /// Alignment.bottomCenter by default when scrollDirection== Axis.horizontal
   /// Alignment.centerRight by default when scrollDirection== Axis.vertical

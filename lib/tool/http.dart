@@ -112,8 +112,8 @@ dynamic getres() {
 
 dynamic getdata(BuildContext? context, String? responseData) {
   var js;
-  if(!isnull(context)){
-    context=g("context");
+  if (!isnull(context)) {
+    context = g("context");
   }
   if (!isnull(responseData)) {
     //请求无数据返回的时候不要报错
@@ -147,7 +147,7 @@ dynamic getdata(BuildContext? context, String? responseData) {
     User.clear();
     // show(context, js['msg']);
     show(context!, lang('请登入'));
-    gourl(context, new Index() as WidgetBuilder);
+    gourl(context, new Index() as Widget);
     return null;
   } else {
     if (loghttpcn) {
@@ -166,9 +166,9 @@ Future<String> httpfile(String url,
 
   dio.options.baseUrl = apiurl;
   //设置连接超时时间
-  dio.options.connectTimeout = Duration(seconds: 10);
+  dio.options.connectTimeout = Duration(seconds: 20);
   //设置数据接收超时时间
-  dio.options.receiveTimeout = Duration(seconds: 10);
+  dio.options.receiveTimeout = Duration(seconds: 30);
   // dio.options.headers[HttpHeaders.authorizationHeader] = '1233';
   // dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 

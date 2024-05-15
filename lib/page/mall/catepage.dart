@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:ng169/model/base.dart';
 import 'package:ng169/model/cate.dart';
@@ -150,20 +149,21 @@ class CatePage extends LoginBase {
         tagHeight = tt;
       }
     } catch (e) {
-       dt(e);
+      dt(e);
     }
   }
 
   loadcate() async {
     try {
       cate = await Catemodel.getcate();
+      if (!isnull(cate)) return;
       cateleft = cate[0]['child'];
       selectc1 = cate[0]['child'][0]['category_id'];
       tag = cate[0]['child'][0]['child'];
       gethttpdata();
       setState(() {});
     } catch (e) {
-       dt(e);
+      dt(e);
     }
   }
 
@@ -675,7 +675,7 @@ class CatePage extends LoginBase {
   }
 
   Widget bookCardWithInfo(int style, String title, List json) {
-    Widget card=new SizedBox();
+    Widget card = new SizedBox();
     switch (style) {
       case 1:
         card = NovelFourGridView(title, json, false);
