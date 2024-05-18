@@ -52,15 +52,15 @@ const readfx = 'readfx'; //阅读方向
 // 下载渠道，打包的时候修改此处
 const downqd = 'google';
 //测试
-const loghttp = false;
-const loghttprq = false;
-const loghttpcn = false; //显示http错误内容，false显示错误码
-const isdebug = true; //显示各种调试信息，false不显示任何调试信息
-const delanguage = 'zh'; //默认语言
+// const loghttp = false;
+// const loghttprq = false;
+// const loghttpcn = false; //显示http错误内容，false显示错误码
+// const isdebug = true; //显示各种调试信息，false不显示任何调试信息
+// const delanguage = 'zh'; //默认语言
 
 // //正式
-// const loghttp = true;
-// const loghttprq = true;
-// const loghttpcn = true; //显示http错误内容，false显示错误码
-// const isdebug = true; //显示各种调试信息，false不显示任何调试信息
-// const delanguage = 'th'; //默认语言
+const loghttp = true;
+const loghttprq = true;
+const loghttpcn = true; //显示http错误内容，false显示错误码
+const isdebug = true; //显示各种调试信息，false不显示任何调试信息
+const delanguage = 'th'; //默认语言

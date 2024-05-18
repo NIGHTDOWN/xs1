@@ -18,13 +18,13 @@ class Msg {
   Msg.fromJson(Map<String, dynamic> data)
       : content = data['content'] ?? '',
         id = data['id'] ?? 0 {
-    fuid = data['fuid'] ?? '';
-    msgid = data['msgid'] ?? '';
-    tuid = data['tuid'] ?? '';
-    type = data['type'] ?? '0';
-    flag = data['flag'] ?? false;
-    sendtime = data['sendtime'] ?? '';
-    contenttype = data['contenttype'] ?? '0';
+    fuid = tostring(data['fuid']) ?? '';
+    msgid = tostring(data['msgid']) ?? '';
+    tuid = tostring(data['tuid']) ?? '';
+    type = tostring(data['type']) ?? '0';
+    flag = tobool(data['flag']);
+    sendtime = tostring(data['sendtime']);
+    contenttype = tostring(data['contenttype']);
   }
   Msg.fromhttpJson(Map<String, dynamic> data)
       : content = '',
@@ -38,7 +38,7 @@ class Msg {
       tuid = '0';
     }
     type = data['type']?.toString() ?? '0';
-    id = data['id'] ?? 0;
+    id = int.parse(data['id']) ?? 0;
     sendtime = data['sendtime']?.toString() ?? '';
     contenttype = data['contenttype']?.toString() ?? '0';
     content = data['content'] ?? '';

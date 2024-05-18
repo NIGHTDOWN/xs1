@@ -17,9 +17,11 @@ import 'dart:ui' as ui show instantiateImageCodec, Codec, FrameInfo;
 import 'global.dart';
 import 'http.dart';
 import 'lang.dart';
-void dt(var e){
+
+void dt(var e) {
   throw e;
 }
+
 void d(data, [index = 1]) {
   if (!isdebug) {
     return;
@@ -30,6 +32,26 @@ void d(data, [index = 1]) {
   print('输出内容');
   print(data);
   print('行号' + line);
+}
+
+String tostring(dynamic data) {
+  if (data is String) {
+    return data;
+  } else {
+    return data.toString();
+  }
+}
+
+bool tobool(dynamic data) {
+  return isnull(data);
+}
+
+int toing(dynamic data) {
+  if (data is int) {
+    return data;
+  } else {
+    return int.parse(data);
+  }
 }
 
 //弹出消息提示
@@ -338,7 +360,7 @@ bool isnull(dynamic data, [var index]) {
     if ([] == data) {
       return false;
     }
-     if ({} == data) {
+    if ({} == data) {
       return false;
     }
     if ('null' == data) {
@@ -356,7 +378,7 @@ bool isnull(dynamic data, [var index]) {
       return false;
     }
   }
-   if (data is double) {
+  if (data is double) {
     if (0 == data) {
       return false;
     }

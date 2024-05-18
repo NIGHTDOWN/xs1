@@ -84,7 +84,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
 // 系统窗口相关改变回调
   void didChangeMetrics() {
     super.didChangeMetrics();
-    d('切换窗口');
+    // d('切换窗口');
   }
 
   @override

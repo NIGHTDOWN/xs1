@@ -239,7 +239,8 @@ class Kefu extends LoginBase {
       //     },
       //   );
       // });
-
+      d("这里发送了");
+      g('im').send(str);
       Msg msgobj = Msg.carete(0, str);
       //缓存到本地数据库
       await msgobj.send();
