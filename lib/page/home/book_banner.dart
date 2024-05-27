@@ -8,6 +8,7 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
 
 import 'package:ng169/page/smallwidget/gifcartoon.dart';
+import 'package:ng169/page/smallwidget/gifcartoon2.dart';
 import 'package:ng169/page/smallwidget/src/swiper_controller.dart';
 import 'package:ng169/page/smallwidget/src/swiper_pagination.dart';
 import 'package:ng169/page/smallwidget/swiper.dart';
@@ -64,7 +65,7 @@ class BookBanner extends LoginBase {
       borderRadius: BorderRadius.circular(BookBanner.hd),
       child: NgImage(
         novel.imgUrl,
-        placeholder: GifCartoon(),
+        placeholder: GifCartoon2(),
       ),
     );
     // return bneer;
@@ -113,7 +114,7 @@ class BookBanner extends LoginBase {
                             child: NgImage(
                               BookBanner.bgimg!,
                               width: w,
-                              placeholder: GifCartoon(),
+                              placeholder: GifCartoon2(),
                             ))
                         : SizedBox(),
                     //透明遮罩

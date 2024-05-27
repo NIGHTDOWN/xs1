@@ -66,10 +66,8 @@ class CartoonViewState extends State<CartoonView> {
   @override
   void initState() {
     super.initState();
-
-    loadimg = GifCartoon();
+    loadimg = GifCartoon2();
     pageindex = widget.page;
-
     loadanmianl = Gifload();
     init();
   }
@@ -459,6 +457,13 @@ class CartoonViewState extends State<CartoonView> {
         onTapUp: (TapUpDetails details) {
           onTap(details.globalPosition);
         },
+        // child: ListView(
+        //   physics: BouncingScrollPhysics(),
+        //   controller: pageController,
+        //   children: pics.map((item) {
+        //     return item;
+        //   }).toList(),
+        // ),
         child: ListView(
           physics: BouncingScrollPhysics(),
           controller: pageController,

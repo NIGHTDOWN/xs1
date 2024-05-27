@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ng169/page/smallwidget/gifcartoon.dart';
 
-
-
 import 'dart:async' show Future;
 import 'dart:io' show File;
 
@@ -13,6 +11,7 @@ import 'dart:ui' as ui show instantiateImageCodec, Codec;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:ng169/page/smallwidget/gifcartoon2.dart';
 
 import 'function.dart';
 import 'global.dart';
@@ -85,16 +84,16 @@ class NgImage extends StatelessWidget {
         imageUrl: img,
         fit: fit,
         // useOldImageOnUrlChange: true,
-        width: isnull(width)?width:null,
-        height: isnull(height)?height:null,
+        width: isnull(width) ? width : null,
+        height: isnull(height) ? height : null,
         //添加预加载视图
-      
+
         errorWidget: (context, url, error) => errorWidget,
         placeholder: (context, index) {
           if (isnull(placeholder)) {
             return placeholder;
           }
-          return GifCartoon();
+          return GifCartoon2();
         },
         // decoration: BoxDecoration(border: Border.all(color: SQColor.paper)),
       );

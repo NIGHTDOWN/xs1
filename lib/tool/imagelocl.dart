@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:ng169/model/cacheimg.dart';
 import 'package:ng169/page/smallwidget/gifcartoon.dart';
+import 'package:ng169/page/smallwidget/gifcartoon2.dart';
 import 'dart:io' show File;
 import 'package:ng169/tool/down.dart';
 import 'function.dart';
@@ -16,7 +16,10 @@ class NgImageLocl extends StatefulWidget {
   final Widget placeholder;
 
   NgImageLocl(this.imgUrl,
-      {required this.width, required this.height, required this.fit,required this.placeholder});
+      {required this.width,
+      required this.height,
+      required this.fit,
+      required this.placeholder});
 
   @override
   State<StatefulWidget> createState() => NgImageLoclState();
@@ -41,7 +44,7 @@ class NgImageLoclState extends State<NgImageLocl>
     if (isnull(widget.placeholder)) {
       return widget.placeholder;
     }
-    return GifCartoon();
+    return GifCartoon2();
   }
 
   //返回图片本地名

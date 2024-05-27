@@ -11,6 +11,7 @@ import 'package:ng169/page/reader/reader_bar.dart';
 import 'package:ng169/page/reader/reader_scene.dart';
 import 'package:ng169/page/reader/reader_tips_car.dart';
 import 'package:ng169/page/smallwidget/gifcartoon.dart';
+import 'package:ng169/page/smallwidget/gifcartoon2.dart';
 
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
@@ -334,7 +335,7 @@ class CartReaderSceneState extends State<CartReaderScene>
       body: Container(
         color: SQColor.white,
         child: Center(
-          child: GifCartoon(),
+          child: GifCartoon2(),
         ),
       ),
     );

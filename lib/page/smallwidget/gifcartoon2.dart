@@ -19,9 +19,14 @@ class GifCartoon2 extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return Image(
+    var img = Image(
       width: 150,
+      height: 150,
       image: AssetImage('assets/images/gif/loading.gif'), // 替换为你的GIF文件路径
+    );
+    return Container(
+      child: img,
+      width: 150,
     );
   }
 }

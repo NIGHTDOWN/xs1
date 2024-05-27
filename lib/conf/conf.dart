@@ -1,6 +1,6 @@
-const apiurl = 'http://love-novel.com/api/';
+const apiurl = 'https://love-novel.com/api/';
 // const apiurl = 'http://192.168.2.106/api/';
-const serverurl = 'http://love-novel.com/';
+const serverurl = 'https://love-novel.com/';
 
 const defaultAvatar = 'assets/images/ww_default_avatar.png'; //默认头像
 const dbname = 'lsdb.db';
