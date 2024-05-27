@@ -61,22 +61,23 @@ class MallState extends State<Mall> {
       newbook = Mock.get('newbook');
       randdata = Mock.get('randdata');
     } catch (e) {
-       dt(e);
+      dt(e);
     }
   }
-Future<void> processAsyncTasks2() async {
-  List<Future> tasks = [
+
+  Future<void> processAsyncTasks2() async {
+    List<Future> tasks = [
       setdata(null, bannerapi, 0),
       setdata(null, newBookapi, 1),
       setdata(null, newCartoonsapi, 2),
       setdata(null, hotbooksapi, 3),
       setdata(null, randapi, 4),
-    // ... 更多异步任务
-  ];
+      // ... 更多异步任务
+    ];
 
-  Future.wait(tasks);
-  // 所有异步任务都已完成，处理results
-}
+    Future.wait(tasks);
+    // 所有异步任务都已完成，处理results
+  }
 
   bool isdart = false;
   Future<void> gethttpdata() async {
@@ -94,7 +95,7 @@ Future<void> processAsyncTasks2() async {
     //   setdata(null, hotbooksapi, 3),
     //   setdata(null, randapi, 4),
     // ];
-processAsyncTasks2();
+    processAsyncTasks2();
     // try {
     //   await Future.wait(futures);
     //   // 所有 future 完成之后的代码
@@ -185,20 +186,22 @@ processAsyncTasks2();
       refresh();
     }
   }
-  //  gethttpdata(); //加载数据
-Future<void> processAsyncTasks() async {
-  List<Future> tasks = [
-          setdata(mallcache, bannerapi, 0),
-          setdata(mallcache, newBookapi, 1),
-          setdata(mallcache, newCartoonsapi, 2),
-          setdata(mallcache, hotbooksapi, 3),
-          setdata(mallcache, randapi, 4),
-    // ... 更多异步任务
-  ];
 
-  Future.wait(tasks);
-  // 所有异步任务都已完成，处理results
-}
+  //  gethttpdata(); //加载数据
+  Future<void> processAsyncTasks() async {
+    List<Future> tasks = [
+      setdata(mallcache, bannerapi, 0),
+      setdata(mallcache, newBookapi, 1),
+      setdata(mallcache, newCartoonsapi, 2),
+      setdata(mallcache, hotbooksapi, 3),
+      setdata(mallcache, randapi, 4),
+      // ... 更多异步任务
+    ];
+
+    Future.wait(tasks);
+    // 所有异步任务都已完成，处理results
+  }
+
   //加载页面
   //先读缓存
   //在读http数据
@@ -214,7 +217,6 @@ Future<void> processAsyncTasks() async {
       mallcache = getcache(cachedata);
       d(mallcache);
       if (isnull(mallcache)) {
-      
         processAsyncTasks();
       } else {
         setcache(index, 0, '0');
@@ -228,14 +230,13 @@ Future<void> processAsyncTasks() async {
     if (isnull(cache, cacheid)) {
       setval(cacheid, cache![cacheid]);
     } else {
-      var tmp ;
+      var tmp;
       try {
-       tmp = await gethttpdate(api);
+        tmp = await gethttpdate(api);
       } catch (e) {
         dt(e);
       }
-     
-    
+
       if (isnull(tmp)) {
         setval(cacheid, tmp as List);
         if (mallcache == null) {
@@ -245,7 +246,7 @@ Future<void> processAsyncTasks() async {
         setcache(cachedata, mallcache, '-1');
       }
     }
-    return ;
+    return;
   }
 
   setval(int cacheid, List<dynamic> val) {
@@ -381,16 +382,16 @@ Future<void> processAsyncTasks() async {
       height: Screen.navigationBarHeight * .4,
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-      //    border: Border.all(
-      //    color:  Colors.white,
-      // width: 1,
-      //   ),
+        //    border: Border.all(
+        //    color:  SQColor.white,
+        // width: 1,
+        //   ),
         //中间按钮背景框
         borderRadius: BorderRadius.all(Radius.circular(25)),
-        color: navAlpha <= 0 ? Color.fromARGB(176, 91, 93, 91) : Colors.grey[200],
+        color:
+            navAlpha <= 0 ? Color.fromARGB(176, 91, 93, 91) : Colors.grey[200],
       ),
       child: Center(
-        
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -398,13 +399,13 @@ Future<void> processAsyncTasks() async {
                 margin: EdgeInsets.only(right: 16),
                 child: Icon(
                   Icons.search,
-                  color: navAlpha <= 0 ? Colors.white : SQColor.primary,
+                  color: navAlpha <= 0 ? SQColor.white : SQColor.primary,
                   size: 20,
                 )),
             Text(
               lang("书名/作者/关键词"),
               style: TextStyle(
-                  color: navAlpha <= 0 ? Colors.white : Colors.black38,
+                  color: navAlpha <= 0 ? SQColor.white : Colors.black38,
                   fontSize: 12,
                   letterSpacing: 3,
                   fontWeight: FontWeight.w500),
@@ -431,12 +432,12 @@ Future<void> processAsyncTasks() async {
             child: Image.asset(
               'assets/images/icon_menu_catalog.png',
               fit: BoxFit.fill,
-              color: navAlpha <= 0 ? Colors.white : Colors.black38,
+              color: navAlpha <= 0 ? SQColor.white : Colors.black38,
             ))
         //   child: Icon(
         //   Icons.subject,
         //   size: 35,
-        //   color: navAlpha <= 0 ? Colors.white : Colors.black38,
+        //   color: navAlpha <= 0 ? SQColor.white : Colors.black38,
         // )
         // icon_menu_catalog
         );
@@ -478,7 +479,7 @@ Future<void> processAsyncTasks() async {
 
   Widget _buildProgressIndicator() {
     var circular = new CircularProgressIndicator(
-      backgroundColor: Colors.white,
+      backgroundColor: SQColor.white,
       strokeWidth: 5.0,
       valueColor: AlwaysStoppedAnimation(Colors.green[200]),
     );

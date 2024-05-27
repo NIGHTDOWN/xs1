@@ -14,11 +14,11 @@ import android.os.Build.VERSION_CODES;
 
 
 
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.SkuDetails;
-import com.android.billingclient.api.SkuDetailsResponseListener;
+// import com.android.billingclient.api.BillingClient;
+// import com.android.billingclient.api.BillingResult;
+// import com.android.billingclient.api.Purchase;
+// import com.android.billingclient.api.SkuDetails;
+// import com.android.billingclient.api.SkuDetailsResponseListener;
 
 
 import java.util.Locale;
@@ -92,15 +92,15 @@ public class Bridge {
 
         if (call.method.equals("googlepay/initpays")) {
             // 谷歌支付初始化
-            com.ng.story.GooglePay.initpay();
-            result.success("ret");
+            // com.ng.story.GooglePay.initpay();
+            // result.success("ret");
 
         } else if (call.method.equals("googlepay/startgoogleBuy")) {
             // 调用谷歌支付
-            final String sku = call.argument("sku");
-            final String payload = call.argument("payload");
-            GooglePay.startgoogleBuy(sku, payload);
-            result.success(sku);
+            // final String sku = call.argument("sku");
+            // final String payload = call.argument("payload");
+            // GooglePay.startgoogleBuy(sku, payload);
+            // result.success(sku);
         } else if (call.method.equals("googlopj")) {
             // 回倒桌面
             //评论弹不出来

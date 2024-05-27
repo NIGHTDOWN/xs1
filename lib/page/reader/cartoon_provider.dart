@@ -34,8 +34,7 @@ class CartoonProvider {
 
   static Future<dynamic> getremotecontent(
       context, Novel novel, secionid) async {
-    // var response = await http('cartoon/get_wap_content',
-    //     {'cartoon_id': novel.id, 'cart_section_id': secionid}, gethead());
+    if (!isnull(secionid)) return null;
     var response = await http('content/get_cartoon',
         {'cartoon_id': novel.id, 'cart_section_id': secionid}, gethead());
     var tmp = getdata(context, response);

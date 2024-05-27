@@ -1,12 +1,12 @@
 import 'dart:io';
 
-
 import 'package:crop_your_image/crop_your_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
+import 'package:ng169/tool/http.dart';
 
 import 'function.dart';
 import 'lang.dart';
@@ -28,7 +28,7 @@ class _CropImageRouteState extends State<CutImage> {
   late double imageScale = 1; //图片缩放比例
   late Image imageView;
 
-  late Uint8List? img=null;
+  late Uint8List? img = null;
   final _controller = CropController();
   // final cropKey = GlobalKey<CropState>();
   @override
@@ -38,7 +38,9 @@ class _CropImageRouteState extends State<CutImage> {
   }
 
   Future<Uint8List> _load(String assetName) async {
-    final assetData = await rootBundle.load(assetName);
+    final image = File(assetName);
+    final assetData = await image.readAsBytes();
+    // final assetData = await rootBundle.load(assetName);
     return assetData.buffer.asUint8List();
   }
 
@@ -68,18 +70,35 @@ class _CropImageRouteState extends State<CutImage> {
               //   //aspectRatio: 0.3 / 0.3,
               //   alwaysShowGrid: true,
               // ),
-              child: img != null?Crop(
-                  image: img!,
-                  controller: _controller,
-                  onCropped: (image) {
-                    // do something with cropped image data
-                  }):Container(),
+              child: img != null
+                  ? Crop(
+                      image: img!,
+                      controller: _controller,
+                      onCropped: (image) {
+                        d(image);
+                        _saveToTempFile(image);
+                        close(widget.image);
+                        // do something with cropped image data
+                      })
+                  : Container(),
             ),
           ])),
           buildNavigationBar(),
         ]),
       ),
     );
+  }
+
+  Future<String> _saveToTempFile(_imageByteData) async {
+    // final Directory tempDir = await getTemporaryDirectory();
+    // final Directory tempDir = "../";
+    // final String tempImagePath = '${tempDir.path}/temp_image.png';
+    // final File tempFile = File(tempImagePath);
+
+    // 将Uint8List数据写入到临时文件
+    await widget.image.writeAsBytes(_imageByteData);
+
+    return widget.image.path;
   }
 
   close([data]) {
@@ -204,6 +223,7 @@ class _CropImageRouteState extends State<CutImage> {
   ///上传头像
   void upload(File file) {
     d(file);
+    // httpfile(url);
     // print(file.path);
     // Dio dio = Dio();
     // dio

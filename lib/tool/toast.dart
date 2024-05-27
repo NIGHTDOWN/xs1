@@ -1,5 +1,6 @@
 //控制台输出函数
 import 'package:flutter/material.dart';
+import 'package:ng169/style/sq_color.dart';
 
 enum ToastPostion {
   top,
@@ -39,7 +40,7 @@ class Toast {
     //显示的背景
     Color bgColor = Colors.black,
     //显示的文本颜色
-    Color textColor = Colors.white,
+    Color textColor = SQColor.white,
     //显示的文字大小
     double textSize = 14.0,
     //显示的位置

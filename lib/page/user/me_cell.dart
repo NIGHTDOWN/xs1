@@ -14,12 +14,11 @@ class MeCell extends StatelessWidget {
       {required this.title,
       required this.iconName,
       required this.onPressed,
-       this.line_padding_left=0,
+      this.line_padding_left = 0,
       required this.right_widget,
       this.haveline = true});
   @override
   Widget build(BuildContext context) {
-   
     Widget qjin = Icon(
       Icons.keyboard_arrow_right,
       color: SQColor.gray,
@@ -27,7 +26,7 @@ class MeCell extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        color: Colors.white,
+        color: SQColor.white,
         child: Column(
           children: <Widget>[
             Container(

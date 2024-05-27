@@ -172,7 +172,7 @@ class LocalReaderSceneState extends State<LocalReaderScene>
                   Chapter.getReadSecId(widget.novel.id, widget.novel.type))]
               ['section_id']);
     } catch (e) {
-       dt(e);
+      dt(e);
       return;
     }
 
@@ -342,7 +342,7 @@ class LocalReaderSceneState extends State<LocalReaderScene>
     ];
     var box = Container(
         decoration: new BoxDecoration(
-            color: Colors.white, borderRadius: new BorderRadius.circular(10)),
+            color: SQColor.white, borderRadius: new BorderRadius.circular(10)),
         // width: 200,
         padding: EdgeInsets.only(top: 20, bottom: 10),
         margin: EdgeInsets.only(left: 20, right: 20),
@@ -415,7 +415,7 @@ class LocalReaderSceneState extends State<LocalReaderScene>
                               lang("加入书架"),
                               style: new TextStyle(
                                   fontSize: 12.0,
-                                  color: Colors.white,
+                                  color: SQColor.white,
                                   fontWeight: FontWeight.w200,
                                   fontFamily: "Roboto"),
                             ))),

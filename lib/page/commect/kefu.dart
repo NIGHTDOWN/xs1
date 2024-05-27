@@ -118,7 +118,7 @@ class Kefu extends LoginBase {
             borderRadius: BorderRadius.circular(8.0)),
         margin: EdgeInsets.all(5),
         child: Material(
-          child: Ink(child: tmp, color: Colors.white),
+          child: Ink(child: tmp, color: SQColor.white),
         ),
       );
       emjo.add(tmp2);
@@ -483,7 +483,7 @@ class Kefu extends LoginBase {
     //                 ? Container(
     //                     child: Text(
     //                       document['content'],
-    //                       style: TextStyle(color: Colors.white),
+    //                       style: TextStyle(color: SQColor.white),
     //                     ),
     //                     padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
     //                     width: 200.0,
@@ -682,7 +682,7 @@ class Kefu extends LoginBase {
     var c = Container(
       decoration: BoxDecoration(
           border: Border(top: BorderSide(color: greyColor2, width: 0.5)),
-          color: Colors.white),
+          color: SQColor.white),
       // padding: EdgeInsets.all(5.0),
       height: 180.0,
       child: SingleChildScrollView(child: Wrap(children: emjo)),
@@ -701,7 +701,7 @@ class Kefu extends LoginBase {
                   valueColor: AlwaysStoppedAnimation<Color>(themeColor),
                 ),
               ),
-              color: Colors.white.withOpacity(0.8),
+              color: SQColor.white.withOpacity(0.8),
             )
           : Container(),
     );
@@ -726,7 +726,7 @@ class Kefu extends LoginBase {
                 color: primaryColor,
               ),
             ),
-            color: Colors.white,
+            color: SQColor.white,
           ),
           Material(
             child: Container(
@@ -737,7 +737,7 @@ class Kefu extends LoginBase {
                 color: primaryColor,
               ),
             ),
-            color: Colors.white,
+            color: SQColor.white,
           ),
 
           // Edit text
@@ -787,7 +787,7 @@ class Kefu extends LoginBase {
                 color: primaryColor,
               ),
             ),
-            color: Colors.white,
+            color: SQColor.white,
           ),
           // Material(
           //   child: Container(
@@ -800,7 +800,7 @@ class Kefu extends LoginBase {
           //       color: primaryColor,
           //     ),
           //   ),
-          //   color: Colors.white,
+          //   color: SQColor.white,
           // ),
         ],
       ),
@@ -808,7 +808,7 @@ class Kefu extends LoginBase {
       //height: 50.0,
       decoration: BoxDecoration(
           border: Border(top: BorderSide(color: greyColor2, width: 0.5)),
-          color: Colors.white),
+          color: SQColor.white),
     );
   }
 

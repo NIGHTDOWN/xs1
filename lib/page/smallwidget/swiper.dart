@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:ng169/tool/function.dart';
 
 import 'dart:async';
@@ -430,6 +429,10 @@ class _SwiperState extends _SwiperTimerMixin {
 
   @override
   void didUpdateWidget(Swiper oldWidget) {
+    if (!isnull(widget)) return;
+    if (!isnull(widget.index)) {
+      return;
+    }
     super.didUpdateWidget(oldWidget);
     if (_isPageViewLayout()) {
       if (_pageController == null ||

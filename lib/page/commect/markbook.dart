@@ -237,7 +237,7 @@ class MarkBookState extends State<MarkBook> {
     var btn = TextButton(
       child: Text(lang("t" + obj['category_name'])),
       // color: SQColor.gray,
-      // textColor: Colors.white,
+      // textColor: SQColor.white,
       // elevation: 20,
       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       style: ButtonStyle(
@@ -262,7 +262,7 @@ class MarkBookState extends State<MarkBook> {
     var btn = TextButton(
       child: Text(lang("t" + obj['category_name'])),
       // color: SQColor.orange,
-      // textColor: Colors.white,
+      // textColor: SQColor.white,
       // elevation: 20,
 
       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
@@ -322,7 +322,6 @@ class MarkBookState extends State<MarkBook> {
                     children: lists,
                   )
                 : Container(),
-            // Divider(),
           ],
         ));
   }
@@ -368,7 +367,7 @@ class MarkBookState extends State<MarkBook> {
                   child: Padding(
                     child: Text(
                       lang('提交'),
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(fontSize: 16, color: SQColor.white),
                     ),
                     padding: EdgeInsets.all(5),
                   )),

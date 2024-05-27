@@ -12,7 +12,7 @@ import 'package:ng169/tool/lang.dart';
 class AddComment extends LoginBase {
   final Novel novel;
   bool needlogin = true;
-  AddComment({ Key? key, required this.novel});
+  AddComment({Key? key, required this.novel});
 
 //   @override
 //   State<StatefulWidget> createState() => AddCommentState();
@@ -122,7 +122,10 @@ class AddComment extends LoginBase {
             count: 5,
           ),
         ]),
-        Divider(),
+        Divider(
+          height: 1,
+          color: SQColor.lightGray,
+        ),
         Container(
             padding: EdgeInsets.all(10),
             child: new TextFormField(
@@ -149,7 +152,10 @@ class AddComment extends LoginBase {
               },
               onSaved: (value) {},
             )),
-        Divider(),
+        Divider(
+          height: 1,
+          color: SQColor.lightGray,
+        ),
         Row(
           children: <Widget>[
             SizedBox(
@@ -169,7 +175,8 @@ class AddComment extends LoginBase {
                         children: [
                           Text(
                             lang('发布评论'),
-                            style: TextStyle(fontSize: 16, color: Colors.white),
+                            style:
+                                TextStyle(fontSize: 16, color: SQColor.white),
                           ),
                           !issbumit
                               ? Container(
@@ -180,7 +187,7 @@ class AddComment extends LoginBase {
                                     //value: 0.5,
                                     valueColor:
                                         new AlwaysStoppedAnimation<Color>(
-                                            Colors.white),
+                                            SQColor.white),
                                   ),
                                   width: 16,
                                   height: 16,

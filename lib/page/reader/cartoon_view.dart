@@ -7,7 +7,9 @@ import 'package:ng169/page/novel_detail/novel_detail_header.dart';
 
 import 'package:ng169/page/recharge/recharge.dart';
 import 'package:ng169/page/smallwidget/gifcartoon.dart';
+import 'package:ng169/page/smallwidget/gifcartoon2.dart';
 import 'package:ng169/page/smallwidget/gifload.dart';
+import 'package:ng169/page/smallwidget/gifload2.dart';
 
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/styles.dart';
@@ -22,17 +24,17 @@ import 'reader_utils.dart';
 // ignore: must_be_immutable
 class CartoonView extends StatefulWidget {
   late Article article;
-late int page;
-late Function lock;
-late Function unlock;
-late bool islock;
-late double topSafeHeight;
-late Novel novel;
-late Function scroll;
-late Function showmenu;
-late Function next;
-late Function pre;
- 
+  late int page;
+  late Function lock;
+  late Function unlock;
+  late bool islock;
+  late double topSafeHeight;
+  late Novel novel;
+  late Function scroll;
+  late Function showmenu;
+  late Function next;
+  late Function pre;
+
   CartoonView(
       {required this.novel,
       required this.article,
@@ -52,12 +54,12 @@ late Function pre;
 
 class CartoonViewState extends State<CartoonView> {
   List<Widget> pics = [];
- 
+
   late double width;
- late PageController pageController;
- late double height;
- late Widget loadanmianl;
- late Widget loadimg;
+  late PageController pageController;
+  late double height;
+  late Widget loadanmianl;
+  late Widget loadimg;
   int locktime = 0;
   bool lock = false, lastpagelock = false;
   late int pageindex;
@@ -65,7 +67,7 @@ class CartoonViewState extends State<CartoonView> {
   void initState() {
     super.initState();
 
-     loadimg= GifCartoon();
+    loadimg = GifCartoon();
     pageindex = widget.page;
 
     loadanmianl = Gifload();
@@ -246,7 +248,7 @@ class CartoonViewState extends State<CartoonView> {
         ),
       );
     }
-   
+
     var circular = Icon(
       Icons.arrow_downward,
       size: 17,
@@ -311,7 +313,7 @@ class CartoonViewState extends State<CartoonView> {
       );
     }
     // var circular = new CircularProgressIndicator(
-    //   backgroundColor: Colors.white,
+    //   backgroundColor: SQColor.white,
     //   strokeWidth: 5.0,
     //   valueColor: AlwaysStoppedAnimation(Colors.green[200]),
     // );
@@ -395,7 +397,7 @@ class CartoonViewState extends State<CartoonView> {
     width = g('swidth');
     height = g('sheight');
     pics = [];
-  
+
     getpic();
 
     if (widget.article.cartoonisinit) {
@@ -429,7 +431,7 @@ class CartoonViewState extends State<CartoonView> {
     pics.add(SizedBox(height: 18));
     pics.add(_buildtopIndicator());
     // d(widget.article.pay);
-   
+
     if (widget.article.pay) {
       widget.article.images.forEach((pic) {
         pics.add(NgImage(pic['url'],
@@ -580,7 +582,7 @@ class CartoonViewState extends State<CartoonView> {
             //     fit: BoxFit.cover, image: AssetImage(Styles.getTheme()['bg'])),
             color: Styles.getTheme()['barcolor'],
             boxShadow: Styles.borderShadow),
-        //color: Colors.white,
+        //color: SQColor.white,
 
         padding: EdgeInsets.fromLTRB(15, 0, 10, ReaderUtils.bottomOffset),
         // margin: EdgeInsets.only(left:),

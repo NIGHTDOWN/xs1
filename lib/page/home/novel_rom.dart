@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ng169/obj/novel.dart';
+import 'package:ng169/style/sq_bar.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
 import 'home_novel_cover_view.dart';
@@ -37,7 +39,7 @@ class NovelRomView extends StatelessWidget {
       );
     }).toList();
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -57,16 +59,12 @@ class NovelRomView extends StatelessWidget {
 
   gettitle(title) {
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       padding: EdgeInsets.fromLTRB(15, 15, 0, 5),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Image.asset(
-            'assets/images/home_tip.png',
-            height: 22,
-            width: 3,
-          ),
+          SQBar.gettitlebar(),
           SizedBox(width: 10),
           Text(
             '$title',

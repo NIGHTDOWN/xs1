@@ -194,7 +194,7 @@ class MallPageState extends State<MallPage> {
 
   Widget _buildProgressIndicator() {
     var circular = new CircularProgressIndicator(
-      backgroundColor: Colors.white,
+      backgroundColor: SQColor.white,
       strokeWidth: 5.0,
       valueColor: AlwaysStoppedAnimation(Colors.green[200]),
     );

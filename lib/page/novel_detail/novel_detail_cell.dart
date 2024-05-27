@@ -19,11 +19,14 @@ class NovelDetailCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: <Widget>[
-          Divider(height: 1),
+          Divider(
+            height: 1,
+            color: SQColor.lightGray,
+          ),
           Container(
             height: 50,
             child: GestureDetector(
@@ -60,7 +63,6 @@ class NovelDetailCell extends StatelessWidget {
               ),
             ),
           ),
-          // Divider(height: 1),
         ],
       ),
     );

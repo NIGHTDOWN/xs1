@@ -9,8 +9,8 @@
 			<solid android:color="#FFFFFF"/>
 		</shape>
 	</item>
-	<!-- <item android:drawable="@mipmap/startpage">
-	</item> -->
+	<item android:drawable="@mipmap/startpage">
+	</item>
 	<item android:bottom="0dp">
 		<bitmap android:gravity="fill" android:src="@mipmap/startpage"/>
 	</item>

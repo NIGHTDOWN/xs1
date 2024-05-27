@@ -8,6 +8,7 @@ import 'package:ng169/page/commect/addcomment.dart';
 import 'package:ng169/page/commect/comment.dart';
 import 'package:ng169/page/home/novel_rom.dart';
 import 'package:ng169/style/screen.dart';
+import 'package:ng169/style/sq_bar.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
@@ -197,7 +198,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
                 padding: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
                 child: GestureDetector(
                     onTap: back,
-                    child: Icon(Icons.arrow_back, color: Colors.white)),
+                    child: Icon(Icons.arrow_back, color: SQColor.white)),
               ),
               Expanded(child: SizedBox()),
               Container(
@@ -208,7 +209,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
                     onTap: share,
                     child: Icon(
                       Icons.share,
-                      color: Colors.white,
+                      color: SQColor.white,
                     )),
               ),
             ]),
@@ -280,7 +281,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
 
   Widget buildComment() {
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -289,12 +290,7 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Image.asset(
-                  'assets/images/home_tip.png',
-                  width: 3,
-                  height: 22,
-                  // color: SQColor.primary,
-                ),
+                SQBar.gettitlebar(),
                 SizedBox(width: 13),
                 Text(lang('书友评价'), style: TextStyle(fontSize: 16)),
                 Expanded(child: Container()),
@@ -312,12 +308,20 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
               ],
             ),
           ),
-          Divider(height: 1),
+          Divider(
+            height: 1,
+            color: SQColor.lightGray,
+          ),
           Column(
             children:
                 comments.map((comment) => NovelCommentCell(comment)).toList(),
           ),
-          isnull(commentCount) ? Divider(height: 1) : Container(),
+          isnull(commentCount)
+              ? Divider(
+                  height: 1,
+                  color: SQColor.lightGray,
+                )
+              : Container(),
           isnull(commentCount)
               ? GestureDetector(
                   onTap: readmore,

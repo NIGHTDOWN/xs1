@@ -199,7 +199,7 @@ class EditUserState extends State<EditUser> {
         PickedFile? tmpimages =
             // ignore: invalid_use_of_visible_for_testing_member
             await ImagePicker.platform.pickImage(source: ImageSource.camera);
-if(!isnull(tmpimages))return ;
+        if (!isnull(tmpimages)) return;
         File f = File(tmpimages!.path);
         cutimg(f);
         reflash();
@@ -216,7 +216,7 @@ if(!isnull(tmpimages))return ;
         // var tmpimage = await ImagePicker.pickImage(source: ImageSource.gallery);
         PickedFile? tmpimages =
             await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-if(!isnull(tmpimages))return ;
+        if (!isnull(tmpimages)) return;
         File f = File(tmpimages!.path);
         cutimg(f);
         reflash();
@@ -372,7 +372,7 @@ if(!isnull(tmpimages))return ;
                 if (isnull(user, 'invite_id')) {
                   return;
                 }
-                showbox(editinvint(), Colors.white, 15.0, false);
+                showbox(editinvint(), SQColor.white, 15.0, false);
               }),
               getrow(lang('昵称'), Expanded(child: textFormFieldname), () {}),
               getrow(lang('性别'), Text(sex), () {
@@ -479,7 +479,7 @@ if(!isnull(tmpimages))return ;
             dates.year.toString();
       }
     } catch (e) {
-       dt(e);
+      dt(e);
     }
 
     return datestr;
@@ -644,7 +644,7 @@ if(!isnull(tmpimages))return ;
       color: SQColor.white,
       child: InkWell(
         child: Container(
-          color: !haveink ? Colors.white : null,
+          color: !haveink ? SQColor.white : null,
           child: Column(
             children: <Widget>[
               Container(

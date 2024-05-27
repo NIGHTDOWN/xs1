@@ -168,6 +168,7 @@ class CatePage extends LoginBase {
   }
 
   loadingstatu() {
+    if (!mounted) return;
     setState(() {
       moredata = !moredata;
     });
@@ -698,7 +699,7 @@ class CatePage extends LoginBase {
 
   Widget _buildProgressIndicator() {
     var circular = new CircularProgressIndicator(
-      backgroundColor: Colors.white,
+      backgroundColor: SQColor.white,
       strokeWidth: 5.0,
       valueColor: AlwaysStoppedAnimation(Colors.green[200]),
     );

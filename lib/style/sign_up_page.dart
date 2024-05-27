@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ng169/model/user.dart';
+import 'package:ng169/style/sq_color.dart';
 
 import 'package:ng169/style/theme.dart' as theme;
 import 'package:ng169/tool/brige.dart';
@@ -8,7 +9,6 @@ import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
-
 
 /// 注册界面
 class SignUpPage extends StatefulWidget {
@@ -39,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
             new Container(
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
-                  color: Colors.white,
+                  color: SQColor.white,
                 ),
                 width: 300,
                 height: 360,
@@ -101,12 +101,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     padding: EdgeInsets.only(
                         top: 10, bottom: 10, left: 42, right: 42),
                     decoration: new BoxDecoration(
-                      gradient: theme.Theme.primaryGradient,
+                      gradient: theme.Theme.primaryGradient2,
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
                     child: new Text(
                       lang("注册"),
-                      style: new TextStyle(fontSize: 25, color: Colors.white),
+                      style: new TextStyle(fontSize: 25, color: SQColor.white),
                     ),
                   ),
                 ),

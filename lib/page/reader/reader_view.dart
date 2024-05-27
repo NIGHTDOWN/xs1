@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/article.dart';
@@ -23,7 +22,11 @@ class ReaderView extends StatefulWidget {
   final Novel novel;
   final Widget battery;
   ReaderView(
-      {required this.novel, required this.article, required this.page, required this.topSafeHeight, required this.battery});
+      {required this.novel,
+      required this.article,
+      required this.page,
+      required this.topSafeHeight,
+      required this.battery});
 
   @override
   ReaderViewState createState() => ReaderViewState();
@@ -39,7 +42,6 @@ class ReaderViewState extends State<ReaderView> {
 
   @override
   void initState() {
- 
     super.initState();
   }
 
@@ -181,7 +183,7 @@ class ReaderViewState extends State<ReaderView> {
           image: new DecorationImage(
               fit: BoxFit.cover, image: AssetImage(Styles.getTheme()['bg'])),
           boxShadow: Styles.borderShadow),
-      //color: Colors.white,
+      //color: SQColor.white,
 
       padding: EdgeInsets.fromLTRB(15, 0, 10, ReaderUtils.bottomOffset),
       // margin: EdgeInsets.only(left:),

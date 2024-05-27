@@ -18,6 +18,7 @@ Future<String?> http(String url,
     Map<String, dynamic>? header,
     int? reqlockmiao]) async {
   Dio dio = Dio();
+  // if (!isnull(apiurl)) return "";
   //设置代理
   dio.options.baseUrl = apiurl;
   //设置连接超时时间
@@ -166,9 +167,9 @@ Future<String> httpfile(String url,
 
   dio.options.baseUrl = apiurl;
   //设置连接超时时间
-  dio.options.connectTimeout = Duration(seconds: 20);
+  dio.options.connectTimeout = Duration(seconds: 10);
   //设置数据接收超时时间
-  dio.options.receiveTimeout = Duration(seconds: 30);
+  dio.options.receiveTimeout = Duration(seconds: 10);
   // dio.options.headers[HttpHeaders.authorizationHeader] = '1233';
   // dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 

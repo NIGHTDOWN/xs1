@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/style/screen.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/brige.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
@@ -168,7 +168,7 @@ class _BookshelfItemViewState extends State<BookshelfItemView> {
     if (widget.novel.upsecnum < 1) {
       return Container();
     }
-    Color c3 = Colors.white;
+    Color c3 = SQColor.white;
 
     var s = width / 7;
     var con = Container(

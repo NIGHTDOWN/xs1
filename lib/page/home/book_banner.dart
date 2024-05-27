@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-
 import 'package:ng169/model/base.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
@@ -13,6 +12,7 @@ import 'package:ng169/page/smallwidget/src/swiper_controller.dart';
 import 'package:ng169/page/smallwidget/src/swiper_pagination.dart';
 import 'package:ng169/page/smallwidget/swiper.dart';
 import 'package:ng169/style/screen.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/image.dart';
@@ -24,7 +24,7 @@ import '../smallwidget/src/swiper_plugin.dart';
 class BookBanner extends LoginBase {
   final List banners;
   static var novels = {};
-  
+
   BookBanner(this.banners);
   HashMap tmplist = new HashMap();
   static String? bgimg;
@@ -56,15 +56,16 @@ class BookBanner extends LoginBase {
     // sw.dispose();
     // }
     super.dispose();
-   
-   
   }
 
   Widget banner(info) {
     Novel novel = getnovel(info);
     var bneer = ClipRRect(
       borderRadius: BorderRadius.circular(BookBanner.hd),
-      child: NgImage(novel.imgUrl, placeholder: GifCartoon(),),
+      child: NgImage(
+        novel.imgUrl,
+        placeholder: GifCartoon(),
+      ),
     );
     // return bneer;
     return GestureDetector(
@@ -76,7 +77,6 @@ class BookBanner extends LoginBase {
   }
 
   _bannerclick(novel) async {
-    
     gourl(context, NovelDetailScene(novel));
   }
 
@@ -96,7 +96,7 @@ class BookBanner extends LoginBase {
     var bgHeight = w / 0.9;
     var height = Screen.topSafeHeight + 250;
     return Container(
-        color: Colors.white,
+        color: SQColor.white,
         height: h + th,
         child: Stack(
           children: <Widget>[
@@ -112,7 +112,8 @@ class BookBanner extends LoginBase {
                             top: height - bgHeight,
                             child: NgImage(
                               BookBanner.bgimg!,
-                              width: w, placeholder: GifCartoon(),
+                              width: w,
+                              placeholder: GifCartoon(),
                             ))
                         : SizedBox(),
                     //透明遮罩
@@ -142,14 +143,14 @@ class BookBanner extends LoginBase {
                 // pagination: new SwiperPagination(
                 //     builder: DotSwiperPaginationBuilder(
                 //         color: Colors.black54,
-                //         activeColor: Colors.white,
+                //         activeColor: SQColor.white,
                 //         size: 35,
                 //         activeSize: 35)),
                 //白色小点分页指示器
                 pagination: new SwiperCustomPagination(
                     builder: (BuildContext context, SwiperPluginConfig config) {
-                  return initpage(
-                      config.itemCount!, config.activeIndex!, config.controller!);
+                  return initpage(config.itemCount!, config.activeIndex!,
+                      config.controller!);
                 }),
                 controller: sw,
                 itemCount: banners.length,
@@ -174,7 +175,7 @@ class BookBanner extends LoginBase {
   Widget initpage(int count, int index, SwiperController controller) {
     List<Widget> s = [];
     double size = 7;
-    Color colore = Colors.white;
+    Color colore = SQColor.white;
     Widget r = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,

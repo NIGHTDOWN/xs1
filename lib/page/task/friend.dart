@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:ng169/model/base.dart';
+import 'package:ng169/style/sq_color.dart';
 
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
@@ -32,13 +33,13 @@ class Friend extends LoginBase {
     // },
   ];
   var nums = '0', numyx = '0';
-  late List? rand;
+  late List? rand = [];
   var coin = '500';
   var size = 10;
   var cachename = 'friendcache';
   var api = 'task/friendinfo';
   var api2 = 'task/friendmore';
- late Timer time;
+  late Timer time;
   bool start = true;
   int randindex = 0, page = 1;
   bool isend = false;
@@ -156,7 +157,7 @@ class Friend extends LoginBase {
       str = name + lang('刚刚领取') + coin + lang('金豆');
       return Text(str,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: Colors.white));
+          style: TextStyle(color: SQColor.white));
     }
     return SizedBox();
   }
@@ -166,17 +167,17 @@ class Friend extends LoginBase {
       onPressed: () {
         shares();
       },
-      // textColor: Colors.white,
+      // textColor: SQColor.white,
       // clipBehavior: Clip.hardEdge,
       // shape: RoundedRectangleBorder(
       //     borderRadius: BorderRadius.all(Radius.circular(22.0))),
       // padding: const EdgeInsets.all(0.0),
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith((states) {
-          return Colors.white;
+          return SQColor.white;
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
-          return Colors.white;
+          return SQColor.white;
         }),
         padding: WidgetStateProperty.all(EdgeInsets.all(0.0)),
       ),
@@ -523,7 +524,7 @@ class Friend extends LoginBase {
                 title,
                 style: TextStyle(
                     fontSize: 15,
-                    color: Colors.white,
+                    color: SQColor.white,
                     fontWeight: FontWeight.w600),
               )),
             ),

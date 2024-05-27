@@ -59,8 +59,9 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     // Image.asset('assets/images/tab_me_p.png',color: SQColor.primary,),
 
     Image.asset(
-      'assets/images/tab_me_p2.png',
+      'assets/images/tab_me_n.png',
       width: 24,
+      color: SQColor.primary,
     ),
   ];
   @override
@@ -231,7 +232,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
         ),
       )),
     );
-    showbox(bo, Colors.white);
+    showbox(bo, SQColor.white);
   }
 
   @override
@@ -364,7 +365,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
         index: _tabIndex,
       ),
       bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: Colors.white,
+        backgroundColor: SQColor.white,
         activeColor: SQColor.primary,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: getTabIcon(0), label: lang('书架')),

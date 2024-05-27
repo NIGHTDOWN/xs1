@@ -12,7 +12,6 @@ import 'package:ng169/page/reader/reader_scene.dart';
 import 'package:ng169/page/reader/reader_tips_car.dart';
 import 'package:ng169/page/smallwidget/gifcartoon.dart';
 
-
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 
@@ -328,18 +327,17 @@ class CartReaderSceneState extends State<CartReaderScene>
 
   Widget cartoonload() {
     // return Container();
-   return Scaffold(
+    return Scaffold(
       // appBar: AppBar(
       //   title: Text('全屏白色背景'),
       // ),
       body: Container(
-        color: Colors.white,
+        color: SQColor.white,
         child: Center(
           child: GifCartoon(),
         ),
       ),
     );
-    // return GifCartoon();
   }
 
   @override
@@ -357,7 +355,7 @@ class CartReaderSceneState extends State<CartReaderScene>
     ];
     var box = Container(
         decoration: new BoxDecoration(
-            color: Colors.white, borderRadius: new BorderRadius.circular(10)),
+            color: SQColor.white, borderRadius: new BorderRadius.circular(10)),
         // width: 200,
         padding: EdgeInsets.only(top: 20, bottom: 10),
         margin: EdgeInsets.only(left: 20, right: 20),
@@ -429,7 +427,7 @@ class CartReaderSceneState extends State<CartReaderScene>
                               lang("加入书架"),
                               style: new TextStyle(
                                   fontSize: 12.0,
-                                  color: Colors.white,
+                                  color: SQColor.white,
                                   fontWeight: FontWeight.w200,
                                   fontFamily: "Roboto"),
                             ))),

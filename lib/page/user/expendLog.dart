@@ -19,7 +19,7 @@ class ExpendLog extends LoginBase {
 // }
 
 // class ExpendLogState extends State<ExpendLog> {
-  List htppdata=[], mallcache=[];
+  List htppdata = [], mallcache = [];
   List<Widget> more = [SizedBox()];
   var index = 'ExpendLog_';
   var cachedata = 'ExpendLog_data_', page = 1;
@@ -152,7 +152,7 @@ class ExpendLog extends LoginBase {
 
   Widget _buildProgressIndicator() {
     var circular = new CircularProgressIndicator(
-      backgroundColor: Colors.white,
+      backgroundColor: SQColor.white,
       strokeWidth: 5.0,
       valueColor: AlwaysStoppedAnimation(Colors.green[200]),
     );

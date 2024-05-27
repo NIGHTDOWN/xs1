@@ -164,7 +164,7 @@ class _BookshelfHeaderState extends State<BookshelfHeader>
                   Text(novel.name,
                       style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: SQColor.white,
                           fontWeight: FontWeight.bold)),
                   SizedBox(height: 20),
                   Row(

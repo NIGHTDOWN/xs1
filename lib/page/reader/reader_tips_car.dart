@@ -1,9 +1,7 @@
-
-
-
 import 'package:flutter/material.dart';
 
 import 'package:ng169/model/base.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 
 import 'package:ng169/tool/lang.dart';
@@ -12,7 +10,7 @@ import 'dart:math' as math;
 // ignore: must_be_immutable
 class Readertipscar extends LoginBase {
   var page;
-  var textcolor = Colors.white;
+  var textcolor = SQColor.white;
   double sizes = 40;
   String cachenae = 'carshowtips';
   late bool havecache, isshow = true;
@@ -23,7 +21,7 @@ class Readertipscar extends LoginBase {
   }
 
   loadcache() {
-  havecache = isnull(getcache(cachenae,false));
+    havecache = isnull(getcache(cachenae, false));
     // d(havecache);
     reflash();
   }
@@ -124,7 +122,7 @@ class Readertipscar extends LoginBase {
       ),
     );
     clicktips() {
-      setcache(cachenae, 1, '-1',false);
+      setcache(cachenae, 1, '-1', false);
       isshow = false;
       loadcache();
     }
@@ -134,7 +132,7 @@ class Readertipscar extends LoginBase {
     return WillPopScope(
       onWillPop: () {
         clicktips();
-       return Future.value(false);  
+        return Future.value(false);
         // Future<bool> canGoBack = flutterWebViewPlugin.canGoBack();
         // canGoBack.then((str) {
         //   if (str) {

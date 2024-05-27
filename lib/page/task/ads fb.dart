@@ -196,11 +196,11 @@
 //       bannerAdSize: NativeBannerAdSize.HEIGHT_100,
 //       width: double.infinity,
 //       backgroundColor: Colors.blue,
-//       titleColor: Colors.white,
-//       descriptionColor: Colors.white,
+//       titleColor: SQColor.white,
+//       descriptionColor: SQColor.white,
 //       buttonColor: Colors.deepPurple,
-//       buttonTitleColor: Colors.white,
-//       buttonBorderColor: Colors.white,
+//       buttonTitleColor: SQColor.white,
+//       buttonBorderColor: SQColor.white,
 //       listener: (result, value) {
 //         print("Native Banner Ad: $result --> $value");
 //       },
@@ -221,11 +221,11 @@
 //       width: double.infinity,
 //       height: 300,
 //       backgroundColor: Colors.blue,
-//       titleColor: Colors.white,
-//       descriptionColor: Colors.white,
+//       titleColor: SQColor.white,
+//       descriptionColor: SQColor.white,
 //       buttonColor: Colors.deepPurple,
-//       buttonTitleColor: Colors.white,
-//       buttonBorderColor: Colors.white,
+//       buttonTitleColor: SQColor.white,
+//       buttonBorderColor: SQColor.white,
 //       listener: (result, value) {
 //         print("Native Ad: $result --> $value");
 //       },

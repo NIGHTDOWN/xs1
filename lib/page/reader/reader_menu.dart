@@ -15,7 +15,6 @@ import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 
-
 import '../../style/screen.dart';
 
 class ReaderMenu extends StatefulWidget {
@@ -33,15 +32,15 @@ class ReaderMenu extends StatefulWidget {
 
   ReaderMenu(
       {required this.chapters,
-   required  this.articleIndex,
-   required  this.onTap,
-   required  this.onPreviousArticle,
-   required  this.onNextArticle,
-   required  this.onToggleChapter,
-   required  this.novel,
-   required  this.showcate,
-   required  this.showset,
-   required  this.onToggleTheme});
+      required this.articleIndex,
+      required this.onTap,
+      required this.onPreviousArticle,
+      required this.onNextArticle,
+      required this.onToggleChapter,
+      required this.novel,
+      required this.showcate,
+      required this.showset,
+      required this.onToggleTheme});
 
   @override
   _ReaderMenuState createState() => _ReaderMenuState();
@@ -49,15 +48,15 @@ class ReaderMenu extends StatefulWidget {
 
 class _ReaderMenuState extends State<ReaderMenu>
     with SingleTickerProviderStateMixin {
- late AnimationController animationController;
+  late AnimationController animationController;
   late Animation<double> animation;
 
   double progressValue = 1;
   bool isTipVisible = false;
-late String title;
-late List<dynamic> chapters;
- double lightValue = 0.0;
-late int size;
+  String title = "";
+  late List<dynamic> chapters;
+  double lightValue = 0.0;
+  late int size;
   //初始化动画
   @override
   initState() {
@@ -344,6 +343,8 @@ late int size;
           Expanded(
             child: Slider(
               value: lightValue,
+              min: 0,
+              max: 10,
               onChanged: (double value) {
                 setUserBrightnessConfig(value);
                 setState(() {

@@ -222,7 +222,10 @@ class InCataLogState extends State<InCataLog> {
           padding: EdgeInsets.only(left: 18),
           child: Column(
             children: <Widget>[
-              Divider(height: 1),
+              Divider(
+                height: 1,
+                color: SQColor.lightGray,
+              ),
               Expanded(
                 child: Container(
                   height: 50,

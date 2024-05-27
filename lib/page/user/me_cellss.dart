@@ -17,22 +17,22 @@ class MeCellss extends LoginBase {
 
   MeCellss(
       {required this.title,
-    required  this.iconName,
-    required  this.onPressed,
-    required  this.line_padding_left,
-    required  this.right_widget,
+      required this.iconName,
+      required this.onPressed,
+      required this.line_padding_left,
+      required this.right_widget,
       this.havemsg = false,
       this.haveline = true});
   @override
   Widget build(BuildContext context) {
-     var qjin = Icon(
+    var qjin = Icon(
       Icons.keyboard_arrow_right,
       color: SQColor.gray,
     );
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        color: Colors.white,
+        color: SQColor.white,
         child: Column(
           children: <Widget>[
             Container(

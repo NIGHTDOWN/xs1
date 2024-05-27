@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ng169/model/base.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/page/commect/kefu.dart';
-
+import 'package:ng169/page/smallwidget/gifload.dart';
 
 import 'package:ng169/pay/googlepay.dart';
 
@@ -17,12 +17,14 @@ import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/loadbox.dart';
 import 'package:ng169/tool/url.dart';
 
+import '../../pay/pay.dart';
+
 // ignore: must_be_immutable
 class Recharge extends LoginBase {
   final String bookid;
   final String type;
   final String secid;
- late bool needlogin = true;
+  late bool needlogin = true;
 
   List<Widget> more = [SizedBox()];
   bool debug = false;
@@ -35,16 +37,16 @@ class Recharge extends LoginBase {
   String cancel_order_api = 'order/fail';
   String order_log_api = 'order/order_log';
   String order_sure_api = 'google/payv3';
-late  String order_num;
+  late String order_num;
   //2 是用户取消，3是其他
- late int pay_status;
+  late int pay_status;
   int pay_type = 4; //1为paypal 4为google 5 appstore
   int click = 0;
- late var select;
+  late var select = "0";
   List sign_data = [];
- late var user;
- late String failmsg;
- late Googlepay googlepayobj;
+  late var user;
+  String failmsg = "";
+  late Pay googlepayobj;
   var style1 = new TextStyle(
       fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500);
   var style11 = new TextStyle(
@@ -60,12 +62,12 @@ late  String order_num;
   var style6 = new TextStyle(
       fontSize: 15, color: Colors.black38, fontWeight: FontWeight.w300);
   var firstsend = new TextStyle(
-      fontSize: 10, color: Colors.white, fontWeight: FontWeight.w600);
+      fontSize: 10, color: SQColor.white, fontWeight: FontWeight.w600);
   var firstsend1 = new TextStyle(
-      fontSize: 15, color: Colors.white, fontWeight: FontWeight.w600);
+      fontSize: 15, color: SQColor.white, fontWeight: FontWeight.w600);
   var color1 = Colors.black54;
-  var color2 = SQColor.primary;
-  var color3 = SQColor.secondary;
+  var color2 = SQColor.red;
+  var color3 = SQColor.primary4;
   var style41;
   var style51;
   var style61;
@@ -109,7 +111,7 @@ late  String order_num;
   //在读http数据
   loadpage() async {
     var tmp = getcache(cachedata);
-    prolist = tmp;
+    prolist = tmp ?? [];
     if (!isnull(getcache(cachedatatime))) {
       await gethttpdata();
     } else {
@@ -127,25 +129,26 @@ late  String order_num;
   Widget build(BuildContext context) {
     titlebarcolor(false);
     if (!isnull(prolist)) {
-      return Loadbox(
-        // key: this.key,
-        loading: true,
-        color: SQColor.primary,
-        bgColor: SQColor.gray,
-        width: 80,
-        height: 80,
-        opacity: 0.0,
-        child: Container(
-          height: getScreenHeight(context),
-          width: getScreenWidth(context),
-          color: SQColor.white,
-          child: SizedBox(
-            height: getScreenHeight(context),
-            width: getScreenWidth(context),
-            child: Text(''),
-          ),
-        ),
-      );
+      return Gifload();
+      // return Loadbox(
+      //   // key: this.key,
+      //   loading: true,
+      //   color: SQColor.primary,
+      //   bgColor: SQColor.gray,
+      //   width: 80,
+      //   height: 80,
+      //   opacity: 0.0,
+      //   child: Container(
+      //     height: getScreenHeight(context),
+      //     width: getScreenWidth(context),
+      //     color: SQColor.white,
+      //     child: SizedBox(
+      //       height: getScreenHeight(context),
+      //       width: getScreenWidth(context),
+      //       child: Text(''),
+      //     ),
+      //   ),
+      // );
     }
     var margintop = SizedBox(
       height: 15,
@@ -175,7 +178,6 @@ late  String order_num;
                   SizedBox(
                     width: 5,
                   ),
-                  // Text(lang('书豆'), style: style3),
                   bean,
                 ],
               ),
@@ -365,7 +367,7 @@ late  String order_num;
           width: ww,
           height: w * .2,
           child: Container(
-            color: select == pid ? color3 : Colors.white,
+            color: select == pid ? color3 : SQColor.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -445,10 +447,13 @@ late  String order_num;
 
   //初始化谷歌支付
   _initgooglepay() {
-    googlepayobj = new Googlepay();
-    sign_data.add("初始化googlePay" + gettime());
-   
-    googlepayobj.init(func_success: isok, func_fail: initfail);
+    googlepayobj = new Pay();
+    googlepayobj.initializeInAppPurchase(
+        func_success: isok, func_fail: initfail, func_cancel: initcancel);
+    // sign_data.add("初始化googlePay" + gettime());
+
+    // googlepayobj.init(
+    //     func_success: isok, func_fail: initfail, func_cancel: initcancel);
   }
 
   //谷歌支付
@@ -460,6 +465,7 @@ late  String order_num;
     }
     click++;
     sign_data.add("点击购买按钮" + gettime() + "次数" + click.toString());
+
     if (payok || debug) {
       //检查支付挡位有没有选中
       if (!isnull(select)) {
@@ -470,13 +476,18 @@ late  String order_num;
       sign_data.add("创建订单" + gettime());
       //创建订单
       await _createorder(select);
-      //调起支付
+      //调起支付`
 
       if (isnull(order_num)) {
         sign_data.add("进入google支付" + gettime() + "_" + order_num);
         loadbox(context); //加载框
-        googlepayobj.buy(
-            sku: select,
+        // googlepayobj.buyProduct(
+        //     sku: select,
+        //     payload: order_num,
+        //     func_success: buySuccess,
+        //     func_fail: buyfail,
+        //     func_cancel: onCancelled);
+        googlepayobj.buyProduct(select,
             payload: order_num,
             func_success: buySuccess,
             func_fail: buyfail,
@@ -564,7 +575,6 @@ late  String order_num;
       var tmp3 = getdata(context, tmp2);
       if (isnull(tmp3)) {
         //更新充值信息；弹出页面
-
         User.upcoin(tmp3['remainder']);
         reflash();
         pop(context);
@@ -582,6 +592,13 @@ late  String order_num;
     // d("进入onFailure" + data);
     failmsg = data;
     sign_data.add("初始化googlePay失败" + gettime() + data);
+    pop(context);
+  }
+
+  void initcancel([data]) {
+    // d("进入onFailure" + data);
+    failmsg = data;
+    sign_data.add("初始化主动取消" + gettime() + data);
   }
 
   void buyfail([data]) {
@@ -607,87 +624,16 @@ late  String order_num;
   }
 
   static Future loadbox(BuildContext context, [Widget? body]) async {
-    var boxw = getScreenWidth(context);
-    var boxh = getScreenHeight(context);
-    var boxsize = boxw > boxh ? boxh : boxw;
-    boxsize /= 2.5;
-    var fontstyle = new TextStyle(
-        color: Colors.white,
-        fontSize: 15.0,
-        fontWeight: FontWeight.w100,
-        letterSpacing: 0,
-        height: 1,
-        wordSpacing: 0,
-        //fontStyle: FontStyle.italic,
-        //textBaseline: TextBaseline.ideographic,
-        decoration: TextDecoration.none);
     var body = StatefulBuilder(
       builder: (ctx, state) {
         // Down.reflash = state;
         // var point = Down.progress * 100;
-        var theam = Container(
-          height: boxsize,
-          // width: boxsize,
-          decoration: new BoxDecoration(
-            //背景
-            //color: Colors.blue,
-            //设置四周圆角 角度
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            //设置四周边框
-            //border: new Border.all(width: 1, color: Colors.red),
-          ),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: boxsize / 5,
-                    ),
-                    CircularProgressIndicator(
-                      //strokeWidth: 4.0,
-                      // backgroundColor: Colors.blue,
-                      //value: 0.0,
-                      valueColor:
-                          new AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                    SizedBox()
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: Center(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: boxsize / 8,
-                    ),
-                    Container(
-                      //margin: const EdgeInsets.all(5.0),
-                      //padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        lang('等待响应') + '...',
-                        style: fontstyle,
-                      ),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.all(5.0),
-                        padding: const EdgeInsets.all(1.0),
-                        child: Text(
-                          lang('请勿操作'),
-                          style: fontstyle,
-                        ))
-                  ],
-                ),
-              )),
-            ],
-          ),
-        );
+        Widget theam = getloadobj(context);
         // ignore: deprecated_member_use
         return WillPopScope(
             child: Center(child: theam),
             onWillPop: () {
-              return Future.value(false);  
+              return Future.value(false);
               // pop(context);
             });
       },
@@ -698,5 +644,79 @@ late  String order_num;
       builder: (BuildContext context) => body,
     );
     return await action;
+  }
+
+  static Widget getloadobj(BuildContext context) {
+    var boxw = getScreenWidth(context);
+    var boxh = getScreenHeight(context);
+    var boxsize = boxw > boxh ? boxh : boxw;
+    boxsize /= 2.5;
+    var fontstyle = new TextStyle(
+        color: SQColor.white,
+        fontSize: 15.0,
+        fontWeight: FontWeight.w100,
+        letterSpacing: 0,
+        height: 1,
+        wordSpacing: 0,
+        //fontStyle: FontStyle.italic,
+        //textBaseline: TextBaseline.ideographic,
+        decoration: TextDecoration.none);
+    Widget loadc = Column(
+      children: <Widget>[
+        Expanded(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: boxsize / 5,
+              ),
+              CircularProgressIndicator(
+                //strokeWidth: 4.0,
+                // backgroundColor: Colors.blue,
+                //value: 0.0,
+                valueColor: new AlwaysStoppedAnimation<Color>(SQColor.white),
+              ),
+              SizedBox()
+            ],
+          ),
+        ),
+        Expanded(
+            child: Center(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: boxsize / 8,
+              ),
+              Container(
+                //margin: const EdgeInsets.all(5.0),
+                //padding: const EdgeInsets.all(5.0),
+                child: Text(
+                  lang('等待响应') + '...',
+                  style: fontstyle,
+                ),
+              ),
+              Container(
+                  margin: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(1.0),
+                  child: Text(
+                    lang('请勿操作'),
+                    style: fontstyle,
+                  ))
+            ],
+          ),
+        )),
+      ],
+    );
+    return Container(
+        height: boxsize,
+        // width: boxsize,
+        decoration: new BoxDecoration(
+          //背景
+          //color: Colors.blue,
+          //设置四周圆角 角度
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          //设置四周边框
+          //border: new Border.all(width: 1, color: Colors.red),
+        ),
+        child: loadc);
   }
 }

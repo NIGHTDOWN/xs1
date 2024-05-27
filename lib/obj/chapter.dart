@@ -5,20 +5,20 @@ import 'package:ng169/tool/t.dart';
 import 'novel.dart';
 
 class Chapter {
-  int id=0;
-  String book_id="0";
-  int book_type=0;
-  String coin="0";
-  String isfree="0";
-  String title="0";
-  String ispay="0";
-  String secnum="0";
-  String section_id="0";
-  String update_time="0";
-  int index=0;
-  String click_cache_name="";
-  String read_sign_cache_name="";
-  int read_sign=0; //????
+  int id = 0;
+  String book_id = "0";
+  int book_type = 0;
+  String coin = "0";
+  String isfree = "0";
+  String title = "0";
+  String ispay = "0";
+  String secnum = "0";
+  String section_id = "0";
+  String update_time = "0";
+  int index = 0;
+  String click_cache_name = "";
+  String read_sign_cache_name = "";
+  int read_sign = 0; //????
   Chapter.fromJson(Map data, int i) {
     //section_id = data['id'].toString();
     index = i;
@@ -31,6 +31,7 @@ class Chapter {
     coin = data['coin'].toString();
     isfree = data['isfree'].toString();
     title = data['title'];
+    title = trim(title);
     ispay = data['ispay'].toString();
     secnum = data['secnum'].toString();
     section_id = data['section_id'].toString();
@@ -42,7 +43,6 @@ class Chapter {
   getpaystat() {
     if (isnull(getuid)) {
       //如果是登入状态才检测
-
     }
   }
 
@@ -125,7 +125,6 @@ class Chapter {
   }
 
   static Future<List> getcatecache(context, Novel novel) async {
-  
     var bookid = novel.id;
     var cacheindex =
         'chapter' + bookid.toString() + getuid().toString(); //不同用户缓存id不一样

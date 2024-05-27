@@ -108,7 +108,7 @@ class _Index extends State<Index> {
         decoration: _currentPage == 0
             ? BoxDecoration(
                 borderRadius: _borderRadius,
-                color: Colors.white,
+                color: SQColor.white,
               )
             : null,
         child: GestureDetector(
@@ -138,8 +138,8 @@ class _Index extends State<Index> {
             // shape: RoundedRectangleBorder(
             //   borderRadius: _borderRadius,
             // ),
-            // splashColor: Colors.white,
-            // highlightColor: Colors.white,
+            // splashColor: SQColor.white,
+            // highlightColor: SQColor.white,
             onPressed: null,
           ),
         ),
@@ -149,7 +149,7 @@ class _Index extends State<Index> {
               decoration: _currentPage == 1
                   ? BoxDecoration(
                       borderRadius: _borderRadius,
-                      color: Colors.white,
+                      color: SQColor.white,
                     )
                   : null,
               child: GestureDetector(

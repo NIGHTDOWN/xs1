@@ -19,7 +19,7 @@ class RechargeLog extends LoginBase {
 // }
 
 // class RechargeLogState extends State<RechargeLog> {
-  List htppdata=[], mallcache=[];
+  List? htppdata = [], mallcache = [];
   List<Widget> more = [SizedBox()];
   var index = 'RechargeLog_';
   var cachedata = 'RechargeLog_data_', page = 1;
@@ -39,7 +39,7 @@ class RechargeLog extends LoginBase {
     more = [SizedBox()];
     stop = false;
     page = 1;
-    loadpages=0;
+    loadpages = 0;
     reflash();
   }
 
@@ -69,7 +69,7 @@ class RechargeLog extends LoginBase {
       if (stop) {
         return false;
       }
-       if (loadpages == page) {
+      if (loadpages == page) {
         return false;
       }
       loadpages = page;
@@ -97,7 +97,7 @@ class RechargeLog extends LoginBase {
     mallcache = getcache(cachedata);
 
     if (isnull(mallcache)) {
-      htppdata = mallcache[0];
+      htppdata = mallcache?[0];
     } else {
       setcache(index, 0, '0');
     }
@@ -111,8 +111,6 @@ class RechargeLog extends LoginBase {
     } else {}
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     titlebarcolor(false);
@@ -121,9 +119,9 @@ class RechargeLog extends LoginBase {
         onRefresh: gethttpdata,
         child: ListView(
           controller: scrollController,
-           physics: AlwaysScrollableScrollPhysics(),
+          physics: AlwaysScrollableScrollPhysics(),
           children: <Widget>[
-            isnull(htppdata) ? objectBlock(htppdata) : SizedBox(),
+            isnull(htppdata) ? objectBlock(htppdata!) : SizedBox(),
             Column(
               children: more,
             ),
@@ -143,12 +141,11 @@ class RechargeLog extends LoginBase {
 
   Widget objectBlock(List json) {
     return LogList(json, 1);
-    
   }
 
   Widget _buildProgressIndicator() {
     var circular = new CircularProgressIndicator(
-      backgroundColor: Colors.white,
+      backgroundColor: SQColor.white,
       strokeWidth: 5.0,
       valueColor: AlwaysStoppedAnimation(Colors.green[200]),
     );

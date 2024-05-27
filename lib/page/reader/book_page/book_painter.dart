@@ -1,7 +1,5 @@
-
-
 import 'package:flutter/material.dart';
-
+import 'package:ng169/style/sq_color.dart';
 
 import 'package:ng169/tool/function.dart';
 import 'dart:ui' as ui;
@@ -19,10 +17,10 @@ enum PositionStyle {
 
 ///页面画笔
 class BookPainter extends CustomPainter {
- late CalPoint a, f, g, e, h, c, j, b, k, dd, i;
+  late CalPoint a, f, g, e, h, c, j, b, k, dd, i;
 
- late double viewWidth;
- late double viewHeight;
+  late double viewWidth;
+  late double viewHeight;
 
   ///顶部区域
   late Path pathA;
@@ -31,22 +29,22 @@ class BookPainter extends CustomPainter {
   late Path pathC;
 
   ///背部区域
- late  Path pathB;
+  late Path pathB;
 
   ///背景画笔
- late Paint bgPaint;
+  late Paint bgPaint;
 
   ///绘制区域画笔
- late Paint pathAPaint, pathCPaint, pathBPaint;
+  late Paint pathAPaint, pathCPaint, pathBPaint;
 
   ///触摸点的区域
- late  PositionStyle style;
+  late PositionStyle style;
 
   ///回调数据外放
   late ValueChanged changedPoint;
 
   ///背景色
-late  Color bgColor;
+  late Color bgColor;
 
   ///前景色
   late Color frontColor;
@@ -179,7 +177,7 @@ late  Color bgColor;
 
   _initPaintAndPath() {
     bgPaint = new Paint();
-    bgPaint.color = Colors.white;
+    bgPaint.color = SQColor.white;
 // Image.asset(Styles.getTheme()['bg'], fit: BoxFit.cover))
     pathAPaint = new Paint();
 
@@ -451,7 +449,7 @@ late  Color bgColor;
     // canvas.drawPath(_getPathC(), pathPaint);
 
     canvas.save();
-    
+
     var pictureRecorder = ui.PictureRecorder();
     var canvasBitmap = Canvas(pictureRecorder);
     // canvasBitmap.drawPicture(pica);
@@ -495,7 +493,7 @@ late  Color bgColor;
     canvas.transform(mMatrix.storage);
     canvas.drawPicture(pic);
     // canvas.drawPicture(pica);
-    
+
     _drawPathCShadow(canvas); //调用阴影绘制方法
     canvas.restore();
   }

@@ -19,12 +19,17 @@ class NovelHistory extends StatelessWidget {
       var novel = Novel.fromDb(novels[i]);
 
       children.add(getrow(context, novel));
-      children.add(Divider(height: 1));
+      children.add(
+        Divider(
+          height: 1,
+          color: SQColor.lightGray,
+        ),
+      );
     }
     //children.add(Container(height: 10, color: Color(0xfff5f5f5)));
 
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: children,

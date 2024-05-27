@@ -1,5 +1,5 @@
 name: ng169
-description: ervery look story by no advertion.
+description: ervery LoveNovel by no advertion.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -12,7 +12,7 @@ description: ervery look story by no advertion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 9.1.0+22
+version: 9.2.0+23
 
 
 environment:
@@ -45,7 +45,7 @@ dependencies:
   web_socket_channel: any
   cached_network_image: 3.3.1
   # banner滑动
-  flutter_card_swiper: any 
+  # flutter_card_swiper: any 
 
  
   #权限
@@ -59,7 +59,9 @@ dependencies:
   url_launcher: any
   # 监听浏览器唤醒路劲
   uni_links: any
-  flutter_webview_plugin: any
+  # flutter_webview_plugin: any
+  webview_flutter: any
+   
   #app缓存
   path_provider: any
   #app信息
@@ -71,9 +73,10 @@ dependencies:
   #设备信息
   #device_info : 0.4.1
   # dio:any
-  battery: any 
+  # battery: any 
+  battery_info: any
   #intl: ^0.15.8
-  device_info_plus: 9.1.0
+  device_info_plus: any
   device_apps: any
   carousel_slider: any
   # 富文本
@@ -85,12 +88,23 @@ dependencies:
   flutter_screen_wake: any
   crypto: any
   share: any
+  #谷歌苹果内购
+  in_app_purchase: any
   #谷歌登入
+  # google_sign_in: ^6.2.1
+  # flutter_facebook_auth: any
+  # facebook_login: any
+
+  third_party_login: ^1.0.14
+
+  get_time_ago: any
   # firebase_core: any
-  # firebase_analytics: ^5.0.11
+  # firebase_analytics: any
+  # firebase_auth: any
+  # flutter_all_social_login : any
   # firebase_crashlytics: ^0.1.3
   # firebase_messaging: ^6.0.9
-  # firebase_auth: any  
+  #   
   # google_sign_in: any
   # flutter_facebook_login: any
   # flutter_datetime_picker: any
@@ -133,6 +147,7 @@ flutter:
       - assets/lang/
       - assets/mock/
       - assets/images/
+      - assets/images/gif/
       - assets/images/cy/
       - assets/images/emjo/
       - assets/images/loading/

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ng169/obj/novel.dart';
+import 'package:ng169/style/sq_color.dart';
 
 import 'novel_grid_item.dart';
 import 'home_section_view.dart';
@@ -30,7 +31,7 @@ class NovelSecondHybirdCard extends StatelessWidget {
     });
 
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         children: <Widget>[
           HomeSectionView(title),

@@ -1,5 +1,3 @@
-
-
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/chapter.dart';
@@ -13,29 +11,29 @@ import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/t.dart';
 
 class Article {
-  int id=0;
-  int novelId=0;
-  int price=0;
-  String booktype="";
-  int index=0;
-  int nextArticleId=0;
-  int preArticleId=0;
-  String title="";
-  String content="";
-  List images= [];
+  int id = 0;
+  int novelId = 0;
+  int price = 0;
+  String booktype = "";
+  int index = 0;
+  int nextArticleId = 0;
+  int preArticleId = 0;
+  String title = "";
+  String content = "";
+  List images = [];
   List imagestmp = [];
-  String contenttmp="";
-  String section_id="";
-  String dsl="";
-  String book_id="";
-  String update_time="";
-  String isfree="";
+  String contenttmp = "";
+  String section_id = "";
+  String dsl = "";
+  String book_id = "";
+  String update_time = "";
+  String isfree = "";
   double coin = 0.0;
   int cutlength = 300; //????
   bool pay = false; //????
   bool cartoonisinit = true; //????
-  List<Map<String, int>> pageOffsets=[];
-  List<String> page=[];
+  List<Map<String, int>> pageOffsets = [];
+  List<String> page = [];
 
   var context;
   Future<bool> ispay() async {
@@ -266,6 +264,7 @@ class Article {
 //重新拉取章节详情
   reload(context, novel, secid) async {
     Article article;
+    if (!isnull(secid)) return;
     if (booktype == '1') {
       await ArticleProvider.getremotecontent(context, novel, section_id);
       article = (await ArticleProvider.fetchArticle(

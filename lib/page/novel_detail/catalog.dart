@@ -119,7 +119,7 @@ class CataLogState extends State<CataLog> {
         backgroundColor: Colors.grey,
         controller: scrollController,
         heightScrollThumb: 35.0,
-        child: bookCardWithInfo() as  BoxScrollView,
+        child: bookCardWithInfo() as BoxScrollView,
       );
     }
 
@@ -152,14 +152,12 @@ class CataLogState extends State<CataLog> {
       itemExtent: 51.0,
       itemCount: isnull(remotedata) ? remotedata.length : 0,
       itemBuilder: (BuildContext context, int index) {
-
         var chapter = Chapter.fromJson(remotedata[index], index);
         return Container(
-          color: Colors.white,
+          color: SQColor.white,
           padding: EdgeInsets.only(left: 18),
           child: Column(
             children: <Widget>[
-              Divider(height: 1),
               Expanded(
                 child: Container(
                   height: 50,
@@ -167,9 +165,9 @@ class CataLogState extends State<CataLog> {
                     onTap: () async {
                       chapter.click();
                       gotoreadsign();
-                    
-                        await  this.widget.novel.read(context, chapter.id);
-                        
+
+                      await this.widget.novel.read(context, chapter.id);
+
                       loadpage();
                       refresh();
                     }, //显示目录
@@ -207,7 +205,11 @@ class CataLogState extends State<CataLog> {
                     ),
                   ),
                 ),
-              )
+              ),
+              Divider(
+                height: 1,
+                color: SQColor.lightGray,
+              ),
             ],
           ),
         );

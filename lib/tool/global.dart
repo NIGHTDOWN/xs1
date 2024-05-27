@@ -20,6 +20,10 @@ Map<String, dynamic> globalKeys = {};
 PackageInfo? packageInfo;
 //dsl状态
 bool dslStatus = false;
+i1() async {
+  globalKeys = {'cache': new NgCache()};
+}
+
 //dsl域名
 String dslDomain = '';
 i() async {

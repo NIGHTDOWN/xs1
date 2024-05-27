@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/novel.dart';
+import 'package:ng169/style/sq_color.dart';
 
 import 'package:ng169/tool/down.dart';
 import 'package:ng169/tool/toast.dart';
@@ -19,7 +20,11 @@ import 'http.dart';
 import 'lang.dart';
 
 void dt(var e) {
-  throw e;
+  if (isdebug) {
+    throw e;
+  } else {
+    d(e);
+  }
 }
 
 void d(data, [index = 1]) {
@@ -68,7 +73,7 @@ void show(BuildContext context, String msg, [ToastPostion? positions]) {
 
 showbox(
   Widget body, [
-  Color bgcolor = Colors.white10,
+  Color bgcolor = SQColor.white10,
   double radius = 10,
   bool showclosebtn = true,
   double? width,
@@ -349,6 +354,10 @@ double getSysStatsHeight(BuildContext context) {
   return MediaQuery.of(context).padding.top;
 }
 
+String trim(String str) {
+  return str.trim();
+}
+
 //判断对象是否存在
 bool isnull(dynamic data, [var index]) {
   if (null == data) {
@@ -508,7 +517,7 @@ checkversionnum() {
   var serverinfo = getcache(appupinfo);
   if (!isnull(serverinfo)) return false;
 
-  if (!isnull(serverinfo['version_code'])) return false;
+  if (!isnull(serverinfo, "version_code")) return false;
   var version = g('version').split('.').reversed.toList();
 
   var sversion = serverinfo['version_code'].split('.').reversed.toList();
@@ -564,7 +573,6 @@ Future<String> getUniqueId() async {
 
   var cache = 'idfas';
   var idfas = getcache(cache);
-
   if (isnull(idfas)) {
     return idfas;
   }
@@ -583,6 +591,9 @@ Future<String> getUniqueId() async {
 
     // idfas = androidDeviceInfo.androidId; // unique ID on Android
     idfas = androidDeviceInfo.serialNumber;
+    if (idfas == "unknown") {
+      idfas = androidDeviceInfo.id;
+    }
   }
   if (isnull(idfas)) {
     setcache(cache, idfas, '-1');

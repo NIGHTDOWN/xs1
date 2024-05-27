@@ -12,7 +12,8 @@ class HistoryPage extends StatefulWidget {
   final String api;
   final String title;
 
-  const HistoryPage({Key? key, required this.api, required this.title}) : super(key: key);
+  const HistoryPage({Key? key, required this.api, required this.title})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() => HistoryPageState();
 }
@@ -22,7 +23,7 @@ class HistoryPageState extends State<HistoryPage> {
   List<Widget> more = [SizedBox()];
   var index = 'mallpage_';
   var cachedata = 'mallpage_data_', page = 1, pagesize = 5;
-late  String api;
+  late String api;
   bool moredata = false, stop = false;
   ScrollController scrollController = ScrollController();
 
@@ -86,7 +87,8 @@ late  String api;
     //读数据库
     more = [];
     hotbook = await T('read as v left join book as b on v.bookid=b.bookid')
-        .wherestring('v.uid=' + getuid() + " and v.type in (1,2) group by b.bookid")
+        .wherestring(
+            'v.uid=' + getuid() + " and v.type in (1,2) group by b.bookid")
         .limit('5')
         .order('readtime desc')
         .getall();
@@ -128,7 +130,7 @@ late  String api;
   }
 
   Widget bookCardWithInfo(int style, List json) {
-    Widget card=Container();
+    Widget card = Container();
     d(json);
     switch (style) {
       case 4:
@@ -140,7 +142,7 @@ late  String api;
 
   Widget _buildProgressIndicator() {
     var circular = new CircularProgressIndicator(
-      backgroundColor: Colors.white,
+      backgroundColor: SQColor.white,
       strokeWidth: 5.0,
       valueColor: AlwaysStoppedAnimation(Colors.green[200]),
     );

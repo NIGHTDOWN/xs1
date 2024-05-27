@@ -9,6 +9,7 @@ import 'package:ng169/page/reader/lastpage.dart';
 import 'package:ng169/page/reader/reader_bar.dart';
 import 'package:ng169/page/reader/reader_tips.dart';
 import 'package:ng169/page/smallwidget/gifload.dart';
+import 'package:ng169/page/smallwidget/gifload2.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/event_bus.dart';
@@ -52,9 +53,9 @@ class ReaderSceneState extends State<ReaderScene>
   GlobalKey _readkey = new GlobalKey();
   double topSafeHeight = 0;
 
-  late Article? preArticle;
-  late Article? currentArticle;
-  late Article? nextArticle;
+  late Article? preArticle = null;
+  late Article? currentArticle = null;
+  late Article? nextArticle = null;
   late Widget bar;
   List<Chapter> chapters = [];
   List chaptersResponse = [];
@@ -66,40 +67,39 @@ class ReaderSceneState extends State<ReaderScene>
   GlobalKey canvasKey = new GlobalKey();
   late AnimationController percentageAnimationController;
   Widget btter = SizedBox();
-  Widget  load=Container();
-  bool loadflag=false;
+  Widget load = Container();
+  bool loadflag = false;
   var page;
-    loadw() {
+  loadw() {
     // return Container();
-   load= Scaffold(
+    load = Scaffold(
       // appBar: AppBar(
       //   title: Text('全屏白色背景'),
       // ),
       body: Container(
-        color: Colors.white,
+        color: SQColor.white,
         child: Center(
-          child: Gifload(),
+          child: Gifload2(),
         ),
       ),
     );
-    // return GifCartoon();
   }
+
   @override
   void initState() {
     super.initState();
 
-loadw();
-   
+    loadw();
+
     getfx();
     sysinit();
-     resetContent(widget.articleId,PageJumpType.stay);
+    resetContent(widget.articleId, PageJumpType.stay);
     pageController.addListener(onScroll);
     chaptersResponse = Chapter.get(context, this.widget.novel);
     btter = BatteryView();
     // btter = Container();
     setup();
     Jsq()..start();
-    
   }
 
   getfx() {
@@ -134,15 +134,16 @@ loadw();
       pageController.jumpToPage(1);
       return;
     }
-
-    if (pageIndex >= currentArticle!.pageCount - 1 &&
-        currentArticle!.nextArticleId == 0 &&
-        pageController.page! > 1.4) {
-      // pageIndex = currentArticle.pageCount - 1;
-      golast();
-      // show(context, lang('已经是最后一页了'));
-      // pageController.jumpToPage(1);
-      return;
+    if (isnull(currentArticle)) {
+      if (pageIndex >= currentArticle!.pageCount - 1 &&
+          currentArticle!.nextArticleId == 0 &&
+          pageController.page! > 1.4) {
+        // pageIndex = currentArticle.pageCount - 1;
+        golast();
+        // show(context, lang('已经是最后一页了'));
+        // pageController.jumpToPage(1);
+        return;
+      }
     }
 
     //当前页面
@@ -199,7 +200,7 @@ loadw();
                   Chapter.getReadSecId(widget.novel.id, widget.novel.type))]
               ['section_id']);
     } catch (e) {
-       dt(e);
+      dt(e);
       return;
     }
 
@@ -213,9 +214,10 @@ loadw();
     //大于的时候是改变字体的时候，需要把页面大小重新调整
     pageIndex =
         (isnull(getpoint(tmparticleId)) ? (getpoint(tmparticleId)) : 0)!;
-
-    if (pageIndex > currentArticle!.pageCount - 1) {
-      pageIndex = currentArticle!.pageCount - 1;
+    if (isnull(currentArticle)) {
+      if (pageIndex > currentArticle!.pageCount - 1) {
+        pageIndex = currentArticle!.pageCount - 1;
+      }
     }
     // d(currentArticle.pageCount);
   }
@@ -252,10 +254,9 @@ loadw();
           .wherestring(' section_id> ' + articleId.toString())
           .order('`section_id` asc')
           .getone();
-if(isnull(tmp)){
-currentArticle = (await fetchArticle(tmp['section_id']));
-}
-      
+      if (isnull(tmp)) {
+        currentArticle = (await fetchArticle(tmp['section_id']));
+      }
     }
     if (!isnull(currentArticle)) {
       //重试获取下一章还是失败，则退出。
@@ -290,7 +291,7 @@ currentArticle = (await fetchArticle(tmp['section_id']));
       pageIndex = currentArticle!.pageCount - 1;
     }
     showload = false;
-    loadflag=true;
+    loadflag = true;
     reflash();
   }
 
@@ -355,7 +356,7 @@ currentArticle = (await fetchArticle(tmp['section_id']));
 
   @override
   Widget build(BuildContext context) {
-    if(!loadflag)return load;
+    if (!loadflag) return load;
     // try {
     //   bar = ReaderBar(widget.novel, chaptersResponse, currentArticle, reflash,
     //       resetContent);
@@ -363,8 +364,12 @@ currentArticle = (await fetchArticle(tmp['section_id']));
     //   d(e);
     //   bar = Container();
     // }
-    bar = ReaderBar(
-        widget.novel, chaptersResponse, currentArticle!, reflash, resetContent);
+    if (isnull(currentArticle)) {
+      bar = ReaderBar(widget.novel, chaptersResponse, currentArticle!, reflash,
+          resetContent);
+    } else {
+      bar = Container();
+    }
     var stack = Stack(children: [
       Positioned(
           left: 0,
@@ -385,7 +390,7 @@ currentArticle = (await fetchArticle(tmp['section_id']));
     ];
     var box = Container(
         decoration: new BoxDecoration(
-            color: Colors.white, borderRadius: new BorderRadius.circular(10)),
+            color: SQColor.white, borderRadius: new BorderRadius.circular(10)),
         // width: 200,
         padding: EdgeInsets.only(top: 20, bottom: 10),
         margin: EdgeInsets.only(left: 20, right: 20),
@@ -467,7 +472,7 @@ currentArticle = (await fetchArticle(tmp['section_id']));
                               lang("加入书架"),
                               style: new TextStyle(
                                   fontSize: 12.0,
-                                  color: Colors.white,
+                                  color: SQColor.white,
                                   fontWeight: FontWeight.w200,
                                   fontFamily: "Roboto"),
                             ))),
@@ -586,14 +591,17 @@ currentArticle = (await fetchArticle(tmp['section_id']));
   }
 
   //翻页公共库
-  setpage(int nums) {
+  setpage(int nums) async {
     int index = pageIndex + nums;
     if (index < currentArticle!.pageCount && index >= 0) {
       pageIndex = index;
       reflash();
     }
     if (index > currentArticle!.pageCount - 1) {
-      currentArticle = nextArticle;
+      if (isnull(nextArticle)) {
+        currentArticle = nextArticle;
+      }
+
       reflash();
       if (isnull(currentArticle)) {
         resetContent(currentArticle!.id, PageJumpType.firstPage);
@@ -601,7 +609,10 @@ currentArticle = (await fetchArticle(tmp['section_id']));
       // pageIndex=0;
     }
     if (index < 0) {
-      currentArticle = preArticle!;
+      if (isnull(preArticle)) {
+        currentArticle = preArticle!;
+      }
+
       reflash();
       if (isnull(currentArticle)) {
         resetContent(currentArticle!.id, PageJumpType.lastPage);

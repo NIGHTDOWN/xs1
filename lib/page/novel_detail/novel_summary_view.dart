@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ng169/style/sq_color.dart';
 
 class NovelSummaryView extends StatelessWidget {
   final String summary;
@@ -12,7 +13,7 @@ class NovelSummaryView extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        color: Colors.white,
+        color: SQColor.white,
         padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
         child: Stack(
           alignment: AlignmentDirectional.bottomEnd,

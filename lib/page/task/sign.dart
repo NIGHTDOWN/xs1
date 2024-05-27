@@ -116,7 +116,7 @@ class Sign extends LoginBase {
       gradient: LinearGradient(
         begin: Alignment(-0.5, 1.0),
         end: Alignment(-0.2, -1.0),
-        colors: [Color(0x3037a8ff), Color(0xFF37a8ff)], // whitish to gray
+        colors: [SQColor.primary4, SQColor.primary], // whitish to gray
       ),
     );
     textstyle = TextStyle(
@@ -129,9 +129,9 @@ class Sign extends LoginBase {
     loadpage();
     objw = (getScreenWidth(g('context')) - 20) / 7;
     var de = new BoxDecoration(
-      color: Colors.white,
+      color: SQColor.white,
       borderRadius: new BorderRadius.circular(50), // 圆角度
-      border: new Border.all(color: Color(0xf1aec1e2), width: 1),
+      border: new Border.all(color: SQColor.primary2, width: 1),
     );
     choose = Container(
       decoration: de,
@@ -141,7 +141,7 @@ class Sign extends LoginBase {
     maozhua = Container(
       child: Image.asset(
         'assets/images/zhua.png',
-        color: Color(0x80aec1e2),
+        color: const Color.fromARGB(203, 249, 157, 165),
       ),
       width: 20,
       height: 20,
@@ -149,7 +149,7 @@ class Sign extends LoginBase {
     maozhua2 = Container(
       child: Image.asset(
         'assets/images/zhua.png',
-        color: Color(0x80aec1e2),
+        color: const Color.fromARGB(203, 249, 157, 165),
       ),
       width: 25,
       height: 25,
@@ -198,7 +198,7 @@ class Sign extends LoginBase {
                 onTap: back,
                 child: Icon(
                   Icons.arrow_back,
-                  color: Colors.white,
+                  color: SQColor.white,
                 )),
             Expanded(
                 child: Center(
@@ -260,7 +260,7 @@ class Sign extends LoginBase {
                   style: TextStyle(
                     shadows: [
                       BoxShadow(
-                          color: Colors.white,
+                          color: SQColor.white,
                           offset: Offset(1.0, 1.0),
                           blurRadius: 6.0,
                           spreadRadius: 6.0)
@@ -268,7 +268,7 @@ class Sign extends LoginBase {
                     decoration: TextDecoration.none,
                     fontSize: 34,
                     fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    color: SQColor.white,
                   )),
             ),
             top: 50,
@@ -298,29 +298,20 @@ class Sign extends LoginBase {
                 child: Text(lang("确定")),
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.resolveWith((states) {
-                    return Color(0xff37a8ff);
+                    return SQColor.primary;
                   }),
                   foregroundColor: WidgetStateProperty.resolveWith((states) {
-                    return Colors.white;
+                    return SQColor.white;
                   }),
                   shape: WidgetStateProperty.resolveWith((states) {
                     return RoundedRectangleBorder(
                         side: BorderSide(
-                          color: Color(0x8037a8ff),
+                          color: SQColor.primary2,
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(8));
                   }),
                 ),
-
-                // color: Color(0xff37a8ff),
-                // textColor: Colors.white,
-                // shape: RoundedRectangleBorder(
-                //     side: BorderSide(
-                //       color: Color(0x8037a8ff),
-                //       width: 1,
-                //     ),
-                //     borderRadius: BorderRadius.circular(8)),
               )
             ]))
       ]),
@@ -331,6 +322,7 @@ class Sign extends LoginBase {
   httpsign() async {
     var signda = info['sign_day'];
     var signapi = 'user/sign';
+
     var data = await http(signapi, {'day': signda}, gethead());
     var tmpdata = getdata(context, data);
     if (isnull(tmpdata)) {
@@ -349,10 +341,11 @@ class Sign extends LoginBase {
       //borderRadius: new BorderRadius.circular(50), // 圆角度
 
       shape: BoxShape.circle,
-      border: new Border.all(color: Color(0x88aec1e2), width: 10), // 边色与边宽度
+      border: new Border.all(
+          color: Color.fromARGB(213, 231, 213, 215), width: 10), // 边色与边宽度
 // 生成俩层阴影，一层绿，一层黄， 阴影位置由offset决定,阴影模糊层度由blurRadius大小决定（大就更透明更扩散），阴影模糊大小由spreadRadius决定
       boxShadow: [
-        BoxShadow(color: Color(0xff5cb5f9), blurRadius: 3.0, spreadRadius: 7.0),
+        BoxShadow(color: SQColor.primary, blurRadius: 3.0, spreadRadius: 7.0),
       ],
     );
     //签到按钮（显示联系签到天数）
@@ -384,8 +377,10 @@ class Sign extends LoginBase {
             child: Column(children: [
           Container(
             decoration: tmpdee,
-            child: FloatingActionButton(
-              backgroundColor: cansign ? SQColor.white : Colors.grey[300],
+            child: RawMaterialButton(
+              shape: CircleBorder(),
+              padding: EdgeInsets.all(18.0),
+              fillColor: cansign ? SQColor.white : Colors.grey[300],
               child: Text(lang('签到'),
                   style: TextStyle(
                       fontSize: 15,
@@ -410,8 +405,10 @@ class Sign extends LoginBase {
           child: Column(children: [
         Container(
           decoration: tmpdee,
-          child: FloatingActionButton(
-            backgroundColor: cansign ? SQColor.white : Colors.grey[300],
+          child: RawMaterialButton(
+            shape: CircleBorder(),
+            padding: EdgeInsets.all(18.0),
+            fillColor: cansign ? SQColor.white : Colors.grey[300],
             child: Text(lang('补签'),
                 style: TextStyle(
                     fontSize: 15,
@@ -485,7 +482,7 @@ class Sign extends LoginBase {
                   gt2(
                     isnull(info) ? info['sign_icon'].toString() : '0',
                   ),
-                  Icon(Icons.clear, size: 15, color: Colors.white),
+                  Icon(Icons.clear, size: 15, color: SQColor.white),
                   gt3(
                     info['sign_multiple'],
                   ),
@@ -496,7 +493,7 @@ class Sign extends LoginBase {
                               onTap: () {
                                 //显示说明信息
                                 // showDialog(context: context, child: getbox());
-                                showbox(getbox(), Colors.white);
+                                showbox(getbox(), SQColor.white);
                               },
                               child: Icon(Icons.error_outline,
                                   size: 15, color: Colors.grey)))
@@ -563,12 +560,12 @@ class Sign extends LoginBase {
         margin: EdgeInsets.only(left: 10, right: 10),
         padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 10),
         decoration: new BoxDecoration(
-          color: Colors.white,
+          color: SQColor.white,
           borderRadius: new BorderRadius.circular(10), // 圆角度
           //border: new Border.all(color: Color(0xf1aec1e2), width: 1),
           boxShadow: [
             BoxShadow(
-              color: Color(0xff5cb5f9),
+              color: SQColor.primary2,
               offset: Offset(1.0, 1.0),
               blurRadius: 1.0,
             ),
@@ -1055,7 +1052,7 @@ class Sign extends LoginBase {
         c2 = Color.fromARGB(0, 0, 0, 0),
         c3 = Color.fromARGB(0, 0, 0, 0);
     Function f = () {};
-    c2 = Colors.white;
+    c2 = SQColor.white;
     c3 = Colors.black;
     if (status == 0) {
       //去完成
@@ -1210,12 +1207,12 @@ class Sign extends LoginBase {
       //height: 600,
       margin: EdgeInsets.only(left: 10, right: 10),
       decoration: new BoxDecoration(
-        color: Colors.white,
+        color: SQColor.white,
         borderRadius: new BorderRadius.circular(10), // 圆角度
         //border: new Border.all(color: Color(0xf1aec1e2), width: 1),
         boxShadow: [
           BoxShadow(
-            color: Color(0xff5cb5f9),
+            color: SQColor.primary2,
             offset: Offset(1.0, 1.0),
             blurRadius: 1.0,
           ),

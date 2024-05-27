@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ng169/obj/novel.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 
 import 'novel_cell.dart';
@@ -24,7 +25,12 @@ class NovelNormalCard extends StatelessWidget {
     for (var i = 0; i < novels.length; i++) {
       var novel = novels[i];
       if (i != 0) {
-        children.add(Divider(height: 1));
+        // children.add(
+        //   Divider(
+        //     height: 1,
+        //     color: SQColor.lightGray,
+        //   ),
+        // );
       }
 
       children.add(NovelCell(Novel.fromJson(novel)));
@@ -32,7 +38,7 @@ class NovelNormalCard extends StatelessWidget {
     //children.add(Container(height: 10, color: Color(0xfff5f5f5)));
 
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: children,

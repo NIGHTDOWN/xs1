@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ng169/obj/novel.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'home_section_view.dart';
 import 'home_novel_cover_view.dart';
 
@@ -27,7 +28,7 @@ class NovelFourGridView extends StatelessWidget {
       );
     }).toList();
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

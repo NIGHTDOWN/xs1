@@ -1,7 +1,7 @@
 library flutter_page_indicator;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:ng169/style/sq_color.dart';
 
 class WarmPainter extends BasePainter {
   WarmPainter(PageIndicator widget, double page, int index, Paint paint)
@@ -338,7 +338,7 @@ class PageIndicator extends StatefulWidget {
       required this.controller,
       this.color = Colors.white30,
       this.layout = PageIndicatorLayout.SLIDE,
-      this.activeColor = Colors.white,
+      this.activeColor = SQColor.white,
       this.scale = 0.6,
       this.dropHeight = 20.0})
       : super(key: key);

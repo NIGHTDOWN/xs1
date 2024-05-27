@@ -16,7 +16,6 @@ class User {
   static String index = 'user';
 
   static get() {
-    
     return getcache(index, false);
   }
 

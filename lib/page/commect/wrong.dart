@@ -8,7 +8,8 @@ import 'package:ng169/tool/lang.dart';
 class AddWrong extends StatefulWidget {
   final Novel novel;
   final String secid;
-  const AddWrong({Key? key, required this.novel, required this.secid}) : super(key: key);
+  const AddWrong({Key? key, required this.novel, required this.secid})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => AddWrongState();
@@ -19,8 +20,8 @@ class AddWrongState extends State<AddWrong> {
   double star = 10.0;
   String api = 'common/get_wrongtype';
   String subapi = 'user/correction';
-  late String? groupValue;
-  late List wrong;
+  late String? groupValue = "";
+  late List wrong = [];
   String cachedata = 'Comment_wrong_data_';
   @override
   initState() {
@@ -101,14 +102,14 @@ class AddWrongState extends State<AddWrong> {
     }
   }
 
-void _changed(String? value) {
-  // 现在 value 可以是 String 或 null
-  if (value != null) {
-    setState(() {
-      groupValue = value;
-    });
+  void _changed(String? value) {
+    // 现在 value 可以是 String 或 null
+    if (value != null) {
+      setState(() {
+        groupValue = value;
+      });
+    }
   }
-}
 
   List<Widget> getwrong() {
     List<Widget> ret = [];
@@ -152,7 +153,10 @@ void _changed(String? value) {
         Wrap(
           children: getwrong(),
         ),
-        Divider(),
+        Divider(
+          height: 1,
+          color: SQColor.lightGray,
+        ),
         Container(
             padding: EdgeInsets.all(10),
             child: new TextFormField(
@@ -179,7 +183,10 @@ void _changed(String? value) {
               },
               onSaved: (value) {},
             )),
-        Divider(),
+        Divider(
+          height: 1,
+          color: SQColor.lightGray,
+        ),
         Row(
           children: <Widget>[
             SizedBox(
@@ -196,7 +203,7 @@ void _changed(String? value) {
                   child: Padding(
                     child: Text(
                       lang('提交'),
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(fontSize: 16, color: SQColor.white),
                     ),
                     padding: EdgeInsets.all(5),
                   )),

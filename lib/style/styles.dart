@@ -100,19 +100,19 @@ class Styles {
   //暗黑模式
   static Map th6 = {
     'bg': 'assets/images/th6.jpg', //背景
-    'fontcolor': Colors.white60, //文章字体颜色
-    'titlefontcolor': Colors.white60, //章节字体颜色
-    'batterycolor': Colors.white60, //电量背景颜色
-    'batteryfontcolor': Colors.white60, //电量字体颜色
+    'fontcolor': SQColor.white60, //文章字体颜色
+    'titlefontcolor': SQColor.white60, //章节字体颜色
+    'batterycolor': SQColor.white60, //电量背景颜色
+    'batteryfontcolor': SQColor.white60, //电量字体颜色
 
     'barcolor': Colors.black87, //各种弹出框背景颜色
     // 'barcolor': Colors.red, //各种弹出框背景颜色
-    'barfontcolor': Colors.white60, //各种弹出框字体颜色
-    'activecolor': Colors.white, //各种进度条颜色
+    'barfontcolor': SQColor.white60, //各种弹出框字体颜色
+    'activecolor': SQColor.white, //各种进度条颜色
     'activefontcolor': Colors.black54, //各种进度条颜色
-    'catenomal': Colors.white60, //目录文字颜色
+    'catenomal': SQColor.white60, //目录文字颜色
     'cateon': Colors.orange[700], //目录选中文字颜色
-    'cateover': Colors.white38, //目录已点文字颜色
+    'cateover': SQColor.white38, //目录已点文字颜色
   };
   static Map getTheme() {
     var cache = getcache(fontsizecache);

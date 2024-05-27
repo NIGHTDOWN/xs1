@@ -8,6 +8,7 @@ import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
 
 import 'package:ng169/page/recharge/recharge.dart';
 import 'package:ng169/style/screen.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/bow.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
@@ -113,7 +114,7 @@ class HomeBanner extends StatelessWidget {
     double top = MediaQueryData.fromWindow(window).padding.top;
     return Container(
       margin: EdgeInsets.only(top: top),
-      color: Colors.white,
+      color: SQColor.white,
       child: CarouselSlider(
         items: banners.map((info) {
           return Builder(

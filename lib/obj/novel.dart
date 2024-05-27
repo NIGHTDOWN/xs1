@@ -216,7 +216,7 @@ class Novel {
             ? data['cartoon_id']
             : 0;
     //firstArticleId = data['first_article_id'];
-    name = data['other_name'];
+    name = trim(data['other_name']);
     imgUrl = data['bpic'];
     if (dslStatus && isnull(dslDomain)) {
       if (isnull(data, 'bpic_dsl')) {
@@ -225,6 +225,7 @@ class Novel {
     }
 
     desc = isnull(data['desc']) ? data['desc'] : '';
+    desc = trim(desc);
     type = isnull(data['book_id']) ? '1' : '2';
     type = isnull(data['type']) ? data['type'].toString() : type;
     isgroom = !isnull(data['isgroom']) ? '0' : '1';
@@ -340,10 +341,11 @@ class Novel {
       id = data['bookid'].toString();
       dbid = data['id'].toString();
 
-      name = '' + data['bookname'].toString();
+      name = trim('' + data['bookname'].toString());
 
       imgUrl = data['pic'];
       desc = data['desc'] ?? "";
+      desc = trim(desc);
       type = data['type'].toString();
       isgroom = data['isgroom'].toString();
       readChapter = isnull(data['readsec']) ? data['readsec'] : 0;
@@ -443,10 +445,6 @@ class Novel {
     //这里书逻辑
     var context;
     await Chapter.getcatecache(context, this);
-
-    // await secs.forEach((v) {
-    //   ArticleProvider.getremotecontent(context, this, v['section_id']);
-    // });
 
     var tmp = await T('sec').where({'cacheflag': 0, 'book_id': id}).getall();
     for (var i = 0; i < tmp.length; i++) {

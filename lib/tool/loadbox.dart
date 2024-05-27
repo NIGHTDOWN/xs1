@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:ng169/style/sq_color.dart';
 
 import 'function.dart';
 
@@ -22,7 +23,7 @@ class Loadbox extends StatefulWidget {
       {Key? key,
       required this.loading,
       required this.child,
-      this.color = Colors.blue,
+      this.color = SQColor.primary,
       this.bgColor = Colors.black45,
       this.width = 80,
       this.height = 80,
@@ -411,7 +412,7 @@ class RoundPainter extends CustomPainter {
 //       ),
 //     );
 //     var fontstyle = new TextStyle(
-//         color: Colors.white,
+//         color: SQColor.white,
 //         fontSize: 15.0,
 //         fontWeight: FontWeight.w100,
 //         letterSpacing: 0,
@@ -444,7 +445,7 @@ class RoundPainter extends CustomPainter {
 //                     strokeWidth: 5.0,
 //                     backgroundColor: Colors.blue,
 //                     // value: Down.progress,
-//                     valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+//                     valueColor: new AlwaysStoppedAnimation<Color>(SQColor.white),
 
 //                   ),
 //                 ),

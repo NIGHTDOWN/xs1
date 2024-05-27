@@ -5,7 +5,6 @@ import 'package:ng169/page/mall/mall.dart';
 
 import 'package:ng169/style/sq_color.dart';
 
-
 import 'package:ng169/tool/function.dart';
 
 import 'package:ng169/tool/http.dart';

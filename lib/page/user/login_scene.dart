@@ -36,7 +36,7 @@ class LoginSceneState extends State {
   login() async {
     // ignore: unused_local_variable
     var phone = phoneEditer.text;
-     // ignore: unused_local_variable
+    // ignore: unused_local_variable
     var code = codeEditer.text;
 
     // try {
@@ -55,7 +55,7 @@ class LoginSceneState extends State {
   @override
   void dispose() {
     timer.cancel();
-      super.dispose();
+    super.dispose();
   }
 
   coldDown() {
@@ -157,7 +157,7 @@ class LoginSceneState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('登录'), elevation: 0),
-      backgroundColor: Colors.white,
+      backgroundColor: SQColor.white,
       body: buildBody(),
     );
   }

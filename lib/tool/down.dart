@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ng169/conf/conf.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -190,7 +191,7 @@ class Down {
     var boxsize = boxw > boxh ? boxh : boxw;
     boxsize /= 2.5;
     var fontstyle = new TextStyle(
-        color: Colors.white,
+        color: SQColor.white,
         fontSize: 15.0,
         fontWeight: FontWeight.w100,
         letterSpacing: 0,
@@ -227,7 +228,7 @@ class Down {
                       backgroundColor: Colors.blue,
                       value: Down.progress,
                       valueColor:
-                          new AlwaysStoppedAnimation<Color>(Colors.white),
+                          new AlwaysStoppedAnimation<Color>(SQColor.white),
                     ),
                     SizedBox()
                   ],

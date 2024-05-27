@@ -145,19 +145,21 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.0.1'
     implementation 'com.google.android.material:material:1.1.0-alpha02'
     //引入支付 最新3.0.0 库
-    implementation 'com.android.billingclient:billing:3.0.2' 
+    // implementation 'com.android.billingclient:billing:7.0.0' 
     //引入json
     implementation 'com.alibaba:fastjson:1.1.55.android'
+    
     //谷歌登入
     // implementation 'com.google.firebase:firebase-core:16.8.0'
     
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    // implementation 'com.google.firebase:firebase-analytics:17.2.2'
     //facebooksdk版本升级
     // implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
-    implementation 'com.google.android.play:core:1.8.0'
+    implementation 'com.google.android.play:core:1.10.3'
     //fb广告
     // implementation 'com.facebook.android:audience-network-sdk:5.+'
     implementation 'com.android.support:multidex:1.0.3' // 或者更新的版
+
 }
 
 //谷歌登入,下载googlejosn，复制到android/app目录下

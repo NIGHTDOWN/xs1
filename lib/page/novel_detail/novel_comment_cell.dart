@@ -96,7 +96,11 @@ class NovelCommentCell extends StatelessWidget {
     return Column(
       children: <Widget>[
         buildContent(),
-        Divider(height: 1, indent: 15),
+        Divider(
+          indent: 15,
+          height: 1,
+          color: SQColor.lightGray,
+        ),
       ],
     );
   }

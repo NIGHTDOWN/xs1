@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:ng169/conf/conf.dart';
 import 'dart:async';
@@ -8,7 +7,6 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
-
 
 import '../../style/screen.dart';
 
@@ -22,11 +20,11 @@ class ReaderSet extends StatefulWidget {
 
   ReaderSet(
       {required this.chapters,
-    required this.articleIndex,
-    required this.onTap,
-    required this.novel,
-    required this.reflash,
-    required this.reload});
+      required this.articleIndex,
+      required this.onTap,
+      required this.novel,
+      required this.reflash,
+      required this.reload});
 
   @override
   ReaderSetState createState() => ReaderSetState();
@@ -37,7 +35,7 @@ class ReaderSetState extends State<ReaderSet>
   late AnimationController animationController;
   late Animation<double> animation;
 
-  double progressValue = 0.0;
+  double progressValue = 1.0;
   bool isTipVisible = false;
 
   // double brightness; //A??
@@ -130,6 +128,8 @@ class ReaderSetState extends State<ReaderSet>
           Expanded(
             child: Slider(
               value: progressValue,
+              min: 0.0,
+              max: 10,
               onChanged: (double value) {
                 setUserBrightnessConfig(value);
                 setState(() {

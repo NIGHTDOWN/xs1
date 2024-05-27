@@ -49,7 +49,7 @@ class HomeMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     this.context = context;
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

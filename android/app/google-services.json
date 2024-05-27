@@ -1,41 +1,65 @@
 {
-    "project_info": {
-        "project_number": "733051474488",
-        "firebase_url": "https://lookstory-59cad.firebaseio.com",
-        "project_id": "lookstory-59cad",
-        "storage_bucket": "lookstory-59cad.appspot.com"
-    },
-    "client": [{
-        "client_info": {
-            "mobilesdk_app_id": "1:733051474488:android:89e8276ff12beb32430ccd",
-            "android_client_info": {
-                "package_name": "com.ng.story"
-            }
-        },
-        "oauth_client": [{
-                "client_id": "733051474488-dttrdn2kturb1aktfcvrl08l5ru37992.apps.googleusercontent.com",
-                "client_type": 1,
-                "android_info": {
-                    "package_name": "com.ng.story",
-                    "certificate_hash": "a3845393a640481af0834573b6d4b3aca1a425f3"
-                }
-            },
-            {
-                "client_id": "733051474488-mtdcpulkdfq3i77j9538e3nvvi76v77l.apps.googleusercontent.com",
-                "client_type": 3
-            }
-        ],
-        "api_key": [{
-            "current_key": "AIzaSyDrruEz4Lz30n2P0StehIulcWEbvO6vp_k"
-        }],
-        "services": {
-            "appinvite_service": {
-                "other_platform_oauth_client": [{
-                    "client_id": "733051474488-mtdcpulkdfq3i77j9538e3nvvi76v77l.apps.googleusercontent.com",
-                    "client_type": 3
-                }]
-            }
+  "project_info": {
+    "project_number": "733051474488",
+    "firebase_url": "https://lookstory-59cad.firebaseio.com",
+    "project_id": "lookstory-59cad",
+    "storage_bucket": "lookstory-59cad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733051474488:android:89e8276ff12beb32430ccd",
+        "android_client_info": {
+          "package_name": "com.ng.story"
         }
-    }],
-    "configuration_version": "1"
+      },
+      "oauth_client": [
+        {
+          "client_id": "733051474488-beufqb3d4snoj4bpg9jpsde358ril2jo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ng.story",
+            "certificate_hash": "2d461a50c97e3bcba21b09f9067ac75e5fbf6982"
+          }
+        },
+        {
+          "client_id": "733051474488-dttrdn2kturb1aktfcvrl08l5ru37992.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ng.story",
+            "certificate_hash": "a3845393a640481af0834573b6d4b3aca1a425f3"
+          }
+        },
+        {
+          "client_id": "733051474488-if9t4bb1m9uvkgcpkmb0v45b7l3hrp8p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ng.story",
+            "certificate_hash": "a4efd46883aa6a7b2b0f5c651a5fd723ea673fdf"
+          }
+        },
+        {
+          "client_id": "733051474488-mtdcpulkdfq3i77j9538e3nvvi76v77l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrruEz4Lz30n2P0StehIulcWEbvO6vp_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733051474488-mtdcpulkdfq3i77j9538e3nvvi76v77l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-1390959630806254~6526996358"
+    }
+  ],
+  "configuration_version": "1"
 }

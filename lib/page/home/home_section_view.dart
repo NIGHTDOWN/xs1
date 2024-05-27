@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ng169/style/sq_bar.dart';
+import 'package:ng169/style/sq_color.dart';
 
 class HomeSectionView extends StatelessWidget {
   final String title;
@@ -7,15 +9,11 @@ class HomeSectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       padding: EdgeInsets.fromLTRB(15, 15, 0, 5),
       child: Row(
         children: <Widget>[
-          Image.asset(
-            'assets/images/home_tip.png',
-            height: 22,
-            width: 3,
-          ),
+          SQBar.gettitlebar(),
           SizedBox(width: 10),
           Text(
             '$title',

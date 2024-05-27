@@ -17,7 +17,7 @@ class MeHeader extends StatefulWidget {
 }
 
 class MeHeaderState extends State<MeHeader> {
-  late Map? user ;
+  late Map? user = {};
   late BuildContext contexttmp;
   // MeHeader()
   @override
@@ -28,7 +28,7 @@ class MeHeaderState extends State<MeHeader> {
     try {
       user = User.get();
     } catch (e) {
-       dt(e);
+      dt(e);
     }
 
     var img;
@@ -108,10 +108,15 @@ class MeHeaderState extends State<MeHeader> {
                 width: 20,
               ),
               SizedBox(width: 20),
-              Text(lang('书豆'), style: TextStyle(fontSize: 18)),
+              // GestureDetector(
+              //   child: Text("11111"),
+              //   onTap: () async => {d(await getUniqueId())},
+              // ),
+              Text(lang('书豆'),
+                  style: TextStyle(fontSize: 18, color: SQColor.primary)),
               Expanded(child: Container()),
               Text(user != null ? User.getcoin().toString() : '0.0',
-                  style: TextStyle(fontSize: 18)),
+                  style: TextStyle(fontSize: 18, color: SQColor.primary)),
               Text(' | '),
               Ink(
                 child: SizedBox(
@@ -120,7 +125,7 @@ class MeHeaderState extends State<MeHeader> {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
-                        color: SQColor.primary),
+                        color: SQColor.primary2),
                   ),
                 ),
               ),
@@ -228,7 +233,7 @@ class MeHeaderState extends State<MeHeader> {
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white),
+                    color: SQColor.white),
               ),
             ),
             onTap: () {

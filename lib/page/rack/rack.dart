@@ -243,7 +243,7 @@ class RackSceneState extends State<Rack> {
     try {
       loadhttp();
     } catch (e) {
-       dt(e);
+      dt(e);
     }
   }
 
@@ -397,7 +397,7 @@ class RackSceneState extends State<Rack> {
     var bo = Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
-          color: Colors.white,
+          color: SQColor.white,
         ),
         child: Column(
           children: <Widget>[
@@ -507,7 +507,7 @@ class RackSceneState extends State<Rack> {
       try {
         text = await file.readAsString();
       } catch (e) {
-         dt(e);
+        dt(e);
         text = 'Please import utf8 novel';
       }
 

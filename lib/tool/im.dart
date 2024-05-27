@@ -21,9 +21,15 @@ class Im {
       print('WebSocket is already open, not reconnecting');
       return;
     }
-    // url = "ws://"+ip + ":" + port;
-    url = "ws://192.168.10.5:4563";
-    _channel = WebSocketChannel.connect(Uri.parse(url));
+    url = "ws://" + ip + ":" + port;
+    // url =
+    //     "ws://192.168.10.5:4563/socket.io/?EIO=3&transport=websocket&sid=9258795c2c93d94105ad5283";
+    try {
+      _channel = WebSocketChannel.connect(Uri.parse(url));
+    } catch (e) {
+      dt(e);
+    }
+
     // await _channel?.ready;
     _channel!.stream.listen(
       (message) {
@@ -65,6 +71,7 @@ class Im {
   ///监听事件
   Future<void> init() async {
     d("加载im信息");
+    return;
     var data = await http("im/getws");
     var tdata = getdata(g('context'), data);
 

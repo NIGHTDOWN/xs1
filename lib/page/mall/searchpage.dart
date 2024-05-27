@@ -21,7 +21,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class SearchPageState extends State<SearchPage> {
-  late List hotbook=[], mallcache=[];
+  late List hotbook = [], mallcache = [];
   List<Widget> more = [SizedBox()];
   var index = 'mallsearch_';
   var cachedata = 'mallsearch_data_', page = 1;
@@ -89,8 +89,8 @@ class SearchPageState extends State<SearchPage> {
         return false;
       }
       loadingstatu();
-      var data =
-          await http(sapi, {'page': page++, 'keyword': searword.text}, gethead());
+      var data = await http(
+          sapi, {'page': page++, 'keyword': searword.text}, gethead());
       var tmpmore = getdata(context, data);
       if (isnull(tmpmore)) {
         more.add(bookCardWithInfo(5, '', tmpmore));
@@ -315,7 +315,7 @@ class SearchPageState extends State<SearchPage> {
   }
 
   Widget bookCardWithInfo(int style, String title, List json) {
-    Widget card=new SizedBox();
+    Widget card = new SizedBox();
     switch (style) {
       case 1:
         card = NovelFourGridView(title, json, false);
@@ -338,7 +338,7 @@ class SearchPageState extends State<SearchPage> {
 
   Widget _buildProgressIndicator() {
     var circular = new CircularProgressIndicator(
-      backgroundColor: Colors.white,
+      backgroundColor: SQColor.white,
       strokeWidth: 5.0,
       valueColor: AlwaysStoppedAnimation(Colors.green[200]),
     );
@@ -435,6 +435,7 @@ class SearchPageState extends State<SearchPage> {
   Widget serword(String str) {
     var b = Container(
       constraints: BoxConstraints(
+
           // maxWidth: getScreenWidth(context) * .2,
           // maxHeight: 50,
           ),
@@ -548,5 +549,4 @@ class SearchPageState extends State<SearchPage> {
       ),
     );
   }
-
 }

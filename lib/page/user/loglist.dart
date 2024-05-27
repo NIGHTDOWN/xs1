@@ -25,7 +25,7 @@ class LogList extends StatelessWidget {
     }
 
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: children,
@@ -55,11 +55,11 @@ Widget cell(json, type) {
       default:
         typestring = lang('充值');
     }
-
+    d((json['addtime']));
     return Container(
       margin:
           EdgeInsets.only(left: line_padding_left, right: line_padding_left),
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         // crossAxisAlignment :CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -75,7 +75,7 @@ Widget cell(json, type) {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(typestring, style: TextStyle(fontSize: 18)),
+                    Text(trim(typestring), style: TextStyle(fontSize: 18)),
                     Text(gettime2(json['addtime']),
                         style: TextStyle(fontSize: 13, color: Colors.grey)),
                   ],
@@ -114,7 +114,10 @@ Widget cell(json, type) {
               ],
             ),
           ),
-          Divider(height: 1)
+          Divider(
+            height: 1,
+            color: SQColor.lightGray,
+          ),
         ],
       ),
     );
@@ -123,7 +126,7 @@ Widget cell(json, type) {
     return Container(
       margin:
           EdgeInsets.only(left: line_padding_left, right: line_padding_left),
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         // crossAxisAlignment :CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -146,7 +149,7 @@ Widget cell(json, type) {
                             style: TextStyle(fontSize: 13)),
                       ),
                       Flexible(
-                        child: Text(json['section_title'],
+                        child: Text(trim(json['section_title']),
                             overflow: TextOverflow.ellipsis,
                             // maxLines: 2,
                             // softWrap: true,
@@ -171,7 +174,10 @@ Widget cell(json, type) {
               ],
             ),
           ),
-          Divider(height: 1)
+          Divider(
+            height: 1,
+            color: SQColor.lightGray,
+          ),
         ],
       ),
     );
@@ -222,7 +228,7 @@ Widget cell(json, type) {
     return Container(
       margin:
           EdgeInsets.only(left: line_padding_left, right: line_padding_left),
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         // crossAxisAlignment :CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -237,7 +243,7 @@ Widget cell(json, type) {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(typestring, style: TextStyle(fontSize: 18)),
+                    Text(trim(typestring), style: TextStyle(fontSize: 18)),
                     Text(gettime2(json['addtime']),
                         style: TextStyle(fontSize: 13, color: Colors.grey)),
                   ],
@@ -256,7 +262,10 @@ Widget cell(json, type) {
               ],
             ),
           ),
-          Divider(height: 1)
+          Divider(
+            height: 1,
+            color: SQColor.lightGray,
+          ),
         ],
       ),
     );

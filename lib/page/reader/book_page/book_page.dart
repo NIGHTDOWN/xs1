@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ng169/model/article.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
 import 'dart:ui' as ui;
@@ -25,14 +26,14 @@ class _BookPageState extends State<BookPage>
   CalPoint prePoint = CalPoint.data(-1, -1);
   late String content, content2;
   PositionStyle style = PositionStyle.STYLE_LOWER_RIGHT;
- late double width;
- late double height;
- late AnimationController animationController;
- late Animation cancelAnim;
- late Tween cancelValue;
+  late double width;
+  late double height;
+  late AnimationController animationController;
+  late Animation cancelAnim;
+  late Tween cancelValue;
   bool needCancelAnim = true;
 
- late ui.Image bgimage;
+  late ui.Image bgimage;
 
   toNormal([_]) {
     if (needCancelAnim) {
@@ -188,7 +189,7 @@ class _BookPageState extends State<BookPage>
     initstringx();
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    Color bgColor = Colors.white;
+    Color bgColor = SQColor.white;
     return Scaffold(
       body: Container(
         height: height,

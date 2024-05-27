@@ -10,7 +10,7 @@ class Screen {
     MediaQueryData mediaQuery = MediaQueryData.fromWindow(ui.window);
     return mediaQuery.size.width;
   }
-  
+
   static double get height {
     // ignore: deprecated_member_use
     MediaQueryData mediaQuery = MediaQueryData.fromWindow(ui.window);
@@ -57,10 +57,16 @@ class Screen {
   }
 
   static void setBrightness(double data) {
-     s2.FlutterScreenWake.setBrightness(data);
+    s2.FlutterScreenWake.setBrightness(data);
   }
+
   // static void getBrightness(double data) {
   //    s2.FlutterScreenWake.brightness;
   // }
-  static Future<double> get brightness async =>s2.FlutterScreenWake.brightness;
+  static Future<double> get brightness async {
+    double ld = await s2.FlutterScreenWake.brightness;
+
+    double rounded = (ld * 100).round() / 100;
+    return rounded;
+  }
 }

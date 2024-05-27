@@ -15,10 +15,10 @@ class MeCells extends LoginBase {
 
   MeCells(
       {required this.title,
-    required this.iconName,
-    required this.onPressed,
-    required this.line_padding_left,
-    required this.right_widget,
+      required this.iconName,
+      required this.onPressed,
+      required this.line_padding_left,
+      required this.right_widget,
       this.haveline = true});
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class MeCells extends LoginBase {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        color: Colors.white,
+        color: SQColor.white,
         child: Column(
           children: <Widget>[
             Container(
@@ -73,7 +73,7 @@ class MeCells extends LoginBase {
                                   child: Text(g('msg').toString(),
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                          fontSize: 13, color: Colors.white))),
+                                          fontSize: 13, color: SQColor.white))),
                             ),
                           ))
                       : Container(

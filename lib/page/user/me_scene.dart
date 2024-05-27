@@ -41,7 +41,8 @@ class MeScene extends StatelessWidget {
             ),
             onPressed: () {
               gourl(context, Sign());
-            }, line_padding_left: 0,
+            },
+            line_padding_left: 0,
           ),
           MeCell(
             title: lang('邀请好友'),
@@ -49,9 +50,10 @@ class MeScene extends StatelessWidget {
             // right_widget: Icon(Icons.group_add),
             onPressed: () {
               gourl(context, Friend());
-            }, right_widget: Container(),
+            },
+            right_widget: Container(),
           ),
-           MeCell(
+          MeCell(
             title: lang('我要写作'),
             iconName: 'assets/images/u7.png',
             right_widget: Row(
@@ -82,21 +84,24 @@ class MeScene extends StatelessWidget {
             iconName: 'assets/images/u6.png',
             onPressed: () {
               gourl(context, ExpendLog());
-            }, right_widget: Container(),
+            },
+            right_widget: Container(),
           ),
           MeCell(
             title: lang('充值记录'),
             iconName: 'assets/images/u2.png',
             onPressed: () {
               gourl(context, RechargeLog());
-            },right_widget: Container(),
+            },
+            right_widget: Container(),
           ),
           MeCell(
             title: lang('奖励记录'),
             iconName: 'assets/images/u3.png',
             onPressed: () {
               gourl(context, RecordLog());
-            },right_widget: Container(),
+            },
+            right_widget: Container(),
             haveline: false,
           ),
           Container(
@@ -107,8 +112,14 @@ class MeScene extends StatelessWidget {
             title: lang('阅读记录'),
             iconName: 'assets/images/me_buy.png',
             onPressed: () {
-              gourl(context, HistoryPage(api: '', title: '',));
-            },right_widget: Container(),
+              gourl(
+                  context,
+                  HistoryPage(
+                    api: '',
+                    title: '',
+                  ));
+            },
+            right_widget: Container(),
           ),
           // MeCell(
           //   title: lang('打赏记录'),
@@ -131,7 +142,9 @@ class MeScene extends StatelessWidget {
             onPressed: () async {
               await gourl(context, Kefu());
               eventBus.emit('reflashuser', User.get());
-            },right_widget: Container(), line_padding_left: 0,
+            },
+            right_widget: Container(),
+            line_padding_left: 0,
           ),
           MeCellss(
             title: lang('设置'),
@@ -140,7 +153,9 @@ class MeScene extends StatelessWidget {
             onPressed: () async {
               await gourl(context, SettingScene());
               eventBus.emit('reflashuser', User.get());
-            },right_widget: Container(), line_padding_left: 0,
+            },
+            right_widget: Container(),
+            line_padding_left: 0,
           ),
         ],
       ),
@@ -156,7 +171,7 @@ class MeScene extends StatelessWidget {
         // value: SystemUiOverlayStyle.dark,
         onRefresh: gethttpdata,
         child: Container(
-          color: Colors.white,
+          color: SQColor.white,
           child: ListView(
             children: <Widget>[
               MeHeader(),

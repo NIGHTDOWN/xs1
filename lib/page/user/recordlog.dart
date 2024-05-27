@@ -9,8 +9,8 @@ import 'package:ng169/tool/lang.dart';
 import 'loglist.dart';
 
 class RecordLog extends LoginBase {
-   String api= 'log/record';
-   String title="";
+  String api = 'log/record';
+  String title = "";
 
   bool needlogin = true;
   RecordLog({Key? key});
@@ -19,7 +19,7 @@ class RecordLog extends LoginBase {
 // }
 
 // class RecordLogState extends State<RecordLog> {
-  List htppdata=[], mallcache=[];
+  List htppdata = [], mallcache = [];
   List<Widget> more = [SizedBox()];
   var index = 'RecordLog_';
   var cachedata = 'RecordLog_data_', page = 1;
@@ -45,7 +45,7 @@ class RecordLog extends LoginBase {
   void initState() {
     super.initState();
     var hascode = api.toString().hashCode;
-    
+
     index = index + hascode.toString();
     cachedata = cachedata + hascode.toString();
 
@@ -65,7 +65,6 @@ class RecordLog extends LoginBase {
   loadmore() async {
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
-      
       if (stop) {
         return false;
       }
@@ -107,8 +106,6 @@ class RecordLog extends LoginBase {
     } else {}
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     titlebarcolor(false);
@@ -144,7 +141,7 @@ class RecordLog extends LoginBase {
 
   Widget _buildProgressIndicator() {
     var circular = new CircularProgressIndicator(
-      backgroundColor: Colors.white,
+      backgroundColor: SQColor.white,
       strokeWidth: 5.0,
       valueColor: AlwaysStoppedAnimation(Colors.green[200]),
     );

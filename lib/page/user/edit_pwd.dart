@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ng169/model/user.dart';
@@ -59,10 +58,7 @@ class EditPwdState extends State<EditPwd> {
                     child: Icon(
                       Icons.arrow_back,
                       color: SQColor.darkGray,
-                    )
-
-               
-                    ),
+                    )),
                 onTap: close,
               ),
 
@@ -160,7 +156,7 @@ class EditPwdState extends State<EditPwd> {
           contentPadding: EdgeInsets.only(top: -4.0), border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: ( value) {
+      validator: (value) {
         if (value!.isEmpty) {
           return lang('请输入密码');
         }
@@ -196,7 +192,7 @@ class EditPwdState extends State<EditPwd> {
           contentPadding: EdgeInsets.only(top: -4.0), border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: ( value) {
+      validator: (value) {
         if (value!.isEmpty) {
           return lang('请再次输入密码');
         }
@@ -229,7 +225,7 @@ class EditPwdState extends State<EditPwd> {
           contentPadding: EdgeInsets.only(top: -4.0), border: InputBorder.none),
       style: new TextStyle(fontSize: 16, color: Colors.black),
       //验证
-      validator: ( value) {
+      validator: (value) {
         if (value!.isEmpty) {
           return lang('请输入旧密码');
         }
@@ -261,12 +257,13 @@ class EditPwdState extends State<EditPwd> {
     );
   }
 
-  Widget getrow(String title, Widget obj, [void Function()? click, bool haveink = false]) {
+  Widget getrow(String title, Widget obj,
+      [void Function()? click, bool haveink = false]) {
     return Material(
       color: SQColor.white,
       child: InkWell(
         child: Container(
-          color: !haveink ? Colors.white : null,
+          color: !haveink ? SQColor.white : null,
           child: Column(
             children: <Widget>[
               Container(

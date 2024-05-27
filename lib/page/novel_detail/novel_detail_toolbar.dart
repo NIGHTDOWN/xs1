@@ -56,7 +56,7 @@ class _NovelDetailToolbarState extends State<NovelDetailToolbar> {
     return Container(
       padding: EdgeInsets.only(bottom: Screen.bottomSafeHeight),
       decoration:
-          BoxDecoration(color: Colors.white, boxShadow: Styles.borderShadow),
+          BoxDecoration(color: SQColor.white, boxShadow: Styles.borderShadow),
       height: 50 + Screen.bottomSafeHeight,
       child: Row(children: <Widget>[
         Expanded(
@@ -91,7 +91,7 @@ class _NovelDetailToolbarState extends State<NovelDetailToolbar> {
               child: Center(
                 child: Text(
                   lang('开始阅读'),
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(fontSize: 16, color: SQColor.white),
                 ),
               ),
             ),

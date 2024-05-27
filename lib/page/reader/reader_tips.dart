@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ng169/model/base.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
 import 'dart:math' as math;
 
 class Readertips extends LoginBase {
   var page;
-  var textcolor = Colors.white;
+  var textcolor = SQColor.white;
   String cachenae = 'bookshowtips';
   late bool havecache, isshow = true;
   @override
@@ -16,7 +17,7 @@ class Readertips extends LoginBase {
   }
 
   loadcache() {
-        havecache = isnull(getcache(cachenae,false));
+    havecache = isnull(getcache(cachenae, false));
     // d(havecache);
     reflash();
   }
@@ -106,8 +107,8 @@ class Readertips extends LoginBase {
       ),
     );
     clicktips() {
-      setcache(cachenae, 1, '-1',false);
-      isshow=false;
+      setcache(cachenae, 1, '-1', false);
+      isshow = false;
       loadcache();
     }
 
@@ -116,7 +117,7 @@ class Readertips extends LoginBase {
     return WillPopScope(
       onWillPop: () {
         clicktips();
-        return Future.value(false);  
+        return Future.value(false);
         // Future<bool> canGoBack = flutterWebViewPlugin.canGoBack();
         // canGoBack.then((str) {
         //   if (str) {
@@ -126,11 +127,13 @@ class Readertips extends LoginBase {
         //   }
         // });
       },
-      child:isshow? GestureDetector(
-          child: cccc,
-          onTap: () {
-            clicktips();
-          }):SizedBox(),
+      child: isshow
+          ? GestureDetector(
+              child: cccc,
+              onTap: () {
+                clicktips();
+              })
+          : SizedBox(),
     );
   }
 }
@@ -206,8 +209,8 @@ class DashRectPainter extends CustomPainter {
 
     while (currentPoint.x <= b.x && currentPoint.y <= b.y) {
       shouldDraw
-          ? path.lineTo(currentPoint.x as double, currentPoint.y as double )
-          : path.moveTo(currentPoint.x as double,currentPoint.y as double);
+          ? path.lineTo(currentPoint.x as double, currentPoint.y as double)
+          : path.moveTo(currentPoint.x as double, currentPoint.y as double);
       shouldDraw = !shouldDraw;
       currentPoint = math.Point(
         currentPoint.x + dx,

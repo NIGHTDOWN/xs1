@@ -52,7 +52,7 @@ class MarkDetailHeader extends StatelessWidget {
         Text(novel.name,
             style: TextStyle(
                 fontSize: fixedFontSize(18),
-                color: Colors.white,
+                color: SQColor.white,
                 fontWeight: FontWeight.bold)),
         // SizedBox(height: h),
         Row(children: [
@@ -71,7 +71,7 @@ class MarkDetailHeader extends StatelessWidget {
         Text(novel.name,
             style: TextStyle(
                 fontSize: fixedFontSize(18),
-                color: Colors.white,
+                color: SQColor.white,
                 fontWeight: FontWeight.bold)),
         // SizedBox(height: h),
         Row(children: [

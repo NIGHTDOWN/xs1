@@ -47,6 +47,7 @@ class ArticleProvider {
 
   static Future<dynamic> getremotecontent(
       context, Novel novel, secionid) async {
+    if (!isnull(secionid)) return null;
     var tmp;
     if (novel.type != '3') {
       // var response = await http('book/get_wap_content',

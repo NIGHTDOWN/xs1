@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ng169/obj/novel.dart';
+import 'package:ng169/style/sq_color.dart';
 import 'novel_cell_search.dart';
 
 class NovelmorechooseCard extends StatelessWidget {
@@ -22,7 +23,12 @@ class NovelmorechooseCard extends StatelessWidget {
     for (var i = 0; i < novels.length; i++) {
       var novel = novels[i];
       if (showborderline) {
-        children.add(Divider(height: 1));
+        children.add(
+          Divider(
+            height: 1,
+            color: SQColor.lightGray,
+          ),
+        );
       }
 
       children.add(NovelsearchCell(Novel.fromJson(novel), choosestr));
@@ -30,7 +36,7 @@ class NovelmorechooseCard extends StatelessWidget {
     //children.add(Container(height: 10, color: Color(0xfff5f5f5)));
 
     return Container(
-      color: Colors.white,
+      color: SQColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: children,
