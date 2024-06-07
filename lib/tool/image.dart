@@ -58,8 +58,12 @@ class NgImage extends StatelessWidget {
   }
 
   Widget _cachednetworkimage() {
+    String ismock = "";
+    if (isnull(imgUrl)) {
+      ismock = imgUrl.substring(0, 5);
+    }
     //匹配mock数据
-    String ismock = imgUrl.substring(0, 5);
+
     String imgp;
     if (ismock == 'mock:') {
       String mockpng = imgUrl.substring(5);

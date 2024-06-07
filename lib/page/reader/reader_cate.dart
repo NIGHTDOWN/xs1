@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -23,12 +22,12 @@ class ReaderCate extends StatefulWidget {
 
   ReaderCate(
       {required this.chapters,
-    required this.articleIndex,
-    required this.onTap,
-    required this.onPreviousArticle,
-    required this.onNextArticle,
-    required this.onToggleChapter,
-    required this.novel});
+      required this.articleIndex,
+      required this.onTap,
+      required this.onPreviousArticle,
+      required this.onNextArticle,
+      required this.onToggleChapter,
+      required this.novel});
 
   @override
   _ReaderCateState createState() => _ReaderCateState();
@@ -37,18 +36,18 @@ class ReaderCate extends StatefulWidget {
 class _ReaderCateState extends State<ReaderCate>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
- late Animation<double> animation;
+  late Animation<double> animation;
 
- late double progressValue;
+  late double progressValue;
   bool isTipVisible = false;
-late  String title;
+  late String title;
   //初始化动画
   @override
   initState() {
     super.initState();
 
     progressValue =
-        this.widget.articleIndex / (this.widget.chapters.length - 1);
+        this.widget.articleIndex / (this.widget.chapters.length + 1);
 
     animationController = AnimationController(
         duration: const Duration(milliseconds: 200), vsync: this);
@@ -63,8 +62,6 @@ late  String title;
   @override
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // progressValue =
-    //     this.widget.articleIndex / (this.widget.chapters.length - 1);
   }
 
   @override
@@ -118,7 +115,7 @@ late  String title;
               hide();
             },
             child: Container(color: Colors.transparent),
-            //child: Container(color: Colors.red),
+            // child: Container(color: Colors.red),
           ),
           buildTopView(context),
           // buildBottomView(),

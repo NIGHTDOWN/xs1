@@ -83,7 +83,7 @@ class User {
 
     String key;
     if (!isnull(user, 'token')) {
-      key = 'lookstory';
+      key = 'lovenovel';
     } else {
       key = user['token'];
     }

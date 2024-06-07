@@ -238,7 +238,7 @@ class CatePage extends LoginBase {
     var indextmp = index + hascode;
     var cachedatatmp = cachedata + hascode;
     setcache(indextmp, 1, '3600');
-    d(cachedatatmp);
+
     setcache(cachedatatmp, save, '-1');
   }
 

@@ -42,7 +42,7 @@ def keystoreProperties = new Properties()
 
 android {
     
- namespace "com.ng.story"
+ namespace "com.ng.lovenovel"
     // compileSdk flutter.compileSdkVersion
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
@@ -81,7 +81,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.ng.story"
+        applicationId "com.ng.lovenovel"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
@@ -148,7 +148,8 @@ dependencies {
     // implementation 'com.android.billingclient:billing:7.0.0' 
     //引入json
     implementation 'com.alibaba:fastjson:1.1.55.android'
-    
+    //安卓12开屏启动页面
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
     //谷歌登入
     // implementation 'com.google.firebase:firebase-core:16.8.0'
     

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ng169/page/app.dart';
 
 import 'package:ng169/tool/global.dart';
@@ -15,19 +16,14 @@ Future main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   checkpower();
-  // if (!await Power.requestPermissions()) {
-  //   //检查权限
-  //   //  await AppUtils.popApp();
-  // } else {}
-  // i1().then((data) {
-  //   runApp(StartPage());
-  // });
 
-  // runApp(new MyApp());
   i().then((data) {
     // 加载缓存
     // 加载sql
-
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: false);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // 透明状态栏
+    ));
     Widget w = MyApp();
     runApp(w);
   });
@@ -48,7 +44,7 @@ class MyApp extends StatelessWidget {
     // try {
     app = new MaterialApp(
         debugShowCheckedModeBanner: isdebug, //关闭debug标志
-        title: lang('Love-Novel'),
+        title: lang('LoveNovel'),
         theme: new ThemeData(
           // primarySwatch: indextheme.Theme.loginGradientStart,
           // primarySwatch: Colors.black,

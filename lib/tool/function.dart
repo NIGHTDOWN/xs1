@@ -60,14 +60,14 @@ int toing(dynamic data) {
 }
 
 //弹出消息提示
-void show(BuildContext context, String msg, [ToastPostion? positions]) {
+void show(BuildContext? context, String msg, [ToastPostion? positions]) {
   if (!isnull(context)) {
     return;
   }
   if (positions != null) {
-    Toast.toast(context, msg: msg, position: positions);
+    Toast.toast(context!, msg: msg, position: positions);
   } else {
-    Toast.toast(context, msg: msg, position: ToastPostion.bottom);
+    Toast.toast(context!, msg: msg, position: ToastPostion.bottom);
   }
 }
 
@@ -285,6 +285,8 @@ hidetitlebar() async {
 
 //显示状态栏
 showtitlebar() {
+  return;
+  //这里需要加版本判断；如果是安卓12以上；这个不要
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 }
@@ -537,7 +539,7 @@ checkversionnum() {
   return k2;
 }
 
-toint(var str) {
+int toint(var str) {
   if (str is int) {
     return str;
   }
@@ -564,7 +566,7 @@ sharefun(Novel novel) {
   }
 
   var str = novel.name + "    " + url;
-  Share.share(str, subject: lang('LookStory'));
+  Share.share(str, subject: lang('LoveNovel'));
 }
 
 //获取设备唯一标识

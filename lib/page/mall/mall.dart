@@ -305,7 +305,9 @@ class MallState extends State<Mall> {
                 ? HomeBanner(banner)
                 : isnull(randdata)
                     ? BookBanner(randdata)
-                    : SizedBox(),
+                    : SizedBox(
+                        height: 80,
+                      ),
             //菜单
             HomeMenu(),
             isnull(randdata)

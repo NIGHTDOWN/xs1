@@ -49,16 +49,6 @@ class MarkBookState extends State<MarkBook> {
     cate = await Catemodel.getcate();
     setState(() {});
   }
-  // httpget() async {
-  //   var data = await http(api, {}, gethead(), 30);
-  //   List tmp = getdata(context, data);
-  //   if (isnull(tmp)) {
-  //     cate = tmp;
-  //     setcache(cachedata, tmp, '-1');
-  //     setcache(cachedatatime, 1, '7200');
-  //   }
-  //   setState(() {});
-  // }
 
   Future<void> gethttpdata() async {
     refresh();

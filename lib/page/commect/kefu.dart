@@ -11,6 +11,7 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
+import 'package:ng169/tool/im.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/richbuild.dart';
@@ -221,26 +222,8 @@ class Kefu extends LoginBase {
       var str = textEditingController.text;
       textEditingController.clear();
 
-      // var documentReference = Firestore.instance
-      //     .collection('messages')
-      //     .document(groupChatId)
-      //     .collection(groupChatId)
-      //     .document(DateTime.now().millisecondsSinceEpoch.toString());
-
-      // Firestore.instance.runTransaction((transaction) async {
-      //   await transaction.set(
-      //     documentReference,
-      //     {
-      //       'idFrom': id,
-      //       'idTo': peerId,
-      //       'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
-      //       'content': content,
-      //       'type': type
-      //     },
-      //   );
-      // });
       d("这里发送了");
-      g('im').send(str);
+
       Msg msgobj = Msg.carete(0, str);
       //缓存到本地数据库
       await msgobj.send();

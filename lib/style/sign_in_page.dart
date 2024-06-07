@@ -227,6 +227,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   _fb() async {
+    return;
     ThirdPartyLoginMethods thirdPartyLoginMethods = ThirdPartyLoginMethods();
     final userCredential = await thirdPartyLoginMethods.socialMediaLogin(
         authType: AuthType.facebook);

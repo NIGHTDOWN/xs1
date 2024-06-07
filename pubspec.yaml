@@ -12,17 +12,12 @@ description: ervery LoveNovel by no advertion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 9.2.0+23
-
-
+version: 10.3.0+34
 environment:
   sdk: ">=2.12.0 <4.0.0"
-
 dependencies:
   flutter:
-    
     sdk: flutter
-    
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: any
@@ -32,22 +27,19 @@ dependencies:
   sqflite: any
   #http
   dio: any
-  #二维码
+  #二维码 
   #barcode_scan: ^0.0.3
   image_picker: any
   # image_picker: 0.6.0
   # 报错需要移除插件crop.dart中第63行的“, Drag”
   crop_your_image : any    
   # image_cropper: any
-
   flutter_easyrefresh: any
   flutter_spinkit: any
   web_socket_channel: any
   cached_network_image: 3.3.1
   # banner滑动
   # flutter_card_swiper: any 
-
- 
   #权限
   permission_handler: any
   #工具类库
@@ -117,16 +109,15 @@ dependencies:
   # 腾讯广告 谷歌不允许适用腾讯组件
   # tencent_ad: ^1.0.2+2
   # 富文本输入框
-  
   #图片预览
   photo_view: any
   # 文件选择
   file_picker: any
+  
   # firebase_admob: any
   # 谷歌市场评论
   # in_app_review : any
   # app_review :  any
- 
   extended_text_field: 13.0.1 
     # path: kz/extended_text_field-13.0.1      
 dev_dependencies:

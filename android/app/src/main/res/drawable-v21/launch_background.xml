@@ -9,4 +9,15 @@
             android:gravity="center"
             android:src="@mipmap/launch_image" />
     </item> -->
+    <!-- <item>
+		<shape>
+			<solid android:color="#FF0000"/>
+		</shape>
+	</item> -->
+	<item>
+        <bitmap
+		android:src="@mipmap/ic_launcher"
+		android:gravity="center"
+		android:tileMode="disabled" />
+    </item>
 </layer-list>

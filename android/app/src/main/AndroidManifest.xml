@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools" package="com.ng.story">
+	xmlns:tools="http://schemas.android.com/tools" package="com.ng.lovenovel">
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.CAMERA" android:required="false"/>
@@ -24,10 +24,13 @@
 	additional functionality it is fine to subclass or reimplement
 	FlutterApplication and put your custom class here.
 	-->
-	<application    android:name="androidx.multidex.MultiDexApplication"  android:label="LoveNovel" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true">
+	<application    android:name="androidx.multidex.MultiDexApplication"  android:label="LoveNovel" android:icon="@mipmap/ic_launcher" 
+	
+	android:usesCleartextTraffic="true">
+	
 		<activity android:name=".MainActivity" 
 		
-		android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize"  android:exported="true">
+		android:launchMode="singleTop" android:theme="@style/Theme.App.Starting" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize"  android:exported="true">
 			<!--
 			This keeps the window background of the activity showing
 			until Flutter renders its first frame. It can be removed if
@@ -48,7 +51,7 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:host="com.ng.story" android:scheme="lookstory" />
+				<data android:host="com.ng.lovenovel" android:scheme="lovenovel" />
 			</intent-filter>
 		</activity>
 		<!-- 谷歌pay必须加此才能用 -->
@@ -72,13 +75,13 @@
 			
 		</activity> -->
 		<!-- fb登入 -->
-		<!-- <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.ng.story.fileprovider" android:exported="false" android:grantUriPermissions="true">
+		<!-- <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.ng.lovenovel.fileprovider" android:exported="false" android:grantUriPermissions="true">
 
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/provider_paths"/>
 
 		</provider> -->
 
-		<!-- <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.ng.story.FileProvider" android:exported="false" android:grantUriPermissions="true" tools:replace="android:authorities">
+		<!-- <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.ng.lovenovel.FileProvider" android:exported="false" android:grantUriPermissions="true" tools:replace="android:authorities">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/filepaths" tools:replace="android:resource"/>
 		</provider> -->
 		<provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.fileProvider" android:exported="false" android:grantUriPermissions="true" tools:replace="android:authorities">

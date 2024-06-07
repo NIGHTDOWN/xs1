@@ -1,24 +1,15 @@
-
-
 import 'package:flutter/material.dart';
-
 
 class NovelPagePainter extends CustomPainter {
   // ReaderPageManager pageManager;
   // TouchEvent currentTouchData;
-  int currentPageIndex=0;
-  int currentChapterId=0;
+  int currentPageIndex = 0;
+  int currentChapterId = 0;
 
   NovelPagePainter();
 
-  // void setCurrentTouchEvent(TouchEvent event) {
-  //   currentTouchData = event;
-  //   pageManager.setCurrentTouchEvent(currentTouchData);
-  // }
-
   @override
   void paint(Canvas canvas, Size size) {
-
     ///-------------------background----------------///
 //    var _bgPaint = Paint()
 //      ..isAntiAlias = true
@@ -32,7 +23,6 @@ class NovelPagePainter extends CustomPainter {
     //   pageManager.setPageSize(size);
     //   pageManager.onPageDraw(canvas);
     // }
-
   }
 
   @override

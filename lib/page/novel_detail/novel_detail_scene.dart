@@ -439,12 +439,12 @@ class NovelDetailSceneState extends State<NovelDetailScene> with RouteAware {
                           onclick: () {
                             var tmp = {
                               'section_id': novel.lastChapterid,
-                              'booktype': int.parse(novel.type),
+                              'booktype': toint(novel.type),
                               "book_id": novel.id
                             };
                             Chapter.fromtmp(tmp, novel.chapterCount - 1)
                                 .click();
-                            novel.read(context, int.parse(novel.lastChapterid));
+                            novel.read(context, toint(novel.lastChapterid));
                           },
                           subtitle: novel.lastChaptertitle,
                           attachedWidget: Text(novel.status,

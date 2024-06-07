@@ -22,7 +22,9 @@ class Db {
 
   static getpath(dbname) async {
     var databasesPath = await getDatabasesPath();
+
     // var databasesPath = '/mnt/sdcard';
+    d(databasesPath);
     String path = (databasesPath + '/' + dbname);
     return path;
   }
@@ -73,6 +75,7 @@ class Db {
       return id;
     } catch (e) {
       d(e, 2);
+      return false;
     }
     // return await db.rawInsert(sql);
     // return await db.transaction((txn) async {

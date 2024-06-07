@@ -27,7 +27,9 @@ class _BatteryViewState extends State<BatteryView> {
       //1.5.31
       this.level = (await BatteryInfoPlugin().androidBatteryInfo)?.batteryLevel;
       // this.level = await Battery().batteryLevel;
-
+      if (this.level > 100 || this.level < 0) {
+        this.level = 100;
+      }
       if (this.level != null && mounted) {
         setState(() {
           levels = level;

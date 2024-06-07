@@ -165,7 +165,11 @@ class MeHeaderState extends State<MeHeader> {
 
   reflashuser(httpuser) {
     if (isnull(httpuser)) {
-      user!.addAll(httpuser);
+      if (isnull(user)) {
+        user!.addAll(httpuser);
+      } else {
+        user = httpuser;
+      }
     }
 
     // User.set(user);

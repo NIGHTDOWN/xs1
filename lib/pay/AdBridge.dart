@@ -10,7 +10,7 @@ typedef ACancelCallback = void Function([dynamic data]);
 
 //安卓桥
 class AdBridge {
-  static MethodChannel _channel = MethodChannel('com.ng.story/adbridge');
+  static MethodChannel _channel = MethodChannel('com.ng.lovenovel/adbridge');
 
   static ASuccessCallback? success = null;
   static AFailureCallback? fail = null;

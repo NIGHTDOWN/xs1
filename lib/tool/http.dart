@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ng169/conf/conf.dart';
@@ -13,6 +14,23 @@ import 'lang.dart';
 dynamic res;
 List times = [];
 var reqlock = {};
+getsigin(Map m, String url) {
+  String tmp = m['timestamp'] + url + "lovenovel";
+  if (!m.containsKey('timestamp')) {
+    throw ArgumentError('Missing "timestamp" key in the map');
+  }
+  // 拼接字符串
+  tmp = m['timestamp'].toString() + url + "lovenovel";
+  // 使用MD5库生成哈希值
+
+  var key = utf8.encode('lovenovel');
+  var bytes = utf8.encode(tmp);
+
+  var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256
+  var digest = hmacSha256.convert(bytes);
+  return digest;
+}
+
 Future<String?> http(String url,
     [Map<String, dynamic>? datas,
     Map<String, dynamic>? header,
@@ -49,6 +67,7 @@ Future<String?> http(String url,
     if (loghttp) {
       d(header);
     }
+    header['sign'] = getsigin(header, url);
     dio.options.headers = header;
   }
   dio.options.contentType =
@@ -157,6 +176,38 @@ dynamic getdata(BuildContext? context, String? responseData) {
       show(context!, js['code']);
     }
     return null;
+  }
+}
+
+dynamic Bgetdata(String? responseData) {
+  var js;
+
+  if (!isnull(responseData)) {
+    //请求无数据返回的时候不要报错
+    return null;
+  }
+  try {
+    js = jsonDecode(responseData!);
+  } catch (e) {
+    dt(e);
+    if (loghttpcn) {
+      d(('请求错误：1'));
+    } else {
+      if (isdebug) {
+        d('404');
+      }
+    }
+    return null;
+  }
+  int code;
+  if (js['code'] is String) {
+    code = int.parse(js['code']);
+  } else {
+    code = js['code'];
+  }
+  if (code == 1) {
+    //请求成功
+    return js['result'];
   }
 }
 

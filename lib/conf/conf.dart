@@ -3,7 +3,7 @@ const apiurl = 'https://love-novel.com/api/';
 const serverurl = 'https://love-novel.com/';
 
 const defaultAvatar = 'assets/images/ww_default_avatar.png'; //默认头像
-const dbname = 'lsdb.db';
+const dbname = 'lVdb.db';
 //数据库结构
 const datatable = [
   // 'CREATE TABLE "msglist" ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"msgid" integer,"chatid" integer,"comeid" integer,"sendtime" integer,"readflag" integer NOT NULL DEFAULT 0,"content" text,"type" integer, "resid" integer,"url" text,"murl" text,"size" integer,"length" integer)',
@@ -17,7 +17,7 @@ const datatable = [
   'CREATE  INDEX "readtime" ON "book" ("readtime");',
   'CREATE  INDEX "groomtime" ON "book" ("groomtime");',
   'CREATE TABLE "sec" (	"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,	"section_id" INTEGER NOT NULL,"book_id" INTEGER NOT NULL DEFAULT 0,	"isfree" integer NOT NULL DEFAULT 0,	"secnum" integer NOT NULL DEFAULT 1,	"update_time" integer NOT NULL,	"title" TEXT,	"coin" integer NOT NULL DEFAULT 0,	"ispay" integer NOT NULL DEFAULT 0,	"booktype" integer NOT NULL DEFAULT 0,	"index" integer NOT NULL DEFAULT 0,"cacheflag" integer NOT NULL DEFAULT 0,"cachedata" TEXT,"cacheword" TEXT);',
-  'CREATE UNIQUE INDEX "secindex" ON "sec" ("section_id" ASC, "book_id" ASC, "booktype" ASC);',
+  'CREATE UNIQUE INDEX "secindex" ON "sec" ("index" ASC, "book_id" ASC, "booktype" ASC);',
   'CREATE TABLE "read" ( "id" INTEGER PRIMARY KEY AUTOINCREMENT, "bookid" INTEGER, "type" INTEGER, "readtime" INTEGER, "uid" INTEGER, "secid" INTEGER );',
   'CREATE UNIQUE INDEX "weyi2" ON "read" ("uid" ASC, "bookid" ASC,"type" ASC);',
   'CREATE TABLE "pay" ( "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "bookid" INTEGER NOT NULL DEFAULT 0, "type" INTEGER NOT NULL DEFAULT 0, "secid" INTEGER NOT NULL DEFAULT 0, "pay" INTEGER NOT NULL DEFAULT 0, "uid" INTEGER NOT NULL DEFAULT 0 ,"coin" text NOT NULL DEFAULT 0.0 );',
@@ -51,16 +51,18 @@ const langlist = [
 const readfx = 'readfx'; //阅读方向
 // 下载渠道，打包的时候修改此处
 const downqd = 'google';
-//测试
-const loghttp = false;
-const loghttprq = false;
-const loghttpcn = false; //显示http错误内容，false显示错误码
+const bookindex = 'bookindex_';
+const pageindexk = 'pageindex_';
+// //测试
+const loghttp = true;
+const loghttprq = true;
+const loghttpcn = true; //显示http错误内容，false显示错误码
 const isdebug = true; //显示各种调试信息，false不显示任何调试信息
 const delanguage = 'zh'; //默认语言
 
 // //正式
-// const loghttp = true;
-// const loghttprq = true;
-// const loghttpcn = true; //显示http错误内容，false显示错误码
-// const isdebug = true; //显示各种调试信息，false不显示任何调试信息
+// const loghttp = false;
+// const loghttprq = false;
+// const loghttpcn = false; //显示http错误内容，false显示错误码
+// const isdebug = false; //显示各种调试信息，false不显示任何调试信息
 // const delanguage = 'th'; //默认语言

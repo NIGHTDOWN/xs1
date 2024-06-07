@@ -2,6 +2,7 @@ import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/t.dart';
 
+import '../conf/conf.dart';
 import 'novel.dart';
 
 class Chapter {
@@ -40,11 +41,6 @@ class Chapter {
     read_sign_cache_name = book_id + '_' + book_type.toString();
   }
   //获取最新的解锁状态
-  getpaystat() {
-    if (isnull(getuid)) {
-      //如果是登入状态才检测
-    }
-  }
 
   Chapter.fromtmp(Map data, int i) {
     index = i;
@@ -72,14 +68,14 @@ class Chapter {
 
   String getReadSign() {
     var iss = getcache(read_sign_cache_name);
+
     if (isnull(iss)) return iss;
     return '0';
   }
 
   bool isSignHere() {
     String readid = getReadSign();
-
-    if (readid == index.toString()) {
+    if (readid == (index).toString()) {
       return true;
     }
     return false;
@@ -149,45 +145,6 @@ class Chapter {
     }
   }
 
-  static upcachefromdb(context, bookid) async {
-    //性能消耗太大,弃用
-    // List tmpfree, tmpunfree, tmp = [];
-
-    // tmpfree = await T('sec')
-    //     .where({'book_id': bookid})
-    //     .wherestring('isfree!=1')
-    //     .order('`index` asc')
-    //     .getall();
-    // tmpunfree = await T('sec')
-    //     .where({'book_id': bookid, 'isfree': 1})
-    //     .order('`index` asc')
-    //     .getall();
-
-    // tmp.addAll(tmpfree);
-
-    // if (isnull(getuid())) {
-    //   tmpunfree.forEach((v) async {
-    //     Map tmplist = Map.from(v);
-
-    //     var status = await T('pay').where({
-    //       'bookid': bookid,
-    //       'type': v['booktype'],
-    //       'secid': v['section_id'],
-    //       'uid': getuid()
-    //     }).getone();
-
-    //     tmplist['ispay'] = status['pay'];
-    //     tmp.add(v);
-    //   });
-
-    // } else {
-    //   tmp.addAll(tmpunfree);
-    // }
-    // var tmp = await getcatecache(context, bookid);
-    // d(tmp);
-    // setbookcache(context, bookid, tmp);
-  }
-
   static Future<List> gethttp(context, Novel novel) async {
     var bookid = novel.id;
     var api, data;
@@ -242,7 +199,7 @@ class Chapter {
 
   //生成数据库目录
   static makechapter(chapters) async {
-    for (var i = 0; i < chapters.length; i++) {
+    for (var i = 1; i < chapters.length; i++) {
       //里面的同步，全异步会锁死数据库
       await insetcate(chapters[i], i);
       await insertpay(chapters[i]);
@@ -252,6 +209,7 @@ class Chapter {
   static insetlocal(int bookid, int index, String title, String content) async {
     if (!isnull(bookid)) return;
     if (!isnull(content)) return;
+
     var insert = {
       'section_id': index,
       'title': title,
@@ -263,7 +221,25 @@ class Chapter {
       'booktype': 3,
       'index': index,
     };
-    return await T('sec').add(insert);
+    var id;
+    try {
+      id = await T('sec').add(insert);
+      if (!isnull(id)) {
+        T('sec').update(insert, {
+          'index': index,
+          'book_id': bookid,
+          'booktype': 3,
+        });
+      }
+    } catch (e) {
+      T('sec').update(insert, {
+        'index': index,
+        'book_id': bookid,
+        'booktype': 3,
+      });
+    }
+
+    return id;
   }
 
   static insetcate(Map v, int i) async {

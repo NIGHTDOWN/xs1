@@ -4,17 +4,17 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<!-- 这里是启动页图 ，防止白屏 -->
-	<item>
+	<!-- <item>
 		<shape>
-			<solid android:color="#FFFFFF"/>
+			<solid android:color="#FF0000"/>
 		</shape>
-	</item>
-	<item android:drawable="@mipmap/startpage">
-	</item>
-	<item android:bottom="0dp">
-		<bitmap android:gravity="fill" android:src="@mipmap/startpage"/>
-	</item>
+	</item> -->
+	<item>
+       
+		<bitmap
+		android:src="@mipmap/ic_launcher"
+		android:gravity="center"
+		android:tileMode="disabled" />
+    </item>
 
 </layer-list>
-
-

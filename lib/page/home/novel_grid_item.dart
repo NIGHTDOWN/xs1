@@ -16,7 +16,6 @@ class NovelGridItem extends StatelessWidget {
     var width = (Screen.width - 15 * 2 - 15) / 2;
     return GestureDetector(
       onTap: () {
-        // AppNavigator.pushNovelDetail(context, this.novel);
         gourl(context, NovelDetailScene(novel));
       },
       child: Container(

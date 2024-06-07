@@ -215,6 +215,15 @@ class T {
     return await obj.getall(_sql);
   }
 
+  List<Map<String, dynamic>> convertToPhpArray(
+      List<Map<String, dynamic>> rows) {
+    // 遍历每行数据并转换为PHP数组形式
+    return rows.map((row) {
+      // 将每个QueryRow转换为Map<String, dynamic>，这已经是PHP数组的形式
+      return row.cast<String, dynamic>();
+    }).toList();
+  }
+
   Future getcount() async {
     this.field('count(*)');
 

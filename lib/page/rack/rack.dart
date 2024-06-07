@@ -18,6 +18,7 @@ import 'package:ng169/tool/function.dart';
 import 'package:dio/dio.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/lang.dart';
+import 'package:ng169/tool/power.dart';
 import 'package:ng169/tool/t.dart';
 import 'package:ng169/tool/url.dart';
 import 'bookshelf_header.dart';
@@ -28,6 +29,37 @@ class Rack extends StatefulWidget {
   const Rack({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => RackSceneState();
+}
+
+class ExpandedButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  ExpandedButton(this.text, this.onPressed);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          // color: SQColor.primary,
+          borderRadius: BorderRadius.circular(10), // 设置圆角
+        ),
+        child: TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+                SQColor.primary), // 确保TextButton本身没有背景色
+          ),
+          onPressed: onPressed,
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class RackSceneState extends State<Rack> {
@@ -50,31 +82,22 @@ class RackSceneState extends State<Rack> {
   void initState() {
     super.initState();
 
-    if (!isnull(onimg)) {
-      onimg = Image.asset(
-        'assets/images/choose_click.png',
-        width: 17.0,
-      );
-    }
+    onimg = Image.asset(
+      'assets/images/choose_click.png',
+      width: 17.0,
+    );
 
-    if (!isnull(unimg)) {
-      unimg = Image.asset(
-        'assets/images/choose_unclick.png',
-        width: 17.0,
-      );
-      Msg.cheack();
-    }
+    unimg = Image.asset(
+      'assets/images/choose_unclick.png',
+      width: 17.0,
+    );
+    Msg.cheack();
 
     // var cache = g('cache');
 
     //先查本地，本地有加载本地书架
     //本地无加载网络书架：网络书架分登入跟非登入两种数据
-    // if (!User.islogin()) {
-    //   // cache.set('newapp', '1', '-1');
-    //   loadhttp();
-    // } else {
 
-    // }
     mock();
     loadlocals();
     loadhttp();
@@ -109,59 +132,6 @@ class RackSceneState extends State<Rack> {
 
   //本地模拟数据；防止网络加载慢的时候，数据无内容显示
   mock() {
-    // String lang = getlang();
-    // if (isnull(lang)) {
-    //   if (lang.substring(2) != 'th') {
-    //     return;
-    //   }
-    // }
-    // var list = [
-    //   {
-    //     "other_name": "วิวาห์ร้อน รักหวานซึ้ง",
-    //     // "bpic":
-    //     //     "http://xspic.ng169.com/data/attachment/pc/201912/12/17_31/ccdc9e78a94311b3.jpg",
-    //     "bpic": "mock:1-1018.png",
-    //     "book_id": "1018",
-    //     "type": "1",
-    //     "isgroom": "1",
-    //   },
-    //   {
-    //     "other_name": "เจ้าคือพระชายาของข้า",
-    //     "bpic":
-    //         // "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_31/e22bdb07f89fd16e.jpg",
-    //         "mock:1-1008.png",
-    //     "book_id": "1008",
-    //     "type": "1",
-    //     "isgroom": "1",
-    //   },
-    //   {
-    //     "other_name": "รักที่บินถลาเล่นลม",
-    //     "bpic":
-    //         // "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_31/413f79f8528afe81.jpg",
-    //         "mock:1-1009.png",
-    //     "book_id": "1009",
-    //     "type": "1",
-    //     "isgroom": "1",
-    //   },
-    //   {
-    //     "other_name": "surprise เธอคือเซอร์ไพรส์สุดใหญ่ของผม",
-    //     // "bpic":
-    //     //     "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_40/19880cc852440ac4.jpg",
-    //     "bpic": "mock:2-50014.png",
-    //     "book_id": "50014",
-    //     "type": "2",
-    //     "isgroom": "1",
-    //   },
-    //   {
-    //     "other_name": "ยัยหน้าเปี๋ยวของประธานซาตาน",
-    //     // "bpic":
-    //     //     "mock:http://xspic.ng169.com/data/attachment/pc/201912/12/17_40/127a9f96777200f1.jpg",
-    //     "bpic": "mock:2-50016.png",
-    //     "book_id": "50016",
-    //     "type": "2",
-    //     "isgroom": "1",
-    //   },
-    // ];
     var list = Mock.get('rack');
     if (isnull(list)) {
       for (var item in list) {
@@ -190,8 +160,7 @@ class RackSceneState extends State<Rack> {
           .limit('250')
           .getall();
     }
-    // d(favoriteNovels.length);
-    // d(list.length);
+
     if (list.length > 0 && list.length >= favoriteNovels.length) {
       favoriteNovels = []; //重置列表
       for (var item in list) {
@@ -221,8 +190,7 @@ class RackSceneState extends State<Rack> {
           noveltmp..updbgroom();
           favoriteNovels.add(noveltmp);
         }
-// d(json.length);
-// d(favoriteNovels.length);
+
         loadlocals();
       } else {
         //服务器端书架已经被清空了
@@ -307,14 +275,7 @@ class RackSceneState extends State<Rack> {
           height: kToolbarHeight,
           width: 15,
           alignment: Alignment.center,
-          child:
-              // Image.asset(
-              //   'assets/images/bookshelf_add.png',
-              //   color: iconColor,
-              //   // width: 44.0,
-              //   // height: 44.0,
-              // ),
-              Icon(
+          child: Icon(
             Icons.library_add,
             color: iconColor,
           )),
@@ -340,15 +301,38 @@ class RackSceneState extends State<Rack> {
         child: choseall,
         onTap: choose,
       ),
-      GestureDetector(
-        child: hsz,
-        onTap: hs,
-      ),
+      // GestureDetector(
+      //   child: Text(lang("删除")),
+      //   onTap: hs,
+      // ),
       SizedBox(width: 15)
     ]);
+    var bar3 = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ExpandedButton(lang('取消'), () {
+          qx();
+        }),
+        SizedBox(width: 16), // 水平间距
+        ExpandedButton(lang('删除'), () {
+          hs();
+        }),
+      ],
+    );
+
+    if (isedit) {
+      edbar = Container(
+        width: getScreenWidth(context),
+        child: bar3,
+      );
+      ;
+    } else {
+      edbar = Container();
+    }
     return !isedit ? bar1 : bar2;
   }
 
+  Widget edbar = Container();
   // GestureDetector
   Widget buildNavigationBar() {
     return Stack(
@@ -385,11 +369,12 @@ class RackSceneState extends State<Rack> {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }
 
+//显示导入书的操作框
   showchoose() {
     //导入本地小说
     //访问书城
@@ -482,40 +467,28 @@ class RackSceneState extends State<Rack> {
 
   loadlocalbook() async {
     String fileName;
+    bool pw = await Power.getSdcardpower();
+    if (!pw) {
+      show(context, lang("没有存储卡权限；请授于相关权限"));
+      return false;
+    }
     try {
-      // File file = await FilePicker.getFile(type: FileType.any);
-      //目前只支持txt
-      // File file = await FilePicker.getFile(
-      //     type: FileType.custom, allowedExtensions: ['txt']);
-      // File file;
       FilePickerResult? files = await FilePicker.platform
           .pickFiles(type: FileType.custom, allowedExtensions: ['txt']);
       if (!isnull(files)) return;
       //判断是否需要上传
       File file = File(files!.files.single.path!);
       if (!isnull(file)) return;
-
       // var list = await file.readAsBytes();
       upfile(file);
       String text;
-      // try {
-      //   text = gbk.decode(list);
-      // } catch (e) {
-      //   text = await file.readAsString();
-      //   print('text:$text');
-      // }
       try {
         text = await file.readAsString();
       } catch (e) {
         dt(e);
         text = 'Please import utf8 novel';
       }
-
       fileName = file.path.split('/').last.replaceAll('.txt', '');
-
-      // d(fileName);
-      // return;
-
       show(context, lang('小说') + '<$fileName>' + lang('同步中') + '...');
       bool insert = await BookParse(text).parse(fileName);
       if (insert) {
@@ -527,9 +500,9 @@ class RackSceneState extends State<Rack> {
         loadlocals();
       }
     } on PlatformException catch (e) {
+      d(e);
       print("Unsupported operation" + e.toString());
     }
-
     // bookShelfNotify.syncBook();
   }
 
@@ -552,17 +525,9 @@ class RackSceneState extends State<Rack> {
   Widget buildFavoriteView() {
     List<Widget> children = [];
     var novels;
-    // if (favoriteNovels.length <= 1) {
-    //   novels = favoriteNovels; //
-    // } else {
-    //   novels = favoriteNovels.sublist(1); //这里是不显示顶部的
-    // }
 
     novels = favoriteNovels; //
-    //var novels = favoriteNovels; //这里是一样显示顶部最大的那个
-    // d(favoriteNovels[0].lastsecnum);
-    // d(favoriteNovels[0].nowsecnum);
-    // d(favoriteNovels[0].upsecnum);
+
     novels.forEach((novel) {
       children.add(BookshelfItemView(novel));
     });
@@ -651,6 +616,15 @@ class RackSceneState extends State<Rack> {
             ),
           ),
           buildNavigationBar(),
+          Positioned(
+            right: 0,
+            bottom: 22,
+            child: Container(
+              // color: Colors.red,
+              margin: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
+              child: edbar,
+            ),
+          ),
         ]),
       ),
     );
@@ -669,6 +643,15 @@ class RackSceneState extends State<Rack> {
     //d(isedit);
     //show(context,'ddd');
     isedit = true;
+    refresh();
+  }
+
+  qx() {
+    isedit = false;
+    // choosesbook = [];
+    // choosescartoon = [];
+    choosenovel = [];
+    chooseall = 0;
     refresh();
   }
 
@@ -785,25 +768,4 @@ class RackSceneState extends State<Rack> {
     }
     refresh();
   }
-
-  // static callback() {
-  //   httpnodeal('http://test.259459.com/api/task/read60_rewards', {}, {
-  //     'token':
-  //         '04c4345000bbc8c4f5eed755080c464fddc744998aa24829907e59b2c22cec22',
-  //     'uid': 10
-  //   });
-  // }
-
-  // tmp() {
-  //   return Row(children: [
-  //     FlatButton(
-  //         onPressed: () async {
-  //           //启动线程
-
-  //           Supervene.init(40, callback);
-  //         },
-  //         child: Text('测试并发')),
-
-  //   ]);
-  // }
 }

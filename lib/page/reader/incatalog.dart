@@ -32,18 +32,23 @@ class InCataLogState extends State<InCataLog> {
     }
   }
 
+  double hafelines = 0;
+  double gethanglin() {
+    if (isnull(hafelines)) return hafelines;
+    double lines = getScreenHeight(context) / 51 - 3;
+    hafelines = lines / 2;
+    return hafelines;
+  }
+
   void getpostion() {
     readid = Chapter.getReadSecId(this.widget.novel.id, this.widget.novel.type);
-    double lines = getScreenHeight(context) / 51 - 3;
-    double hafelines = lines / 2;
+    double hafelines = gethanglin();
     var h = getScreenHeight(context) - (51 * hafelines);
     double tmp = int.parse(readid) * 51.0;
     if (h > tmp) {
       goread = 0;
     } else {
       //到最后一页的时候滚动页面不能超过半屏
-      // if(readid)
-      // var s=h/51;
       if (int.parse(readid) > (remotedata.length - (hafelines + 2))) {
         goread = ((remotedata.length - 3.2) * 51) - h; //全屏
       } else {
@@ -56,6 +61,8 @@ class InCataLogState extends State<InCataLog> {
   initState() {
     super.initState();
     loadpage();
+    initool(); //初始化控件
+    WidgetsBinding.instance.addPostFrameCallback((_) => gotoreadsign());
   }
 
   Future<void> gethttpdata() async {
@@ -66,7 +73,6 @@ class InCataLogState extends State<InCataLog> {
 
   loadpage() {
     remotedata = Chapter.get(context, this.widget.novel);
-
     loadcache();
     //gotoreadsign();
     refresh();
@@ -90,26 +96,11 @@ class InCataLogState extends State<InCataLog> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    titlebarcolor(false);
-
-    if (!isnull(remotedata.length)) {
-      return SizedBox();
-    }
-    getpostion();
-
-    scrollController = new ScrollController(initialScrollOffset: goread);
-
-    var drag = DraggableScrollbar.arrows(
-      backgroundColor: Colors.grey,
-      controller: scrollController,
-      heightScrollThumb: 35.0,
-      child: bookCardWithInfo() as BoxScrollView,
-    );
-
-    var h = 90.0;
-    var tmptitle = Container(
+  var h = 90.0;
+  late Widget tmptitle;
+  late Widget drag;
+  initool() {
+    tmptitle = Container(
         decoration: BoxDecoration(
             color: Styles.getTheme()['barcolor'],
             boxShadow: Styles.borderShadow),
@@ -143,6 +134,25 @@ class InCataLogState extends State<InCataLog> {
                 ),
               )
             ]));
+    initdrag();
+  }
+
+  initdrag() {
+    drag = DraggableScrollbar.arrows(
+      backgroundColor: Colors.grey,
+      controller: scrollController,
+      heightScrollThumb: 35.0,
+      child: bookCardWithInfo() as BoxScrollView,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    titlebarcolor(false);
+
+    if (!isnull(remotedata.length)) {
+      return SizedBox();
+    }
 
     var body = Container(
       height: getScreenHeight(context) - h,
@@ -155,7 +165,10 @@ class InCataLogState extends State<InCataLog> {
               onRefresh: gethttpdata,
               child: drag),
     );
+    getpostion();
+    // scrollController = new ScrollController(initialScrollOffset: goread);
 
+    // initdrag();
     var b = Stack(
       children: <Widget>[
         Positioned(
@@ -173,7 +186,7 @@ class InCataLogState extends State<InCataLog> {
       ],
     );
     return Scaffold(
-      backgroundColor: SQColor.white,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: b,
     );
   }
@@ -206,7 +219,7 @@ class InCataLogState extends State<InCataLog> {
   }
 
   Widget bookCardWithInfo() {
-    return new ListView.builder(
+    return ListView.builder(
       //reverse: true,
       controller: scrollController,
       scrollDirection: Axis.vertical,
@@ -215,8 +228,7 @@ class InCataLogState extends State<InCataLog> {
       itemExtent: 51.0,
       itemCount: isnull(remotedata) ? remotedata.length : 0,
       itemBuilder: (BuildContext context, int index) {
-        var chapter = Chapter.fromJson(remotedata[index], index);
-
+        var chapter = Chapter.fromJson(remotedata[index], index + 1);
         return Container(
           color: Styles.getTheme()['barcolor'],
           padding: EdgeInsets.only(left: 18),
@@ -233,8 +245,7 @@ class InCataLogState extends State<InCataLog> {
                     onTap: () {
                       chapter.click();
                       gotoreadsign();
-                      // gourl(
-                      //     context, ReaderScene(this.widget.novel, chapter.id));
+
                       widget.clickChapter(chapter);
                       refresh();
                     }, //显示目录

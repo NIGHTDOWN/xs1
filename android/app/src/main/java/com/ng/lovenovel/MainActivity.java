@@ -1,4 +1,4 @@
-package com.ng.story;
+package com.ng.lovenovel;
 
 import io.flutter.embedding.android.FlutterActivity;
 import android.content.Context;

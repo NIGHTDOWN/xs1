@@ -2,8 +2,9 @@ import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/chapter.dart';
 import 'package:ng169/obj/novel.dart';
-import 'package:ng169/page/reader/article_provider.dart';
-import 'package:ng169/page/reader/cartoon_provider.dart';
+
+import 'package:ng169/page/reader/article_provider2.dart';
+
 import 'package:ng169/page/reader/reader_page_agent.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
@@ -15,7 +16,7 @@ class Article {
   int novelId = 0;
   int price = 0;
   String booktype = "";
-  int index = 0;
+  int index = 1;
   int nextArticleId = 0;
   int preArticleId = 0;
   String title = "";
@@ -73,35 +74,24 @@ class Article {
   }
 
   getarticlecache() {
-    // String cacheindex = 'book_' +
-    //     novelId.toString() +
-    //     booktype.toString() +
-    //     section_id.toString();
-    // var cache = getcache(cacheindex);
-    // return cache;
     return getCache(
         novelId.toString(), booktype.toString(), section_id.toString());
   }
 
   uparticlecache(cache) {
-    // String cacheindex = 'book_' +
-    //     novelId.toString() +
-    //     booktype.toString() +
-    //     section_id.toString();
-    // setcache(cacheindex, cache, '0');
     setCache(novelId.toString(), booktype.toString(), section_id.toString(),
         cache, '0');
   }
 
   static getCache(String novelId, String noveltype, String sectionid) {
-    String cacheindex = 'book_' + novelId + noveltype + sectionid;
+    String cacheindex = 'bookorder_' + novelId + noveltype + sectionid;
     var cache = getcache(cacheindex);
     return cache;
   }
 
   static setCache(String novelId, String noveltype, String sectionid, cache,
       [String time = '-1']) {
-    String cacheindex = 'book_' + novelId + noveltype + sectionid;
+    String cacheindex = 'bookorder_' + novelId + noveltype + sectionid;
     setcache(cacheindex, cache, time);
     return cache;
   }
@@ -129,9 +119,6 @@ class Article {
     }
     //????
     if (isnull(images)) {
-      // if (content.toString().length >= cutlength) {
-      //   contenttmp = content.toString().substring(0, cutlength);
-      // }
       if (images.length > 2) {
         //三张以上的图片，显示三张
         imagestmp = [images[0], images[1]];
@@ -154,6 +141,7 @@ class Article {
         setcache(autounlock, '0', '-1');
       }
     }
+    savedb();
   }
 
   uppaystatus() async {
@@ -177,10 +165,6 @@ class Article {
   }
 
   Future<bool> unlock(context) async {
-    //??????
-    //?????????
-    //?????
-
     if (await ispay()) {
       return true;
     }
@@ -192,14 +176,12 @@ class Article {
     User.upcoin(lastcoin);
     Map<String, dynamic> postdata;
     if (booktype == '1') {
-      //??
       postdata = {
         'book_id': novelId,
         'section_id': section_id,
         'expend_red': coin
       };
     } else {
-      //??
       postdata = {
         'cartoon_id': novelId,
         'cart_section_id': section_id,
@@ -211,10 +193,8 @@ class Article {
     var ret = getdata(context, rettmp!);
     if (isnull(ret)) {
       Novel novel = await Novel.fromID(novelId, int.parse(booktype));
-      //??????
-      //??????
       //拉数据
-      await reload(context, novel, section_id);
+      await reload(context, novel, index);
       if (isnull(ret['remainder'])) {
         User.upcoin(ret['remainder']);
         var bookcache = getarticlecache();
@@ -222,7 +202,6 @@ class Article {
           bookcache['ispay'] = 1;
           uparticlecache(bookcache);
         }
-
         await uppaystatus();
         //????????????
         // Novel novel = Novel.fromDb({
@@ -238,7 +217,7 @@ class Article {
           'booktype': booktype
         }).getone();
         if (isnull(indexs)) {
-          cache[indexs['index']]['ispay'] = 1;
+          cache[indexs['index'] - 1]['ispay'] = 1;
           Chapter.setbookcache(context, novel, cache);
         }
 
@@ -264,19 +243,17 @@ class Article {
 //重新拉取章节详情
   reload(context, novel, secid) async {
     Article article;
+    if (!isnull(context)) {
+      context = g("context");
+    }
     if (!isnull(secid)) return;
     if (booktype == '1') {
-      await ArticleProvider.getremotecontent(context, novel, section_id);
-      article = (await ArticleProvider.fetchArticle(
-          context, novel, int.parse(section_id)))!;
-
-      article.page = ReaderPageAgent.getPage(
-        article.content,
-      );
+      article = (await ArticleProvider2.fetchArticleRemote(
+          context, novel, toint(secid)))!;
+      article.initpage();
     } else {
-      await CartoonProvider.getremotecontent(context, novel, section_id);
-      article = (await CartoonProvider.fetchArticle(
-          context, novel, int.parse(section_id)))!;
+      article = (await ArticleProvider2.fetchArticleRemote(
+          context, novel, toint(secid)))!;
     }
 
     this.content = article.content;
@@ -286,10 +263,17 @@ class Article {
     this.page = article.page;
   }
 
+  initpage() {
+    this.page = ReaderPageAgent.getPage(
+      content,
+    );
+  }
+
   Article.fromJson(Map data, Novel novel) {
     if (!isnull(data)) {
       return;
     }
+    index = toint(data['list_order']);
     section_id = data['section_id'].toString();
     booktype = novel.type;
     book_id = data['book_id'].toString();
@@ -299,23 +283,17 @@ class Article {
     content = data['sec_content'].toString();
     isfree = data['isfree'].toString();
     pay = isnull(data['ispay']) ? true : false;
-    // d(data);
-    // d(isnull(data,'coin'));
     coin = isnull(data, 'coin') ? double.parse(data['coin'].toString()) : 0.00;
-    //content = content.replaceAll(new RegExp(r'[\s]{1,}'), '\n\t');
-    //content = content.replaceAll(new RegExp(r'\n\s{0,}\n'), '\2');
-    //content = '　　' + content;
-    // content = content.replaceAll('\n', '\n　　');
-
-    // price = data['welth'];
-    // index = int.parse(Chapter.getReadSecId(novel.id, novel.type));
-    // d(index);
-    nextArticleId =
-        data['next'] is int ? data['next'] : int.parse(data['next']);
-    preArticleId = data['pre'] is int ? data['pre'] : int.parse(data['pre']);
-
+    if (isnull(data, 'next')) {
+      nextArticleId = toint(data['next']);
+    }
+    if (isnull(data, 'pre')) {
+      preArticleId = toint(data['pre']);
+    }
     ispay();
     cut();
+    initpage();
+    savedb();
   }
   Article.fromcartoonJson(Map data, Novel novel) {
     if (!isnull(data)) {
@@ -326,6 +304,7 @@ class Article {
       return;
     }
     section_id = data['cart_section_id'].toString();
+    index = toint(data['list_order']);
     booktype = '2';
     book_id = data['cartoon_id'].toString();
     id = int.parse(section_id);
@@ -354,6 +333,7 @@ class Article {
 
     // ispay();
     cutimg();
+    savedb();
   }
   inserdbpay(bool tmppay) async {
     //把解锁记录更新到本地数据库
@@ -380,12 +360,13 @@ class Article {
         }
       }
     }
+    savedb();
   }
 
   Future<int> getindex() async {
+    if (isnull(index)) return index;
     var data = await T('sec').getone(
         {'section_id': section_id, 'book_id': novelId, 'booktype': booktype});
-
     if (isnull(data)) {
       if (isnull(data['index'])) {
         return data['index'];
@@ -398,14 +379,54 @@ class Article {
     if (!isnull(this.content)) {
       return '';
     }
-
     if (!isnull(page, index)) {
       return page[page.length - 1];
     }
     return page[index];
-    // var offset = pageOffsets[index];
+  }
 
-    // return this.content.substring(offset['start'], offset['end']);
+  savedb() async {
+    var insert = {
+      'section_id': section_id,
+      'title': title,
+      'book_id': book_id,
+      'isfree': isfree,
+      'secnum': content.length,
+      'update_time': gettime(),
+      'coin': coin,
+      'cachedata': content,
+      'ispay': pay,
+      'booktype': booktype,
+      'index': index,
+      'cacheflag': 0,
+    };
+    if (content.length > 0) {
+      //如果里面章节详情有数据加保存缓存状态2
+      insert['cacheflag'] = 1;
+    }
+    var w = {
+      'book_id': book_id,
+      'booktype': booktype,
+      'index': index,
+    };
+    if (!(await isdb())) {
+      //更新
+      T("sec").insert(insert);
+    } else {
+      //插入
+      T("sec").update(insert, w);
+    }
+  }
+
+  isdb() async {
+    var tmps = await T('sec').where(
+        {'book_id': novelId, 'index': index, 'booktype': booktype}).getone();
+
+    if (!isnull(tmps)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   int get pageCount {

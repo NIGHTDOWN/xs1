@@ -152,7 +152,7 @@ class CataLogState extends State<CataLog> {
       itemExtent: 51.0,
       itemCount: isnull(remotedata) ? remotedata.length : 0,
       itemBuilder: (BuildContext context, int index) {
-        var chapter = Chapter.fromJson(remotedata[index], index);
+        var chapter = Chapter.fromJson(remotedata[index], index + 1);
         return Container(
           color: SQColor.white,
           padding: EdgeInsets.only(left: 18),
@@ -166,7 +166,7 @@ class CataLogState extends State<CataLog> {
                       chapter.click();
                       gotoreadsign();
 
-                      await this.widget.novel.read(context, chapter.id);
+                      await this.widget.novel.read(context, chapter.index);
 
                       loadpage();
                       refresh();

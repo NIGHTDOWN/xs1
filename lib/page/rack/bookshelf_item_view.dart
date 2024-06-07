@@ -29,12 +29,10 @@ class _BookshelfItemViewState extends State<BookshelfItemView> {
 
   @override
   void initState() {
-    if (!isnull(onimg)) {
-      onimg = Image.asset('assets/images/choose_click.png');
-    }
-    if (!isnull(unimg)) {
-      unimg = Image.asset('assets/images/choose_unclick.png');
-    }
+    onimg = Image.asset('assets/images/choose_click.png');
+
+    unimg = Image.asset('assets/images/choose_unclick.png');
+
     super.initState();
   }
 

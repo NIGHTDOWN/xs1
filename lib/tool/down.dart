@@ -72,7 +72,7 @@ class Down {
     //     await PermissionHandler().requestPermissions([PermissionGroup.storage]);
     // if (permissions[PermissionGroup.storage] == PermissionStatus.granted) {
     //   apkrealpath = 'app_flutter/install5.2.0.apk';
-    //   InstallPlugin.installApk(apkrealpath, 'com.ng.story').then((result) {
+    //   InstallPlugin.installApk(apkrealpath, 'com.ng.lovenovel').then((result) {
     //     d('install apk $result');
     //   }).catchError((error) {c
     //     d('install apk error: $error');
@@ -81,7 +81,7 @@ class Down {
     //   d('Permission request fail!');
     // }
 
-    // return InstallPlugin.installApk(apkrealpath, 'com.ng.story');
+    // return InstallPlugin.installApk(apkrealpath, 'com.ng.lovenovel');
     //release环境报错需要在 AndroidManifest 加入
     // <provider
     //             android:name="androidx.core.content.FileProvider"

@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:ng169/model/user.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/t.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/global.dart';
+
+import '../tool/im.dart';
 
 class Msg {
   // ignore: non_constant_identifier_names
@@ -79,17 +84,34 @@ class Msg {
     }
   }
   send() async {
+    //先判断im；如果im不行加转http发送
     //http发送成功在入库
-    var tmp = await http(
-        'chat/send',
-        {
-          'contenttype': contenttype,
-          'content': content,
-        },
-        gethead());
-    var data = getdata(g('context'), tmp!);
+    var data;
+    var post = {
+      'contenttype': contenttype,
+      'content': content,
+    };
+    var obj = g("im");
     var insert;
-    if (isnull(data)) {
+    if (obj.isok()) {
+      d("im发送");
+      obj.send(jsonEncode(post));
+      data = "";
+      sleep(Duration(microseconds: 300)); //等3毫秒
+    } else {
+      d("http发送");
+      var tmp = await http('chat/send', post, gethead());
+      data = getdata(g('context'), tmp!);
+      insert = insertdb(contenttype, content, data);
+    }
+    //http 发送
+    return insert;
+  }
+
+//im消息的时候需要调用
+  insertdb(String contenttype, String content, String dataid) {
+    var insert;
+    if (isnull(dataid)) {
       //发送成功
       insert = {
         'fuid': fuid,
@@ -100,7 +122,7 @@ class Msg {
         'contenttype': contenttype,
         'content': content,
         'flag': 0,
-        'id': data //插入后台id
+        'id': dataid //插入后台id
       };
       T('msg').add(insert);
     } else {
@@ -117,7 +139,6 @@ class Msg {
       };
       T('msg').add(insert);
     }
-    //http 发送
     return insert;
   }
 

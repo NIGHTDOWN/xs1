@@ -13,7 +13,6 @@ import 'package:receive_intent/receive_intent.dart';
 import 'function.dart';
 
 class ListenClip {
-
   static ListenClip? _instance = null;
   ListenClip() {}
 // class _ListenClip {
@@ -55,10 +54,10 @@ class ListenClip {
 
     if (isnull(user, 'invite_id')) {
       //用户已经绑定
-      if(isnull(_instance)){
- _instance!.end();
+      if (isnull(_instance)) {
+        _instance!.end();
       }
-     
+
       return false;
     }
 
@@ -69,7 +68,7 @@ class ListenClip {
       String _name = clipboardData.text!.trim();
       // 淘口令的正则表达式，能判断类似“￥lookstory￥123456￥”的文本。
       // d(RegExp(r'[\uffe5]lookstory[\uffe5]+.+[\uffe5]').hasMatch(_name));
-      RegExp reg = new RegExp(r'[\uffe5]lookstory[\uffe5]+(\d+)[\uffe5]');
+      RegExp reg = new RegExp(r'[\uffe5]lovenovel[\uffe5]+(\d+)[\uffe5]');
       d('剪切板数据监听');
       String? getid;
       if (reg.hasMatch(_name)) {
@@ -124,11 +123,14 @@ class ListenClip {
 // ignore: unused_field
   late StreamSubscription _intentSub;
   open() async {
-    await ReceiveIntent.setResult(kActivityResultOk,
-        data: {"scheme": "lookstory", "host": 'com.ng.story', "path": "456"});
+    await ReceiveIntent.setResult(kActivityResultOk, data: {
+      "scheme": "lovenovel",
+      "host": 'com.ng.lovenovel',
+      "path": "456"
+    });
     // inters.Intent()
     //   ..setAction(intersaction.Action.ACTION_VIEW)
-    //   ..setData(Uri(scheme: "lookstory", host: 'com.ng.story', path: "456"))
+    //   ..setData(Uri(scheme: "lookstory", host: 'com.ng.lovenovel', path: "456"))
     //   ..startActivity().catchError((e) => d(e));
 // Listen to media sharing coming from outside the app while the app is in the memory.
     // _intentSub = ReceiveSharingIntent.getMediaStream().listen((value) {

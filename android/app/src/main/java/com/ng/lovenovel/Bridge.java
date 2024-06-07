@@ -1,4 +1,4 @@
-package com.ng.story;
+package com.ng.lovenovel;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -47,7 +47,7 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 
 public class Bridge {
-    public static final String CHANNEL = "com.ng.story/adbridge";
+    public static final String CHANNEL = "com.ng.lovenovel/adbridge";
     static Bridge _self;
 
     public static MethodChannel channels;
@@ -92,7 +92,7 @@ public class Bridge {
 
         if (call.method.equals("googlepay/initpays")) {
             // 谷歌支付初始化
-            // com.ng.story.GooglePay.initpay();
+            // com.ng.lovenovel.GooglePay.initpay();
             // result.success("ret");
 
         } else if (call.method.equals("googlepay/startgoogleBuy")) {

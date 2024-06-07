@@ -5,6 +5,7 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/styles.dart';
+import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/lang.dart';
 
@@ -174,6 +175,7 @@ class _BookshelfHeaderState extends State<BookshelfHeader>
                             style:
                                 TextStyle(fontSize: 14, color: SQColor.paper)),
                         onTap: () {
+                          d("231312");
                           widget.novel.read(context, novel.readChapter);
                         },
                       ),

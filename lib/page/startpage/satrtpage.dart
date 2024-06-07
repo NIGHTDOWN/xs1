@@ -113,7 +113,7 @@ class _StartPageState extends State<StartPage>
   @override
   void dispose() {
     // _controller.dispose(); //释放动画
-    showtitlebar();
+    // showtitlebar();
     super.dispose();
   }
 

@@ -10,6 +10,7 @@ import 'package:ng169/page/reader/reader_set.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'reader_menu.dart';
+import 'readstat.dart';
 
 typedef setCallback = dynamic Function(int articleId, PageJumpType jumpType);
 
@@ -17,8 +18,8 @@ class ReaderBar extends StatefulWidget {
   final Novel novel; //小说
   final List chapets; //小说
   final Article currentArticle;
-  final VoidCallback reflash;
-  final setCallback resetContent;
+  final Function reflash;
+  final Function resetContent;
   ReaderBar(this.novel, this.chapets, this.currentArticle, this.reflash,
       this.resetContent);
 
@@ -93,8 +94,7 @@ class ReaderBarState extends State<ReaderBar> with RouteAware {
           }
         },
         onToggleChapter: (tmpchapter) {
-          widget.resetContent(
-              int.parse(tmpchapter.section_id), PageJumpType.firstPage);
+          widget.resetContent(toint(tmpchapter.index), PageJumpType.firstPage);
         },
         onToggleTheme: (tmpchapter) {
           if (isnull(getcache(isnight))) {
@@ -161,8 +161,7 @@ class ReaderBarState extends State<ReaderBar> with RouteAware {
             widget.currentArticle.nextArticleId, PageJumpType.firstPage);
       },
       onToggleChapter: (tmpchapter) {
-        widget.resetContent(
-            int.parse(tmpchapter.section_id), PageJumpType.firstPage);
+        widget.resetContent(toint(tmpchapter.index), PageJumpType.firstPage);
       },
     );
   }

@@ -64,9 +64,9 @@ class _ReaderMenuState extends State<ReaderMenu>
 
     chapters = this.widget.chapters ?? [];
     if (!isnull(chapters)) {
-      size = this.widget.novel.chapterCount - 1;
+      size = this.widget.novel.chapterCount;
     } else {
-      size = chapters.length - 1;
+      size = chapters.length;
     }
 
     if (size < 1) {
@@ -159,7 +159,7 @@ class _ReaderMenuState extends State<ReaderMenu>
             GestureDetector(
               onTap: () {
                 Chapter chapter = Chapter.fromJson(
-                    chapters[currentArticleIndex()], currentArticleIndex());
+                    chapters[currentArticleIndex()], currentArticleIndex() + 1);
                 gourl(
                     context,
                     AddWrong(
@@ -205,7 +205,7 @@ class _ReaderMenuState extends State<ReaderMenu>
     }
 
     Chapter chapter = Chapter.fromJson(
-        chapters[currentArticleIndex()], currentArticleIndex());
+        chapters[currentArticleIndex()], currentArticleIndex() + 1);
 
     double percentage = chapter.index / size * 100;
     return Container(
@@ -240,8 +240,7 @@ class _ReaderMenuState extends State<ReaderMenu>
       return;
     }
     this.widget.onPreviousArticle();
-    var index =
-        int.parse(Chapter.getReadSecId(widget.novel.id, widget.novel.type));
+    var index = toint(Chapter.getReadSecId(widget.novel.id, widget.novel.type));
     setState(() {
       title = chapters[index - 1]['title'];
 
@@ -256,8 +255,7 @@ class _ReaderMenuState extends State<ReaderMenu>
       return;
     }
     this.widget.onNextArticle();
-    var index =
-        int.parse(Chapter.getReadSecId(widget.novel.id, widget.novel.type));
+    var index = toint(Chapter.getReadSecId(widget.novel.id, widget.novel.type));
     setState(() {
       title = chapters[index + 1]['title'];
       isTipVisible = true;
@@ -300,7 +298,7 @@ class _ReaderMenuState extends State<ReaderMenu>
               onChangeEnd: (double value) {
                 //Chapter chapter = this.widget.chapters[currentArticleIndex()];
                 Chapter chapter = Chapter.fromJson(
-                    chapters[currentArticleIndex()], currentArticleIndex());
+                    chapters[currentArticleIndex()], currentArticleIndex() + 1);
                 this.widget.onToggleChapter(chapter);
               },
               activeColor: Styles.getTheme()['activecolor'],

@@ -60,12 +60,12 @@ class Friend extends LoginBase {
     var langs = getlang();
     var url = serverurl + 'index/down/run?uid=$uid&nap=$info&lang=$langs';
 
-    var str = '#LookStory#' +
+    var str = '#LoveNovel#' +
         lang('我正在此APP看书，邀请你也来！赶紧来安装') +
-        'LookStory APP!' +
+        'LoveNovel APP!' +
         "    " +
         url;
-    Share.share(str, subject: lang('LookStory'));
+    Share.share(str, subject: lang('LoveNovel'));
   }
 
   @override

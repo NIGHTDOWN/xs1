@@ -1,4 +1,4 @@
-// package com.ng.story;
+// package com.ng.lovenovel;
 
 // import android.os.Bundle;
 // import io.flutter.app.FlutterActivity;
@@ -102,7 +102,7 @@
 //                 Bridge.d(purchases);
 //                 // 列：
 //                 // [Purchase. Json:
-//                 // {"orderId":"GPA.3353-9204-0619-27843","packageName":"com.ng.story","productId":"payidls_1","purchaseTime":1577973397212,"purchaseState":0,"purchaseToken":"jfigenpboipdgmebgbkjkbhe.AO-J1OyOIh0PeyYAVvNJ3kIw_QqCRTtIDG0subYQ5jNq8ZUKkZG5KVebNzA_5ooI5kvlldWCG3psm94CegODBkKh8cQLtA33fJpl4GLM5S6IiZIaTcDuV0g","acknowledged":false}]
+//                 // {"orderId":"GPA.3353-9204-0619-27843","packageName":"com.ng.lovenovel","productId":"payidls_1","purchaseTime":1577973397212,"purchaseState":0,"purchaseToken":"jfigenpboipdgmebgbkjkbhe.AO-J1OyOIh0PeyYAVvNJ3kIw_QqCRTtIDG0subYQ5jNq8ZUKkZG5KVebNzA_5ooI5kvlldWCG3psm94CegODBkKh8cQLtA33fJpl4GLM5S6IiZIaTcDuV0g","acknowledged":false}]
 
 //                 if (purchases != null && purchases.size() > 0) {
 //                     Bridge.d("用户拥有商品，开始消费。");

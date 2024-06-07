@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:ng169/model/base.dart';
 import 'package:ng169/model/user.dart';
@@ -12,15 +11,15 @@ classObject 为页面实列对象
  */
 List loginobject = [Recharge()];
 Future gourl(BuildContext context, Object classObject) async {
- 
   if (!mustlogin(classObject)) {
     return await Navigator.push(
         context, new MaterialPageRoute(builder: (context) => Index()));
   }
-    final widget = classObject is Widget ? classObject : Container();
+  final widget = classObject is Widget ? classObject : Container();
   return await Navigator.push(
       context, new MaterialPageRoute(builder: (context) => widget));
 }
+
 // Future gourl(BuildContext context, WidgetBuilder builder) async {
 //   if (!mustlogin(context)) {
 //     return await Navigator.push(
@@ -99,12 +98,11 @@ void gourl_animation(context, Object? classObject, [int? type, int? time]) {
               child: child,
             );
           },
-          transitionDuration:
-              Duration(milliseconds: time?? 500)));
+          transitionDuration: Duration(milliseconds: time ?? 500)));
 }
 
 formar_url(String url) {
-  RegExp reg = new RegExp(r'^lookstory://com\.ng\.story/(.+)\?(.+)');
+  RegExp reg = new RegExp(r'^lovenovel://com\.ng\.lovenovel/(.+)\?(.+)');
   RegExp regdata = new RegExp(r'(([a-zA-Z0-9-_]+)\=([a-zA-Z0-9-_]+))&?');
 
   String? action, params;

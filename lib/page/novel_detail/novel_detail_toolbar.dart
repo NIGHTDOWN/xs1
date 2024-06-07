@@ -22,6 +22,7 @@ class _NovelDetailToolbarState extends State<NovelDetailToolbar> {
   late String isdown;
   read(context) {
     //获取当前书阅读章节id
+
     widget.novel.read(context, widget.novel.readChapter);
   }
 
@@ -81,7 +82,6 @@ class _NovelDetailToolbarState extends State<NovelDetailToolbar> {
           child: GestureDetector(
             onTap: () {
               read(context);
-              // AppNavigator.pushReader(context, novel.firstArticleId);
             },
             child: Container(
               height: 40,

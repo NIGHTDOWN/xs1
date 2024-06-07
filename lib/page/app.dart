@@ -355,6 +355,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
 
     //  dir();
     var body = Scaffold(
+      appBar: null,
       body: IndexedStack(
         children: <Widget>[
           Rack(), //书架

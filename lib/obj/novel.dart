@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ng169/conf/conf.dart';
+import 'package:ng169/model/article.dart';
 import 'package:ng169/model/rack.dart';
 import 'package:ng169/model/user.dart';
-import 'package:ng169/page/reader/article_provider.dart';
+
+import 'package:ng169/page/reader/article_provider2.dart';
 import 'package:ng169/page/reader/cartreader_scene.dart';
 import 'package:ng169/page/reader/reader_scene.dart';
-import 'package:ng169/page/reader/local_reader_scene.dart';
+
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
@@ -20,9 +23,9 @@ class Novel {
   String dbid = "0";
   String name = "";
   String imgUrl = "";
-  int firstChapter = 0;
-  int readChapter = 0;
-  int lastChapter = 0;
+  int firstChapter = 1;
+  int readChapter = 1;
+  int lastChapter = 1;
   String lastChaptertitle = "";
   String lastChapterid = "0";
   String isgroom = "0";
@@ -50,9 +53,39 @@ class Novel {
   List catelog = []; //目录
   String isdownload = "0";
   String downrate = '0';
+  Article? readarticle; //小说里面的默认阅读章节
+  Future<Article?> getArticle() async {
+    if (!isnull(readChapter)) {
+      readChapter = 1;
+    }
+    var readarticlemap =
+        await ArticleProvider2.getcontent(g("context"), this, readChapter);
+    readarticle = Article.fromJson(readarticlemap, this);
+    return readarticle;
+  }
 
   setcomment(Map comments) {
     comment = comments;
+  }
+
+  //记录阅读历史
+  setcur(int index) {
+    var tmpReadSignCacheName = bookindex + id + '_' + type.toString();
+    setcache(tmpReadSignCacheName, index, "-1");
+    readChapter = index;
+    savedb();
+  }
+
+  getcur() {
+    var tmpReadSignCacheName = bookindex + id + '_' + type.toString();
+    var iss = getcache(tmpReadSignCacheName);
+    if (isnull(iss)) {
+      readChapter = toint(iss);
+    } else {
+      readChapter = 1;
+    }
+
+    return readChapter;
   }
 
   savedb() async {
@@ -78,23 +111,8 @@ class Novel {
       'readsec': readChapter,
     };
     //登入的时候才更新书架状态，且书架状态为1才更新
-    // insert.addAll({'uid': User.getuid()});
-    // if (isnull(user)) {
-    //   // insert.addAll({'uid': User.getuid()});
-    //   if (isgroom == '1') {
-    //     insert.addAll({'isgroom': isgroom});
-    //   }
-    // } else {
-    //   //未登入的除非有gromm状态，否则全部为0
 
-    //   if (isgroom == '1') {
-    //     insert.addAll({'isgroom': isgroom});
-    //   } else {
-    //     insert.addAll({'isgroom': 0});
-    //   }
-    // }
     if (!isnull(ins)) {
-      // db.add('book', insert);
       T('book').add(insert);
       //添加
     } else {
@@ -104,7 +122,6 @@ class Novel {
         insert.addAll({'addtime': gettime()});
       }
       T('book').update(insert, w);
-      // db.update('book', insert, w);
       //更新
     }
   }
@@ -118,7 +135,6 @@ class Novel {
     // var ins = await db.where(w).getone('book');
     var ins = await T('book').where(w).getone();
     var user = User.get();
-
     Map<String, dynamic> insert = {};
     if (isnull(nowsecnum)) {
       //检查最新章节数量
@@ -133,7 +149,6 @@ class Novel {
       }
     } else {
       //未登入的除非有gromm状态，否则全部为0
-
       if (isgroom == '1') {
         insert.addAll({'isgroom': isgroom});
       } else {
@@ -175,7 +190,6 @@ class Novel {
   isdown() async {
     var dbdata = await T('book').getone({'type': type, 'bookid': id});
     //判断缓存比列
-
     if (isnull(dbdata)) {
       if (isnull(dbdata['isdownload'])) {
         await continuedown();
@@ -199,9 +213,6 @@ class Novel {
       downrate = '0';
     } else {
       downrate = (((catedown / cateall) * 100).toStringAsFixed(0));
-      // d(cateall);
-      // d(catedown);
-      // d(((catedown / cateall) * 100).toStringAsFixed(0));
       if (int.parse(downrate) < 100) {
         // 继续下载
         down();
@@ -215,7 +226,6 @@ class Novel {
         : isnull(data['cartoon_id'])
             ? data['cartoon_id']
             : 0;
-    //firstArticleId = data['first_article_id'];
     name = trim(data['other_name']);
     imgUrl = data['bpic'];
     if (dslStatus && isnull(dslDomain)) {
@@ -243,7 +253,7 @@ class Novel {
         : 5.0;
     // type = data['class_name'];
     lastChaptertitle = data['new_section_title'] ?? "";
-    lastChapterid = data['new_section_id'] ?? "";
+    lastChapterid = data['update_section'] ?? "";
     introduction = data['desc'];
     if (isnull(data, 'update_section')) {
       chapterCount = int.parse(data['update_section'] ?? 0);
@@ -300,9 +310,9 @@ class Novel {
         'bookname': name,
         'type': type
       });
-      return 0;
+      return isin['bookid'];
     } else {
-      int idstart = 90000;
+      int idstart = 900000;
       int bid;
       var id =
           await T('book').where({'type': type}).order('bookid desc').getone();
@@ -343,7 +353,7 @@ class Novel {
 
       name = trim('' + data['bookname'].toString());
 
-      imgUrl = data['pic'];
+      imgUrl = data['pic'] ?? "";
       desc = data['desc'] ?? "";
       desc = trim(desc);
       type = data['type'].toString();
@@ -396,7 +406,7 @@ class Novel {
   }
 
   Future<int> getprogress() async {
-    int tmp = int.parse(Chapter.getReadSecId(id, type));
+    int tmp = getcur();
     if (tmp == 0) {
       return 0;
     }
@@ -449,12 +459,12 @@ class Novel {
     var tmp = await T('sec').where({'cacheflag': 0, 'book_id': id}).getall();
     for (var i = 0; i < tmp.length; i++) {
       //重新缓存所有未完成的缓存
-      await ArticleProvider.getcontent(context, this, tmp[i]['section_id']);
+      await ArticleProvider2.getcontent(context, this, tmp[i]['index']);
     }
     var tmp2 = await T('sec').where({'cacheflag': 2, 'book_id': id}).getall();
     for (var i = 0; i < tmp2.length; i++) {
       //重新缓存所有未完成的缓存
-      await ArticleProvider.getcontent(context, this, tmp2[i]['section_id']);
+      await ArticleProvider2.getcontent(context, this, tmp2[i]['index']);
     }
   }
 
@@ -488,14 +498,17 @@ class Novel {
     Rackmodel().rackrf();
   }
 
-  read(context, [int readChapter = 0]) async {
+  read(context, [int readChapter = 1]) async {
     Rackmodel()..upreadtime(this);
+    //先加载下章节
+    getcur();
+
     if (type == '1') {
       await gourl(context, ReaderScene(this, readChapter));
     } else if (type == '2') {
       await gourl(context, CartReaderScene(this, readChapter));
     } else if (type == '3') {
-      await gourl(context, LocalReaderScene(this, readChapter));
+      await gourl(context, ReaderScene(this, readChapter));
     }
 
     //更新阅读记录

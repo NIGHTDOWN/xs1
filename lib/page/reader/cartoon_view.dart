@@ -34,6 +34,7 @@ class CartoonView extends StatefulWidget {
   late Function showmenu;
   late Function next;
   late Function pre;
+  PageController pageController;
 
   CartoonView(
       {required this.novel,
@@ -45,6 +46,7 @@ class CartoonView extends StatefulWidget {
       required this.pre,
       required this.lock,
       required this.islock,
+      required this.pageController,
       required this.unlock,
       required this.showmenu});
 
@@ -56,7 +58,7 @@ class CartoonViewState extends State<CartoonView> {
   List<Widget> pics = [];
 
   late double width;
-  late PageController pageController;
+
   late double height;
   late Widget loadanmianl;
   late Widget loadimg;
@@ -73,10 +75,8 @@ class CartoonViewState extends State<CartoonView> {
   }
 
   init() {
-    pageController = PageController(keepPage: false, initialPage: 0);
-
     if (isnull(widget.scroll)) {
-      pageController.addListener(() {
+      widget.pageController.addListener(() {
         _scroll();
       });
     }
@@ -100,45 +100,47 @@ class CartoonViewState extends State<CartoonView> {
       widget.showmenu();
     } else if (xRate >= 0.66) {
       //下一页
-      of = pageController.offset;
-      if (of > pageController.position.maxScrollExtent) {
+      of = widget.pageController.offset;
+      if (of > widget.pageController.position.maxScrollExtent) {
         return;
       }
-      if (of == pageController.position.maxScrollExtent) {
-        pageController.animateTo(of + h,
+      if (of == widget.pageController.position.maxScrollExtent) {
+        widget.pageController.animateTo(of + h,
             duration: Duration(milliseconds: time), curve: Curves.easeInOut);
         return;
       }
       goh = of + h;
-      if (goh > pageController.position.maxScrollExtent) {
-        pageController.animateTo(pageController.position.maxScrollExtent,
-            duration: Duration(milliseconds: time), curve: Curves.easeInOut);
+      if (goh > widget.pageController.position.maxScrollExtent) {
+        widget.pageController.animateTo(
+            widget.pageController.position.maxScrollExtent,
+            duration: Duration(milliseconds: time),
+            curve: Curves.easeInOut);
         return;
       }
 
       //如果当前是已经底部则可以继续下滑
-      pageController.animateTo(goh,
+      widget.pageController.animateTo(goh,
           duration: Duration(milliseconds: time), curve: Curves.easeInOut);
-      // pageController.animateToPage(2,
+      //widget.pageController.animateToPage(2,
       //     duration: Duration(milliseconds: time), curve: Curves.easeInOut);
     } else {
       //上一页
-      of = pageController.offset;
+      of = widget.pageController.offset;
       goh = of - h;
       if (of < 0) {
         return;
       }
       if (of == 0) {
-        pageController.animateTo(-(h / 3),
+        widget.pageController.animateTo(-(h / 3),
             duration: Duration(milliseconds: time), curve: Curves.easeInOut);
         return;
       }
       if (goh < 0) {
-        pageController.animateTo(0,
+        widget.pageController.animateTo(0,
             duration: Duration(milliseconds: time), curve: Curves.easeInOut);
         return;
       }
-      pageController.animateTo(goh,
+      widget.pageController.animateTo(goh,
           duration: Duration(milliseconds: time), curve: Curves.easeInOut);
     }
   }
@@ -170,11 +172,11 @@ class CartoonViewState extends State<CartoonView> {
         //加载未完成停止监听
         return;
       }
-      if (!pageController.hasClients) {
+      if (!widget.pageController.hasClients) {
         //滚动后停止滚动监听
         return;
       }
-      if (pageController.position.maxScrollExtent <= g('sheight')) {
+      if (widget.pageController.position.maxScrollExtent <= g('sheight')) {
         //滚动后停止滚动监听
         return;
       }
@@ -182,10 +184,10 @@ class CartoonViewState extends State<CartoonView> {
         return;
       }
       var offseth = g('sheight') * 0.1;
-      widget.scroll(pageController);
+      widget.scroll();
 
-      if (pageController.position.pixels >
-          (pageController.position.maxScrollExtent + offseth)) {
+      if (widget.pageController.position.pixels >
+          (widget.pageController.position.maxScrollExtent + offseth)) {
         if (isnull(widget.article.nextArticleId) && check()) {
           lock = true;
           widget.lock();
@@ -196,7 +198,7 @@ class CartoonViewState extends State<CartoonView> {
         }
         return;
       }
-      if (pageController.position.pixels <= (0.0 - offseth)) {
+      if (widget.pageController.position.pixels <= (0.0 - offseth)) {
         if (isnull(widget.article.preArticleId) && check()) {
           lock = true;
           widget.lock();
@@ -217,11 +219,11 @@ class CartoonViewState extends State<CartoonView> {
     if (!widget.article.pay) {
       return SizedBox();
     }
-    if (!isnull(pageController.hasClients)) {
+    if (!isnull(widget.pageController.hasClients)) {
       return SizedBox();
     }
-    if (pageController.position.pixels <
-        (pageController.position.maxScrollExtent)) {
+    if (widget.pageController.position.pixels <
+        (widget.pageController.position.maxScrollExtent)) {
       return SizedBox();
     }
     if (!isnull(widget.article.nextArticleId)) {
@@ -282,10 +284,10 @@ class CartoonViewState extends State<CartoonView> {
     if (!widget.article.pay) {
       return SizedBox();
     }
-    if (!isnull(pageController.hasClients)) {
+    if (!isnull(widget.pageController.hasClients)) {
       return SizedBox();
     }
-    if (pageController.position.pixels >= 0) {
+    if (widget.pageController.position.pixels >= 0) {
       return SizedBox();
     }
     if (!isnull(widget.article.preArticleId)) {
@@ -351,27 +353,27 @@ class CartoonViewState extends State<CartoonView> {
     lock = true;
     locktime = int.parse(gettime());
     await Future.delayed(Duration(milliseconds: 500)).then((data) async {
-      if (!isnull(pageController.hasClients)) {
+      if (!isnull(widget.pageController.hasClients)) {
         //获取页面高度失败,持续等待加载完成，
         goindex();
         return;
       } else {
-        var max = pageController.position.maxScrollExtent;
+        var max = widget.pageController.position.maxScrollExtent;
 
         // await Future.delayed(Duration(milliseconds: 500));
         var pagemax = max - 48;
         if (pageindex >= widget.article.pageCount - 1) {
-          pageController.jumpTo(pagemax);
+          widget.pageController.jumpTo(pagemax);
         } else {
           if (pageindex <= 1) {
-            pageController.jumpTo(0);
+            widget.pageController.jumpTo(0);
           } else {
             var rate = (pageindex + 1) / widget.article.pageCount;
             var pooint = max * rate;
             if (pooint > pagemax) {
-              pageController.jumpTo(pagemax);
+              widget.pageController.jumpTo(pagemax);
             } else {
-              pageController.jumpTo(pooint);
+              widget.pageController.jumpTo(pooint);
             }
           }
         }
@@ -387,7 +389,7 @@ class CartoonViewState extends State<CartoonView> {
 
   void dispose() {
     super.dispose();
-    pageController.dispose();
+    // widget.pageController.dispose();
   }
 
   @override
@@ -459,20 +461,20 @@ class CartoonViewState extends State<CartoonView> {
         },
         // child: ListView(
         //   physics: BouncingScrollPhysics(),
-        //   controller: pageController,
+        //   controller:widget.pageController,
         //   children: pics.map((item) {
         //     return item;
         //   }).toList(),
         // ),
         child: ListView(
           physics: BouncingScrollPhysics(),
-          controller: pageController,
+          controller: widget.pageController,
           children: pics,
         ));
     //SingleChildScrollView 数量多性能不好；
     // return SingleChildScrollView(
     //     physics: BouncingScrollPhysics(),
-    //     controller: pageController,
+    //     controller:widget.pageController,
     //     child: Column(
     //       children: pics,
     //       crossAxisAlignment: CrossAxisAlignment.start,

@@ -5,14 +5,16 @@ import 'package:ng169/model/article.dart';
 
 import 'package:ng169/obj/chapter.dart';
 import 'package:ng169/obj/novel.dart';
-import 'package:ng169/page/novel_detail/novel_detail_header.dart';
+import 'package:ng169/page/reader/article_provider2.dart';
 import 'package:ng169/page/reader/lastpage.dart';
 import 'package:ng169/page/reader/reader_bar.dart';
+import 'package:ng169/page/reader/reader_tips.dart';
 
+import 'package:ng169/page/smallwidget/gifload2.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/event_bus.dart';
-
+import 'package:ng169/tool/jsq.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/loadbox.dart';
 import 'package:ng169/tool/url.dart';
@@ -20,40 +22,40 @@ import 'package:ng169/tool/url.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
-import 'package:ng169/tool/t.dart';
+import 'package:ng169/tool/t.dart' as dbt;
 import 'dart:async';
-import 'article_provider.dart';
-import 'reader_utils.dart';
+
+import 'battery_view.dart';
+
 import 'reader_page_agent.dart';
 import 'reader_view.dart';
-import 'reader_scene.dart';
-import 'package:ng169/model/user.dart';
 
-class LocalReaderScene extends StatefulWidget {
-  final int articleId; //章节id
-  final Novel novel; //小说
+enum PageJumpType { stay, firstPage, lastPage }
 
-  LocalReaderScene(this.novel, this.articleId);
-
+// ignore: must_be_immutable
+abstract class ReadStat extends StatefulWidget {
+  late State<ReadStat> state;
+  late BuildContext? context;
+  bool mounted = false;
+  Function setState = () {};
+  Function reflash = () {};
   @override
-  LocalReaderSceneState createState() => LocalReaderSceneState();
-}
-
-class LocalReaderSceneState extends State<LocalReaderScene>
-    with TickerProviderStateMixin {
+  createState() => _ReadStatState();
+  @protected
+  Widget build(BuildContext context);
   int pageIndex = 0;
   int articleIndex = 0;
   bool islast = false;
+  Novel? novel;
   PageController pageController =
       PageController(keepPage: false, initialPage: 1);
   bool isLoading = false, isFirst = true;
-  GlobalKey _readkey = new GlobalKey();
+  GlobalKey readkey = new GlobalKey();
   double topSafeHeight = 0;
-
-  late Article? preArticle;
-  late Article? currentArticle;
-  late Article? nextArticle;
-
+  late Article? preArticle = null;
+  late Article? currentArticle = null;
+  late Article? nextArticle = null;
+  late Widget bar;
   List<Chapter> chapters = [];
   List chaptersResponse = [];
   Widget kongbai = SizedBox();
@@ -63,17 +65,25 @@ class LocalReaderSceneState extends State<LocalReaderScene>
   late CustomPainter mPainter;
   GlobalKey canvasKey = new GlobalKey();
   late AnimationController percentageAnimationController;
+  Widget btter = SizedBox();
+  late Widget box;
+  Widget load = Scaffold(
+    body: Container(
+      color: SQColor.white,
+      child: Center(
+        child: Gifload2(),
+      ),
+    ),
+  );
+  bool loadflag = false;
   var page;
-  @override
+
   void initState() {
-    super.initState();
     getfx();
     sysinit();
     pageController.addListener(onScroll);
-    chaptersResponse = Chapter.get(context, this.widget.novel);
-
-    setup();
-    //阅读本地小说不参与活动
+    initaddgrombox();
+    Jsq()..start();
   }
 
   getfx() {
@@ -108,41 +118,35 @@ class LocalReaderSceneState extends State<LocalReaderScene>
       pageController.jumpToPage(1);
       return;
     }
-
-    if (pageIndex >= currentArticle!.pageCount - 1 &&
-        currentArticle!.nextArticleId == 0 &&
-        pageController.page! > 1.4) {
-      golast();
-      // show(context, lang('已经是最后一页了'));
-      // pageController.jumpToPage(1);
-      return;
+    if (isnull(currentArticle)) {
+      if (pageIndex >= currentArticle!.pageCount - 1 &&
+          currentArticle!.nextArticleId == 0 &&
+          pageController.page! > 1.4) {
+        golast(novel!);
+        return;
+      }
     }
 
     //当前页面
     if (pageController.page == 1.0) {}
   }
 
-  golast() async {
+  golast(Novel novel) async {
     if (!islast) {
       islast = true;
-      await gourl(context, Lastpage(widget.novel));
+      await gourl(context!, Lastpage(novel));
       islast = false;
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   void dispose() {
-    super.dispose();
-
-    pageController.dispose();
+    Jsq()..end();
     showtitlebar();
     eventBus.off('read_reflash');
     Screen.keepOn(false); //屏幕常亮
+    try {
+      pageController.dispose();
+    } catch (e) {}
   }
 
   sysinit() async {
@@ -158,99 +162,44 @@ class LocalReaderSceneState extends State<LocalReaderScene>
     });
   }
 
-  void setup() async {
-    List chaptersResponse =
-        await Chapter.getcatecache(context, this.widget.novel);
-
-    //章节id记录
-    int tmparticleId;
-
-    try {
-      tmparticleId = isnull(this.widget.articleId)
-          ? this.widget.articleId
-          : (chaptersResponse[int.parse(
-                  Chapter.getReadSecId(widget.novel.id, widget.novel.type))]
-              ['section_id']);
-    } catch (e) {
-      dt(e);
-      return;
-    }
-
-    //获取章节索引 0开始
-    articleIndex =
-        int.parse(Chapter.getReadSecId(widget.novel.id, widget.novel.type));
-
-    //章节内阅读页面
-    //获取小说内容
-    await resetContent(tmparticleId, PageJumpType.stay);
-    //初始化指针
-    pageIndex =
-        (isnull(getpoint(tmparticleId)) ? (getpoint(tmparticleId)) : 0)!;
-    if (pageIndex > currentArticle!.pageCount - 1) {
-      pageIndex = currentArticle!.pageCount - 1;
-    }
-  }
-
   //获取章节页面定位
   int? getpoint(sectionId) {
-    var cache = 'pageindex' +
-        widget.novel.id +
-        widget.novel.type +
-        sectionId.toString();
+    var cache = pageindexk + novel!.id + novel!.type + tostring(sectionId);
     var tmp = getcache(cache);
-    if (!isnull(tmp)) return null;
-    if (tmp is int) {
-      return tmp;
-    }
-    return int.parse(getcache(cache));
+    if (!isnull(tmp)) return 0;
+    return toint(tmp);
   }
 
   //获取章节内容，并且预加载前后两章
-  resetContent(int articleId, PageJumpType jumpType) async {
+  resetContent(int index, PageJumpType jumpType) async {
     //目录定位
     //获取当前章节内容
-
     showload = true;
     reflash();
-
-    currentArticle = (await fetchArticle(articleId))!;
-
+    currentArticle = (await fetchArticle(index));
     if (!isnull(currentArticle)) {
       //章节内容不存在，跳一章
-      var v = this.widget.novel;
-      var tmp = await T('sec')
-          .where({'book_id': v.id, 'booktype': v.type})
-          .wherestring(' section_id> ' + articleId.toString())
-          .order('`section_id` asc')
+      var v = novel;
+      var tmp = await dbt
+          .T('sec')
+          .where({'book_id': v?.id, 'booktype': v?.type})
+          .wherestring(' `index`> ' + index.toString())
+          .order('`index` asc')
           .getone();
-
-      currentArticle = (await fetchArticle(tmp['section_id']))!;
+      if (isnull(tmp)) {
+        currentArticle = (await fetchArticle(tmp['index']));
+      }
     }
     if (!isnull(currentArticle)) {
       //重试获取下一章还是失败，则退出。
+      showload = false;
+      reflash();
       return;
     }
+    novel!.setcur(currentArticle!.index);
     showload = false;
     reflash();
-    if (currentArticle!.preArticleId > 0) {
-      //预加载上一章
-      fetchArticle(currentArticle!.preArticleId).then((onValue) {
-        preArticle = onValue!;
-        reflash();
-      });
-    } else {
-      preArticle = null;
-    }
 
-    if (currentArticle!.nextArticleId > 0) {
-      //预加载下一章
-      fetchArticle(currentArticle!.nextArticleId).then((onValuen) {
-        nextArticle = onValuen!;
-        reflash();
-      });
-    } else {
-      nextArticle = null;
-    }
     if (jumpType == PageJumpType.firstPage) {
       //跳首页
       pageIndex = 0;
@@ -258,89 +207,33 @@ class LocalReaderSceneState extends State<LocalReaderScene>
       //跳最后一页
       pageIndex = currentArticle!.pageCount - 1;
     }
+    fetchPreviousArticle(currentArticle!.preArticleId);
+    fetchNextArticle(currentArticle!.nextArticleId);
     showload = false;
+    loadflag = true;
     reflash();
   }
 
   fetchPreviousArticle(int articleId) async {
-    if (preArticle != null || isLoading || articleId == 0) {
-      return;
+    if (isnull(articleId)) {
+      preArticle = (await fetchArticle(articleId))!;
+    } else {
+      preArticle = null;
     }
-    isLoading = true;
-    preArticle = (await fetchArticle(articleId))!;
-    pageController.jumpToPage(preArticle!.pageCount + pageIndex);
-    isLoading = false;
     reflash();
   }
 
   fetchNextArticle(int articleId) async {
-    // ignore: unnecessary_null_comparison
-    if (nextArticle != null || isLoading || articleId == 0) {
-      return;
+    if (isnull(articleId)) {
+      nextArticle = (await fetchArticle(articleId))!;
+    } else {
+      nextArticle = null;
     }
-    isLoading = true;
-    nextArticle = (await fetchArticle(articleId))!;
-    isLoading = false;
     reflash();
   }
 
-  //获取章节内容
-  Future<Article?> fetchArticle(int articleId) async {
-    //获取章节内容，并且根据字体大小分页
-    var article =
-        await ArticleProvider.fetchArticle(context, widget.novel, articleId);
-
-    if (!isnull(article)) {
-      return null;
-    }
-    // if (await article.ispay()) {
-    //   //支付状态检测
-
-    // }
-
-    // var contentHeight = Screen.height -
-    //     topSafeHeight -
-    //     ReaderUtils.topOffset -
-    //     Screen.bottomSafeHeight -
-    //     ReaderUtils.bottomOffset -
-    //     20;
-
-    // var contentWidth = Screen.width - 15 - 10;
-    article?.page = ReaderPageAgent.getPage(
-      article.content,
-    );
-
-    return article;
-  }
-
-  //重新渲染
-  reflash() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var stack = Stack(children: [
-      Positioned(
-          left: 0,
-          top: 0,
-          right: 0,
-          bottom: 0,
-          child: Image.asset(Styles.getTheme()['bg'], fit: BoxFit.cover)),
-      buildPageView(),
-    ]);
-    var children2 = <Widget>[
-      Loadbox(
-        loading: showload,
-        child: stack,
-        hasmask: false,
-      ),
-      ReaderBar(widget.novel, chaptersResponse, currentArticle!, reflash,
-          resetContent),
-    ];
-    var box = Container(
+  initaddgrombox() {
+    box = Container(
         decoration: new BoxDecoration(
             color: SQColor.white, borderRadius: new BorderRadius.circular(10)),
         // width: 200,
@@ -383,10 +276,19 @@ class LocalReaderSceneState extends State<LocalReaderScene>
                               pop(context);
                             },
                             // color: const Color(0xFFe0e0e0),
-                            style: ButtonStyle(backgroundColor:
-                                WidgetStateProperty.resolveWith((states) {
-                              return Color(0xFFe0e0e0);
-                            })),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  WidgetStateProperty.resolveWith((states) {
+                                return Color(0xFFe0e0e0);
+                              }),
+                              // foregroundColor: MaterialStateProperty.resolveWith((states) {
+                              //   return Styles.getTheme()['activefontcolor'];
+                              // }),
+                              // shape: MaterialStateProperty.resolveWith((states) {
+                              //   return RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(8));
+                              // }),
+                            ),
                             child: new Text(
                               lang("取消"),
                               style: new TextStyle(
@@ -402,7 +304,7 @@ class LocalReaderSceneState extends State<LocalReaderScene>
                         child: new TextButton(
                             key: null,
                             onPressed: () {
-                              widget.novel.addgroom();
+                              novel!.addgroom();
                               pop(context);
                               pop(context);
                             },
@@ -424,85 +326,35 @@ class LocalReaderSceneState extends State<LocalReaderScene>
                     ),
                   ])
             ]));
-
-    return Scaffold(
-      key: _readkey,
-      body: AnnotatedRegion(
-          value: SystemUiOverlayStyle.dark,
-          // ignore: deprecated_member_use
-          child: WillPopScope(
-            onWillPop: () {
-              if (isnull(widget.novel.isgroom)) {
-                pop(context);
-              } else {
-                if (User.islogin()) {
-                  showbox(box, Color(0x00ffffff));
-                } else {
-                  pop(context);
-                }
-              }
-              return Future.value(false);
-            },
-            child: Stack(
-              children: children2,
-            ),
-          )),
-    );
   }
+
+  //获取章节内容
+  Future<Article?> fetchArticle(int index) async {
+    //获取章节内容，并且根据字体大小分页
+    var article = await ArticleProvider2.fetchArticle(context!, novel!, index);
+
+    if (!isnull(article)) {
+      return null;
+    }
+
+    return article;
+  }
+
+  //重新渲染
 
   //页面渲染
   buildPageView() {
-    if (widget.novel.chapterCount == 1) {
-      //只有一张说明 内容过长
-
-      var c = Container(
-        color: Colors.transparent,
-        width: getScreenWidth(context),
-        //  height: getScreenHeight(context),
-        margin: EdgeInsets.fromLTRB(
-            15, topSafeHeight + ReaderUtils.topOffset, 10, 0),
-        child: Text.rich(
-          TextSpan(children: [
-            TextSpan(
-                text: isnull(currentArticle)
-                    ? currentArticle!.stringAtPageIndex(0)
-                    : '',
-                style: TextStyle(
-                    color: Styles.getTheme()['fontcolor'],
-                    fontSize: fixedFontSize(Styles.getTheme()['fontsize']))),
-          ]),
-          textAlign: TextAlign.left,
-        ),
-      );
-      page = Stack(
-        children: <Widget>[
-          Positioned(
-              left: 0,
-              top: 0,
-              // right: 0,
-              // bottom: 0,
-
-              child: Container(
-                  width: getScreenWidth(context),
-                  height: getScreenHeight(context),
-                  child:
-                      Image.asset(Styles.getTheme()['bg'], fit: BoxFit.cover))),
-          Column(children: [Expanded(child: SingleChildScrollView(child: c))]),
-        ],
-      );
-    } else {
-      page = PageView(
-        scrollDirection: fx == '1' ? Axis.horizontal : Axis.vertical,
-        physics: BouncingScrollPhysics(),
-        controller: pageController,
-        children: <Widget>[
-          // drag,
-          pagecontent1(),
-          pagecontent(),
-          pagecontent2(),
-        ],
-      );
-    }
+    page = PageView(
+      scrollDirection: fx == '1' ? Axis.horizontal : Axis.vertical,
+      physics: BouncingScrollPhysics(),
+      controller: pageController,
+      children: <Widget>[
+        // drag,
+        pagecontent1(),
+        pagecontent(),
+        pagecontent2(),
+      ],
+    );
 
     return GestureDetector(
       child: page,
@@ -554,8 +406,7 @@ class LocalReaderSceneState extends State<LocalReaderScene>
     }
     if (pageIndex >= currentArticle!.pageCount - 1 &&
         currentArticle!.nextArticleId == 0) {
-      golast();
-
+      golast(novel!);
       // show(context, lang('已经是最后一页了'));
       return;
     }
@@ -574,25 +425,36 @@ class LocalReaderSceneState extends State<LocalReaderScene>
   }
 
   //翻页公共库
-  setpage(int nums) {
+  setpage(int nums) async {
     int index = pageIndex + nums;
+    if (!isnull(currentArticle)) {
+      pageIndex = 0;
+      reflash();
+      return;
+    }
     if (index < currentArticle!.pageCount && index >= 0) {
       pageIndex = index;
       reflash();
     }
     if (index > currentArticle!.pageCount - 1) {
-      currentArticle = nextArticle;
+      if (isnull(nextArticle)) {
+        currentArticle = nextArticle;
+      }
+
       reflash();
       if (isnull(currentArticle)) {
-        resetContent(currentArticle!.id, PageJumpType.firstPage);
+        resetContent(currentArticle!.index, PageJumpType.firstPage);
       }
       // pageIndex=0;
     }
     if (index < 0) {
-      currentArticle = preArticle;
+      if (isnull(preArticle)) {
+        currentArticle = preArticle!;
+      }
+
       reflash();
       if (isnull(currentArticle)) {
-        resetContent(currentArticle!.id, PageJumpType.lastPage);
+        resetContent(currentArticle!.index, PageJumpType.lastPage);
       }
     }
   }
@@ -601,12 +463,11 @@ class LocalReaderSceneState extends State<LocalReaderScene>
   pagecontent() {
     if (!isnull(currentArticle)) return kongbai;
     Widget obj = ReaderView(
-      novel: widget.novel,
-      article: currentArticle!,
-      page: pageIndex,
-      topSafeHeight: topSafeHeight,
-      battery: SizedBox(),
-    );
+        novel: novel!,
+        article: currentArticle!,
+        battery: btter,
+        page: pageIndex,
+        topSafeHeight: topSafeHeight);
     catelog(currentArticle);
     return obj;
   }
@@ -616,21 +477,19 @@ class LocalReaderSceneState extends State<LocalReaderScene>
     if (!isnull(currentArticle)) return kongbai;
     if (pageIndex != 0) {
       return ReaderView(
-        novel: widget.novel,
-        article: currentArticle!,
-        page: pageIndex - 1,
-        topSafeHeight: topSafeHeight,
-        battery: SizedBox(),
-      );
+          novel: novel!,
+          article: currentArticle!,
+          battery: btter,
+          page: pageIndex - 1,
+          topSafeHeight: topSafeHeight);
     } else {
       if (isnull(preArticle)) {
         return ReaderView(
-          novel: widget.novel,
-          article: preArticle!,
-          page: preArticle!.pageCount - 1,
-          topSafeHeight: topSafeHeight,
-          battery: SizedBox(),
-        );
+            novel: novel!,
+            article: preArticle!,
+            battery: btter,
+            page: preArticle!.pageCount - 1,
+            topSafeHeight: topSafeHeight);
       } else {
         return kongbai;
       }
@@ -645,21 +504,19 @@ class LocalReaderSceneState extends State<LocalReaderScene>
 
     if (tmpindex <= ccount) {
       return ReaderView(
-        novel: widget.novel,
-        article: currentArticle!,
-        page: tmpindex,
-        topSafeHeight: topSafeHeight,
-        battery: SizedBox(),
-      );
+          novel: novel!,
+          article: currentArticle!,
+          page: tmpindex,
+          battery: btter,
+          topSafeHeight: topSafeHeight);
     } else {
       if (isnull(nextArticle)) {
         return ReaderView(
-          novel: widget.novel,
-          article: nextArticle!,
-          page: 0,
-          topSafeHeight: topSafeHeight,
-          battery: SizedBox(),
-        );
+            novel: novel!,
+            article: nextArticle!,
+            battery: btter,
+            page: 0,
+            topSafeHeight: topSafeHeight);
       } else {
         return kongbai;
       }
@@ -669,20 +526,48 @@ class LocalReaderSceneState extends State<LocalReaderScene>
   //设置阅读章节记录
   catelog(var article) async {
     var index = await article.getindex();
-
-    Chapter.clickout(
-        widget.novel.id, widget.novel.type, article.section_id, index);
-    this.widget.novel.addreadlog(article.section_id);
+    Chapter.clickout(novel!.id, novel!.type, article.section_id, index);
+    novel!.addreadlog(article.index);
     setpoint(article);
   }
 
   //设置阅读章节分页记录
   void setpoint(article) {
     var page = pageIndex;
-    var cache = 'pageindex' +
-        widget.novel.id +
-        widget.novel.type +
-        article.section_id.toString();
+    var cache = pageindexk + novel!.id + novel!.type + article.index.toString();
     setcache(cache, page, '-1');
+  }
+}
+
+class _ReadStatState extends State<ReadStat> {
+  @override
+  void initState() {
+    super.initState();
+    widget.initState();
+    widget.mounted = mounted;
+  }
+
+  void reflash() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    widget.mounted = mounted;
+    widget.state = this;
+    widget.context = context;
+    widget.setState = setState;
+    widget.reflash = reflash;
+    // setState(() {
+    // });
+    return widget.build(context);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.dispose();
   }
 }

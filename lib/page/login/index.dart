@@ -192,7 +192,7 @@ class _Index extends State<Index> {
         // height: 60,
         image: new AssetImage("assets/loginlogo.png"),
       ),
-      //  Text(lang('LookStory'),style:TextStyle(color: SQColor.white))
+
       //  ,
       new SizedBox(
         height: 3,

@@ -19,7 +19,7 @@ class ExpendLog extends LoginBase {
 // }
 
 // class ExpendLogState extends State<ExpendLog> {
-  List htppdata = [], mallcache = [];
+  List? htppdata = [], mallcache = [];
   List<Widget> more = [SizedBox()];
   var index = 'ExpendLog_';
   var cachedata = 'ExpendLog_data_', page = 1;
@@ -98,7 +98,7 @@ class ExpendLog extends LoginBase {
     mallcache = getcache(cachedata);
 
     if (isnull(mallcache)) {
-      htppdata = mallcache[0];
+      htppdata = mallcache![0];
     } else {
       setcache(index, 0, '0');
     }
@@ -128,7 +128,7 @@ class ExpendLog extends LoginBase {
           controller: scrollController,
           physics: AlwaysScrollableScrollPhysics(),
           children: <Widget>[
-            isnull(htppdata) ? objectBlock(htppdata) : SizedBox(),
+            isnull(htppdata) ? objectBlock(htppdata!) : SizedBox(),
             Column(
               children: more,
             ),

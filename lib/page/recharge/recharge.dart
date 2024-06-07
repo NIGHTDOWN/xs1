@@ -270,7 +270,7 @@ class Recharge extends LoginBase {
                 ),
                 onPressed: () {
                   var data =
-                      '{"packagename":"com.ng.story", "sku":"payidls_1", "token":"ngfgloomgjnpfhjebilckdil.AO-J1Oyb2DPUUA182tZE-Y79VBFmSYOkCHqOXeyKcR5L0ROpUiT3DOBHn0dni6UzFZK5hDMBOhxW176hw3XWnGaQX8v7SMOsRXcY14H4RiY9cfSjXSqrKNg", "purchasestate":"1", "fluttersku":"payidls_1", "purchasetime":"1578033450708", "flutterpayload":"测试是不是加入payload", "consumetoken":"ngfgloomgjnpfhjebilckdil.AO-J1Oyb2DPUUA182tZE-Y79VBFmSYOkCHqOXeyKcR5L0ROpUiT3DOBHn0dni6UzFZK5hDMBOhxW176hw3XWnGaQX8v7SMOsRXcY14H4RiY9cfSjXSqrKNg", "orderid":"GPA.3315-9027-5593-93708"}';
+                      '{"packagename":"com.ng.lovenovel", "sku":"payidls_1", "token":"ngfgloomgjnpfhjebilckdil.AO-J1Oyb2DPUUA182tZE-Y79VBFmSYOkCHqOXeyKcR5L0ROpUiT3DOBHn0dni6UzFZK5hDMBOhxW176hw3XWnGaQX8v7SMOsRXcY14H4RiY9cfSjXSqrKNg", "purchasestate":"1", "fluttersku":"payidls_1", "purchasetime":"1578033450708", "flutterpayload":"测试是不是加入payload", "consumetoken":"ngfgloomgjnpfhjebilckdil.AO-J1Oyb2DPUUA182tZE-Y79VBFmSYOkCHqOXeyKcR5L0ROpUiT3DOBHn0dni6UzFZK5hDMBOhxW176hw3XWnGaQX8v7SMOsRXcY14H4RiY9cfSjXSqrKNg", "orderid":"GPA.3315-9027-5593-93708"}';
                   buySuccess(data);
                 },
               )

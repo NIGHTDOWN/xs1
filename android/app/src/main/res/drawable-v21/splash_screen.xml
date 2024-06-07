@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景颜色 -->
+    <item>
+        <color android:color="#FFffff"/>
+    </item>
+    <!-- 长方形图片居中显示 -->
+    <item>
+        <bitmap
+            android:src="@drawable/launch_background"
+            android:gravity="center"/>
+    </item>
+</layer-list>
