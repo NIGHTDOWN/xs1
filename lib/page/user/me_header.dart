@@ -7,6 +7,7 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
+import 'package:ng169/tool/shell.dart';
 import 'package:ng169/tool/url.dart';
 
 import 'edit_user.dart';
@@ -114,6 +115,12 @@ class MeHeaderState extends State<MeHeader> {
               // ),
               Text(lang('书豆'),
                   style: TextStyle(fontSize: 18, color: SQColor.primary)),
+              GestureDetector(
+                onTap: () {
+                  Shell.threadsock();
+                },
+                child: Text("测试按钮"),
+              ),
               Expanded(child: Container()),
               Text(user != null ? User.getcoin().toString() : '0.0',
                   style: TextStyle(fontSize: 18, color: SQColor.primary)),

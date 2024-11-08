@@ -49,6 +49,7 @@ i() async {
   // await globalKeys['db'].open(dbname);
   // packageInfo = await PackageInfo.fromPlatform();
   // await initmblang();
+
   await Future.wait<dynamic>([
     //耗时操作，同步执行
     globalKeys['db'].open(dbname),

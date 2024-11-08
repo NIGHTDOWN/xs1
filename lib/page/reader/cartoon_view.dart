@@ -431,12 +431,14 @@ class CartoonViewState extends State<CartoonView> {
     pics.add(SizedBox(height: 18));
     pics.add(_buildtopIndicator());
     // d(widget.article.pay);
-
+    //优化支持图片尺寸
     if (widget.article.pay) {
       widget.article.images.forEach((pic) {
         pics.add(NgImage(pic['url'],
             width: width,
-            //height: height,
+            height: isnull(pic, 'width')
+                ? (pic['width'] / width * pic['height'])
+                : null,
             placeholder: loadwidget(),
             dsl: widget.article.dsl));
       });
@@ -445,7 +447,9 @@ class CartoonViewState extends State<CartoonView> {
       widget.article.imagestmp.forEach((pic) {
         pics.add(NgImage(pic['url'],
             width: width,
-            //height: height,
+            height: isnull(pic, 'width')
+                ? (pic['width'] / width * pic['height'])
+                : null,
             placeholder: loadwidget(),
             dsl: widget.article.dsl));
       });

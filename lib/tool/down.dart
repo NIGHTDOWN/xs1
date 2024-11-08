@@ -34,7 +34,6 @@ class Down {
 
     String cachename = 'apk' + urlPath.hashCode.toString();
     var tmp = getcache(cachename);
-
     if (isnull(tmp)) {
       success?.call(tmp);
       return tmp;
@@ -54,6 +53,7 @@ class Down {
         success?.call(savePath);
         setcache(cachename, savePath, '-1');
       } else {
+        d(savePath);
         d('downloadFile success---------${response.data}');
       }
     } on DioException catch (e) {

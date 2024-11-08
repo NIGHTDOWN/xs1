@@ -12,6 +12,7 @@ class ArticleProvider2 {
     var artiicle, article;
 
     artiicle = await getcontent(context, novel, order);
+
     if (!isnull(artiicle)) {
       return null;
     }
@@ -68,6 +69,7 @@ class ArticleProvider2 {
     if (isnull(cache)) {
       return cache;
     } else {
+      d("api拉取" + order.toString());
       return await getremotecontent(context, novel, order);
     }
   }

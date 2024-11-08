@@ -355,7 +355,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
 
     //  dir();
     var body = Scaffold(
-      appBar: null,
+      // appBar: null,
       body: IndexedStack(
         children: <Widget>[
           Rack(), //书架
@@ -397,6 +397,9 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
         },
       ),
     );
+    // return Center(
+    //   child: Text("dsfsdf"),
+    // );
     // ignore: deprecated_member_use
     return WillPopScope(
       child: body,

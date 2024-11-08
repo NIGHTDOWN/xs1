@@ -56,6 +56,7 @@ class MyApp extends StatelessWidget {
 
         //   s('locallg', deviceLocale);
         // },
+
         home: new StartPage());
     // } catch (e) {
     //   d(e);

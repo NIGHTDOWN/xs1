@@ -9,6 +9,7 @@ import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/style/sq_color.dart';
+import 'package:ng169/tool/cache.dart';
 
 import 'package:ng169/tool/down.dart';
 import 'package:ng169/tool/toast.dart';
@@ -213,6 +214,11 @@ Future<dynamic> getAssetImage(String asset, {width, height}) async {
 
 getcache(key, [bool needid = true]) {
   var cache = g('cache');
+  if (!isnull(cache)) return false;
+  // if (!isnull(cache)) {
+  //   s("cache", new NgCache());
+  //   g('cache').init();
+  // }
   String name;
   if (needid) {
     int id = User.getuid();
@@ -225,7 +231,7 @@ getcache(key, [bool needid = true]) {
     name = key;
   }
   // name = name + g('locallg');
-  var data = cache.get(name);
+  var data = cache!.get(name);
   return data;
 }
 
@@ -285,8 +291,23 @@ hidetitlebar() async {
 
 //显示状态栏
 showtitlebar() {
-  return;
+  // return;
   //这里需要加版本判断；如果是安卓12以上；这个不要
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+  //     overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.values ,
+  //     overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+  // d("erwerewrwer" + Platform.version.toString());
+  // if (Platform.isAndroid && int.parse(Platform.version.split('.')[0]) >= 12) {
+  //   d("erwerewrwer");
+  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+  //       overlays: [SystemUiOverlay.bottom]);
+  // } else {
+  //   // For older Android versions, show both top and bottom overlays
+  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+  //       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+  // }
+  //这里要显示系统状态栏以及系统底部按钮；不要显示app的标题栏
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 }

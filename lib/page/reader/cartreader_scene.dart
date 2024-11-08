@@ -68,7 +68,20 @@ class CartReaderScene extends ReadStat {
 
     //记录当前页面
     getnowpage();
-    if (pageController.page! > 1.0) {}
+    if (pageController.page! > 1.0) {
+      yjz();
+    }
+  }
+
+  int yjzid = 0;
+  //预加载下一章
+  yjz() {
+    if (currentArticle!.nextArticleId != yjzid) {
+      yjzid = currentArticle!.nextArticleId;
+      //预加载下一章
+      fetchArticle(currentArticle!.nextArticleId);
+      // d("预加载");
+    }
   }
 
   Future<Article?> next() async {
