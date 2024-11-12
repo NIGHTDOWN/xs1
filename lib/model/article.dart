@@ -22,6 +22,7 @@ class Article {
   String title = "";
   String content = "";
   List images = [];
+  List dslimages = [];
   List imagestmp = [];
   String contenttmp = "";
   String section_id = "";
@@ -330,7 +331,6 @@ class Article {
     // inserdbpay(pay);
     nextArticleId = int.parse(data['next']);
     preArticleId = int.parse(data['pre']);
-
     // ispay();
     cutimg();
     savedb();

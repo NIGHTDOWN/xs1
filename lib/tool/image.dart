@@ -24,15 +24,24 @@ class NgImage extends StatelessWidget {
   final BoxFit fit;
   final Widget placeholder;
   bool localcache = false;
+  bool needyzj;
   String dsl;
   NgImage(this.imgUrl,
       {double? width,
       double? height,
       this.fit = BoxFit.cover,
       this.dsl = "",
+      this.needyzj = false,
       required this.placeholder})
       : this.width = width ?? 0,
-        this.height = height ?? 0;
+        this.height = height ?? 0,
+        this.localcache = yjz(needyzj, imgUrl);
+  static yjz(bool needyjz, String imgUrl) {
+    // if (needyjz) {
+    //   d("预加载" + imgUrl);
+    // }
+    return true;
+  }
 
   Widget getpathimg(String img) {
     if (isnull(height) && isnull(width))
@@ -63,7 +72,7 @@ class NgImage extends StatelessWidget {
       ismock = imgUrl.substring(0, 5);
     }
     //匹配mock数据
-
+    // d(imgUrl);
     String imgp;
     if (ismock == 'mock:') {
       String mockpng = imgUrl.substring(5);

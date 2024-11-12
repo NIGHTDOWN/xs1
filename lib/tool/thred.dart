@@ -110,4 +110,18 @@ class Thred {
     }
     //监听
   }
+
+  static Future<Thred> run(var paramdata, Function call) async {
+    RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
+    // d(rootIsolateToken.toString());
+    var t = Thred();
+    await t.init((data) => {call(data)}, false);
+    await Future.delayed(Duration(seconds: 2));
+    var args = {
+      'data': paramdata,
+      'rootIsolateToken': rootIsolateToken,
+    };
+    t.send(args);
+    return t;
+  }
 }

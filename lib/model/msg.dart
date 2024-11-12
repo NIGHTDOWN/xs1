@@ -93,17 +93,18 @@ class Msg {
     };
     var obj = g("im");
     var insert;
-    if (obj.isok()) {
-      d("im发送");
-      obj.send(jsonEncode(post));
-      data = "";
-      sleep(Duration(microseconds: 300)); //等3毫秒
-    } else {
-      d("http发送");
-      var tmp = await http('chat/send', post, gethead());
-      data = getdata(g('context'), tmp!);
-      insert = insertdb(contenttype, content, data);
-    }
+    // if (obj.isok()) {
+    //   d("im发送");
+    //   obj.send(jsonEncode(post));
+    //   data = "";
+    //   sleep(Duration(microseconds: 300)); //等3毫秒
+    // } else {
+    d("http发送");
+    var tmp = await http('chat/send', post, gethead());
+    data = getdata(g('context'), tmp!);
+    insert = insertdb(contenttype, content, data);
+    // }
+    obj.sendmsg();
     //http 发送
     return insert;
   }

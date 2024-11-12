@@ -205,14 +205,14 @@ public class Bridge {
                     e.printStackTrace();
                 }
             }
-            Optional.ofNullable(pro).ifPresent(p -> p.destroy());
+            if (pro != null) {
+                pro.destroy();
+            }
         }
-        result.put("rxPercent", rxPercent);// 下行速率
-        result.put("txPercent", txPercent);// 上行速率
+        result.put("rxPercent", rxPercent); // 下行速率
+        result.put("txPercent", txPercent); // 上行速率
         return result;
-
     }
-
     private static long[] readInLine(BufferedReader input, String osType) {
         long arr[] = new long[2];
         StringTokenizer tokenStat = null;

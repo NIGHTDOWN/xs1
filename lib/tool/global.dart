@@ -37,7 +37,7 @@ i() async {
     'msg': 0,
     'locallg': '',
     'downthred': Thred(),
-    'im': Im(),
+    'im': "",
   };
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =
@@ -49,7 +49,7 @@ i() async {
   // await globalKeys['db'].open(dbname);
   // packageInfo = await PackageInfo.fromPlatform();
   // await initmblang();
-
+  //连接ws
   await Future.wait<dynamic>([
     //耗时操作，同步执行
     globalKeys['db'].open(dbname),
@@ -77,7 +77,7 @@ i() async {
   globalKeys['version'] = version;
 
   globalKeys['rack'] = false;
-
+  Im.init();
   // await inilang(); //加载语言包
   //数据库的还没加载
 }

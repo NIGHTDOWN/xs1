@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/user.dart';
@@ -36,6 +37,12 @@ Future<String?> http(String url,
     Map<String, dynamic>? header,
     int? reqlockmiao]) async {
   Dio dio = Dio();
+  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (client) {
+    client.badCertificateCallback = (cert, host, port) {
+      return true; // 返回true强制通过
+    };
+  };
   // if (!isnull(apiurl)) return "";
   //设置代理
   dio.options.baseUrl = apiurl;
@@ -112,6 +119,12 @@ Future<String?> http(String url,
 Future<String> httpnodeal(String url,
     [Map<String, dynamic>? datas, Map<String, dynamic>? header]) async {
   Dio dio = Dio();
+  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (client) {
+    client.badCertificateCallback = (cert, host, port) {
+      return true; // 返回true强制通过
+    };
+  };
   dio.options.baseUrl = apiurl;
   dio.options.receiveTimeout = Duration(seconds: 1);
   // dio.options.connectTimeout = 1;
@@ -215,7 +228,12 @@ Future<String> httpfile(String url,
     [Map<String, dynamic>? datas, Map<String, dynamic>? header]) async {
   Dio dio = Dio();
   //设置代理
-
+  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (client) {
+    client.badCertificateCallback = (cert, host, port) {
+      return true; // 返回true强制通过
+    };
+  };
   dio.options.baseUrl = apiurl;
   //设置连接超时时间
   dio.options.connectTimeout = Duration(seconds: 10);

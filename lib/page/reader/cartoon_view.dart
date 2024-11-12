@@ -440,6 +440,7 @@ class CartoonViewState extends State<CartoonView> {
                 ? (pic['width'] / width * pic['height'])
                 : null,
             placeholder: loadwidget(),
+            needyzj: true,
             dsl: widget.article.dsl));
       });
     } else {
@@ -450,6 +451,7 @@ class CartoonViewState extends State<CartoonView> {
             height: isnull(pic, 'width')
                 ? (pic['width'] / width * pic['height'])
                 : null,
+            needyzj: true,
             placeholder: loadwidget(),
             dsl: widget.article.dsl));
       });
