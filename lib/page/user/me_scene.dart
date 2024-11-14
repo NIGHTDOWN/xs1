@@ -142,6 +142,8 @@ class MeScene extends StatelessWidget {
             onPressed: () async {
               await gourl(context, Kefu());
               eventBus.emit('reflashuser', User.get());
+              eventBus.emit('user_im_on', 0);
+              eventBus.emit('bar_im_on', 0);
             },
             right_widget: Container(),
             line_padding_left: 0,
@@ -190,6 +192,6 @@ class MeScene extends StatelessWidget {
     // var httpuser = getdata(context, tmp);
     var user = await User.gethttpuser(context);
     eventBus.emit('reflashuser', user);
-    Msg.cheack();
+    // Msg.cheack();
   }
 }

@@ -102,9 +102,10 @@ class Msg {
     d("http发送");
     var tmp = await http('chat/send', post, gethead());
     data = getdata(g('context'), tmp!);
+    if (!isnull(data)) return;
     insert = insertdb(contenttype, content, data);
     // }
-    obj.sendmsg();
+    obj.sendmsg(post);
     //http 发送
     return insert;
   }
@@ -160,7 +161,7 @@ class Msg {
 
   static clearread() {
     if (!User.islogin()) return false;
-    d('调用');
+
     setcache('msg', 0, '0');
     return;
   }

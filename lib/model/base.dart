@@ -6,6 +6,7 @@ abstract class LoginBase extends StatefulWidget {
   late State<LoginBase> state;
   late BuildContext context;
   bool mounted = false;
+
   Function setState = () {};
   Function reflash = () {};
   @override

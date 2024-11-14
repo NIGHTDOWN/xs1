@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:ng169/model/user.dart';
+import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/ngsock.dart';
@@ -78,11 +79,12 @@ class Im {
     // _channel.sink.close();
     // _messageController.close();
   }
-  sendmsg() {
+  sendmsg(var postdata) {
     var data = {
       "action": "msg",
       "data": {
         "msgnum": "1",
+        "msg": postdata,
         "uid": getuid(),
       }
     };
@@ -103,8 +105,30 @@ class Im {
     Im im = Im(url);
     s("im", im);
     im.messageStream.listen((message) {
-      print('收到消息：$message');
+      print('收到消息3：$message');
+      Im.msg_on(message);
+
+// bar_im_on
     });
     return im;
+  }
+
+  static msg_on(msg) {
+    //判断当前用户界面是否聊天窗口界面
+    if (!User.islogin()) return false;
+    if (!isnull(g("inmsgpage"))) {
+      int msgnum = toint(g("msg"));
+      msgnum += 1;
+      s("msg", msgnum);
+      eventBus.emit('bar_im_on', msg); //底部bar状态图标
+      //用户页面状态图标
+      eventBus.emit('user_im_on', msg);
+    } else {
+      //直接更新消息页面
+      eventBus.emit('msg_im_on', msg);
+    }
+
+    // //消息页面状态图标
+    // eventBus.emit('msg_im_on', msg);
   }
 }

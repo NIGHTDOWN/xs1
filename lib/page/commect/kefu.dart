@@ -8,6 +8,7 @@ import 'package:ng169/model/user.dart';
 
 import 'package:ng169/page/commect/picviw.dart';
 import 'package:ng169/style/sq_color.dart';
+import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
@@ -20,7 +21,7 @@ import 'package:ng169/model/msg.dart';
 import 'package:ng169/tool/url.dart';
 
 // ignore: must_be_immutable
-class Kefu extends LoginBase {
+class Kefu extends LoginBase with WidgetsBindingObserver {
   bool needlogin = true;
   late String peerId;
   late String peerAvatar;
@@ -50,7 +51,10 @@ class Kefu extends LoginBase {
   @override
   void initState() {
     super.initState();
+    s("inmsgpage", "1");
+    WidgetsBinding.instance.addObserver(this);
     focusNode.addListener(onFocusChange);
+    loadbus();
     listScrollController.addListener(() {
       if (listScrollController.position.pixels ==
           listScrollController.position.maxScrollExtent) {
@@ -95,6 +99,39 @@ class Kefu extends LoginBase {
     ));
     readLocal();
     Msg.clearread();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      // 页面可见时执行的操作
+      s("inmsgpage", "1");
+      print('页面可见，执行相关操作');
+    } else if (state == AppLifecycleState.paused) {
+      // 页面不可见时执行的操作
+      print('页面不可见，执行相关操作');
+      s("inmsgpage", "0");
+    }
+  }
+
+  loadbus() {
+    eventBus.on('msg_im_on', (data) {
+      d("更新消息窗口");
+      d(data);
+    });
+  }
+
+  offbus() {
+    eventBus.off('msg_im_on');
+  }
+
+  @override
+  void dispose() {
+    offbus();
+    WidgetsBinding.instance.removeObserver(this);
+    s("inmsgpage", "0");
+    super.dispose();
   }
 
 //加载表情
@@ -629,6 +666,7 @@ class Kefu extends LoginBase {
 
   @override
   Widget build(BuildContext context) {
+    s("inmsgpage", "1");
     var bbb = Stack(
       children: <Widget>[
         Column(

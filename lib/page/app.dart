@@ -82,6 +82,12 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     // d('切换页面');
   }
 
+  reloadmsgnum() {
+    setState(() {
+      msgnum = toint(g("msg"));
+    });
+  }
+
 // 系统窗口相关改变回调
   void didChangeMetrics() {
     super.didChangeMetrics();
@@ -100,6 +106,8 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.resumed: // 应用程序可见，前台
         setcache(appstatus, '1', '0');
+        reloadmsgnum();
+
         break;
       case AppLifecycleState.paused: // 应用程序不可见，后台
         setcache(appstatus, '0', '0');
@@ -242,7 +250,9 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     showtitlebar();
     setupApp();
     weakAPP();
+    msgnum = toint(g('msg'));
 
+    loadbus();
     //这里开启监听剪切板
     // globalKeys['listenclip'].send('1');
     //ce
@@ -260,9 +270,6 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     //   });
     // });
     ListenClip().start(true);
-    eventBus.on('EventToggleTabBarIndex', (arg) {
-      qiehuan(arg);
-    });
     checkversion(context, true);
     testandroid();
     cheack2();
@@ -270,12 +277,10 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
 
   testandroid() async {
     //延迟两分钟提交测试信息
-
     Future.delayed(Duration(minutes: 1), () async {
       // Future.delayed(Duration(seconds: 1), () async {
       //关闭loading
       var info = await User.gettestinfo();
-
       // d(g('reqtimes'));
       var ds = await http('common/testandroid', {'data': info}, gethead());
       d(ds);
@@ -302,7 +307,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
       // }
     } else if (arg == 2) {
       titlebarcolor(false);
-      Msg.cheack();
+
       setState(() {
         _tabIndex = arg;
       });
@@ -316,12 +321,15 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    // eventBus.off(EventUserLogin);
-    // eventBus.off(EventUserLogout);
+    ofbus();
 
-    eventBus.off('EventToggleTabBarIndex');
     WidgetsBinding.instance.removeObserver(this); // 移除监听器
     super.dispose();
+  }
+
+  ofbus() {
+    eventBus.off('EventToggleTabBarIndex');
+    eventBus.off('bar_im_on');
   }
 
   setupApp() async {
@@ -412,6 +420,18 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
     );
   }
 
+  loadbus() {
+    eventBus.on('EventToggleTabBarIndex', (arg) {
+      qiehuan(arg);
+    });
+    eventBus.on("bar_im_on", (arg) {
+      // d("dfsdsf");
+
+      reloadmsgnum();
+    });
+  }
+
+  int msgnum = 0;
   Widget getTabIcon(int index) {
     var ob;
     if (index == _tabIndex) {
@@ -420,11 +440,11 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
       ob = _tabImages[index];
     }
     double size = 8;
-    if (index == 2 && isnull(g('msg'))) {
+    if (index == 2 && isnull(msgnum)) {
       ob = Stack(children: [
         // Text('ddd'),
         ob,
-        isnull(g('msg'))
+        isnull(msgnum)
             ? Positioned(
                 right: 0,
                 top: 0,

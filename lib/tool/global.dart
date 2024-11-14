@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/cacheimg.dart';
+import 'package:ng169/model/msg.dart';
 
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/im.dart';
@@ -38,6 +39,7 @@ i() async {
     'locallg': '',
     'downthred': Thred(),
     'im': "",
+    'inmsgpage': "0",
   };
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =
@@ -46,6 +48,7 @@ i() async {
   }
 
   await globalKeys['cache'].init(); //加载缓存
+  Msg.cheack();
   // await globalKeys['db'].open(dbname);
   // packageInfo = await PackageInfo.fromPlatform();
   // await initmblang();
