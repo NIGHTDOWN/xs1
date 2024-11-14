@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:extended_text_field/extended_text_field.dart';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ng169/model/base.dart';
@@ -29,32 +29,36 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
   late String peerAvatar;
   late String id;
 
-  var listMessage;
-  late String groupChatId;
+  static var listMessage;
+  static late String groupChatId;
 
-  late bool isLoading, issend = true;
-  late bool isShowSticker;
+  static bool isLoading = false, issend = true;
+  static late bool isShowSticker;
   late String imageUrl;
-  int page = 0, size = 11;
+  static int page = 0, size = 11;
   int lasttime = 0;
   TextEditingController textEditingController = TextEditingController();
   final ScrollController listScrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
 
   final themeColor = Color(0xfff5a623);
+  Widget load = Center(
+      child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Color(0xfff5a623))));
   final primaryColor = Color(0xff203152);
   final greyColor = Color(0xffaeaeae);
   final greyColor2 = Color(0xffE8E8E8);
-  List<Widget> emjo = [];
-  var showdata = [], senddata = [], history = [];
-  List<ListTile> chosimgobj = [];
-  late Widget mehead, gmhead;
+  static List<Widget> emjo = [];
+  static var showdata = [], senddata = [], history = [];
+  static List<ListTile> chosimgobj = [];
+  static Widget mehead = Container(), gmhead = Container();
   bool canscrool = true;
   @override
   void initState() {
     super.initState();
     s("inmsgpage", "1");
     WidgetsBinding.instance.addObserver(this);
+    mockNetworkData();
     focusNode.addListener(onFocusChange);
     loadbus();
     listScrollController.addListener(() {
@@ -75,20 +79,31 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
 
     double headsize = (getScreenWidth(g('context'))) / 10;
     mehead = Container(
+        //  margin: EdgeInsets.only(left:10,right:10),
         child: ClipOval(
-      child: isnull(user, 'avater')
-          ? NgImage(
-              user['avater'],
-              width: headsize,
-              fit: BoxFit.cover,
-              height: null,
-              placeholder: Container(),
-            )
-          : Image.asset(
-              'assets/images/placeholder_avatar.png',
-              width: headsize,
-            ),
+      child: Image.asset(
+        'assets/images/placeholder_avatar.png',
+        width: headsize,
+      ),
     ));
+    try {
+      mehead = Container(
+          child: ClipOval(
+        child: isnull(user, 'avater')
+            ? NgImage(
+                user['avater'],
+                width: headsize,
+                fit: BoxFit.cover,
+                height: null,
+                placeholder: Container(),
+              )
+            : Image.asset(
+                'assets/images/placeholder_avatar.png',
+                width: headsize,
+              ),
+      ));
+    } catch (e) {}
+
     gmhead = Container(
         //  margin: EdgeInsets.only(left:10,right:10),
         child: ClipOval(
@@ -295,7 +310,11 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
 
   Widget buildItem(int index, var document) {
     Msg msgs = Msg.fromJson(document);
-    var cc;
+    // var cc = SizedBox(
+    //   width: 10,
+    //   height: 10,
+    // );
+    Widget cc;
     if (msgs.contenttype == '0') {
       cc = Container(
         child: ExtendedTextField(
@@ -610,44 +629,72 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     //return data;
   }
 
-  Widget buildListMessage() {
-    return Flexible(
-      child: FutureBuilder(
-        future: mockNetworkData(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          // 请求已结束
-          var load = Center(
-              child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(themeColor)));
-          var listobj = ListView.builder(
-            physics: AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.all(10.0),
-            itemBuilder: (context, index) => buildItem(index, showdata[index]),
-            itemCount: showdata.length,
-            reverse: true,
-            controller: listScrollController,
-          );
-
-          if (snapshot.connectionState == ConnectionState.done) {
-            issend = false;
-            if (snapshot.hasError) {
-              // 请求失败，显示错误
-              // return Text("Error: ${snapshot.error}");
-              return load;
-            } else {
-              // 请求成功，显示数据
-              return listobj;
-            }
-          } else {
-            // 请求未结束，显示loading
-            if (issend) {
-              return load;
-            }
-            return listobj;
-          }
-        },
+  static Widget txt1 = SizedBox(
+        height: 10,
       ),
-    );
+      txt2 = SizedBox(
+        height: 10,
+      ),
+      txt3 = SizedBox(
+        height: 10,
+      );
+  Widget threelist(data) {
+    return SliverList(
+        delegate: SliverChildBuilderDelegate(
+      (context, index) => buildItem(index, data[index]),
+      childCount: data.length,
+    ));
+  }
+
+  Widget buildListMessage() {
+    Widget list;
+    try {
+      list = Flexible(
+          flex: 1,
+          child: CustomScrollView(
+            slivers: [threelist(showdata)],
+            controller: listScrollController,
+          ));
+    } catch (e) {
+      list = load;
+      d(e);
+    }
+    return list;
+    // return Flexible(
+    //   child: FutureBuilder(
+    //     future: mockNetworkData(),
+    //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //       // 请求已结束
+
+    //       var listobj = ListView.builder(
+    //         physics: AlwaysScrollableScrollPhysics(),
+    //         padding: EdgeInsets.all(10.0),
+    //         itemBuilder: (context, index) => buildItem(index, showdata[index]),
+    //         itemCount: showdata.length,
+    //         reverse: true,
+    //         controller: listScrollController,
+    //       );
+
+    //       if (snapshot.connectionState == ConnectionState.done) {
+    //         issend = false;
+    //         if (snapshot.hasError) {
+    //           // 请求失败，显示错误
+    //           // return Text("Error: ${snapshot.error}");
+    //           return load;
+    //         } else {
+    //           // 请求成功，显示数据
+    //           return listobj;
+    //         }
+    //       } else {
+    //         // 请求未结束，显示loading
+    //         if (issend) {
+    //           return load;
+    //         }
+    //         return listobj;
+    //       }
+    //     },
+    //   ),
+    // );
   }
 
   Future mockNetworkData() async {
@@ -664,6 +711,9 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
           .getall();
 
       showdata.addAll(data);
+      isLoading = true;
+
+      reflash();
       return data;
     }
     return showdata;
@@ -693,5 +743,11 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     } else {
       //没未读消息
     }
+  }
+
+  // 格式化时间显示
+  String formatTime(int timestamp) {
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    return DateFormat('HH:mm').format(dateTime);
   }
 }
