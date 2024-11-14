@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 
@@ -59,7 +61,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       if (listScrollController.position.pixels ==
           listScrollController.position.maxScrollExtent) {
         //加载更多
-
         gethistory();
       }
     });
@@ -74,7 +75,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
 
     double headsize = (getScreenWidth(g('context'))) / 10;
     mehead = Container(
-        // margin: EdgeInsets.only(left:10,right:10),
         child: ClipOval(
       child: isnull(user, 'avater')
           ? NgImage(
@@ -115,10 +115,32 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     }
   }
 
+  imrecvshow(vdata) {
+    try {
+      var msg = vdata;
+      d(msg);
+      var data = {
+        "id": msg["msg"]['msgid'],
+        "msgid": msg["msg"]['msgid'],
+        "flag": 0,
+        "fuid": msg['uid'],
+        "tuid": msg['touid'],
+        "type": 1, //目前只有管理员发来的消息
+        "sendtime": gettime(),
+        "contenttype": msg["msg"]['contenttype'],
+        "content": msg["msg"]['content'],
+      };
+      senddata.add(data);
+      reflash();
+    } catch (e) {
+      d(e);
+    }
+  }
+
   loadbus() {
     eventBus.on('msg_im_on', (data) {
       d("更新消息窗口");
-      d(data);
+      imrecvshow(data);
     });
   }
 
@@ -173,17 +195,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
   }
 
   readLocal() async {
-    // prefs = await SharedPreferences.getInstance();
-    // id = prefs.getString('id') ?? '';
-    // if (id.hashCode <= peerId.hashCode) {
-    //   groupChatId = '$id-$peerId';
-    // } else {
-    //   groupChatId = '$peerId-$id';
-    // }
-
-    // Firestore.instance.collection('users').document(id).updateData({'chattingWith': peerId});
-
-    // setState(() {});
     loadhttp();
   }
 
@@ -258,9 +269,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     if (content.trim() != '') {
       var str = textEditingController.text;
       textEditingController.clear();
-
       d("这里发送了");
-
       Msg msgobj = Msg.carete(0, str);
       //缓存到本地数据库
       await msgobj.send();
@@ -269,8 +278,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       issend = true;
       //刷新的时候会重载数据
       reflash();
-      // listScrollController.animateTo(0.0,
-      //     duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
       show(context, lang('Nothing to send'));
     }
@@ -382,221 +389,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       ]),
       margin: EdgeInsets.only(top: 10),
     );
-    // if (document['idFrom'] == id) {
-    //   // Right (my message)
-    //   return Row(
-    //     children: <Widget>[
-    //       document['type'] == 0
-    //           // Text
-    //           ? Container(
-    //               child: Text(
-    //                 document['content'],
-    //                 style: TextStyle(color: primaryColor),
-    //               ),
-    //               padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-    //               width: 200.0,
-    //               decoration: BoxDecoration(
-    //                   color: greyColor2,
-    //                   borderRadius: BorderRadius.circular(8.0)),
-    //               margin: EdgeInsets.only(
-    //                   bottom: isLastMessageRight(index) ? 20.0 : 10.0,
-    //                   right: 10.0),
-    //             )
-    //           : document['type'] == 1
-    //               // Image
-    //               ? Container(
-    //                   child: FlatButton(
-    //                     child: Material(
-    //                       child: CachedNetworkImage(
-    //                         placeholder: (context, url) => Container(
-    //                           child: CircularProgressIndicator(
-    //                             valueColor:
-    //                                 AlwaysStoppedAnimation<Color>(themeColor),
-    //                           ),
-    //                           width: 200.0,
-    //                           height: 200.0,
-    //                           padding: EdgeInsets.all(70.0),
-    //                           decoration: BoxDecoration(
-    //                             color: greyColor2,
-    //                             borderRadius: BorderRadius.all(
-    //                               Radius.circular(8.0),
-    //                             ),
-    //                           ),
-    //                         ),
-    //                         errorWidget: (context, url, error) => Material(
-    //                           child: Image.asset(
-    //                             'images/img_not_available.jpeg',
-    //                             width: 200.0,
-    //                             height: 200.0,
-    //                             fit: BoxFit.cover,
-    //                           ),
-    //                           borderRadius: BorderRadius.all(
-    //                             Radius.circular(8.0),
-    //                           ),
-    //                           clipBehavior: Clip.hardEdge,
-    //                         ),
-    //                         imageUrl: document['content'],
-    //                         width: 200.0,
-    //                         height: 200.0,
-    //                         fit: BoxFit.cover,
-    //                       ),
-    //                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
-    //                       clipBehavior: Clip.hardEdge,
-    //                     ),
-    //                     onPressed: () {
-    //                       // Navigator.push(
-    //                       //     context, MaterialPageRoute(builder: (context) => FullPhoto(url: document['content'])));
-    //                     },
-    //                     padding: EdgeInsets.all(0),
-    //                   ),
-    //                   margin: EdgeInsets.only(
-    //                       bottom: isLastMessageRight(index) ? 20.0 : 10.0,
-    //                       right: 10.0),
-    //                 )
-    //               // Sticker
-    //               : Container(
-    //                   // child: Image.asset(
-    //                   //   'images/${document['content']}.gif',
-    //                   //   width: 100.0,
-    //                   //   height: 100.0,
-    //                   //   fit: BoxFit.cover,
-    //                   // ),
-    //                   margin: EdgeInsets.only(
-    //                       bottom: isLastMessageRight(index) ? 20.0 : 10.0,
-    //                       right: 10.0),
-    //                 ),
-    //     ],
-    //     mainAxisAlignment: MainAxisAlignment.end,
-    //   );
-    // } else {
-    //   // Left (peer message)
-    //   return Container(
-    //     child: Column(
-    //       children: <Widget>[
-    //         Row(
-    //           children: <Widget>[
-    //             isLastMessageLeft(index)
-    //                 ? Material(
-    //                     child: CachedNetworkImage(
-    //                       placeholder: (context, url) => Container(
-    //                         child: CircularProgressIndicator(
-    //                           strokeWidth: 1.0,
-    //                           valueColor:
-    //                               AlwaysStoppedAnimation<Color>(themeColor),
-    //                         ),
-    //                         width: 35.0,
-    //                         height: 35.0,
-    //                         padding: EdgeInsets.all(10.0),
-    //                       ),
-    //                       imageUrl: peerAvatar,
-    //                       width: 35.0,
-    //                       height: 35.0,
-    //                       fit: BoxFit.cover,
-    //                     ),
-    //                     borderRadius: BorderRadius.all(
-    //                       Radius.circular(18.0),
-    //                     ),
-    //                     clipBehavior: Clip.hardEdge,
-    //                   )
-    //                 : Container(width: 35.0),
-    //             document['type'] == 0
-    //                 ? Container(
-    //                     child: Text(
-    //                       document['content'],
-    //                       style: TextStyle(color: SQColor.white),
-    //                     ),
-    //                     padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-    //                     width: 200.0,
-    //                     decoration: BoxDecoration(
-    //                         color: primaryColor,
-    //                         borderRadius: BorderRadius.circular(8.0)),
-    //                     margin: EdgeInsets.only(left: 10.0),
-    //                   )
-    //                 : document['type'] == 1
-    //                     ? Container(
-    //                         child: FlatButton(
-    //                           child: Material(
-    //                             child: CachedNetworkImage(
-    //                               placeholder: (context, url) => Container(
-    //                                 child: CircularProgressIndicator(
-    //                                   valueColor: AlwaysStoppedAnimation<Color>(
-    //                                       themeColor),
-    //                                 ),
-    //                                 width: 200.0,
-    //                                 height: 200.0,
-    //                                 padding: EdgeInsets.all(70.0),
-    //                                 decoration: BoxDecoration(
-    //                                   color: greyColor2,
-    //                                   borderRadius: BorderRadius.all(
-    //                                     Radius.circular(8.0),
-    //                                   ),
-    //                                 ),
-    //                               ),
-    //                               errorWidget: (context, url, error) =>
-    //                                   Material(
-    //                                 child: Image.asset(
-    //                                   'images/img_not_available.jpeg',
-    //                                   width: 200.0,
-    //                                   height: 200.0,
-    //                                   fit: BoxFit.cover,
-    //                                 ),
-    //                                 borderRadius: BorderRadius.all(
-    //                                   Radius.circular(8.0),
-    //                                 ),
-    //                                 clipBehavior: Clip.hardEdge,
-    //                               ),
-    //                               imageUrl: document['content'],
-    //                               width: 200.0,
-    //                               height: 200.0,
-    //                               fit: BoxFit.cover,
-    //                             ),
-    //                             borderRadius:
-    //                                 BorderRadius.all(Radius.circular(8.0)),
-    //                             clipBehavior: Clip.hardEdge,
-    //                           ),
-    //                           onPressed: () {
-    //                             // Navigator.push(context,
-    //                             //     MaterialPageRoute(builder: (context) => FullPhoto(url: document['content'])));
-    //                           },
-    //                           padding: EdgeInsets.all(0),
-    //                         ),
-    //                         margin: EdgeInsets.only(left: 10.0),
-    //                       )
-    //                     : Container(
-    //                         child: Image.asset(
-    //                           'images/${document['content']}.gif',
-    //                           width: 100.0,
-    //                           height: 100.0,
-    //                           fit: BoxFit.cover,
-    //                         ),
-    //                         margin: EdgeInsets.only(
-    //                             bottom: isLastMessageRight(index) ? 20.0 : 10.0,
-    //                             right: 10.0),
-    //                       ),
-    //           ],
-    //         ),
-
-    //         // Time
-    //         isLastMessageLeft(index)
-    //             ? Container(
-    //                 child: Text(
-    //                   '时间',
-    //                   // DateFormat('dd MMM kk:mm')
-    //                   //     .format(DateTime.fromMillisecondsSinceEpoch(int.parse(document['timestamp']))),
-    //                   style: TextStyle(
-    //                       color: greyColor,
-    //                       fontSize: 12.0,
-    //                       fontStyle: FontStyle.italic),
-    //                 ),
-    //                 margin: EdgeInsets.only(left: 50.0, top: 5.0, bottom: 5.0),
-    //               )
-    //             : Container()
-    //       ],
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //     ),
-    //     margin: EdgeInsets.only(bottom: 10.0),
-    //   );
-    // }
   }
 
   strtoobj(String str) {
@@ -606,14 +398,9 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
 
     if (reg.hasMatch(str)) {
       Iterable<Match> matches = reg.allMatches(str);
-
       // d(reg.firstMatch(str).group(1));
       for (Match m in matches) {
-        // d(m.group(0));
-        // d(m.group(1));
         index = m.group(1);
-        // print(m.group(0));
-        // print(m.group(1));
       }
     }
   }
@@ -673,9 +460,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
           children: <Widget>[
             // List of messages
             buildListMessage(),
-
             // Sticker
-
             // Input content
             buildInput(),
             (isShowSticker ? buildSticker() : Container()),
@@ -781,22 +566,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
                     specialTextSpanBuilder: RichBuilder(
                         showAtBackground: true,
                         type: BuilderType.extendedTextField),
-                  ))
-              // Container(
-              //   child: TextField(
-              //     onSubmitted: (String str) {
-              //       onSendMessage(str, 0);
-              //     },
-              //     style: TextStyle(color: primaryColor, fontSize: 15.0),
-              //     controller: textEditingController,
-              //     decoration: InputDecoration.collapsed(
-              //       hintText: 'Type your message...',
-              //       hintStyle: TextStyle(color: greyColor),
-              //     ),
-              //     focusNode: focusNode,
-              //   ),
-              // ),
-              ),
+                  ))),
 
           // Button send message
           Material(
@@ -810,19 +580,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
             ),
             color: SQColor.white,
           ),
-          // Material(
-          //   child: Container(
-          //     margin: EdgeInsets.symmetric(horizontal: 8.0),
-          //     child: IconButton(
-          //       icon: Icon(Icons.send),
-          //       onPressed: () {
-          //         T('msg').del();
-          //       },
-          //       color: primaryColor,
-          //     ),
-          //   ),
-          //   color: SQColor.white,
-          // ),
         ],
       ),
       width: double.infinity,
@@ -871,9 +628,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
             controller: listScrollController,
           );
 
-          // var listobj = RefreshIndicator(
-          //     child: Container(child: ltmp), onRefresh: gethistory);
-
           if (snapshot.connectionState == ConnectionState.done) {
             issend = false;
             if (snapshot.hasError) {
@@ -883,37 +637,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
             } else {
               // 请求成功，显示数据
               return listobj;
-              // return ListView(
-              //   reverse: true,
-              //   controller: listScrollController,
-
-              //   children: <Widget>[
-              //     ListView.builder(
-              //       padding: EdgeInsets.all(10.0),
-              //        shrinkWrap: true,
-              //       itemBuilder: (context, index) =>
-              //           buildItem(index, senddata[index]),
-              //       itemCount: senddata.length,
-              //     ),
-              //     // Text('ddd'),
-              //     ListView.builder(
-              //       shrinkWrap: true,
-              //       padding: EdgeInsets.all(10.0),
-              //       itemBuilder: (context, index) =>
-              //           buildItem(index, showdata[index]),
-              //       itemCount: showdata.length,
-              //       reverse: true,
-              //     ),
-              //     ListView.builder(
-              //       padding: EdgeInsets.all(10.0),
-              //       shrinkWrap: true,
-              //       itemBuilder: (context, index) =>
-              //           buildItem(index, history[index]),
-              //       itemCount: history.length,
-              //     ),
-              //   ],
-              // );
-              // return Text("Contents: ${snapshot.data}");
             }
           } else {
             // 请求未结束，显示loading
@@ -921,47 +644,10 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
               return load;
             }
             return listobj;
-            // return Center(
-            //     child: CircularProgressIndicator(
-            //         valueColor: AlwaysStoppedAnimation<Color>(themeColor)));
           }
         },
       ),
     );
-
-    // : StreamBuilder(
-    //     // stream: Firestore.instance
-    //     //     .collection('messages')
-    //     //     .document(groupChatId)
-    //     //     .collection(groupChatId)
-    //     //     .orderBy('timestamp', descending: true)
-    //     //     .limit(20)
-    //     //     .snapshots(),
-    //     stream: () {
-    //       //这里是socket流监听
-    //       // return Stream.periodic(Duration(seconds: 1), (i) async {
-    //       //   return await T('msg').where({}).getone();
-    //       // });
-    //     },
-    //     builder: (context, snapshot) {
-    //       if (!snapshot.hasData) {
-    //         return Center(
-    //             child: CircularProgressIndicator(
-    //                 valueColor:
-    //                     AlwaysStoppedAnimation<Color>(themeColor)));
-    //       } else {
-    //         listMessage = snapshot.data.documents;
-    //         return ListView.builder(
-    //           padding: EdgeInsets.all(10.0),
-    //           itemBuilder: (context, index) =>
-    //               buildItem(index, snapshot.data.documents[index]),
-    //           itemCount: snapshot.data.documents.length,
-    //           reverse: true,
-    //           controller: listScrollController,
-    //         );
-    //       }
-    //     },
-    //   ),
   }
 
   Future mockNetworkData() async {
@@ -984,9 +670,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
   }
 
   loadhttp() async {
-    //
-    // var checktmp = await http('chat/havemsg', {}, gethead());
-    // var check = getdata(context, checktmp);
     var check = Msg.cheack();
     if (isnull(check)) {
       //有未读消息

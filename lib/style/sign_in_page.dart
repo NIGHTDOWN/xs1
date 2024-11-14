@@ -308,9 +308,10 @@ class _SignInPageState extends State<SignInPage> {
     };
     http('login/run', postdata, gethead()).then((onValue) async {
       var getdatas = getdata(context, onValue!);
-
+      nguser.User.set(getdatas);
       // User.set(getdatas);
       pop(context);
+
       // gourl(context, new App());
     });
   }

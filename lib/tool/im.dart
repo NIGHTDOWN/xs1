@@ -115,17 +115,25 @@ class Im {
 
   static msg_on(msg) {
     //判断当前用户界面是否聊天窗口界面
+    var msg2 = jsonDecode(msg);
+    // d("消息解析失败丢弃");
+    if (!isnull(msg2)) return;
     if (!User.islogin()) return false;
-    if (!isnull(g("inmsgpage"))) {
-      int msgnum = toint(g("msg"));
-      msgnum += 1;
-      s("msg", msgnum);
-      eventBus.emit('bar_im_on', msg); //底部bar状态图标
-      //用户页面状态图标
-      eventBus.emit('user_im_on', msg);
+    if (msg2['action'] == 'adminmsg') {
+      var realmsg = msg2['data'];
+      if (!isnull(g("inmsgpage"))) {
+        int msgnum = toint(g("msg"));
+        msgnum += 1;
+        s("msg", msgnum);
+        eventBus.emit('bar_im_on', realmsg); //底部bar状态图标
+        //用户页面状态图标
+        eventBus.emit('user_im_on', realmsg);
+      } else {
+        //直接更新消息页面
+        eventBus.emit('msg_im_on', realmsg);
+      }
     } else {
-      //直接更新消息页面
-      eventBus.emit('msg_im_on', msg);
+      //其他类型系统消息不处理
     }
 
     // //消息页面状态图标

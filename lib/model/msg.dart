@@ -22,7 +22,7 @@ class Msg {
   int id = 0;
   Msg.fromJson(Map<String, dynamic> data)
       : content = data['content'] ?? '',
-        id = data['id'] ?? 0 {
+        id = toing(data['id']) ?? 0 {
     fuid = tostring(data['fuid']) ?? '';
     msgid = tostring(data['msgid']) ?? '';
     tuid = tostring(data['tuid']) ?? '';
@@ -91,22 +91,16 @@ class Msg {
       'contenttype': contenttype,
       'content': content,
     };
-    var obj = g("im");
+
     var insert;
-    // if (obj.isok()) {
-    //   d("im发送");
-    //   obj.send(jsonEncode(post));
-    //   data = "";
-    //   sleep(Duration(microseconds: 300)); //等3毫秒
-    // } else {
     d("http发送");
     var tmp = await http('chat/send', post, gethead());
     data = getdata(g('context'), tmp!);
     if (!isnull(data)) return;
-    insert = insertdb(contenttype, content, data);
-    // }
+
+    var obj = g("im");
     obj.sendmsg(post);
-    //http 发送
+    insert = insertdb(contenttype, content, data);
     return insert;
   }
 
