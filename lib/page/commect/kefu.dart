@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:extended_text_field/extended_text_field.dart';
-import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ng169/model/base.dart';
@@ -34,12 +34,12 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
 
   static bool isLoading = false, issend = true;
   static late bool isShowSticker;
-  late String imageUrl;
+  static late String imageUrl;
   static int page = 0, size = 11;
-  int lasttime = 0;
-  TextEditingController textEditingController = TextEditingController();
-  final ScrollController listScrollController = ScrollController();
-  final FocusNode focusNode = FocusNode();
+  static int lasttime = 0;
+  static TextEditingController textEditingController = TextEditingController();
+  static final ScrollController listScrollController = ScrollController();
+  static final FocusNode focusNode = FocusNode();
 
   final themeColor = Color(0xfff5a623);
   Widget load = Center(
@@ -50,9 +50,9 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
   final greyColor2 = Color(0xffE8E8E8);
   static List<Widget> emjo = [];
   static var showdata = [], senddata = [], history = [];
-  static List<ListTile> chosimgobj = [];
+  List<ListTile> chosimgobj = [];
   static Widget mehead = Container(), gmhead = Container();
-  bool canscrool = true;
+  static bool canscrool = true;
   @override
   void initState() {
     super.initState();
@@ -94,7 +94,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
                 user['avater'],
                 width: headsize,
                 fit: BoxFit.cover,
-                height: null,
+                height: headsize,
                 placeholder: Container(),
               )
             : Image.asset(
@@ -130,23 +130,32 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     }
   }
 
-  imrecvshow(vdata) {
+//发送消息；收到消息显示在页面上
+  addsendmsg(frometype, contexttype, contexts, {fuid = 0}) {
     try {
-      var msg = vdata;
-      d(msg);
       var data = {
-        "id": msg["msg"]['msgid'],
-        "msgid": msg["msg"]['msgid'],
+        "id": 0,
+        "msgid": 0,
         "flag": 0,
-        "fuid": msg['uid'],
-        "tuid": msg['touid'],
-        "type": 1, //目前只有管理员发来的消息
+        "fuid": fuid,
+        "tuid": getuid(),
+        "type": frometype, //目前只有管理员发来的消息
         "sendtime": gettime(),
-        "contenttype": msg["msg"]['contenttype'],
-        "content": msg["msg"]['content'],
+        "contenttype": contexttype,
+        "content": contexts,
       };
       senddata.add(data);
       reflash();
+      gobottom();
+    } catch (e) {
+      d(e);
+    }
+  }
+
+  imrecvshow(vdata) {
+    try {
+      var msg = vdata;
+      addsendmsg(1, msg["msg"]['contenttype'], msg["msg"]['content']);
     } catch (e) {
       d(e);
     }
@@ -263,7 +272,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       Msg obj = Msg.carete(2, imgurl);
       await obj.send();
       issend = true;
-      reflash();
+      addsendmsg(0, 2, imgurl);
     }
   }
 
@@ -291,8 +300,9 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       //更新到List
       // senddata.add(sendmsg);
       issend = true;
+      addsendmsg(0, 0, str);
       //刷新的时候会重载数据
-      reflash();
+      // reflash();
     } else {
       show(context, lang('Nothing to send'));
     }
@@ -300,57 +310,153 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
 
   sendemj(String id) {
     String emj = "【emj_$id】";
-    // textEditingController.text;
-    // d(textEditingController.value);
     String texttmp = textEditingController.text + emj;
-
-    textEditingController = new TextEditingController(text: texttmp);
+    textEditingController.text = texttmp;
     reflash();
+  }
+
+  calculateTextWidth(String text) {
+    TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: TextStyle(fontSize: imtxtsize)),
+      textDirection: TextDirection.ltr, // 添加这行设置文本方向
+    );
+    textPainter.layout();
+    return textPainter.size.width + 8;
   }
 
   Widget buildItem(int index, var document) {
     Msg msgs = Msg.fromJson(document);
-    // var cc = SizedBox(
-    //   width: 10,
-    //   height: 10,
-    // );
+    Widget cc = buildmsg(msgs);
+    var row;
+    if (msgs.type == '0') {
+      row = builduser(cc, msgs);
+    } else {
+      row = buildadmin(cc, msgs);
+    }
+    return Container(
+      //屏幕宽度
+      width: MediaQuery.of(context).size.width,
+      child: Column(children: [
+        gettimeoj(msgs),
+        row,
+      ]),
+      margin: EdgeInsets.only(top: 10),
+    );
+  }
+
+  Widget builduser(cc, msgs) {
+    Widget row =
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+      Flexible(
+        child: mehead,
+        // flex: 2,
+      ),
+      cc,
+      Flexible(
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Flexible(child: Container(),flex: 1,),
+              msgs.flag ? Icon(Icons.error, color: Colors.red) : Container()
+            ],
+          ),
+        ),
+      ),
+    ]);
+    return row;
+  }
+
+  Widget buildadmin(cc, msgs) {
+    Widget row = Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Flexible(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Flexible(child: Container(),flex: 1,),
+                  msgs.flag ? Icon(Icons.error, color: Colors.red) : Container()
+                ],
+              ),
+            ),
+          ),
+          cc,
+          // Flexible(
+          //   child: cc,
+          //   flex: 7, // 根据需要调整这个值
+          // ),
+          Flexible(
+            child: gmhead,
+            flex: 1, // 让头像占据较小的空间
+          ),
+        ]);
+    return row;
+  }
+
+  final double imtxtsize = 20;
+  Widget buildmsg(msgs) {
     Widget cc;
+    double bigwidth = MediaQuery.of(context).size.width * 0.7;
     if (msgs.contenttype == '0') {
-      cc = Container(
+      //计算msgs.content文本宽度
+
+      // double textWidth = calculateTextWidth(msgs.content);
+      // d(textWidth);
+      // double boxwidth = bigwidth;
+      // if (bigwidth >= textWidth) {
+      //   boxwidth = textWidth;
+      // } else {
+      //   boxwidth = bigwidth;
+      // }
+      var ct = Container(
         child: ExtendedTextField(
           readOnly: true,
           maxLines: null,
           minLines: null,
-          style:
-              TextStyle(color: !isnull(msgs.type) ? primaryColor : greyColor2),
+          textAlign: TextAlign.justify,
+          style: TextStyle(
+              color: !isnull(msgs.type) ? primaryColor : greyColor2,
+              fontSize: imtxtsize),
           controller: TextEditingController(text: msgs.content),
           decoration: InputDecoration(border: InputBorder.none),
           specialTextSpanBuilder: RichBuilder(
               showAtBackground: false, type: BuilderType.extendedTextField),
         ),
         padding: EdgeInsets.fromLTRB(15.0, 0, 15, 0),
-        // width: 200.0,
         decoration: BoxDecoration(
             color: !isnull(msgs.type) ? greyColor2 : primaryColor,
             borderRadius: BorderRadius.circular(8.0)),
         margin: EdgeInsets.only(left: 10, right: 10.0),
       );
+      cc = ConstrainedBox(
+        constraints:
+            BoxConstraints(maxWidth: bigwidth), // 设置最大宽度为屏幕宽度的80%，可按需调整
+        child: ct,
+      );
     } else {
-      cc = Container(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: NgImage(
-            msgs.content,
-            fit: BoxFit.cover,
-            width: 0,
-            height: 0,
-            placeholder: SizedBox(),
-            dsl: '',
+      cc = ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: bigwidth), // 同样设置最大宽度
+        child: Container(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: NgImage(
+              msgs.content,
+              fit: BoxFit.cover,
+              width: 0,
+              height: 0,
+              placeholder: SizedBox(),
+              dsl: '',
+            ),
           ),
+          decoration: BoxDecoration(
+              color: greyColor2, borderRadius: BorderRadius.circular(88.0)),
+          margin: EdgeInsets.only(left: 10, right: 10),
         ),
-        decoration: BoxDecoration(
-            color: greyColor2, borderRadius: BorderRadius.circular(88.0)),
-        margin: EdgeInsets.only(left: 10, right: 10),
       );
       cc = GestureDetector(
         onTap: () {
@@ -359,55 +465,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
         child: cc,
       );
     }
-    var row;
-    if (msgs.type == '0') {
-      row =
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-        Flexible(
-          child: mehead,
-          // flex: 2,
-        ),
-        Flexible(
-          child: cc,
-          flex: 7,
-        ),
-        Flexible(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                // Flexible(child: Container(),flex: 1,),
-                msgs.flag ? Icon(Icons.error, color: Colors.red) : Container()
-              ],
-            ),
-          ),
-          flex: 2,
-        ),
-      ]);
-    } else {
-      row =
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-        Flexible(
-          child: Container(),
-          flex: 2,
-        ),
-        Flexible(
-          child: cc,
-          flex: 7,
-        ),
-        Flexible(
-          child: gmhead,
-        ),
-      ]);
-    }
-
-    return Container(
-      child: Column(children: [
-        gettimeoj(msgs),
-        row,
-      ]),
-      margin: EdgeInsets.only(top: 10),
-    );
+    return cc;
   }
 
   strtoobj(String str) {
@@ -622,9 +680,10 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     if (!isnull(data)) {
       canscrool = false;
     } else {
-      showdata.addAll(data);
-    }
+      // data倒置
 
+      history.addAll(data);
+    }
     reflash();
     //return data;
   }
@@ -652,7 +711,12 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       list = Flexible(
           flex: 1,
           child: CustomScrollView(
-            slivers: [threelist(showdata)],
+            reverse: true,
+            slivers: [
+              threelist(senddata.reversed.toList()),
+              threelist(showdata),
+              threelist(history),
+            ],
             controller: listScrollController,
           ));
     } catch (e) {
@@ -660,41 +724,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       d(e);
     }
     return list;
-    // return Flexible(
-    //   child: FutureBuilder(
-    //     future: mockNetworkData(),
-    //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //       // 请求已结束
-
-    //       var listobj = ListView.builder(
-    //         physics: AlwaysScrollableScrollPhysics(),
-    //         padding: EdgeInsets.all(10.0),
-    //         itemBuilder: (context, index) => buildItem(index, showdata[index]),
-    //         itemCount: showdata.length,
-    //         reverse: true,
-    //         controller: listScrollController,
-    //       );
-
-    //       if (snapshot.connectionState == ConnectionState.done) {
-    //         issend = false;
-    //         if (snapshot.hasError) {
-    //           // 请求失败，显示错误
-    //           // return Text("Error: ${snapshot.error}");
-    //           return load;
-    //         } else {
-    //           // 请求成功，显示数据
-    //           return listobj;
-    //         }
-    //       } else {
-    //         // 请求未结束，显示loading
-    //         if (issend) {
-    //           return load;
-    //         }
-    //         return listobj;
-    //       }
-    //     },
-    //   ),
-    // );
   }
 
   Future mockNetworkData() async {
@@ -709,14 +738,23 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
           .order('id desc')
           .limit(str)
           .getall();
-
       showdata.addAll(data);
       isLoading = true;
 
       reflash();
+      gobottom();
       return data;
     }
     return showdata;
+  }
+
+  gobottom() {
+    return;
+    listScrollController.animateTo(
+      0,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
   loadhttp() async {
@@ -743,11 +781,5 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     } else {
       //没未读消息
     }
-  }
-
-  // 格式化时间显示
-  String formatTime(int timestamp) {
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-    return DateFormat('HH:mm').format(dateTime);
   }
 }

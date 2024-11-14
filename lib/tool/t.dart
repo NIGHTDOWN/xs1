@@ -212,6 +212,7 @@ class T {
     _limit = '';
     this.field(null);
     _reset();
+    // d(_sql);
     return await obj.getall(_sql);
   }
 
