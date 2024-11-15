@@ -9,6 +9,7 @@ import 'package:ng169/model/base.dart';
 import 'package:ng169/model/user.dart';
 
 import 'package:ng169/page/commect/picviw.dart';
+import 'package:ng169/style/emj.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
@@ -25,8 +26,7 @@ import 'package:ng169/tool/url.dart';
 // ignore: must_be_immutable
 class Kefu extends LoginBase with WidgetsBindingObserver {
   bool needlogin = true;
-  late String peerId;
-  late String peerAvatar;
+
   late String id;
 
   static var listMessage;
@@ -42,13 +42,14 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
   static final FocusNode focusNode = FocusNode();
 
   final themeColor = Color(0xfff5a623);
-  Widget load = Center(
+  static const Widget load = Center(
       child: CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(Color(0xfff5a623))));
   final primaryColor = Color(0xff203152);
   final greyColor = Color(0xffaeaeae);
   final greyColor2 = Color(0xffE8E8E8);
-  static List<Widget> emjo = [];
+  // static List<Widget> emjo = [];
+  Widget emj = Container();
   static var showdata = [], senddata = [], history = [];
   List<ListTile> chosimgobj = [];
   static Widget mehead = Container(), gmhead = Container();
@@ -58,7 +59,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     super.initState();
     s("inmsgpage", "1");
     WidgetsBinding.instance.addObserver(this);
-    mockNetworkData();
+
     focusNode.addListener(onFocusChange);
     loadbus();
     listScrollController.addListener(() {
@@ -73,7 +74,8 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     isLoading = false;
     isShowSticker = false;
     imageUrl = '';
-    initemjo();
+    // initemjo();
+    emj = EmojiGrid((data) => sendemj(data));
     chooseImageinit();
     var user = User.get();
 
@@ -114,6 +116,8 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     ));
     readLocal();
     Msg.clearread();
+    showtitlebar();
+    mockNetworkData();
   }
 
   @override
@@ -122,10 +126,9 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       // 页面可见时执行的操作
       s("inmsgpage", "1");
-      print('页面可见，执行相关操作');
     } else if (state == AppLifecycleState.paused) {
       // 页面不可见时执行的操作
-      print('页面不可见，执行相关操作');
+
       s("inmsgpage", "0");
     }
   }
@@ -181,40 +184,16 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
   }
 
 //加载表情
-  initemjo() {
-    for (var i = 1; i < 79; i++) {
-      var tmp = InkWell(
-        borderRadius: BorderRadius.circular(8.0),
-        onTap: () => sendemj('$i'),
-        child: Container(
-            // color: Color(0xffffffff),
-            padding: EdgeInsets.all(4),
-            child: Image.asset(
-              "assets/images/emjo/emj_$i.png",
-              fit: BoxFit.cover,
-            )),
-      );
-      Widget tmp2 = Container(
-        width: 35,
-        height: 35,
-        decoration: BoxDecoration(
-            // color: greyColor2,
-            borderRadius: BorderRadius.circular(8.0)),
-        margin: EdgeInsets.all(5),
-        child: Material(
-          child: Ink(child: tmp, color: SQColor.white),
-        ),
-      );
-      emjo.add(tmp2);
-    }
-  }
 
   void onFocusChange() {
-    if (focusNode.hasFocus) {
-      // Hide sticker when keyboard appear
-      setState(() {
+    if (mounted) {
+      if (focusNode.hasFocus) {
+        // Hide sticker when keyboard appear
+
         isShowSticker = false;
-      });
+
+        reflash();
+      }
     }
   }
 
@@ -234,10 +213,16 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
         Navigator.pop(context);
 
         // ignore: invalid_use_of_visible_for_testing_member
-        PickedFile? tmpimage = await ImagePicker.platform.pickImage(
-            source: ImageSource.camera, maxWidth: 500, imageQuality: 80);
-        imgtoserver(tmpimage);
-        reflash();
+        try {
+          PickedFile? tmpimage = await ImagePicker.platform.pickImage(
+              source: ImageSource.camera, maxWidth: 500, imageQuality: 80);
+          imgtoserver(tmpimage);
+          if (mounted) {
+            reflash();
+          }
+        } catch (e) {
+          d("摄像头又问题");
+        }
       },
     );
     var gallery = ListTile(
@@ -253,7 +238,9 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
             source: ImageSource.gallery, maxWidth: 500, imageQuality: 80);
 
         imgtoserver(tmpimage);
-        reflash();
+        if (mounted) {
+          reflash();
+        }
       },
     );
     chosimgobj.add(camera);
@@ -278,14 +265,18 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
 
   chosimg() {
     selectbox(context, chosimgobj);
+    // SafeArea(
+    //   child: selectbox(context, chosimgobj),
+    // );
   }
 
   void getSticker() {
     // Hide keyboard when sticker appear
     focusNode.unfocus();
-    setState(() {
+    if (mounted) {
       isShowSticker = !isShowSticker;
-    });
+      reflash();
+    }
   }
 
   Future<void> onSendMessage(String content, int type) async {
@@ -293,6 +284,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     if (content.trim() != '') {
       var str = textEditingController.text;
       textEditingController.clear();
+      addsendmsg(0, 0, str); //先显示
       d("这里发送了");
       Msg msgobj = Msg.carete(0, str);
       //缓存到本地数据库
@@ -300,7 +292,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       //更新到List
       // senddata.add(sendmsg);
       issend = true;
-      addsendmsg(0, 0, str);
       //刷新的时候会重载数据
       // reflash();
     } else {
@@ -328,7 +319,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     Msg msgs = Msg.fromJson(document);
     Widget cc = buildmsg(msgs);
     var row;
-    if (msgs.type == '0') {
+    if (msgs.type != '0') {
       row = builduser(cc, msgs);
     } else {
       row = buildadmin(cc, msgs);
@@ -517,9 +508,11 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
 
   Future<bool> onBackPress() {
     if (isShowSticker) {
-      setState(() {
+      if (mounted) {
         isShowSticker = false;
-      });
+
+        reflash();
+      }
     } else {
       // Firestore.instance.collection('users').document(id).updateData({'chattingWith': null});
       Navigator.pop(context);
@@ -549,7 +542,8 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       ],
     );
 
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         title: Center(
           child: Text(lang("在线客服")),
@@ -557,7 +551,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       ),
       backgroundColor: SQColor.white,
       body: bbb,
-    );
+    ));
   }
 
 //显示表情
@@ -568,7 +562,8 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
           color: SQColor.white),
       // padding: EdgeInsets.all(5.0),
       height: 180.0,
-      child: SingleChildScrollView(child: Wrap(children: emjo)),
+      child: emj,
+      // child: SingleChildScrollView(child: Wrap(children: emjo)),
     );
     //
     return c;
@@ -688,15 +683,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     //return data;
   }
 
-  static Widget txt1 = SizedBox(
-        height: 10,
-      ),
-      txt2 = SizedBox(
-        height: 10,
-      ),
-      txt3 = SizedBox(
-        height: 10,
-      );
   Widget threelist(data) {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
@@ -713,6 +699,12 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
           child: CustomScrollView(
             reverse: true,
             slivers: [
+              //展位10高度
+              SliverToBoxAdapter(
+                child: Container(
+                  height: 20,
+                ),
+              ),
               threelist(senddata.reversed.toList()),
               threelist(showdata),
               threelist(history),
@@ -765,7 +757,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       var mg = await T('msg').order('id desc').getone();
       var tmp = await http(
           'chat/list', {'msgid': isnull(mg) ? mg['id'] : ''}, gethead());
-      var data = getdata(context, tmp!);
+      var data = getdata(g("context"), tmp!);
       if (isnull(data)) {
         //更新本地数据库
         for (var item in data) {

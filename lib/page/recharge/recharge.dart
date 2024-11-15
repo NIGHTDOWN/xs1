@@ -13,6 +13,7 @@ import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/function.dart';
 
 import 'package:ng169/tool/http.dart';
+import 'package:ng169/tool/im.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/loadbox.dart';
 import 'package:ng169/tool/url.dart';
@@ -436,8 +437,9 @@ class Recharge extends LoginBase {
                   color: SQColor.blue,
                   decoration: TextDecoration.underline,
                 )),
-            onTap: () {
-              gourl(context, Kefu());
+            onTap: () async {
+              await gourl(context, Kefu());
+              Im.immsgflag(0);
             }),
         Text(lang('客服页面'), style: s)
       ])

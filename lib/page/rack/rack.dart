@@ -499,7 +499,6 @@ class RackSceneState extends State<Rack> {
       }
     } on PlatformException catch (e) {
       d(e);
-      print("Unsupported operation" + e.toString());
     }
     // bookShelfNotify.syncBook();
   }
@@ -610,10 +609,20 @@ class RackSceneState extends State<Rack> {
                     ? BookshelfHeader(favoriteNovels[0])
                     : Container(),
                 buildFavoriteView(),
+                isedit
+                    ? Container(
+                        // color: Colors.,
+                        height: 80,
+                      )
+                    : Container(),
               ],
             ),
           ),
           buildNavigationBar(),
+
+          // isedit ? Container() : Container(),    //
+          //在编辑的时候下面的操作按钮会遮挡，所以要加一个透明占用下面edbar高度的容器
+
           Positioned(
             right: 0,
             bottom: 22,

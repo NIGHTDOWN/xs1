@@ -55,7 +55,6 @@ class SettingState extends State<SettingScene> {
           //打印每个缓存文件的路径
         print(file.path);
       });*/
-    // print('临时目录大小: ' + value.toString());
 
     // _cacheSizeStr用来存储大小的值
     _cacheSizeStr = _renderSize(value);

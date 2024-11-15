@@ -282,8 +282,7 @@ class AppSceneState extends State<App> with WidgetsBindingObserver {
       //关闭loading
       var info = await User.gettestinfo();
       // d(g('reqtimes'));
-      var ds = await http('common/testandroid', {'data': info}, gethead());
-      d(ds);
+      http('common/testandroid', {'data': info}, gethead());
     });
   }
 

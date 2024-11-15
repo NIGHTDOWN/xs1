@@ -157,6 +157,7 @@ class Msg {
     if (!User.islogin()) return false;
 
     setcache('msg', 0, '0');
+    //
     return;
   }
 }

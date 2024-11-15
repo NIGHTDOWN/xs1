@@ -175,7 +175,6 @@ class _BookshelfHeaderState extends State<BookshelfHeader>
                             style:
                                 TextStyle(fontSize: 14, color: SQColor.paper)),
                         onTap: () {
-                          d("231312");
                           widget.novel.read(context, novel.readChapter);
                         },
                       ),

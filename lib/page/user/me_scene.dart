@@ -10,6 +10,7 @@ import 'package:ng169/page/user/recordlog.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/tool/bow.dart';
 import 'package:ng169/tool/event_bus.dart';
+import 'package:ng169/tool/im.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 import 'package:ng169/page/commect/kefu.dart';
@@ -141,9 +142,8 @@ class MeScene extends StatelessWidget {
             iconName: 'assets/images/u4.png',
             onPressed: () async {
               await gourl(context, Kefu());
+              Im.immsgflag(0);
               eventBus.emit('reflashuser', User.get());
-              eventBus.emit('user_im_on', 0);
-              eventBus.emit('bar_im_on', 0);
             },
             right_widget: Container(),
             line_padding_left: 0,

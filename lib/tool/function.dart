@@ -467,12 +467,19 @@ setDeviceOrientation([DeviceOrientation? fx]) {
 }
 
 void selectbox(BuildContext context, List<Widget> childrens) async {
-  if (!isnull(context)) return;
+  if (isnull(context)) return;
   await showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) => Container(
-            child: Column(mainAxisSize: MainAxisSize.min, children: childrens),
-          ));
+    context: context,
+    isScrollControlled: true, // 添加这一行以确保模态底部板可以滚动
+    builder: (BuildContext bc) => SafeArea(
+      child: Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: childrens,
+        ),
+      ),
+    ),
+  );
 }
 
 checkversion(context, [bool isauto = false]) {

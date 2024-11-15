@@ -4,12 +4,11 @@ import 'package:flutter/services.dart';
 
 import 'package:ng169/tool/function.dart';
 
-
 class Mock {
   //初始化mock数据
-  static Map<String, dynamic> mockjson={};
+  static Map<String, dynamic> mockjson = {};
   static init(String city) async {
-    d('加载mock' + city);
+    // d('加载mock' + city);
     if (!isnull(city)) {
       return false;
     }
@@ -25,13 +24,11 @@ class Mock {
   }
 
   static get(name) {
-    
     if (isnull(mockjson, name)) {
-      var val= mockjson[name];
-      if(isnull(val)){
+      var val = mockjson[name];
+      if (isnull(val)) {
         return val;
       }
-      
     }
     return [];
   }

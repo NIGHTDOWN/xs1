@@ -18,6 +18,7 @@ import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
+import 'package:ng169/tool/im.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/loadbox.dart';
 import 'package:ng169/tool/t.dart';
@@ -756,7 +757,7 @@ class Sign extends LoginBase {
               // gourl(context, Ads());
               // var data = await gourl(context, Ads());
               show(context, lang('视频加载中，请稍等..'));
-              g('admob').load((bool isget) {
+              g('admob')?.load((bool isget) {
                 if (isnull(isget)) {
                   d('回调');
                   //执行结算
@@ -1340,8 +1341,9 @@ class Sign extends LoginBase {
   }
 
   showgokf() {
-    msgbox(context, () {
-      gourl(context, Kefu());
+    msgbox(context, () async {
+      await gourl(context, Kefu());
+      Im.immsgflag(0);
     }, null, Text(lang('评论完成，去提交截图给客服')), Text(lang('取消')), Text(lang('确定')));
   }
 }

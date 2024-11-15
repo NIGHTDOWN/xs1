@@ -94,7 +94,7 @@ class Novel {
     var w = {'bookid': id, 'type': type};
     // var ins = await db.where(w).getone('book');
     var ins = await T('book').where(w).getone();
-
+    // d(ins);
     Map<String, dynamic> insert = {
       // 'bookid': id,
       'bookname': name,

@@ -215,7 +215,7 @@ class MallState extends State<Mall> {
       setcache(index, 1, '1800');
     } else {
       mallcache = getcache(cachedata);
-      d(mallcache);
+      // d(mallcache);
       if (isnull(mallcache)) {
         processAsyncTasks();
       } else {

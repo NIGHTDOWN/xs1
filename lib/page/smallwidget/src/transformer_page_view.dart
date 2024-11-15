@@ -404,8 +404,6 @@ class _TransformerPageViewState extends State<TransformerPageView> {
         _pageController.position.viewportDimension *
         widget.viewportFraction!;
 
-    //  print("activeIndex:$_activeIndex , pix:$_currentPixels");
-
     return _currentPixels;
   }
 

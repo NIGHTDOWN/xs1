@@ -144,7 +144,7 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
         try {
           _animationController!.value = 0.5;
         } catch (e) {
-          print(e);
+          d(e);
         }
 
         _currentIndex = nextIndex;
@@ -288,7 +288,8 @@ abstract class TransformBuilder<T> {
 
 class ScaleTransformBuilder extends TransformBuilder<double> {
   final Alignment alignment;
-  ScaleTransformBuilder({List<double>? values, this.alignment = Alignment.center})
+  ScaleTransformBuilder(
+      {List<double>? values, this.alignment = Alignment.center})
       : super(values: values);
 
   Widget build(int i, double animationValue, Widget widget) {

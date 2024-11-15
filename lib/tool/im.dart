@@ -4,7 +4,9 @@ import 'package:ng169/model/user.dart';
 import 'package:ng169/tool/event_bus.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/http.dart';
+import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/ngsock.dart';
+import 'package:ng169/tool/notify.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -125,9 +127,8 @@ class Im {
         int msgnum = toint(g("msg"));
         msgnum += 1;
         s("msg", msgnum);
-        eventBus.emit('bar_im_on', realmsg); //底部bar状态图标
-        //用户页面状态图标
-        eventBus.emit('user_im_on', realmsg);
+        immsgflag(msgnum);
+        nft(realmsg);
       } else {
         //直接更新消息页面
         eventBus.emit('msg_im_on', realmsg);
@@ -138,5 +139,21 @@ class Im {
 
     // //消息页面状态图标
     // eventBus.emit('msg_im_on', msg);
+  }
+
+  //更新消息状态
+  static immsgflag(msgnum) {
+    s("msg", msgnum);
+    eventBus.emit('bar_im_on', msgnum); //底部bar状态图标
+    //用户页面状态图标
+    eventBus.emit('user_im_on', msgnum);
+  }
+
+  static nft(realmsg) {
+    if (!isnull(realmsg)) return;
+    Notify.setcontext(g('context'));
+    String tmpmsg = realmsg['msg']['content'];
+    // setcache('install_upapk', file, '0');
+    Notify.showNotification(lang('收到消息'), tmpmsg, 'go_msg', data: tmpmsg);
   }
 }

@@ -54,11 +54,10 @@ class MeCells extends LoginBase with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
       // 页面可见时执行的操作
-      // print('页面可见，执行相关操作');
+
       reloadmsgnum();
     } else if (state == AppLifecycleState.paused) {
       // 页面不可见时执行的操作
-      // print('页面不可见，执行相关操作');
     }
   }
 
