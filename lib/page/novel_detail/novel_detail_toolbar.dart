@@ -6,6 +6,7 @@ import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/styles.dart';
 import 'package:ng169/tool/function.dart';
+import 'package:ng169/tool/keeplive.dart';
 import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/url.dart';
 
@@ -144,6 +145,7 @@ class _NovelDetailToolbarState extends State<NovelDetailToolbar> {
 
   down() async {
     //添加书架？
+    Keeplive.startService();
     widget.novel.down();
     //改变文字状态
     //加入或者移除数据接口

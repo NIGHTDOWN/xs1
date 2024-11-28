@@ -104,7 +104,7 @@ class User {
   static set(user) {
     setcache(index, user, '-1', false);
     // d("触发im登入" + user);
-    g("im").login(); //触发im登入
+    g("im").login(getuid()); //触发im登入
     //刷新书架
     eventBus.emit('rfrack');
     //刷新用户

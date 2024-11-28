@@ -15,6 +15,7 @@ import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/lang.dart';
+import 'package:ng169/tool/upfile.dart';
 import 'package:ng169/tool/url.dart';
 
 class EditUser extends StatefulWidget {
@@ -153,10 +154,11 @@ class EditUserState extends State<EditUser> {
       reflash();
       var imgurl;
       if (isnull(image)) {
-        String path = image.path;
+        // String path = image.path;
 
-        var tmp = await httpfile('upimg/run',
-            {'file': await MultipartFile.fromFile(path)}, gethead());
+        // var tmp = await httpfile('upimg/run',
+        //     {'file': await MultipartFile.fromFile(path)}, gethead());
+        var tmp = await Upfile.upimg(image.path);
         imgurl = getdata(context, tmp);
       }
 

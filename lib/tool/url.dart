@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ng169/model/base.dart';
 import 'package:ng169/model/user.dart';
@@ -18,6 +19,15 @@ Future gourl(BuildContext context, Object classObject) async {
   final widget = classObject is Widget ? classObject : Container();
   return await Navigator.push(
       context, new MaterialPageRoute(builder: (context) => widget));
+}
+
+Future gourlhd(BuildContext context, Object classObject) async {
+  if (!mustlogin(classObject)) {
+    return await Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => Index()));
+  }
+  final widget = classObject is Widget ? classObject : Container();
+  Navigator.of(context).push(CupertinoPageRoute(builder: (context) => widget));
 }
 
 // Future gourl(BuildContext context, WidgetBuilder builder) async {

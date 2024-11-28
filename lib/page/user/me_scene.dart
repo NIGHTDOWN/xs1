@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ng169/conf/conf.dart';
 import 'package:ng169/model/msg.dart';
 import 'package:ng169/model/user.dart';
+import 'package:ng169/page/smallwidget/camer.dart';
 import 'package:ng169/page/task/friend.dart';
 import 'package:ng169/page/task/sign.dart';
 import 'package:ng169/page/user/historypage.dart';
@@ -141,7 +142,7 @@ class MeScene extends StatelessWidget {
             title: lang('联系客服'),
             iconName: 'assets/images/u4.png',
             onPressed: () async {
-              await gourl(context, Kefu());
+              await gourlhd(context, Kefu());
               Im.immsgflag(0);
               eventBus.emit('reflashuser', User.get());
             },
@@ -177,6 +178,7 @@ class MeScene extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               MeHeader(),
+              // camer(type: 1),
               SizedBox(height: 10),
               buildCells(context),
             ],

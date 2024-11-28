@@ -19,7 +19,7 @@ class RecordLog extends LoginBase {
 // }
 
 // class RecordLogState extends State<RecordLog> {
-  List htppdata = [], mallcache = [];
+  List? htppdata = [], mallcache = [];
   List<Widget> more = [SizedBox()];
   var index = 'RecordLog_';
   var cachedata = 'RecordLog_data_', page = 1;
@@ -92,7 +92,7 @@ class RecordLog extends LoginBase {
     mallcache = getcache(cachedata);
 
     if (isnull(mallcache)) {
-      htppdata = mallcache[0];
+      htppdata = mallcache![0];
     } else {
       setcache(index, 0, '0');
     }
@@ -116,7 +116,7 @@ class RecordLog extends LoginBase {
           controller: scrollController,
           physics: AlwaysScrollableScrollPhysics(),
           children: <Widget>[
-            isnull(htppdata) ? objectBlock(htppdata) : SizedBox(),
+            isnull(htppdata) ? objectBlock(htppdata!) : SizedBox(),
             Column(
               children: more,
             ),

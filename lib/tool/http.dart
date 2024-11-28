@@ -15,21 +15,55 @@ import 'lang.dart';
 dynamic res;
 List times = [];
 var reqlock = {};
+var DeviceTypesSecret = {
+  'wxapp': {
+    'key': '4c917b5d90a5732cf34e7e5545138f9c',
+    'secret': 'dbc0fc07525b37772d47303c1b3d7d98'
+  },
+  'wap': {
+    'key': 'd621b33de3cfa050c7bb8614d6ad50ea',
+    'secret': '8a8b79104e3a3695c8b0e06db8a9e5b0'
+  },
+  'iphone': {
+    'key': '755975d21db2ada29e3b279897caffb9',
+    'secret': '47281f0bf8bcf5f62cb5190d9e004d7f'
+  },
+  'android': {
+    'key': '9b4af02fddc12d2a38e2deae747beff0',
+    'secret': '35ffc40f96f9e129f59c63ca6732578b'
+  },
+};
 getsigin(Map m, String url) {
-  String tmp = m['timestamp'] + url + "lovenovel";
-  if (!m.containsKey('timestamp')) {
-    throw ArgumentError('Missing "timestamp" key in the map');
-  }
-  // 拼接字符串
-  tmp = m['timestamp'].toString() + url + "lovenovel";
-  // 使用MD5库生成哈希值
+  String secret = DeviceTypesSecret[m['devicetype']]!['secret']!;
+  String key = DeviceTypesSecret[m['devicetype']]!['key']!;
+  // 获取所有请求的参数
+  Map<String, dynamic> allPar = {
+    'apiKey': key,
+    'timestamp': m['timestamp'],
+    'deviceType': m['devicetype'],
+    // 'version': m['version'],
+    // 'tokens': m['token'],
+    // 'deviceToken': m['idfa'],
+  };
+  // 根据键对数组进行升序排序
+  allPar = Map.fromEntries(
+      allPar.entries.toList()..sort((a, b) => a.key.compareTo(b.key)));
+  String hashData = '';
+  allPar.forEach((key, value) {
+    hashData += value.toString();
+  });
+  // 生成签名
 
-  var key = utf8.encode('lovenovel');
-  var bytes = utf8.encode(tmp);
+  String _apiSign = _hmacMd5(hashData, secret);
 
-  var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256
-  var digest = hmacSha256.convert(bytes);
-  return digest;
+  return _apiSign;
+}
+
+String _hmacMd5(String data, String secret) {
+  //md5加密
+  var content = new Utf8Encoder().convert(data + secret);
+  var result = md5.convert(content);
+  return result.toString();
 }
 
 Future<String?> http(String url,
@@ -74,7 +108,7 @@ Future<String?> http(String url,
     if (loghttp) {
       d(header);
     }
-    header['sign'] = getsigin(header, url);
+    header['apisign'] = getsigin(header, url);
     dio.options.headers = header;
   }
   dio.options.contentType =
@@ -243,7 +277,10 @@ Future<String> httpfile(String url,
   // dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
   if (null != header) {
-    d(header);
+    if (loghttp) {
+      d(header);
+    }
+    header['apisign'] = getsigin(header, url);
     dio.options.headers = header;
   }
   dio.options.contentType = ContentType.parse("multipart/form-data").toString();

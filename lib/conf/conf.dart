@@ -1,21 +1,20 @@
-const apiurl = 'https://love-novel.com/api/';
+const apiurl = 'https://love-novel.com/apiv1/';
 // const apiurl = 'http://192.168.2.106/api/';
 const serverurl = 'https://love-novel.com/';
 
 const defaultAvatar = 'assets/images/ww_default_avatar.png'; //默认头像
-const dbname = 'lVdb.db';
+const dbname = 'lVdbv7.db';
 //数据库结构
 const datatable = [
-  // 'CREATE TABLE "msglist" ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"msgid" integer,"chatid" integer,"comeid" integer,"sendtime" integer,"readflag" integer NOT NULL DEFAULT 0,"content" text,"type" integer, "resid" integer,"url" text,"murl" text,"size" integer,"length" integer)',
-  // 'CREATE TABLE "chatlist" ("id" INTEGER NOT NULL,"chatid" INTEGER NOT NULL,"uid" INTEGER NOT NULL,"uid2" integer NOT NULL,"name" TEXT,"lock" integer NOT NULL DEFAULT 0,"username" TEXT,"headimg" TEXT,"num" INTEGER NOT NULL, "msgtime" integer NOT NULL,"msg" TEXT,PRIMARY KEY ("id"));',
-  'CREATE TABLE "optinon" ("id" INTEGER PRIMARY KEY AUTOINCREMENT,"name" TEXT,"value" TEXT)',
-  "CREATE UNIQUE INDEX 'name' ON 'optinon' ('name' COLLATE BINARY)",
-  'CREATE TABLE "book" (	"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,	"bookid" INTEGER NOT NULL,"uid" INTEGER NOT NULL DEFAULT 0,	"price" integer NOT NULL DEFAULT 0,	"type" integer NOT NULL DEFAULT 1,	"bookname" integer NOT NULL,	"author" TEXT,	"pic" TEXT,	"about" TEXT,	"isfree" integer NOT NULL DEFAULT 0,	"flag" integer NOT NULL DEFAULT 0,	"addtime" integer NOT NULL DEFAULT 0,	"scroe" integer NOT NULL DEFAULT 0,	"isgroom" integer NOT NULL DEFAULT 0,	"groomtime" integer NOT NULL DEFAULT 0,	"readtime" integer NOT NULL DEFAULT 0,	"readsec" integer NOT NULL DEFAULT 0,	"secnum" INTEGER NOT NULL DEFAULT 0,	"wordnum" INTEGER NOT NULL DEFAULT 0,"isdownload" INTEGER NOT NULL DEFAULT 0, "lastsecnum" INTEGER NOT NULL DEFAULT 0, "nowsecnum" INTEGER NOT NULL DEFAULT 0);',
-  'CREATE  INDEX "bookid" ON "book" ("bookid");',
+  'CREATE TABLE "dslimg" ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"simg" TEXT,"flag" integer,"dsl" TEXT,"dslimg" TEXT,"b64" TEXT,"width" NUMBER,"height" NUMBER);',
+  'CREATE INDEX "wy" ON "dslimg" ("simg");',
+  'CREATE TABLE "optinon" ("id" INTEGER PRIMARY KEY AUTOINCREMENT,"name" TEXT,"value" TEXT);',
+  'CREATE TABLE "book" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,"bookid" INTEGER NOT NULL,"uid" INTEGER NOT NULL DEFAULT 0,"price" integer NOT NULL DEFAULT 0,"type" integer NOT NULL DEFAULT 1,"bookname" integer NOT NULL,"author" TEXT,"pic" TEXT,"about" TEXT,"isfree" integer NOT NULL DEFAULT 0,"flag" integer NOT NULL DEFAULT 0,"addtime" integer NOT NULL DEFAULT 0,"scroe" integer NOT NULL DEFAULT 0,"isgroom" integer NOT NULL DEFAULT 0,"groomtime" integer NOT NULL DEFAULT 0,"readtime" integer NOT NULL DEFAULT 0,"readsec" integer NOT NULL DEFAULT 0,"secnum" INTEGER NOT NULL DEFAULT 0,"wordnum" INTEGER NOT NULL DEFAULT 0,"isdownload" INTEGER NOT NULL DEFAULT 0,"lastsecnum" INTEGER NOT NULL DEFAULT 0,"nowsecnum" INTEGER NOT NULL DEFAULT 0,"picdsl" TEXT,"catid" text,"tagid" text );',
+  'CREATE INDEX "bookid" ON "book" ("bookid");',
+  'CREATE INDEX "groomtime" ON "book" ("groomtime");',
+  'CREATE INDEX "readtime" ON "book" ("readtime");',
+  'CREATE INDEX "type" ON "book" ("type");',
   'CREATE UNIQUE INDEX "weyi" ON "book" ("bookid" ASC, "type" ASC);',
-  'CREATE  INDEX "type" ON "book" ("type");',
-  'CREATE  INDEX "readtime" ON "book" ("readtime");',
-  'CREATE  INDEX "groomtime" ON "book" ("groomtime");',
   'CREATE TABLE "sec" (	"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,	"section_id" INTEGER NOT NULL,"book_id" INTEGER NOT NULL DEFAULT 0,	"isfree" integer NOT NULL DEFAULT 0,	"secnum" integer NOT NULL DEFAULT 1,	"update_time" integer NOT NULL,	"title" TEXT,	"coin" integer NOT NULL DEFAULT 0,	"ispay" integer NOT NULL DEFAULT 0,	"booktype" integer NOT NULL DEFAULT 0,	"index" integer NOT NULL DEFAULT 0,"cacheflag" integer NOT NULL DEFAULT 0,"cachedata" TEXT,"cacheword" TEXT);',
   'CREATE UNIQUE INDEX "secindex" ON "sec" ("index" ASC, "book_id" ASC, "booktype" ASC);',
   'CREATE TABLE "read" ( "id" INTEGER PRIMARY KEY AUTOINCREMENT, "bookid" INTEGER, "type" INTEGER, "readtime" INTEGER, "uid" INTEGER, "secid" INTEGER );',

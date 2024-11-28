@@ -4,16 +4,19 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:flutter/services.dart';
+import 'package:ng169/tool/global.dart';
+import 'package:ng169/tool/im.dart';
 
 import 'function.dart';
 
 //线程任务；先init任务函数；
 //要启动好时任务；必须要产生至少一次send；才会触发
 //线程对象
-class Thred {
+class Thredim {
   SendPort? sendPort = null; //发送端口
   ReceivePort mainport = ReceivePort(); //接收端口
   late Isolate? _ioIsolate;
+  static Isolate? isIslocateRunning;
   List _recvdata = [];
   bool _asyn = false;
   late Function callback;
@@ -24,9 +27,10 @@ class Thred {
     mainport.close();
     _ioIsolate!.kill(priority: Isolate.immediate);
     _ioIsolate = null;
+    // isstop();
   }
 
-  Future<Thred> init(Function call, [bool? asyn, bool isonce = false]) async {
+  Future<Thredim> init(Function call, [bool? asyn, bool isonce = false]) async {
     callback = call;
     if (isnull(asyn)) {
       _asyn = asyn!;
@@ -40,20 +44,37 @@ class Thred {
     };
     _recv();
     _ioIsolate = await Isolate.spawn(startthred, thredinfo);
-
-    // if (!isnull(sendPort)) {
-    //   sendPort = await mainport.first as SendPort;
-    // }
+    isIslocateRunning = _ioIsolate;
+    // _ioIsolate!.addErrorListener((v) {} as SendPort);
+    // _ioIsolate!.addErrorListener();
+    // isstart();
     //监听消息
 
     return this;
   }
 
+  static String imflag = "imflag";
+  static isstart() {
+    setcache(imflag, "1", "-1");
+  }
+
+  static isstop() {
+    setcache(imflag, "0", "-1");
+  }
+
+  static getflag() {
+    return getcache(imflag);
+  }
+
   _recv() {
     if (isnull(mainport)) {
       mainport.listen((msg) {
+        // d("线程收到消息：$msg");
         if (isnull(sendPort)) {
           _recvdata.add(msg);
+          if (isnull(msg)) {
+            Im.msg_on(msg);
+          }
         } else {
           sendPort = msg as SendPort;
         }
@@ -71,50 +92,72 @@ class Thred {
     } else {}
   }
 
+  login(tmpuid) {
+    var msg = {"call": "login", 'data': tmpuid};
+    send(msg);
+  }
+
+  sendmsg(var postdata) {
+    var msg = {"call": "sendmsg", 'data': postdata};
+    send(msg);
+  }
+
+  static late Im? imobj = null;
+  static SendPort? snedport;
+  //子进程给父进程发消息
+  static sendtoPartent(msg) {
+    if (isnull(snedport)) {
+      d("snedport是空");
+      return;
+    }
+    snedport!.send(msg);
+  }
+
   static void startthred(var thredinfo) async {
-    // RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
-    // BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
     //线程体
     final mport = new ReceivePort();
     //绑定
     Function call = thredinfo['function'];
-    SendPort snedport = thredinfo['receiveport'];
+    snedport = thredinfo['receiveport'];
     bool asyn = thredinfo['asyn'];
-    bool isonce = thredinfo['isonce'];
-    snedport.send(mport.sendPort);
-    if (isonce) {
-      //直接运行子任务
-      var back;
 
-      if (asyn) {
-        back = await call();
-      } else {
-        back = call();
-      }
-      snedport.send(back);
-    } else {
+    snedport!.send(mport.sendPort);
+    if (true) {
+      //直接运行子任务
       mport.listen((message) async {
         //常驻内存；获取参数每次执行
-        //获取数据并解析
-
-        if (isnull(message)) {
-          var back;
-          if (asyn) {
-            back = await call(message);
-          } else {
-            back = call(message);
+        var back;
+        if (!isnull(imobj)) {
+          RootIsolateToken rootIsolateToken = message['rootIsolateToken'];
+          BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
+          //初始化缓存
+          await isolocateinit();
+          imobj = await Im.init(isthred: true);
+          imobj?.call = (msg) => {snedport!.send(msg)};
+          snedport?.send(back);
+        } else {
+          if (!isnull(message)) {
+            return;
           }
-          snedport.send(back);
+          if (!isnull(message, "call")) return;
+          String callfun = message["call"];
+          var calldata = message["data"];
+          if (callfun == "login") {
+            imobj!.login(calldata);
+          } else {
+            // d(calldata);
+            imobj!.sendmsg(calldata);
+          }
         }
       });
     }
     //监听
   }
 
-  static Future<Thred> run(var paramdata, Function call) async {
+  static Future<Thredim> run(var paramdata, Function call) async {
     RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
     // d(rootIsolateToken.toString());
-    var t = Thred();
+    var t = Thredim();
     await t.init((data) => {call(data)}, false);
     await Future.delayed(Duration(seconds: 2));
     var args = {
@@ -122,6 +165,7 @@ class Thred {
       'rootIsolateToken': rootIsolateToken,
     };
     t.send(args);
+    s("im", t);
     return t;
   }
 }

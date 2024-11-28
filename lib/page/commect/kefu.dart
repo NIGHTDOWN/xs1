@@ -21,6 +21,7 @@ import 'package:ng169/tool/lang.dart';
 import 'package:ng169/tool/richbuild.dart';
 import 'package:ng169/tool/t.dart';
 import 'package:ng169/model/msg.dart';
+import 'package:ng169/tool/upfile.dart';
 import 'package:ng169/tool/url.dart';
 
 // ignore: must_be_immutable
@@ -58,6 +59,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
   void initState() {
     super.initState();
     s("inmsgpage", "1");
+    readLocal();
     WidgetsBinding.instance.addObserver(this);
 
     focusNode.addListener(onFocusChange);
@@ -114,7 +116,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
         width: headsize,
       ),
     ));
-    readLocal();
+
     Msg.clearread();
     showtitlebar();
     mockNetworkData();
@@ -251,10 +253,11 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
 
   imgtoserver(imgpath) async {
     if (isnull(imgpath)) {
-      String path = imgpath.path;
+      // String path = imgpath.path;
 
-      var tmp = await httpfile(
-          'upimg/run', {'file': await MultipartFile.fromFile(path)}, gethead());
+      // var tmp = await httpfile(
+      //     'upimg/run', {'file': await MultipartFile.fromFile(path)}, gethead());
+      var tmp = await Upfile.upimg(imgpath.path);
       var imgurl = getdata(context, tmp);
       Msg obj = Msg.carete(2, imgurl);
       await obj.send();
@@ -285,7 +288,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       var str = textEditingController.text;
       textEditingController.clear();
       addsendmsg(0, 0, str); //先显示
-      d("这里发送了");
+
       Msg msgobj = Msg.carete(0, str);
       //缓存到本地数据库
       await msgobj.send();
@@ -339,7 +342,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     Widget row =
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Flexible(
-        child: mehead,
+        child: gmhead,
         // flex: 2,
       ),
       cc,
@@ -382,7 +385,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
           //   flex: 7, // 根据需要调整这个值
           // ),
           Flexible(
-            child: gmhead,
+            child: mehead,
             flex: 1, // 让头像占据较小的空间
           ),
         ]);
@@ -396,14 +399,6 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     if (msgs.contenttype == '0') {
       //计算msgs.content文本宽度
 
-      // double textWidth = calculateTextWidth(msgs.content);
-      // d(textWidth);
-      // double boxwidth = bigwidth;
-      // if (bigwidth >= textWidth) {
-      //   boxwidth = textWidth;
-      // } else {
-      //   boxwidth = bigwidth;
-      // }
       var ct = Container(
         child: ExtendedTextField(
           readOnly: true,
@@ -451,7 +446,7 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
       );
       cc = GestureDetector(
         onTap: () {
-          gourl(context, PicView(url: msgs.content));
+          gourlhd(context, PicView(url: msgs.content));
         },
         child: cc,
       );
@@ -754,24 +749,31 @@ class Kefu extends LoginBase with WidgetsBindingObserver {
     if (isnull(check)) {
       //有未读消息
       //拉取消息
-      var mg = await T('msg').order('id desc').getone();
-      var tmp = await http(
-          'chat/list', {'msgid': isnull(mg) ? mg['id'] : ''}, gethead());
-      var data = getdata(g("context"), tmp!);
-      if (isnull(data)) {
-        //更新本地数据库
-        for (var item in data) {
-          // ignore: await_only_futures
-          await Msg.fromhttpJson(item)
-            ..savedb();
-        }
-        //刷新列表
-        issend = true;
-        s('msg', 0);
-        reflash();
-      }
+      //更新本地数据库
+      await load_http();
+      //刷新列表
+      issend = true;
+      s('msg', 0);
+      reflash();
     } else {
       //没未读消息
+    }
+  }
+
+  static load_http() async {
+    //有未读消息
+    //拉取消息
+    var mg = await T('msg').order('id desc').getone();
+    var tmp = await http(
+        'chat/list', {'msgid': isnull(mg) ? mg['id'] : ''}, gethead());
+    var data = getdata(g("context"), tmp!);
+    if (isnull(data)) {
+      //更新本地数据库
+      for (var item in data) {
+        // ignore: await_only_futures
+        await Msg.fromhttpJson(item)
+          ..savedb();
+      }
     }
   }
 }

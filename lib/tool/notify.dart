@@ -90,10 +90,11 @@ class Notify {
 
   static Future showNotification(String title, String content, String callback,
       {String data = ""}) async {
+    Notify.init('app_icon');
     setcache(callback, data, "-1"); //参数通过缓存传入
     //安卓的通知配置，必填参数是渠道id, 名称, 和描述, 可选填通知的图标，重要度等等。
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        'ng169', 'ng169',
+        'LoveMsg', 'LoveMsg',
         // 'your channel id', 'your channel name', 'your channel description',
         importance: Importance.max,
         priority: Priority.high);

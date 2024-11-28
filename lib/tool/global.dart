@@ -8,8 +8,10 @@ import 'package:ng169/model/msg.dart';
 
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/im.dart';
+import 'package:ng169/tool/keeplive.dart';
 
 import 'package:ng169/tool/thred.dart';
+import 'package:ng169/tool/thredim.dart';
 import 'package:package_info/package_info.dart';
 
 import 'cache.dart';
@@ -21,8 +23,13 @@ Map<String, dynamic> globalKeys = {};
 PackageInfo? packageInfo;
 //dsl状态
 bool dslStatus = false;
-i1() async {
-  globalKeys = {'cache': new NgCache()};
+isolocateinit() async {
+  globalKeys = {
+    'cache': new NgCache()
+    // , "db": new Db()
+  };
+  await globalKeys['cache'].init(); //加载缓存
+  // globalKeys['db'].open(dbname);
 }
 
 //dsl域名
@@ -58,10 +65,15 @@ i() async {
     globalKeys['db'].open(dbname),
     initpackinfo(),
     initmblang(),
+
     initidfa(),
   ]);
+
   //dsl状态非必要加载
   getdsl();
+  Keeplive.register(); //后台任务
+  Keeplive.init(); //后台任务
+  //后台任务
   //下载线程
   globalKeys['downthred'].init(Cacheimg.islocol, true);
 
@@ -80,7 +92,9 @@ i() async {
   globalKeys['version'] = version;
 
   globalKeys['rack'] = false;
-  Im.init();
+  // Im.init();
+  Thredim.run("", () {});
+
   // await inilang(); //加载语言包
   //数据库的还没加载
 }

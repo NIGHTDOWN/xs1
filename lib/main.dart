@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget app = new SizedBox();
     s('context', context);
-
     // try {
     app = new MaterialApp(
         debugShowCheckedModeBanner: isdebug, //关闭debug标志

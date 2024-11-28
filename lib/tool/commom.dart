@@ -35,6 +35,11 @@ class CustomMessages implements Messages {
 
   @override
   String wordSeparator() => ' ';
+
+  @override
+  String justNow(int seconds) {
+    return "";
+  }
 }
 
 /// TimelineUtil

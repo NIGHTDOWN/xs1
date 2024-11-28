@@ -1,7 +1,13 @@
+ext.kotlin_version = '2.0.21'
 allprojects {
     repositories {
-        google()
-        mavenCentral()
+         maven { url 'https://mirrors.aliyun.com/flutter/' }
+    maven { url 'https://mirrors.aliyun.com/maven' }
+    maven { url 'https://maven.aliyun.com/repository/google' }
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        // google()
+        // mavenCentral()
     }
 }
 

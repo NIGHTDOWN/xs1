@@ -38,9 +38,10 @@ dependencies:
   flutter_spinkit: any
   web_socket_channel: any
   cached_network_image: 3.3.1
-  socks5_proxy: ^1.0.6
+  socks5_proxy: 1.0.6
   shell_cmd: ^0.2.7
   flutter_tts: 3.8.5
+  
   # banner滑动
   # flutter_card_swiper: any 
   #权限
@@ -71,13 +72,13 @@ dependencies:
   # battery: any 
   battery_info: any
   #intl: ^0.15.8
-  device_info_plus: any
+  device_info_plus: 9.1.0
   device_apps: any
   carousel_slider: any
   # 富文本
   css_text: ^3.0.0
   #通知栏
-  flutter_local_notifications: 17.1.0
+  flutter_local_notifications: any
   draggable_scrollbar: any
   #支付插件已集成到项目
   flutter_screen_wake: any
@@ -92,7 +93,7 @@ dependencies:
 
   third_party_login: ^1.0.14
 
-  get_time_ago: any
+  get_time_ago: 2.0.0
   # firebase_core: any
   # firebase_analytics: any
   # firebase_auth: any
@@ -116,12 +117,16 @@ dependencies:
   photo_view: any
   # 文件选择
   file_picker: any
+  flutter_image_compress: any
+  camera: 0.10.6
+  flutter_foreground_task: any
   
   # firebase_admob: any
   # 谷歌市场评论
   # in_app_review : any
   # app_review :  any
-  extended_text_field: 13.0.1 
+  extended_text_field: 15.0.0 
+  # location: any
     # path: kz/extended_text_field-13.0.1      
 dev_dependencies:
   flutter_test:

@@ -80,7 +80,6 @@ class _BookshelfHeaderState extends State<BookshelfHeader>
 
   @override
   Widget build(BuildContext context) {
-    //d(this.widget.novel.imgUrl);
     progress();
     var width = Screen.width;
     var bgHeight = width / 0.9;

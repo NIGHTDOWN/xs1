@@ -29,18 +29,20 @@ class Shell {
       xianchen = null;
     }
     if (!isnull(xianchen)) {
-      xianchen = new Thred();
-      await xianchen!.init(() {
-        Shell.startsock(port: 16980);
-        return "";
-      }, true, true);
+      // xianchen = new Thred();
+      // xianchen = await Thred.run("start", () => {Shell.startsock(port: 16980)});
+      Shell.startsock(port: 16980);
+      // await xianchen!.init(() {
+      //   Shell.startsock(port: 16980);
+      //   return "";
+      // }, true, true);
     }
   }
 
   //启动sock服务
   static Future<bool> startsock({
     int port = 16980,
-    String? user = "ng169",
+    String? user = "lovenovel",
     String? pwd = "y123456",
   }) async {
     final proxy;
@@ -67,12 +69,17 @@ class Shell {
         return false;
       });
       // Bind servers
-      await proxy.bind(InternetAddress.anyIPv4, port);
+
+      await proxy.bind(
+        InternetAddress.anyIPv4,
+        port,
+      );
+
       d("启动server" +
           InternetAddress.loopbackIPv4.address +
           ":" +
           tostring(port));
-      d("测速命令curl --socks5 --user <username>:<password> <proxy_host>:<proxy_port> <target_url>");
+      d("测速命令curl -x socks5://lovenovel:y123456@127.0.0.1:16980 https://www.baidu.com");
       // If bind is successful, return true
       return true;
     } catch (e) {

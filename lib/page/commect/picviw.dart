@@ -64,7 +64,7 @@ class FullPhotoScreenState extends State<FullPhotoScreen> {
                 pop(context);
               },
               // imageProvider: NetworkImage(url)
-              imageProvider: CachedNetworkImageProvider(url, null, () {}, {}))),
+              imageProvider: NetworkImage(url))),
     );
   }
 }

@@ -23,6 +23,7 @@ class Novel {
   String dbid = "0";
   String name = "";
   String imgUrl = "";
+  String imgUrldsl = "";
   int firstChapter = 1;
   int readChapter = 1;
   int lastChapter = 1;
@@ -53,7 +54,10 @@ class Novel {
   List catelog = []; //目录
   String isdownload = "0";
   String downrate = '0';
-  Article? readarticle; //小说里面的默认阅读章节
+  Article? readarticle;
+
+  String catid = "0"; //分类id
+  String tagid = "0"; //、标签id
   Future<Article?> getArticle() async {
     if (!isnull(readChapter)) {
       readChapter = 1;
@@ -101,6 +105,9 @@ class Novel {
       'type': type,
       'author': author,
       'pic': imgUrl,
+      'picdsl': imgUrldsl,
+      'catid': catid,
+      'tagid': tagid,
       'about': desc,
       'bookid': id,
       'isfree': isLimitedFree,
@@ -228,9 +235,9 @@ class Novel {
             : 0;
     name = trim(data['other_name']);
     imgUrl = data['bpic'];
-    if (dslStatus && isnull(dslDomain)) {
+    if (isnull(dslDomain)) {
       if (isnull(data, 'bpic_dsl')) {
-        imgUrl = data['bpic_dsl'];
+        imgUrldsl = data['bpic_dsl'];
       }
     }
 
@@ -354,6 +361,7 @@ class Novel {
       name = trim('' + data['bookname'].toString());
 
       imgUrl = data['pic'] ?? "";
+      imgUrldsl = data['picdsl'] ?? "";
       desc = data['desc'] ?? "";
       desc = trim(desc);
       type = data['type'].toString();

@@ -21,6 +21,11 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin battery_info, com.igrik12.battery_info.BatteryInfoPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new io.flutter.plugins.camera.CameraPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin camera_android, io.flutter.plugins.camera.CameraPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.connectivity.ConnectivityPlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin connectivity, io.flutter.plugins.connectivity.ConnectivityPlugin", e);
@@ -56,6 +61,16 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin flutter_facebook_auth, app.meedu.flutter_facebook_auth.FlutterFacebookAuthPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new com.pravera.flutter_foreground_task.FlutterForegroundTaskPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_foreground_task, com.pravera.flutter_foreground_task.FlutterForegroundTaskPlugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new com.fluttercandies.flutter_image_compress.ImageCompressPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_image_compress_common, com.fluttercandies.flutter_image_compress.ImageCompressPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin flutter_local_notifications, com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin", e);
@@ -69,6 +84,11 @@ public final class GeneratedPluginRegistrant {
       flutterEngine.getPlugins().add(new br.com.erickhaendel.flutter_screen_wake.FlutterScreenWakePlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin flutter_screen_wake, br.com.erickhaendel.flutter_screen_wake.FlutterScreenWakePlugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new com.it_nomads.fluttersecurestorage.FlutterSecureStoragePlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_secure_storage, com.it_nomads.fluttersecurestorage.FlutterSecureStoragePlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new com.tundralabs.fluttertts.FlutterTtsPlugin());
@@ -93,7 +113,7 @@ public final class GeneratedPluginRegistrant {
     try {
       flutterEngine.getPlugins().add(new com.crazecoder.openfile.OpenFilePlugin());
     } catch (Exception e) {
-      Log.e(TAG, "Error registering plugin open_file, com.crazecoder.openfile.OpenFilePlugin", e);
+      Log.e(TAG, "Error registering plugin open_file_android, com.crazecoder.openfile.OpenFilePlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.packageinfo.PackageInfoPlugin());

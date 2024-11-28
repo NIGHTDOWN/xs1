@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:connectivity/connectivity.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
@@ -212,6 +213,10 @@ Future<dynamic> getAssetImage(String asset, {width, height}) async {
   return fi.image;
 }
 
+getidfa() {
+  return getcache("idfas");
+}
+
 getcache(key, [bool needid = true]) {
   var cache = g('cache');
   if (!isnull(cache)) return false;
@@ -263,7 +268,7 @@ setcache(String key, val, String time, [bool needid = true]) {
     name = key;
   }
   // name = name + g('locallg');
-  var data = cache.set(name, val, time);
+  var data = cache!.set(name, val, time);
   return data;
 }
 
@@ -293,20 +298,7 @@ hidetitlebar() async {
 showtitlebar() {
   // return;
   //这里需要加版本判断；如果是安卓12以上；这个不要
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-  //     overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.values ,
-  //     overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
-  // d("erwerewrwer" + Platform.version.toString());
-  // if (Platform.isAndroid && int.parse(Platform.version.split('.')[0]) >= 12) {
-  //   d("erwerewrwer");
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-  //       overlays: [SystemUiOverlay.bottom]);
-  // } else {
-  //   // For older Android versions, show both top and bottom overlays
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-  //       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
-  // }
+
   //这里要显示系统状态栏以及系统底部按钮；不要显示app的标题栏
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
@@ -467,19 +459,14 @@ setDeviceOrientation([DeviceOrientation? fx]) {
 }
 
 void selectbox(BuildContext context, List<Widget> childrens) async {
-  if (isnull(context)) return;
+  if (!isnull(context)) return;
   await showModalBottomSheet(
-    context: context,
-    isScrollControlled: true, // 添加这一行以确保模态底部板可以滚动
-    builder: (BuildContext bc) => SafeArea(
-      child: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: childrens,
-        ),
-      ),
-    ),
-  );
+      context: context,
+      builder: (BuildContext bc) => Container(
+            child: SafeArea(
+                child: Column(
+                    mainAxisSize: MainAxisSize.min, children: childrens)),
+          ));
 }
 
 checkversion(context, [bool isauto = false]) {
@@ -608,18 +595,9 @@ Future<String> getUniqueId() async {
   }
   if (Platform.isIOS) {
     IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
-    // print("ios唯一设备码："+iosDeviceInfo.identifierForVendor);
-
-    // StorageManager.sharedPreferences.setString(StorageManager.KEY_SERIALID, iosDeviceInfo.identifierForVendor);
-
     idfas = iosDeviceInfo.identifierForVendor; // unique ID on iOS
   } else {
     AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-    // print("android唯一设备码："+androidDeviceInfo.androidId);
-
-    // StorageManager.sharedPreferences.setString(StorageManager.KEY_SERIALID, androidDeviceInfo.androidId);
-
-    // idfas = androidDeviceInfo.androidId; // unique ID on Android
     idfas = androidDeviceInfo.serialNumber;
     if (idfas == "unknown") {
       idfas = androidDeviceInfo.id;
@@ -627,7 +605,27 @@ Future<String> getUniqueId() async {
   }
   if (isnull(idfas)) {
     setcache(cache, idfas, '-1');
+  } else {
+    idfas = uuidv4();
+    setcache(cache, idfas, '-1');
   }
 
   return idfas;
+}
+
+uuidv4() {
+  final random = Random();
+  final chars = '0123456789abcdef';
+
+  final uuid = List.generate(36, (index) {
+    if (index == 8 || index == 13 || index == 18 || index == 23) {
+      return '-';
+    } else if (index == 14) {
+      return '4';
+    } else {
+      return chars[random.nextInt(chars.length)];
+    }
+  }).join();
+
+  return uuid;
 }

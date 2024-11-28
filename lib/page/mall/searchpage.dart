@@ -316,6 +316,7 @@ class SearchPageState extends State<SearchPage> {
 
   Widget bookCardWithInfo(int style, String title, List json) {
     Widget card = new SizedBox();
+    // d(json);
     switch (style) {
       case 1:
         card = NovelFourGridView(title, json, false);
