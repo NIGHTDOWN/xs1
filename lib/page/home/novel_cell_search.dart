@@ -31,6 +31,7 @@ class NovelsearchCell extends StatelessWidget {
             //   height: 93,
             //   placeholder: Container(),
             // ),
+
             Novelimage(
               novel,
               width: 70,

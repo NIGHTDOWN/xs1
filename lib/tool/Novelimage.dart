@@ -162,8 +162,7 @@ class Novelimage extends LoginBase {
   getfromremote() async {
     //判断远程图片是否存在
     flag = await checkImageExists(imgUrl!);
-    d("tp" + novel.imgUrl);
-    d("tp" + novel.id);
+
     if (flag) {
       trueimgurl = imgUrl!;
     } else {
