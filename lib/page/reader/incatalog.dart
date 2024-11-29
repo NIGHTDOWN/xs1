@@ -4,6 +4,7 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/styles.dart';
+import 'package:ng169/tool/Novelimage.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
@@ -115,10 +116,9 @@ class InCataLogState extends State<InCataLog> {
               ),
               widget.novel.type == '3'
                   ? getbookbg2(60, 60 * 1.3)
-                  : NgImage(
-                      widget.novel.imgUrl,
+                  : Container(
                       width: 50,
-                      placeholder: Container(),
+                      child: widget.novel.imgdom,
                     ),
               SizedBox(
                 width: 15,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
+import 'package:ng169/tool/Novelimage.dart';
 import 'package:ng169/tool/brige.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
@@ -127,13 +128,13 @@ class _BookshelfItemViewState extends State<BookshelfItemView> {
                   // top:0,
                   child: this.widget.novel.type == '3'
                       ? getbookbg()
-                      : NgImage(
-                          this.widget.novel.imgUrl,
+                      : Container(
                           width: width,
                           height: width / 0.75,
-                          fit: BoxFit.fill,
-                          placeholder: Container(),
+                          child: novel.imgdom,
                         ),
+                  // Novelimage(this.widget.novel,
+                  // width: width, height: width / 0.75, fit: BoxFit.fill),
                 ),
                 getnum(),
                 zhezao,

@@ -5,6 +5,7 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/starbar.dart';
+import 'package:ng169/tool/Novelimage.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/lang.dart';
@@ -26,21 +27,12 @@ class NovelDetailHeader extends StatelessWidget {
       height: height,
       child: Stack(
         children: <Widget>[
-          NgImage(
-            novel.imgUrl,
-            fit: BoxFit.fitWidth,
+          Container(
             width: width,
             height: height,
-            placeholder: Container(),
+            child: novel.imgdom,
           ),
-          // Image(
-          //   image: CachedNetworkImageProvider(novel.imgUrl),
-
-          //   fit: BoxFit.fitWidth,
-          //   width: width,
-          //   height: height,
-          // ),
-          // NgImage(novel.imgUrl),
+          // Novelimage(novel, width: width, height: height, fit: BoxFit.fitWidth),
           Container(color: Color(0xbb000000), width: width, height: height),
           BackdropFilter(
             filter: ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
@@ -126,11 +118,10 @@ class NovelDetailHeader extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          NgImage(
-            novel.imgUrl,
+          Container(
             width: 100,
-            height: 133,
-            placeholder: Container(),
+            height: 113,
+            child: novel.imgdom,
           ),
           SizedBox(width: 15),
           Expanded(

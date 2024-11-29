@@ -3,6 +3,7 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
+import 'package:ng169/tool/Novelimage.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/url.dart';
 
@@ -22,11 +23,11 @@ class NovelGridItem extends StatelessWidget {
         width: width,
         child: Row(
           children: <Widget>[
-            NgImage(
-              novel.imgUrl,
+            // Novelimage(novel, width: 50, height: 66),
+            Container(
               width: 50,
               height: 66,
-              placeholder: Container(),
+              child: novel.imgdom,
             ),
             SizedBox(width: 10),
             Expanded(

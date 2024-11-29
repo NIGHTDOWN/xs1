@@ -9,6 +9,7 @@ import 'package:ng169/page/reader/cartreader_scene.dart';
 import 'package:ng169/page/reader/reader_scene.dart';
 
 import 'package:ng169/style/sq_color.dart';
+import 'package:ng169/tool/Novelimage.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
@@ -19,6 +20,7 @@ import 'package:ng169/tool/url.dart';
 import 'chapter.dart';
 
 class Novel {
+  Widget imgdom = Container();
   String id = "0";
   String dbid = "0";
   String name = "";
@@ -288,7 +290,13 @@ class Novel {
     // isLimitedFree = data['is_free'] == 1;
     // getgroom();
     savedb();
+    initdom();
   }
+  initdom() {
+    d("dsfsdfdsf");
+    imgdom = Novelimage(this);
+  }
+
   //更新书架状态
   initrack() {}
   getchapterCount() async {
@@ -385,6 +393,7 @@ class Novel {
         default:
           status = lang('连载中');
       }
+      initdom();
     } catch (e) {
       dt(e);
     }

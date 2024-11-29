@@ -5,6 +5,7 @@ import 'package:ng169/obj/novel.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
 import 'package:ng169/style/styles.dart';
+import 'package:ng169/tool/Novelimage.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/lang.dart';
@@ -94,11 +95,22 @@ class _BookshelfHeaderState extends State<BookshelfHeader>
             top: height - bgHeight,
             child: widget.novel.type == '3'
                 ? getbookbg2(width, bgHeight)
-                : NgImage(
-                    pic,
+                :
+                // NgImage(
+                //     pic,
+                //     width: width,
+                //     height: bgHeight,
+                //     placeholder: Container(),
+                //   ),
+                // Novelimage(
+                //     widget.novel,
+                //     width: width,
+                //     height: bgHeight,
+                //   ),
+                Container(
                     width: width,
                     height: bgHeight,
-                    placeholder: Container(),
+                    child: widget.novel.imgdom,
                   ),
             //  Image.asset(
 
@@ -147,11 +159,10 @@ class _BookshelfHeaderState extends State<BookshelfHeader>
             DecoratedBox(
               child: widget.novel.type == '3'
                   ? getbookbg2(120, 160)
-                  : NgImage(
-                      novel.imgUrl,
+                  : Container(
                       width: 120,
                       height: 160,
-                      placeholder: Container(),
+                      child: novel.imgdom,
                     ),
               decoration: BoxDecoration(boxShadow: Styles.borderShadow),
             ),

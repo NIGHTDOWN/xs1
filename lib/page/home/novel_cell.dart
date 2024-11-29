@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ng169/obj/novel.dart';
 import 'package:ng169/page/novel_detail/novel_detail_scene.dart';
 import 'package:ng169/style/sq_color.dart';
+import 'package:ng169/tool/Novelimage.dart';
 import 'package:ng169/tool/image.dart';
 import 'package:ng169/tool/url.dart';
 
@@ -22,11 +23,11 @@ class NovelCell extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            NgImage(
-              novel.imgUrl,
+            // Novelimage(novel, width: 70, height: 93),
+            Container(
               width: 70,
               height: 93,
-              placeholder: Container(),
+              child: novel.imgdom,
             ),
             SizedBox(width: 15),
             Expanded(

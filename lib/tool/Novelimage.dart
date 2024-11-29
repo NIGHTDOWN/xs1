@@ -27,16 +27,17 @@ import 'global.dart';
 // ignore: must_be_immutable
 class Novelimage extends LoginBase {
   final Novel novel;
-
+  late Novelimage obj;
   late final double? width;
   late final double? height;
   final BoxFit fit;
-  final Widget placeholder = GifCartoon2();
+  static Widget placeholder = GifCartoon2();
   bool localcache = false;
+
   bool needyzj;
   String dsl = "";
   String? imgUrl = "";
-  late Widget img;
+  Widget img = Container();
   bool isload = false;
   static Widget errorimage = Container();
   Novelimage(
@@ -51,6 +52,7 @@ class Novelimage extends LoginBase {
     dsl = novel.imgUrldsl;
     imgUrl = novel.imgUrl;
     errorimage = getpathimg("assets/images/bookbg.jpg");
+    this.obj = this;
   }
   static yjz(bool needyjz, Novel novel) {
     // if (needyjz) {
@@ -87,8 +89,8 @@ class Novelimage extends LoginBase {
     if (isnull(data)) {
       if (data['flag'] == 1) {
         if (isnull(data['dslimg'])) {
-          trueimgurl = data['dslimg'];
-          isload = true;
+          obj.trueimgurl = data['dslimg'];
+          obj.isload = true;
           reflash();
           return true;
         }
@@ -123,8 +125,8 @@ class Novelimage extends LoginBase {
       // 获取图片尺寸信息
       image.image.resolve(ImageConfiguration()).addListener(
         ImageStreamListener((ImageInfo info, bool sync) {
-          sw = info.image.width + 0.0;
-          sh = info.image.height + 0.0;
+          obj.sw = info.image.width + 0.0;
+          obj.sh = info.image.height + 0.0;
           // 在这里，info.image就是Image对象，info.width和info.height是图片的尺寸
           // d('Image width: ${info.image.width}, height: ${info.image.height}');
         }),
@@ -145,7 +147,7 @@ class Novelimage extends LoginBase {
         String base64Image = base64Encode(bytes);
         //获取图片的宽度和高度
         await getImageSizeFromBase64(base64Image); //获取尺寸
-        b64 = base64Image;
+        obj.b64 = base64Image;
         savedb();
         return base64Image;
       } else {
@@ -161,22 +163,23 @@ class Novelimage extends LoginBase {
   //从网络获取
   getfromremote() async {
     //判断远程图片是否存在
-    flag = await checkImageExists(imgUrl!);
+    obj.flag = await checkImageExists(imgUrl!);
 
     if (flag) {
-      trueimgurl = imgUrl!;
+      obj.trueimgurl = imgUrl!;
     } else {
       if (isnull(dsl)) {
-        trueimgurl = dsl;
+        obj.trueimgurl = dsl;
+        d(trueimgurl);
       } else {
-        trueimgurl = imgUrl!;
+        obj.trueimgurl = imgUrl!;
       }
 
       //如果不存在就保存到本地
     }
 
     getImageBase64(trueimgurl);
-    isload = true;
+    obj.isload = true;
 
     reflash();
     //如果存在就保存到数据库
@@ -199,13 +202,13 @@ class Novelimage extends LoginBase {
     var whree = {"simg": novel.imgUrl};
     var dbdata = await T("dslimg").where(whree).getone();
     var data = {
-      "simg": novel.imgUrl,
-      "flag": flag ? 1 : 0,
-      "dsl": dsl,
-      "dslimg": getdslimg(dsl),
-      "width": sw,
-      "height": sh,
-      "b64": b64
+      "simg": obj.novel.imgUrl,
+      "flag": obj.flag ? 1 : 0,
+      "dsl": obj.dsl,
+      "dslimg": obj.getdslimg(dsl),
+      "width": obj.sw,
+      "height": obj.sh,
+      "b64": obj.b64
     };
     // d(data);
     if (!isnull(dbdata)) {
@@ -239,7 +242,7 @@ class Novelimage extends LoginBase {
         return img;
       }
     }
-    return NgImage(trueimgurl,
+    return NgImage(obj.trueimgurl,
         width: width, height: height, fit: fit, placeholder: placeholder);
   }
 }

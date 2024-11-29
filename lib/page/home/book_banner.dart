@@ -14,6 +14,7 @@ import 'package:ng169/page/smallwidget/src/swiper_pagination.dart';
 import 'package:ng169/page/smallwidget/swiper.dart';
 import 'package:ng169/style/screen.dart';
 import 'package:ng169/style/sq_color.dart';
+import 'package:ng169/tool/Novelimage.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/image.dart';
@@ -63,10 +64,12 @@ class BookBanner extends LoginBase {
     Novel novel = getnovel(info);
     var bneer = ClipRRect(
       borderRadius: BorderRadius.circular(BookBanner.hd),
-      child: NgImage(
-        novel.imgUrl,
-        placeholder: GifCartoon2(),
+      child: Container(
+        // width: width,
+        // height: height,
+        child: novel.imgdom,
       ),
+      // Novelimage(novel, fit: BoxFit.fitWidth),
     );
     // return bneer;
     return GestureDetector(
