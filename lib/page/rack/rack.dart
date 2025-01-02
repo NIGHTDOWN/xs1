@@ -470,6 +470,7 @@ class RackSceneState extends State<Rack> {
       show(context, lang("没有存储卡权限；请授于相关权限"));
       return false;
     }
+
     try {
       FilePickerResult? files = await FilePicker.platform
           .pickFiles(type: FileType.custom, allowedExtensions: ['txt']);
